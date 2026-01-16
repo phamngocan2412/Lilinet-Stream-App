@@ -1,4 +1,4 @@
-# lilinet_app
+# Lilinet-novel-app
 
 A new Flutter project.
 
