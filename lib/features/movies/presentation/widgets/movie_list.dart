@@ -16,6 +16,19 @@ class MovieList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Optimization: Calculate optimal memory cache size for images.
+    // The grid is 2 columns with 16px padding on sides and 12px spacing.
+    // Width = (ScreenWidth - 32 - 12) / 2
+    final screenWidth = MediaQuery.of(context).size.width;
+    final itemWidth = (screenWidth - 32 - 12) / 2;
+    final pixelRatio = MediaQuery.of(context).devicePixelRatio;
+    // Cap cache width to avoid excessive memory on very large screens (though tablet is fine),
+    // and ensure minimum quality.
+    // Default logic in AppCachedImage uses 700 if width is infinite.
+    // For a phone (360px wide), item is ~158px. 158 * 3 (high density) = 474px.
+    // 474px < 700px, so we save memory.
+    final memCacheWidth = (itemWidth * pixelRatio).toInt();
+
     return SliverGrid(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
@@ -31,6 +44,7 @@ class MovieList extends StatelessWidget {
             heroTag:
                 heroTagPrefix != null ? '${heroTagPrefix}_${movie.id}' : null,
             onTap: () => onMovieTap(movie),
+            memCacheWidth: memCacheWidth,
           );
         },
         childCount: movies.length,
