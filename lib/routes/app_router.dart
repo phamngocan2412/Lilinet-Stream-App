@@ -3,20 +3,38 @@ import '../features/main/presentation/pages/main_screen.dart';
 import '../features/main/presentation/pages/scaffold_with_player.dart';
 import '../features/movies/presentation/pages/movie_details_page.dart';
 import '../features/movies/domain/entities/movie.dart';
+import '../features/movies/presentation/pages/search_page.dart';
+import '../features/settings/presentation/pages/settings_page.dart';
+import '../features/splash/presentation/pages/splash_page.dart';
 
 class AppRouter {
   static final router = GoRouter(
-    initialLocation: '/',
+    initialLocation: '/splash',
     routes: [
+      GoRoute(
+        path: '/splash',
+        name: 'splash',
+        builder: (context, state) => const SplashPage(),
+      ),
       ShellRoute(
         builder: (context, state, child) {
-          return ScaffoldWithPlayer(child: child, state: state);
+          return ScaffoldWithPlayer(state: state, child: child);
         },
         routes: [
           GoRoute(
             path: '/',
             name: 'home',
             builder: (context, state) => const MainScreen(),
+          ),
+          GoRoute(
+            path: '/search',
+            name: 'search',
+            builder: (context, state) => const SearchPage(),
+          ),
+          GoRoute(
+            path: '/settings',
+            name: 'settings',
+            builder: (context, state) => const SettingsPage(),
           ),
           GoRoute(
             path: '/movie/:id',

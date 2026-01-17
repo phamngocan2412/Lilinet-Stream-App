@@ -9,12 +9,13 @@ class StreamingCubit extends Cubit<StreamingState> {
 
   StreamingCubit(this._getStreamingLinks) : super(StreamingInitial());
 
-  static const _servers = ['vidcloud', 'upcloud', 'mixdrop'];
+  static const _servers = ['vidcloud', 'upcloud', 'vidstream', 'mixdrop'];
 
   Future<void> loadLinks({
     required String episodeId,
     required String mediaId,
     String? server,
+    String provider = 'himovies',
   }) async {
     if (isClosed) return;
     emit(StreamingLoading());
@@ -25,6 +26,7 @@ class StreamingCubit extends Cubit<StreamingState> {
         episodeId: episodeId,
         mediaId: mediaId,
         server: server,
+        provider: provider,
       );
       if (isClosed) return;
       result.fold(
@@ -55,6 +57,7 @@ class StreamingCubit extends Cubit<StreamingState> {
         episodeId: episodeId,
         mediaId: mediaId,
         server: s,
+        provider: provider,
       );
 
       if (isClosed) return;

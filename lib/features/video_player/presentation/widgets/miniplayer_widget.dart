@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -130,16 +132,16 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent> {
 
   // Streaming Cubit instance managed here to reset on new video
   late StreamingCubit _streamingCubit;
+  String? _movieProvider;
+  String? _animeProvider;
 
   @override
   void initState() {
     super.initState();
     WakelockPlus.enable();
-    _loadSettings();
-    _initPlayer();
-
+    _initPlayer(); // Initialize player first
     _streamingCubit = getIt<StreamingCubit>();
-    _loadVideo();
+    _loadSettingsAndVideo(); // Consolidated loading
 
     // Check initial state for expansion
     if (widget.state.status == VideoPlayerStatus.expanded) {
@@ -149,33 +151,72 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent> {
     }
   }
 
-  @override
-  void didUpdateWidget(_VideoPlayerContent oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.state.episodeId != widget.state.episodeId ||
-        oldWidget.state.mediaId != widget.state.mediaId) {
-      _loadVideo();
-    }
+  // Load Settings AND THEN Video
+  Future<void> _loadSettingsAndVideo() async {
+    final result = await getIt<SettingsRepository>().getSettings();
+    result.fold(
+      (l) {
+        // If fails, use defaults
+        _movieProvider = 'goku';
+        _animeProvider = 'hianime';
+        _loadVideo();
+      },
+      (settings) {
+        if (mounted) {
+          setState(() {
+            _autoPlayEnabled = settings.autoPlay;
+            _movieProvider = settings.movieProvider;
+            _animeProvider = settings.animeProvider;
+          });
+          _loadVideo();
+        }
+      },
+    );
   }
 
   void _loadVideo() {
     // Reset state for new video
     _lastPlayedUrl = null;
+
+    final isAnime =
+        widget.state.movie?.genres.any(
+          (g) => g.toLowerCase().contains('anime'),
+        ) ??
+        false;
+
+    final provider = isAnime
+        ? (_animeProvider ?? 'animekai')
+        : (_movieProvider ?? 'himovies');
+
     _streamingCubit.loadLinks(
       episodeId: widget.state.episodeId!,
       mediaId: widget.state.mediaId!,
+      provider: provider,
     );
   }
 
-  Future<void> _loadSettings() async {
-    final result = await getIt<SettingsRepository>().getSettings();
-    result.fold((l) => null, (settings) {
-      if (mounted) {
-        setState(() {
-          _autoPlayEnabled = settings.autoPlay;
-        });
-      }
+  // Update _switchServer to use the provider too
+  void _switchServer(String server) {
+    setState(() {
+      _currentServer = server;
     });
+
+    final isAnime =
+        widget.state.movie?.genres.any(
+          (g) => g.toLowerCase().contains('anime'),
+        ) ??
+        false;
+
+    final provider = isAnime
+        ? (_animeProvider ?? 'animekai')
+        : (_movieProvider ?? 'himovies');
+
+    _streamingCubit.loadLinks(
+      episodeId: widget.state.episodeId!,
+      mediaId: widget.state.mediaId!,
+      server: server,
+      provider: provider,
+    );
   }
 
   @override
@@ -456,17 +497,6 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent> {
     await player.play();
   }
 
-  void _switchServer(String server) {
-    setState(() {
-      _currentServer = server;
-    });
-    _streamingCubit.loadLinks(
-      episodeId: widget.state.episodeId!,
-      mediaId: widget.state.mediaId!,
-      server: server,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     // Provide the LOCAL streaming cubit to children
@@ -677,21 +707,28 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent> {
                 const Text('Server', style: TextStyle(color: Colors.grey)),
                 const SizedBox(width: 8),
                 _buildVipButton(
-                  'VIP #1',
+                  'VidCloud',
                   kGreenVIP,
                   _currentServer == 'vidcloud',
                   () => _switchServer('vidcloud'),
                 ),
                 const SizedBox(width: 8),
                 _buildVipButton(
-                  'VIP #2',
+                  'UpCloud',
                   kBlueVIP,
                   _currentServer == 'upcloud',
                   () => _switchServer('upcloud'),
                 ),
                 const SizedBox(width: 8),
                 _buildVipButton(
-                  'VIP #3',
+                  'VidStream',
+                  kOrangeColor,
+                  _currentServer == 'vidstream',
+                  () => _switchServer('vidstream'),
+                ),
+                const SizedBox(width: 8),
+                _buildVipButton(
+                  'MixDrop',
                   const Color(0xFF8E24AA),
                   _currentServer == 'mixdrop',
                   () => _switchServer('mixdrop'),

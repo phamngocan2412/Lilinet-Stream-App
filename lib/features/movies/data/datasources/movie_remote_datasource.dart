@@ -50,8 +50,8 @@ class MovieRemoteDataSource {
     if (fastMode) {
       queryParams['fast'] = 'true';
     } else {
-      // Use Goku for faster scraping (user preference)
-      queryParams['provider'] = 'goku';
+      // Use HiMovies for faster scraping (user preference)
+      queryParams['provider'] = 'himovies';
     }
 
     final response = await _dio.get(
@@ -94,9 +94,20 @@ class MovieRemoteDataSource {
     required String episodeId,
     required String mediaId,
     String? server,
+    String provider = 'himovies', // Default to fastest
   }) async {
+    // Determine category based on provider known list or assume movies if unknown
+    // This is a simple heuristic. Ideally, the provider type should be passed.
+    final isAnime = [
+      'hianime',
+      'animepahe',
+      'animekai',
+      'gogoanime',
+    ].contains(provider.toLowerCase());
+    final category = isAnime ? 'anime' : 'movies';
+
     final response = await _dio.get(
-      ApiConstants.watch,
+      ApiConstants.getWatchEndpoint(category, provider),
       queryParameters: {
         'episodeId': episodeId,
         'mediaId': mediaId,

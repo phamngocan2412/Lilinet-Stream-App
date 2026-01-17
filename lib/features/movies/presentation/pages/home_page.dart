@@ -29,7 +29,37 @@ class HomePageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Lilinet')),
+      appBar: AppBar(
+        title: Text(
+          'LILINET',
+          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+            fontWeight: FontWeight.w900,
+            letterSpacing: 1.5,
+            color: Theme.of(context).colorScheme.primary,
+          ),
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () => context.push('/search'),
+          ),
+          GestureDetector(
+            onTap: () => context.push('/settings'),
+            child: Container(
+              margin: const EdgeInsets.only(right: 16, left: 8),
+              child: CircleAvatar(
+                radius: 16,
+                backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                child: Icon(
+                  Icons.person,
+                  size: 20,
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
       body: RefreshIndicator(
         onRefresh: () async {
           context.read<TrendingMoviesBloc>().add(const RefreshTrendingMovies());

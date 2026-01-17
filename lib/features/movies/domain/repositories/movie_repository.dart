@@ -29,5 +29,6 @@ abstract class MovieRepository {
     required String episodeId,
     required String mediaId,
     String? server,
+    String provider = 'himovies',
   });
 }

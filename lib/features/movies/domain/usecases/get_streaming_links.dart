@@ -14,11 +14,13 @@ class GetStreamingLinks {
     required String episodeId,
     required String mediaId,
     String? server,
+    String provider = 'himovies',
   }) async {
     return await _repository.getStreamingLinks(
       episodeId: episodeId,
       mediaId: mediaId,
       server: server,
+      provider: provider,
     );
   }
 }

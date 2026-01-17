@@ -169,12 +169,14 @@ class MovieRepositoryImpl implements MovieRepository {
     required String episodeId,
     required String mediaId,
     String? server,
+    String provider = 'himovies', // Default provider
   }) async {
     try {
       final response = await _remoteDataSource.getStreamingLinks(
         episodeId: episodeId,
         mediaId: mediaId,
         server: server,
+        provider: provider,
       );
       final links = response.sources.map((s) => s.toEntity()).toList();
 

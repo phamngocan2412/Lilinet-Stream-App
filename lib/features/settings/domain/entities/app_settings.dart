@@ -1,18 +1,8 @@
 import 'package:equatable/equatable.dart';
 
-enum ThemeMode {
-  light,
-  dark,
-  system,
-}
+enum ThemeMode { light, dark, system }
 
-enum VideoQuality {
-  auto,
-  sd360,
-  sd480,
-  hd720,
-  hd1080,
-}
+enum VideoQuality { auto, sd360, sd480, hd720, hd1080 }
 
 class AppSettings extends Equatable {
   final ThemeMode themeMode;
@@ -24,6 +14,8 @@ class AppSettings extends Equatable {
   final bool showNotifications;
   final bool adultContent;
   final String subtitleLanguage;
+  final String movieProvider;
+  final String animeProvider;
 
   const AppSettings({
     this.themeMode = ThemeMode.dark,
@@ -35,6 +27,8 @@ class AppSettings extends Equatable {
     this.showNotifications = true,
     this.adultContent = false,
     this.subtitleLanguage = 'en',
+    this.movieProvider = 'himovies', // Fastest (~0.625s)
+    this.animeProvider = 'animekai', // Fastest (~0.438s)
   });
 
   AppSettings copyWith({
@@ -47,6 +41,8 @@ class AppSettings extends Equatable {
     bool? showNotifications,
     bool? adultContent,
     String? subtitleLanguage,
+    String? movieProvider,
+    String? animeProvider,
   }) {
     return AppSettings(
       themeMode: themeMode ?? this.themeMode,
@@ -58,6 +54,8 @@ class AppSettings extends Equatable {
       showNotifications: showNotifications ?? this.showNotifications,
       adultContent: adultContent ?? this.adultContent,
       subtitleLanguage: subtitleLanguage ?? this.subtitleLanguage,
+      movieProvider: movieProvider ?? this.movieProvider,
+      animeProvider: animeProvider ?? this.animeProvider,
     );
   }
 
@@ -72,6 +70,8 @@ class AppSettings extends Equatable {
       'showNotifications': showNotifications,
       'adultContent': adultContent,
       'subtitleLanguage': subtitleLanguage,
+      'movieProvider': movieProvider,
+      'animeProvider': animeProvider,
     };
   }
 
@@ -92,19 +92,23 @@ class AppSettings extends Equatable {
       showNotifications: json['showNotifications'] ?? true,
       adultContent: json['adultContent'] ?? false,
       subtitleLanguage: json['subtitleLanguage'] ?? 'en',
+      movieProvider: json['movieProvider'] ?? 'himovies',
+      animeProvider: json['animeProvider'] ?? 'animekai',
     );
   }
 
   @override
   List<Object?> get props => [
-        themeMode,
-        language,
-        autoPlay,
-        skipIntro,
-        defaultQuality,
-        downloadOverWifiOnly,
-        showNotifications,
-        adultContent,
-        subtitleLanguage,
-      ];
+    themeMode,
+    language,
+    autoPlay,
+    skipIntro,
+    defaultQuality,
+    downloadOverWifiOnly,
+    showNotifications,
+    adultContent,
+    subtitleLanguage,
+    movieProvider,
+    animeProvider,
+  ];
 }

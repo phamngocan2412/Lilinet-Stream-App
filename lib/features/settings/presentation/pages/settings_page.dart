@@ -88,6 +88,7 @@ class SettingsView extends StatelessWidget {
                       },
                     ),
                     _buildQualitySelector(context, settings),
+                    _buildProviderSelector(context, settings),
                   ],
                 ),
                 const Divider(height: 32),
@@ -441,6 +442,142 @@ class SettingsView extends StatelessWidget {
             ),
           ),
         );
+      },
+    );
+  }
+
+  Widget _buildProviderSelector(
+    BuildContext context,
+    domain.AppSettings settings,
+  ) {
+    return Column(
+      children: [
+        ListTile(
+          title: const Text('Movie Source'),
+          subtitle: Text(settings.movieProvider.toUpperCase()),
+          leading: const Icon(Icons.movie),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () {
+            final settingsBloc = context.read<SettingsBloc>();
+            showModalBottomSheet(
+              context: context,
+              builder: (bottomSheetContext) => BlocProvider.value(
+                value: settingsBloc,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _buildProviderOption(
+                      context,
+                      settingsBloc,
+                      settings,
+                      'goku',
+                      'Goku (Standard)',
+                      isMovie: true,
+                    ),
+                    _buildProviderOption(
+                      context,
+                      settingsBloc,
+                      settings,
+                      'himovies',
+                      'HiMovies (Recommended)', // Fastest
+                      isMovie: true,
+                    ),
+                    _buildProviderOption(
+                      context,
+                      settingsBloc,
+                      settings,
+                      'sflix',
+                      'SFlix (Fast)',
+                      isMovie: true,
+                    ),
+                    _buildProviderOption(
+                      context,
+                      settingsBloc,
+                      settings,
+                      'flixhq',
+                      'FlixHQ (Alternative)',
+                      isMovie: true,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+        ListTile(
+          title: const Text('Anime Source'),
+          subtitle: Text(settings.animeProvider.toUpperCase()),
+          leading: const Icon(Icons.animation),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () {
+            final settingsBloc = context.read<SettingsBloc>();
+            showModalBottomSheet(
+              context: context,
+              builder: (bottomSheetContext) => BlocProvider.value(
+                value: settingsBloc,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _buildProviderOption(
+                      context,
+                      settingsBloc,
+                      settings,
+                      'hianime',
+                      'HiAnime (Popular)',
+                      isMovie: false,
+                    ),
+                    _buildProviderOption(
+                      context,
+                      settingsBloc,
+                      settings,
+                      'animepahe',
+                      'AnimePahe (Fast)',
+                      isMovie: false,
+                    ),
+                    _buildProviderOption(
+                      context,
+                      settingsBloc,
+                      settings,
+                      'animekai',
+                      'AnimeKai (Recommended)', // Fastest
+                      isMovie: false,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildProviderOption(
+    BuildContext context,
+    SettingsBloc bloc,
+    domain.AppSettings settings,
+    String id,
+    String label, {
+    required bool isMovie,
+  }) {
+    final isSelected = isMovie
+        ? settings.movieProvider == id
+        : settings.animeProvider == id;
+
+    return ListTile(
+      title: Text(label),
+      trailing: isSelected
+          ? const Icon(Icons.check, color: Colors.green)
+          : null,
+      onTap: () {
+        bloc.add(
+          UpdateSettings(
+            isMovie
+                ? settings.copyWith(movieProvider: id)
+                : settings.copyWith(animeProvider: id),
+          ),
+        );
+        Navigator.pop(context);
       },
     );
   }

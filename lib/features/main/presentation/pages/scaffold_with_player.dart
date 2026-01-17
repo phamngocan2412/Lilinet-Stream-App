@@ -28,12 +28,12 @@ class ScaffoldWithPlayer extends StatelessWidget {
             // Determine if we should show the Navigation Bar
             // We hide it if:
             // 1. We are on a detail page (starts with /movie/)
-            // 2. The player is in full screen (expanded)
+            // 2. We are on Search or Settings pages
             bool showNavBar = true;
-            if (state.uri.path.startsWith('/movie/')) {
-              showNavBar = false;
-            }
-            if (state.uri.path.startsWith('/movie/')) {
+            final path = state.uri.path;
+            if (path.startsWith('/movie/') ||
+                path == '/search' ||
+                path == '/settings') {
               showNavBar = false;
             }
             // Logic removed: Don't hide navbar based on player state to prevent layout bugs if state desyncs
@@ -106,11 +106,6 @@ class ScaffoldWithPlayer extends StatelessWidget {
                           label: 'Explore',
                         ),
                         NavigationDestination(
-                          icon: Icon(Icons.search_outlined),
-                          selectedIcon: Icon(Icons.search),
-                          label: 'Search',
-                        ),
-                        NavigationDestination(
                           icon: Icon(Icons.favorite_outline),
                           selectedIcon: Icon(Icons.favorite),
                           label: 'Favorites',
@@ -119,11 +114,6 @@ class ScaffoldWithPlayer extends StatelessWidget {
                           icon: Icon(Icons.history_outlined),
                           selectedIcon: Icon(Icons.history),
                           label: 'Resume',
-                        ),
-                        NavigationDestination(
-                          icon: Icon(Icons.settings_outlined),
-                          selectedIcon: Icon(Icons.settings),
-                          label: 'Settings',
                         ),
                       ],
                     )

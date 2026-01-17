@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import '../../domain/entities/genre.dart';
 
@@ -5,11 +7,7 @@ class GenreCard extends StatelessWidget {
   final Genre genre;
   final VoidCallback onTap;
 
-  const GenreCard({
-    super.key,
-    required this.genre,
-    required this.onTap,
-  });
+  const GenreCard({super.key, required this.genre, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
