@@ -112,6 +112,11 @@ class _SearchPageViewState extends State<SearchPageView> {
             );
           }
 
+          // Calculate optimal cache width
+          final screenWidth = MediaQuery.of(context).size.width;
+          final devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
+          final cacheWidth = ((screenWidth - 32) / 2 * devicePixelRatio).ceil();
+
           return GridView.builder(
             controller: _scrollController,
             padding: const EdgeInsets.all(16),
@@ -136,6 +141,7 @@ class _SearchPageViewState extends State<SearchPageView> {
                   '/movie/${movie.id}?type=${movie.type}',
                   extra: movie,
                 ),
+                memCacheWidth: cacheWidth,
               );
             },
           );
