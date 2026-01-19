@@ -1,7 +1,7 @@
 class ApiConstants {
   static const String baseUrl = String.fromEnvironment(
     'API_BASE_URL',
-    defaultValue: 'http://localhost:3000',
+    defaultValue: 'https://novel-liline.onrender.com',
   );
 
   // TMDB
@@ -9,6 +9,8 @@ class ApiConstants {
   static const String tmdbOriginalImage = '$tmdbImageBaseUrl/original';
   static const String tmdbW500Image = '$tmdbImageBaseUrl/w500';
 
+  // Endpoints
+  // Endpoints
   // Endpoints
   static const String trendingMovies = '/meta/tmdb/trending';
   static const String searchMovies = '/meta/tmdb';

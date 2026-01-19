@@ -17,8 +17,9 @@ abstract class MovieRepository {
   });
 
   Future<Either<Failure, Movie>> getMovieDetails(
-    String id,
-    String type, {
+    String id, {
+    String? provider,
+    String? type,
     bool fastMode = false,
   });
 
@@ -29,6 +30,6 @@ abstract class MovieRepository {
     required String episodeId,
     required String mediaId,
     String? server,
-    String provider = 'himovies',
+    String provider = 'animekai',
   });
 }

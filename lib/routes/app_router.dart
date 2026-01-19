@@ -41,7 +41,7 @@ class AppRouter {
             name: 'movieDetails',
             builder: (context, state) {
               final id = state.pathParameters['id']!;
-              final type = state.uri.queryParameters['type'] ?? 'Movie';
+              final type = state.uri.queryParameters['type'] ?? 'TV Series';
               // Check if a Movie object was passed in 'extra'
               final moviePreview = state.extra is Movie
                   ? state.extra as Movie

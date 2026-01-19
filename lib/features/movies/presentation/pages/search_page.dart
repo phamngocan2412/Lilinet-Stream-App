@@ -62,7 +62,7 @@ class _SearchPageViewState extends State<SearchPageView> {
           autofocus: true,
           style: Theme.of(context).textTheme.bodyLarge,
           decoration: InputDecoration(
-            hintText: 'Search movies, TV shows...',
+            hintText: 'Search anime...',
             border: InputBorder.none,
             enabledBorder: InputBorder.none,
             focusedBorder: InputBorder.none,
@@ -84,7 +84,7 @@ class _SearchPageViewState extends State<SearchPageView> {
           if (state.query.isEmpty) {
             return const EmptyStateWidget(
               icon: Icons.search,
-              message: 'Search for movies and TV shows',
+              message: 'Search for anime',
             );
           }
 

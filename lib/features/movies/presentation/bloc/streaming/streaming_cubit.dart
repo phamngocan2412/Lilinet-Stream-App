@@ -9,13 +9,14 @@ class StreamingCubit extends Cubit<StreamingState> {
 
   StreamingCubit(this._getStreamingLinks) : super(StreamingInitial());
 
-  static const _servers = ['vidcloud', 'upcloud', 'vidstream', 'mixdrop'];
+  // Valid servers for animekai: vidcloud, upcloud, megaup
+  static const _servers = ['vidcloud', 'upcloud', 'megaup'];
 
   Future<void> loadLinks({
     required String episodeId,
     required String mediaId,
     String? server,
-    String provider = 'himovies',
+    String provider = 'animekai', // Changed from sflix
   }) async {
     if (isClosed) return;
     emit(StreamingLoading());
@@ -70,6 +71,12 @@ class StreamingCubit extends Cubit<StreamingState> {
         (response) {
           if (response.links.isNotEmpty) {
             if (!isClosed) {
+              print('✅ Streaming links loaded successfully:');
+              print('  Provider: $provider');
+              print('  Server: $s');
+              print('  Sources: ${response.links.length}');
+              print('  Subtitles: ${response.subtitles.length}');
+
               emit(
                 StreamingLoaded(
                   links: response.links,

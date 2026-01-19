@@ -24,6 +24,7 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
         startPosition: event.startPosition,
         mediaType: event.mediaType,
         movie: event.movie,
+        timestamp: DateTime.now().millisecondsSinceEpoch,
       ),
     );
   }

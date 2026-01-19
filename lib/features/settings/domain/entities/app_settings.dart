@@ -27,8 +27,8 @@ class AppSettings extends Equatable {
     this.showNotifications = true,
     this.adultContent = false,
     this.subtitleLanguage = 'en',
-    this.movieProvider = 'himovies', // Fastest (~0.625s)
-    this.animeProvider = 'animekai', // Fastest (~0.438s)
+    this.movieProvider = 'gogoanime', // Fastest and most reliable
+    this.animeProvider = 'gogoanime', // Fastest (~0.438s)
   });
 
   AppSettings copyWith({
@@ -92,8 +92,8 @@ class AppSettings extends Equatable {
       showNotifications: json['showNotifications'] ?? true,
       adultContent: json['adultContent'] ?? false,
       subtitleLanguage: json['subtitleLanguage'] ?? 'en',
-      movieProvider: json['movieProvider'] ?? 'himovies',
-      animeProvider: json['animeProvider'] ?? 'animekai',
+      movieProvider: 'gogoanime',
+      animeProvider: json['animeProvider'] ?? 'gogoanime',
     );
   }
 

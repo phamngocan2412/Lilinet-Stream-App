@@ -131,6 +131,19 @@ class AppTheme {
         type: BottomNavigationBarType.fixed,
         elevation: 0,
       ),
+      navigationBarTheme: NavigationBarThemeData(
+        backgroundColor: AppColors.darkBackground,
+        indicatorColor: AppColors.netflixRed.withOpacity(0.2),
+        labelTextStyle: MaterialStateProperty.all(
+          const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+        ),
+        iconTheme: MaterialStateProperty.resolveWith((states) {
+          if (states.contains(MaterialState.selected)) {
+            return const IconThemeData(color: AppColors.netflixRed);
+          }
+          return const IconThemeData(color: AppColors.darkTextTertiary);
+        }),
+      ),
       cardTheme: CardThemeData(
         color: AppColors.darkSurface,
         elevation: 0,

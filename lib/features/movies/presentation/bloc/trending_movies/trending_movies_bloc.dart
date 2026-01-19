@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import '../../../domain/usecases/get_trending_movies.dart';
-import '../../../domain/usecases/get_cached_trending_movies.dart'; // Added
+import '../../../domain/usecases/get_cached_trending_movies.dart';
 import 'trending_movies_event.dart';
 import 'trending_movies_state.dart';
 
@@ -12,7 +12,7 @@ class TrendingMoviesBloc
   final GetCachedTrendingMovies _getCachedTrendingMovies; // Added
 
   TrendingMoviesBloc(this._getTrendingMovies, this._getCachedTrendingMovies)
-      : super(TrendingMoviesInitial()) {
+    : super(TrendingMoviesInitial()) {
     on<LoadTrendingMovies>(_onLoadTrendingMovies);
     on<RefreshTrendingMovies>(_onRefreshTrendingMovies);
   }
@@ -33,20 +33,17 @@ class TrendingMoviesBloc
     // 3. Then Fetch Network
     final result = await _getTrendingMovies(type: event.type, page: 1);
 
-    result.fold(
-      (failure) {
-        // If we have cache, don't show error screen, just toast?
-        // Or keep showing cache.
-        if (state is! TrendingMoviesLoaded) {
-          emit(TrendingMoviesError(failure.message));
-        } else {
-          // Ideally emit a "LoadedButNetworkError" state or similar,
-          // but for now, just keep the cached data visible.
-          // Or we can just log the error.
-        }
-      },
-      (movies) => emit(TrendingMoviesLoaded(movies)),
-    );
+    result.fold((failure) {
+      // If we have cache, don't show error screen, just toast?
+      // Or keep showing cache.
+      if (state is! TrendingMoviesLoaded) {
+        emit(TrendingMoviesError(failure.message));
+      } else {
+        // Ideally emit a "LoadedButNetworkError" state or similar,
+        // but for now, just keep the cached data visible.
+        // Or we can just log the error.
+      }
+    }, (movies) => emit(TrendingMoviesLoaded(movies)));
   }
 
   Future<void> _onRefreshTrendingMovies(
@@ -54,7 +51,7 @@ class TrendingMoviesBloc
     Emitter<TrendingMoviesState> emit,
   ) async {
     // Refresh usually skips cache reading and goes straight to network
-    final result = await _getTrendingMovies(type: 'all', page: 1);
+    final result = await _getTrendingMovies(type: 'tv', page: 1);
 
     result.fold(
       (failure) => emit(TrendingMoviesError(failure.message)),

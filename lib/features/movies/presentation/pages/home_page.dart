@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../injection_container.dart';
 import '../../../../core/widgets/loading_indicator.dart';
 import '../../../../core/widgets/error_widget.dart';
 import '../bloc/trending_movies/trending_movies_bloc.dart';
@@ -15,11 +14,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-          getIt<TrendingMoviesBloc>()..add(const LoadTrendingMovies()),
-      child: const HomePageView(),
-    );
+    return const HomePageView();
   }
 }
 
@@ -87,7 +82,7 @@ class HomePageView extends StatelessWidget {
               final movies = state.movies.toSet().toList(); // Deduplicate
 
               if (movies.isEmpty) {
-                return const Center(child: Text('No movies found'));
+                return const Center(child: Text('No anime found'));
               }
 
               return CustomScrollView(

@@ -181,11 +181,11 @@ Future<void> configureDependencies() async {
   getIt.registerLazySingleton(() => IsFavorite(getIt()));
 
   // Blocs
-  getIt.registerFactory(() => TrendingMoviesBloc(getIt(), getIt()));
-  getIt.registerFactory(() => MovieDetailsBloc(getIt(), getIt()));
+  getIt.registerLazySingleton(() => TrendingMoviesBloc(getIt(), getIt()));
+  getIt.registerFactory(() => MovieDetailsBloc(getIt(), getIt(), getIt()));
   getIt.registerFactory(() => SearchBloc(getIt()));
   getIt.registerFactory(() => StreamingCubit(getIt()));
-  getIt.registerFactory(
+  getIt.registerLazySingleton(
     () => ExploreBloc(
       getGenres: getIt(),
       getMoviesByGenre: getIt(),
