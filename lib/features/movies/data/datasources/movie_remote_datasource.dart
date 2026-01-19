@@ -93,7 +93,7 @@ class MovieRemoteDataSource {
       response.data as Map<String, dynamic>,
     );
 
-    return model.copyWith(provider: provider ?? 'animekai');
+    return model.copyWith(provider: provider);
   }
 
   Future<StreamingResponseModel> getStreamingLinks({
@@ -102,32 +102,54 @@ class MovieRemoteDataSource {
     String? server,
     String provider = 'animekai', // Default to animekai
   }) async {
+    // Normalize provider key
+    final providerKey = provider.toLowerCase().trim();
+
     // Determine category based on provider known list
     final animeProviders = [
       'animekai',
       'gogoanime',
+      'animepahe',
       'animesaturn',
       'animeunity',
     ];
-    final isAnime = animeProviders.contains(provider.toLowerCase());
+    final isAnime = animeProviders.contains(providerKey);
     final category = isAnime ? 'anime' : 'movies';
+
+    debugPrint(
+      'getStreamingLinks: provider=$provider ($providerKey), isAnime=$isAnime, category=$category',
+    );
 
     // Anime providers use path param: /watch/:episodeId
     // Movie providers use query param: /watch?episodeId=xxx&mediaId=xxx
-    if (isAnime) {
+    // EXCEPTION: animepahe uses query param
+    if (isAnime && providerKey != 'animepahe') {
+      debugPrint('Using PATH param strategy for $providerKey');
       final response = await _dio.get(
-        '/$category/$provider/watch/${Uri.encodeComponent(episodeId)}',
+        '/$category/$providerKey/watch/${Uri.encodeComponent(episodeId)}',
         queryParameters: {if (server != null) 'server': server},
       );
       return StreamingResponseModel.fromJson(response.data);
     } else {
+      // Movies OR animepahe
+      debugPrint(
+        'Using QUERY param strategy for $providerKey (Movies/AnimePahe)',
+      );
+      final queryParams = {
+        'episodeId': episodeId,
+        if (server != null) 'server': server,
+      };
+
+      // Only mmovies need mediaId
+      if (!isAnime) {
+        queryParams['mediaId'] = mediaId;
+      }
+
       final response = await _dio.get(
-        ApiConstants.getWatchEndpoint(category, provider),
-        queryParameters: {
-          'episodeId': episodeId,
-          'mediaId': mediaId,
-          'server': server,
-        },
+        isAnime
+            ? '/$category/$providerKey/watch'
+            : ApiConstants.getWatchEndpoint(category, providerKey),
+        queryParameters: queryParams,
       );
       return StreamingResponseModel.fromJson(response.data);
     }

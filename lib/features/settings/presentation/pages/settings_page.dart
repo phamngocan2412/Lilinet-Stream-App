@@ -470,8 +470,24 @@ class SettingsView extends StatelessWidget {
                       context,
                       settingsBloc,
                       settings,
+                      'animepahe',
+                      'AnimePahe (Recommended)',
+                      isMovie: false,
+                    ),
+                    _buildProviderOption(
+                      context,
+                      settingsBloc,
+                      settings,
                       'gogoanime',
-                      'Gogoanime (Recommended)', // Most stable
+                      'GogoAnime (Stable)',
+                      isMovie: false,
+                    ),
+                    _buildProviderOption(
+                      context,
+                      settingsBloc,
+                      settings,
+                      'zoro',
+                      'Zoro / HiAnime (Best Quality)',
                       isMovie: false,
                     ),
                     _buildProviderOption(
@@ -479,8 +495,44 @@ class SettingsView extends StatelessWidget {
                       settingsBloc,
                       settings,
                       'animekai',
-                      'AnimeKai (Backup)',
+                      'AnimeKai',
                       isMovie: false,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+        ListTile(
+          title: const Text('Movie Source'),
+          subtitle: Text(settings.movieProvider.toUpperCase()),
+          leading: const Icon(Icons.movie),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () {
+            final settingsBloc = context.read<SettingsBloc>();
+            showModalBottomSheet(
+              context: context,
+              builder: (bottomSheetContext) => BlocProvider.value(
+                value: settingsBloc,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _buildProviderOption(
+                      context,
+                      settingsBloc,
+                      settings,
+                      'flixhq',
+                      'FlixHQ (Recommended)',
+                      isMovie: true,
+                    ),
+                    _buildProviderOption(
+                      context,
+                      settingsBloc,
+                      settings,
+                      'viewasian',
+                      'ViewAsian / DramaCool',
+                      isMovie: true,
                     ),
                   ],
                 ),

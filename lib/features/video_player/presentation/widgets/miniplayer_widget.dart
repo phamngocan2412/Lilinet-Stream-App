@@ -18,6 +18,7 @@ import '../../../settings/domain/repositories/settings_repository.dart';
 import '../../../settings/domain/entities/app_settings.dart';
 import '../../../movies/presentation/bloc/streaming/streaming_cubit.dart';
 import '../../../movies/presentation/bloc/streaming/streaming_state.dart';
+import '../../../movies/domain/entities/streaming_link.dart';
 
 import '../bloc/video_player_bloc.dart';
 import '../bloc/video_player_event.dart';
@@ -157,8 +158,8 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent>
     result.fold(
       (l) {
         // If fails, use defaults (Fastest)
-        _movieProvider = 'animekai';
-        _animeProvider = 'animekai';
+        _movieProvider = 'flixhq';
+        _animeProvider = 'animepahe';
         _loadVideo();
       },
       (settings) {
@@ -199,8 +200,8 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent>
         false;
 
     return isAnime
-        ? (_animeProvider ?? 'animekai')
-        : (_movieProvider ?? 'animekai');
+        ? (_animeProvider ?? 'animepahe')
+        : (_movieProvider ?? 'flixhq');
   }
 
   void _switchServer(String server) {
@@ -556,12 +557,10 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent>
   }
 
   // We need the helper function for auto-play logic
-  dynamic _selectLinkByQuality(
-    List<dynamic> links,
+  StreamingLink _selectLinkByQuality(
+    List<StreamingLink> links,
     VideoQuality defaultQuality,
   ) {
-    // I need to import StreamingLink properly or use dynamic.
-    // Ideally import it.
     if (links.isEmpty) throw Exception('No streaming links');
 
     String qualityTarget;
@@ -603,6 +602,23 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent>
   Widget _buildVideoPlayer() {
     return BlocConsumer<StreamingCubit, StreamingState>(
       listener: (context, state) {
+        if (state is StreamingError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Error: ${state.message}'),
+              backgroundColor: Colors.red,
+              behavior: SnackBarBehavior.floating,
+              action: SnackBarAction(
+                label: 'Retry',
+                textColor: Colors.white,
+                onPressed: () {
+                  _loadVideo();
+                },
+              ),
+            ),
+          );
+        }
+
         if (state is StreamingLoaded && state.links.isNotEmpty) {
           // Sync local state with actual server used by Cubit
           if (state.selectedServer != null) {

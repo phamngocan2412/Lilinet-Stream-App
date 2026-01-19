@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../domain/entities/movie.dart';
 
 class MovieInfoSection extends StatelessWidget {
@@ -10,6 +11,30 @@ class MovieInfoSection extends StatelessWidget {
     required this.movie,
     required this.isLoading,
   });
+
+  static const Map<String, String> _genreMap = {
+    'Action': '28',
+    'Adventure': '12',
+    'Animation': '16',
+    'Comedy': '35',
+    'Crime': '80',
+    'Documentary': '99',
+    'Drama': '18',
+    'Family': '10751',
+    'Fantasy': '14',
+    'History': '36',
+    'Horror': '27',
+    'Music': '10402',
+    'Mystery': '9648',
+    'Romance': '10749',
+    'Sci-Fi': '878',
+    'Science Fiction': '878',
+    'TV Movie': '10770',
+    'Thriller': '53',
+    'War': '10752',
+    'Western': '37',
+    'Anime': '16', // Custom mapping for Anime
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +65,10 @@ class MovieInfoSection extends StatelessWidget {
                 spacing: 8,
                 runSpacing: 8,
                 children: movie.genres.map((genre) {
-                  return Chip(
+                  final genreId = _genreMap[genre];
+                  final isClickable = genreId != null;
+
+                  return ActionChip(
                     label: Text(genre),
                     backgroundColor: Theme.of(
                       context,
@@ -53,6 +81,11 @@ class MovieInfoSection extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                       side: BorderSide.none,
                     ),
+                    onPressed: isClickable
+                        ? () {
+                            context.push('/genre/$genreId?name=$genre');
+                          }
+                        : null,
                   );
                 }).toList(),
               ),

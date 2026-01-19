@@ -54,6 +54,7 @@ import 'features/favorites/domain/usecases/get_favorites.dart';
 import 'features/favorites/domain/usecases/is_favorite.dart';
 import 'features/favorites/presentation/bloc/favorites_bloc.dart';
 import 'features/video_player/presentation/bloc/video_player_bloc.dart'; // NEW
+import 'features/video_player/presentation/bloc/comments/comments_cubit.dart'; // NEW
 import 'features/main/presentation/bloc/navigation_cubit.dart'; // Added
 
 import 'package:hive_ce_flutter/hive_ce_flutter.dart';
@@ -181,7 +182,9 @@ Future<void> configureDependencies() async {
   getIt.registerLazySingleton(() => IsFavorite(getIt()));
 
   // Blocs
-  getIt.registerLazySingleton(() => TrendingMoviesBloc(getIt(), getIt()));
+  getIt.registerLazySingleton(
+    () => TrendingMoviesBloc(getIt(), getIt(), getIt()),
+  );
   getIt.registerFactory(() => MovieDetailsBloc(getIt(), getIt(), getIt()));
   getIt.registerFactory(() => SearchBloc(getIt()));
   getIt.registerFactory(() => StreamingCubit(getIt()));
@@ -217,6 +220,7 @@ Future<void> configureDependencies() async {
   );
   // Video Player
   getIt.registerLazySingleton<VideoPlayerBloc>(() => VideoPlayerBloc());
+  getIt.registerLazySingleton<CommentsCubit>(() => CommentsCubit());
 
   // Navigation
   getIt.registerFactory(() => NavigationCubit());

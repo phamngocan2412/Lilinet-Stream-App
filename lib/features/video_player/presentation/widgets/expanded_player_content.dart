@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../movies/presentation/bloc/streaming/streaming_cubit.dart';
 import '../../../movies/presentation/bloc/streaming/streaming_state.dart';
-import '../bloc/video_player_state.dart'; // Corrected path
-import '../../../settings/domain/entities/app_settings.dart'; // Corrected path
+import '../bloc/video_player_state.dart';
+import 'package:lilinet_app/features/settings/domain/entities/app_settings.dart';
+import 'comment_section.dart'; // Import CommentSection
 
 const kOrangeColor = Color(0xFFC6A664);
 const kGreenVIP = Color(0xFF43A047);
@@ -41,137 +42,168 @@ class ExpandedPlayerContent extends StatelessWidget {
           description = movie.description;
         }
 
-        return ListView(
-          padding: const EdgeInsets.all(16),
+        return Column(
           children: [
-            Text(
-              '${state.title}${state.episodeTitle != null ? " - ${state.episodeTitle}" : ""}',
-              style: const TextStyle(
-                color: kOrangeColor,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 16),
-
-            // Server Selector
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
+            // Top Section: Details & Controls (Scrollable)
+            Expanded(
+              flex: 4,
+              child: ListView(
+                padding: const EdgeInsets.all(16),
                 children: [
-                  const Text('Server', style: TextStyle(color: Colors.grey)),
-                  const SizedBox(width: 8),
-                  _buildVipButton(
-                    'VidCloud',
-                    kGreenVIP,
-                    currentServer == 'vidcloud',
-                    () => onServerSelected('vidcloud'),
+                  Text(
+                    '${state.title}${state.episodeTitle != null ? " - ${state.episodeTitle}" : ""}',
+                    style: const TextStyle(
+                      color: kOrangeColor,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  const SizedBox(width: 8),
-                  _buildVipButton(
-                    'UpCloud',
-                    kBlueVIP,
-                    currentServer == 'upcloud',
-                    () => onServerSelected('upcloud'),
+                  const SizedBox(height: 16),
+
+                  // Server Selector
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        const Text(
+                          'Server',
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                        const SizedBox(width: 8),
+                        _buildVipButton(
+                          'VidCloud',
+                          kGreenVIP,
+                          currentServer == 'vidcloud',
+                          () => onServerSelected('vidcloud'),
+                        ),
+                        const SizedBox(width: 8),
+                        _buildVipButton(
+                          'UpCloud',
+                          kBlueVIP,
+                          currentServer == 'upcloud',
+                          () => onServerSelected('upcloud'),
+                        ),
+                        const SizedBox(width: 8),
+                        _buildVipButton(
+                          'VidStream',
+                          kOrangeColor,
+                          currentServer == 'vidstream',
+                          () => onServerSelected('vidstream'),
+                        ),
+                        const SizedBox(width: 8),
+                        _buildVipButton(
+                          'MixDrop',
+                          const Color(0xFF8E24AA),
+                          currentServer == 'mixdrop',
+                          () => onServerSelected('mixdrop'),
+                        ),
+                      ],
+                    ),
                   ),
-                  const SizedBox(width: 8),
-                  _buildVipButton(
-                    'VidStream',
-                    kOrangeColor,
-                    currentServer == 'vidstream',
-                    () => onServerSelected('vidstream'),
-                  ),
-                  const SizedBox(width: 8),
-                  _buildVipButton(
-                    'MixDrop',
-                    const Color(0xFF8E24AA),
-                    currentServer == 'mixdrop',
-                    () => onServerSelected('mixdrop'),
-                  ),
+                  const SizedBox(height: 16),
+
+                  // Quality Selector
+                  if (streamingState is StreamingLoaded &&
+                      streamingState.links.isNotEmpty) ...[
+                    Builder(
+                      builder: (context) {
+                        final uniqueLinks = <String, dynamic>{};
+                        for (var link in streamingState.links) {
+                          if (!uniqueLinks.containsKey(link.quality)) {
+                            uniqueLinks[link.quality] = link;
+                          }
+                        }
+                        if (uniqueLinks.length <= 1)
+                          return const SizedBox.shrink();
+
+                        return Container(
+                          height: 40,
+                          margin: const EdgeInsets.only(bottom: 16),
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: [
+                              const Center(
+                                child: Text(
+                                  "Quality: ",
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              ...uniqueLinks.entries.map((entry) {
+                                final link = entry.value;
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 8),
+                                  child: OutlinedButton(
+                                    style: OutlinedButton.styleFrom(
+                                      side: const BorderSide(
+                                        color: kOrangeColor,
+                                      ),
+                                      foregroundColor: kOrangeColor,
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 12,
+                                      ),
+                                      visualDensity: VisualDensity.compact,
+                                    ),
+                                    onPressed: () {
+                                      String? subUrl;
+                                      String? subLang;
+                                      if (streamingState.subtitles != null &&
+                                          streamingState
+                                              .subtitles!
+                                              .isNotEmpty) {
+                                        try {
+                                          final englishSub = streamingState
+                                              .subtitles!
+                                              .firstWhere(
+                                                (s) => s.lang
+                                                    .toLowerCase()
+                                                    .contains('english'),
+                                              );
+                                          subUrl = englishSub.url;
+                                          subLang = englishSub.lang;
+                                        } catch (_) {}
+                                      }
+                                      onQualitySelected(
+                                        link.url,
+                                        subUrl,
+                                        subLang,
+                                        link.headers,
+                                      );
+                                    },
+                                    child: Text(entry.key.toUpperCase()),
+                                  ),
+                                );
+                              }),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+
+                  if (description != null) ...[
+                    Text(
+                      description,
+                      style: const TextStyle(color: Colors.grey),
+                      maxLines: 4,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 16),
+                  ],
                 ],
               ),
             ),
-            const SizedBox(height: 16),
 
-            // Quality Selector
-            if (streamingState is StreamingLoaded &&
-                streamingState.links.isNotEmpty) ...[
-              Builder(
-                builder: (context) {
-                  // Map Quality -> Link Object to preserve headers
-                  final uniqueLinks = <String, dynamic>{};
-                  for (var link in streamingState.links) {
-                    if (!uniqueLinks.containsKey(link.quality)) {
-                      uniqueLinks[link.quality] = link;
-                    }
-                  }
-                  if (uniqueLinks.length <= 1) return const SizedBox.shrink();
+            const Divider(height: 1, color: Colors.white24),
 
-                  return Container(
-                    height: 40,
-                    margin: const EdgeInsets.only(bottom: 16),
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        const Center(
-                          child: Text(
-                            "Quality: ",
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        ...uniqueLinks.entries.map((entry) {
-                          final link = entry.value;
-                          return Padding(
-                            padding: const EdgeInsets.only(right: 8),
-                            child: OutlinedButton(
-                              style: OutlinedButton.styleFrom(
-                                side: const BorderSide(color: kOrangeColor),
-                                foregroundColor: kOrangeColor,
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 12,
-                                ),
-                                visualDensity: VisualDensity.compact,
-                              ),
-                              onPressed: () {
-                                String? subUrl;
-                                String? subLang;
-                                if (streamingState.subtitles != null &&
-                                    streamingState.subtitles!.isNotEmpty) {
-                                  try {
-                                    final englishSub = streamingState.subtitles!
-                                        .firstWhere(
-                                          (s) => s.lang.toLowerCase().contains(
-                                            'english',
-                                          ),
-                                        );
-                                    subUrl = englishSub.url;
-                                    subLang = englishSub.lang;
-                                  } catch (_) {}
-                                }
-                                onQualitySelected(
-                                  link.url,
-                                  subUrl,
-                                  subLang,
-                                  link.headers,
-                                );
-                              },
-                              child: Text(entry.key.toUpperCase()),
-                            ),
-                          );
-                        }),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ],
-
-            if (description != null)
-              Text(description, style: const TextStyle(color: Colors.grey)),
+            // Bottom Section: Comments
+            Expanded(
+              flex: 6,
+              child: CommentSection(videoId: state.mediaId ?? 'unknown'),
+            ),
           ],
         );
       },

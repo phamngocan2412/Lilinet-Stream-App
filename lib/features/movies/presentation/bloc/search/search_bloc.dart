@@ -16,6 +16,14 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     );
     on<SearchLoadMore>(_onSearchLoadMore);
     on<SearchCleared>(_onSearchCleared);
+    on<SearchFilterChanged>(_onSearchFilterChanged);
+  }
+
+  void _onSearchFilterChanged(
+    SearchFilterChanged event,
+    Emitter<SearchState> emit,
+  ) {
+    emit(state.copyWith(activeFilter: event.filter));
   }
 
   Future<void> _onSearchQueryChanged(
@@ -27,27 +35,33 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       return;
     }
 
-    emit(state.copyWith(
-      query: event.query,
-      isLoading: true,
-      currentPage: 1,
-      movies: [], // Clear previous results
-    ));
+    emit(
+      state.copyWith(
+        query: event.query,
+        isLoading: true,
+        currentPage: 1,
+        movies: [], // Clear previous results
+      ),
+    );
 
     final result = await _searchMovies(event.query, page: 1);
 
     result.fold(
-      (failure) => emit(state.copyWith(
-        isLoading: false,
-        hasError: true,
-        errorMessage: failure.message,
-      )),
-      (movies) => emit(state.copyWith(
-        isLoading: false,
-        movies: movies,
-        hasError: false,
-        hasMore: movies.length >= 20,
-      )),
+      (failure) => emit(
+        state.copyWith(
+          isLoading: false,
+          hasError: true,
+          errorMessage: failure.message,
+        ),
+      ),
+      (movies) => emit(
+        state.copyWith(
+          isLoading: false,
+          movies: movies,
+          hasError: false,
+          hasMore: movies.length >= 20,
+        ),
+      ),
     );
   }
 
@@ -63,17 +77,21 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     final result = await _searchMovies(state.query, page: nextPage);
 
     result.fold(
-      (failure) => emit(state.copyWith(
-        isLoading: false,
-        hasError: true,
-        errorMessage: failure.message,
-      )),
-      (movies) => emit(state.copyWith(
-        isLoading: false,
-        movies: [...state.movies, ...movies],
-        currentPage: nextPage,
-        hasMore: movies.length >= 20,
-      )),
+      (failure) => emit(
+        state.copyWith(
+          isLoading: false,
+          hasError: true,
+          errorMessage: failure.message,
+        ),
+      ),
+      (movies) => emit(
+        state.copyWith(
+          isLoading: false,
+          movies: [...state.movies, ...movies],
+          currentPage: nextPage,
+          hasMore: movies.length >= 20,
+        ),
+      ),
     );
   }
 
