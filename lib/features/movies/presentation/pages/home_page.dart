@@ -240,6 +240,8 @@ class HomePageView extends StatelessWidget {
                                         130, // Fixed width for horizontal items
                                     child: MovieCard(
                                       movie: movie,
+                                      width: 130,
+                                      height: 200,
                                       onTap: () => context.push(
                                         '/movie/${movie.id}?type=${movie.type}',
                                         extra: movie,

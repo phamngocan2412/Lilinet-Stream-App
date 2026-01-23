@@ -8,6 +8,8 @@ class AppCachedImage extends StatelessWidget {
   final double? height;
   final BoxFit fit;
   final double? borderRadius;
+  final int? memCacheWidth;
+  final int? memCacheHeight;
 
   const AppCachedImage({
     super.key,
@@ -16,6 +18,8 @@ class AppCachedImage extends StatelessWidget {
     this.height,
     this.fit = BoxFit.cover,
     this.borderRadius,
+    this.memCacheWidth,
+    this.memCacheHeight,
   });
 
   @override
@@ -42,6 +46,8 @@ class AppCachedImage extends StatelessWidget {
       return errorWidget;
     }
 
+    final pixelRatio = MediaQuery.of(context).devicePixelRatio;
+
     final image = CachedNetworkImage(
       imageUrl: imageUrl,
       width: width,
@@ -49,11 +55,14 @@ class AppCachedImage extends StatelessWidget {
       fit: fit,
       fadeInDuration: const Duration(milliseconds: 300),
       fadeOutDuration: const Duration(milliseconds: 100),
-      memCacheWidth: (width != null && width!.isFinite)
-          ? (width! * 2).toInt()
-          : 700, // Fallback to prevent OOM with infinite width
-      memCacheHeight:
-          (height != null && height!.isFinite) ? (height! * 2).toInt() : null,
+      memCacheWidth: memCacheWidth ??
+          ((width != null && width!.isFinite)
+              ? (width! * pixelRatio).toInt()
+              : 700), // Fallback to prevent OOM with infinite width
+      memCacheHeight: memCacheHeight ??
+          ((height != null && height!.isFinite)
+              ? (height! * pixelRatio).toInt()
+              : null),
       maxWidthDiskCache: 800, // Limit disk cache size
       maxHeightDiskCache: 1200,
       placeholder: (context, url) => Container(
