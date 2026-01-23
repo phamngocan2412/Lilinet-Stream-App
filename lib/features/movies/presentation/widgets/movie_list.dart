@@ -26,9 +26,9 @@ class MovieList extends StatelessWidget {
 
     return SliverGrid(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
+        crossAxisCount: crossAxisCount,
         childAspectRatio: 0.7,
-        crossAxisSpacing: 12,
+        crossAxisSpacing: crossAxisSpacing,
         mainAxisSpacing: 12,
       ),
       delegate: SliverChildBuilderDelegate(

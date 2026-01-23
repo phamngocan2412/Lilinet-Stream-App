@@ -15,19 +15,22 @@ import '../../../../core/widgets/cached_image.dart';
 import '../../../history/domain/entities/watch_progress.dart';
 import '../../../history/presentation/bloc/history_bloc.dart';
 import '../../../settings/domain/repositories/settings_repository.dart';
+import '../../../settings/domain/entities/app_settings.dart';
 import '../../../movies/presentation/bloc/streaming/streaming_cubit.dart';
 import '../../../movies/presentation/bloc/streaming/streaming_state.dart';
+import '../../../movies/domain/entities/streaming_link.dart';
 
 import '../bloc/video_player_bloc.dart';
 import '../bloc/video_player_event.dart';
 import '../bloc/video_player_state.dart';
 
+// New Imports for Split Widgets
+import 'custom_video_controls.dart';
+import 'expanded_player_content.dart';
+
 // Colors
 const kBgColor = Color(0xFF101010);
 const kOrangeColor = Color(0xFFC6A664);
-const kGreenVIP = Color(0xFF43A047);
-const kBlueVIP = Color(0xFF1E88E5);
-const kRedColor = Color(0xFFD32F2F);
 
 class MiniplayerWidget extends StatefulWidget {
   final double miniplayerHeight;
@@ -49,7 +52,7 @@ class _MiniplayerWidgetState extends State<MiniplayerWidget> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<VideoPlayerBloc, VideoPlayerState>(
-      listenWhen: (previous, current) => previous.status != current.status,
+      // Listen to all changes so we can re-expand even if status is Same (but timestamp changed)
       listener: (context, state) {
         if (state.status == VideoPlayerStatus.expanded) {
           _miniplayerController.animateToHeight(state: PanelState.MAX);
@@ -68,13 +71,9 @@ class _MiniplayerWidgetState extends State<MiniplayerWidget> {
           maxHeight: MediaQuery.of(context).size.height,
           builder: (height, percentage) {
             final isMini = percentage < 0.2;
-            // Determine if we should show full controls or mini controls
-            // percentage 0.0 = min height, 1.0 = max height
 
             return _VideoPlayerContent(
-              key: ValueKey(
-                state.episodeId,
-              ), // Rebuild if episode changes? No, handle inside
+              key: ValueKey(state.episodeId),
               state: state,
               isMini: isMini,
               percentage: percentage,
@@ -114,7 +113,8 @@ class _VideoPlayerContent extends StatefulWidget {
   State<_VideoPlayerContent> createState() => _VideoPlayerContentState();
 }
 
-class _VideoPlayerContentState extends State<_VideoPlayerContent> {
+class _VideoPlayerContentState extends State<_VideoPlayerContent>
+    with WidgetsBindingObserver {
   late Player player;
   late VideoController controller;
 
@@ -128,22 +128,24 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent> {
   String? _lastPlayedUrl;
   StreamSubscription<Duration>? _positionSub;
   StreamSubscription<void>? _completeSub;
+  StreamSubscription<String>? _errorSub;
   bool _autoPlayEnabled = false;
 
   // Streaming Cubit instance managed here to reset on new video
   late StreamingCubit _streamingCubit;
   String? _movieProvider;
   String? _animeProvider;
+  VideoQuality _defaultQuality = VideoQuality.auto;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     WakelockPlus.enable();
-    _initPlayer(); // Initialize player first
+    _initPlayer();
     _streamingCubit = getIt<StreamingCubit>();
-    _loadSettingsAndVideo(); // Consolidated loading
+    _loadSettingsAndVideo();
 
-    // Check initial state for expansion
     if (widget.state.status == VideoPlayerStatus.expanded) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         widget.miniplayerController.animateToHeight(state: PanelState.MAX);
@@ -151,14 +153,13 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent> {
     }
   }
 
-  // Load Settings AND THEN Video
   Future<void> _loadSettingsAndVideo() async {
     final result = await getIt<SettingsRepository>().getSettings();
     result.fold(
       (l) {
-        // If fails, use defaults
-        _movieProvider = 'goku';
-        _animeProvider = 'hianime';
+        // If fails, use defaults (Fastest)
+        _movieProvider = 'flixhq';
+        _animeProvider = 'animepahe';
         _loadVideo();
       },
       (settings) {
@@ -167,6 +168,7 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent> {
             _autoPlayEnabled = settings.autoPlay;
             _movieProvider = settings.movieProvider;
             _animeProvider = settings.animeProvider;
+            _defaultQuality = settings.defaultQuality;
           });
           _loadVideo();
         }
@@ -175,18 +177,11 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent> {
   }
 
   void _loadVideo() {
-    // Reset state for new video
     _lastPlayedUrl = null;
 
-    final isAnime =
-        widget.state.movie?.genres.any(
-          (g) => g.toLowerCase().contains('anime'),
-        ) ??
-        false;
-
-    final provider = isAnime
-        ? (_animeProvider ?? 'animekai')
-        : (_movieProvider ?? 'himovies');
+    // Use movie's stored provider if it exists, otherwise fall back to genres check
+    final provider =
+        widget.state.movie?.provider ?? _determineProviderByGenres();
 
     _streamingCubit.loadLinks(
       episodeId: widget.state.episodeId!,
@@ -195,21 +190,27 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent> {
     );
   }
 
-  // Update _switchServer to use the provider too
+  String _determineProviderByGenres() {
+    final isAnime =
+        widget.state.movie?.genres.any(
+          (g) =>
+              g.toLowerCase().contains('anime') ||
+              g.toLowerCase().contains('animation'),
+        ) ??
+        false;
+
+    return isAnime
+        ? (_animeProvider ?? 'animepahe')
+        : (_movieProvider ?? 'flixhq');
+  }
+
   void _switchServer(String server) {
     setState(() {
       _currentServer = server;
     });
 
-    final isAnime =
-        widget.state.movie?.genres.any(
-          (g) => g.toLowerCase().contains('anime'),
-        ) ??
-        false;
-
-    final provider = isAnime
-        ? (_animeProvider ?? 'animekai')
-        : (_movieProvider ?? 'himovies');
+    final provider =
+        widget.state.movie?.provider ?? _determineProviderByGenres();
 
     _streamingCubit.loadLinks(
       episodeId: widget.state.episodeId!,
@@ -220,19 +221,29 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent> {
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      player.pause();
+    } else if (state == AppLifecycleState.resumed) {
+      // Optional: Auto-resume or keep paused based on preference
+      // player.play();
+    }
+  }
+
+  @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _isDisposed = true;
     _positionSub?.cancel();
     _completeSub?.cancel();
+    _errorSub?.cancel();
     WakelockPlus.disable();
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
     player.dispose();
-    _tempPlayer?.dispose(); // Dispose temp player if exists
-
-    _streamingCubit
-        .close(); // Close the cubit since we created it via GetIt factory
+    _tempPlayer?.dispose();
+    _streamingCubit.close();
     super.dispose();
   }
 
@@ -258,6 +269,13 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent> {
         _onVideoCompleted();
       }
     });
+
+    // Listen for errors
+    _errorSub = player.stream.error.listen((error) {
+      if (!_isDisposed) {
+        print('❌ Media Player Error: $error');
+      }
+    });
   }
 
   void _onVideoCompleted() {
@@ -278,7 +296,6 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent> {
 
       if (currentIndex > 0) {
         final prevEpisode = episodes[currentIndex - 1];
-
         context.read<VideoPlayerBloc>().add(
           PlayVideo(
             episodeId: prevEpisode.id,
@@ -306,7 +323,6 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent> {
 
       if (currentIndex != -1 && currentIndex < episodes.length - 1) {
         final nextEpisode = episodes[currentIndex + 1];
-
         context.read<VideoPlayerBloc>().add(
           PlayVideo(
             episodeId: nextEpisode.id,
@@ -351,6 +367,7 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent> {
     String url, {
     String? subtitleUrl,
     String? subtitleLang,
+    Map<String, String>? headers,
     bool isQualitySwitch = false,
   }) async {
     if (url == _lastPlayedUrl) {
@@ -368,7 +385,6 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent> {
     if (isQualitySwitch) {
       if (mounted) setState(() => isSwitchingQuality = true);
 
-      // 1. Initialize Temp Player (Background)
       final tempPlayer = Player(
         configuration: const PlayerConfiguration(bufferSize: 32 * 1024 * 1024),
       );
@@ -379,28 +395,19 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent> {
         ),
       );
 
-      // 2. Prepare without playing/sound
       await tempPlayer.setVolume(0);
-      await tempPlayer.open(Media(url), play: false);
+      await tempPlayer.open(Media(url, httpHeaders: headers), play: false);
 
-      // 3. Sync position
-      // Wait for duration to be available before seeking (Critical for HLS)
       try {
         await tempPlayer.stream.duration
             .firstWhere((duration) => duration > Duration.zero)
             .timeout(const Duration(seconds: 10));
-      } catch (_) {
-        // If timeout, we try seeking anyway or just let it play
-      }
+      } catch (_) {}
 
       final currentPos = player.state.position;
       await tempPlayer.seek(currentPos);
-
-      // 4. Start buffering/playing in background
       await tempPlayer.play();
 
-      // 5. Wait for it to be ready (playing & not buffering)
-      // Safety timeout: if it takes too long (>15s), abort switch to avoid stuck UI
       try {
         await Future.any([
           tempPlayer.stream.playing.firstWhere((isPlaying) => isPlaying),
@@ -408,26 +415,19 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent> {
             const Duration(seconds: 15),
           ).then((_) => throw TimeoutException('Buffer timeout')),
         ]);
-
-        // Wait a tiny bit more for frame render
         await Future.delayed(const Duration(milliseconds: 500));
       } catch (e) {
-        // Fallback: If failed, just dispose temp and keep playing old quality
         await tempPlayer.dispose();
         if (mounted) setState(() => isSwitchingQuality = false);
         return;
       }
 
-      // 6. SWAP PLAYERS
       if (_isDisposed) {
         await tempPlayer.dispose();
         return;
       }
 
-      // Restore volume
       await tempPlayer.setVolume(100);
-
-      // Update UI references
       final oldPlayer = player;
 
       setState(() {
@@ -436,9 +436,9 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent> {
         isSwitchingQuality = false;
       });
 
-      // Re-attach listeners to new player
       _positionSub?.cancel();
       _completeSub?.cancel();
+      _errorSub?.cancel();
 
       _positionSub = player.stream.position.listen((position) {
         if (_isDisposed) return;
@@ -451,14 +451,18 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent> {
         }
       });
 
-      // Set Subtitles if needed
+      _errorSub = player.stream.error.listen((error) {
+        if (!_isDisposed) {
+          print('❌ Media Player Error: $error');
+        }
+      });
+
       if (subtitleUrl != null) {
         player.setSubtitleTrack(
           SubtitleTrack.uri(subtitleUrl, title: subtitleLang),
         );
       }
 
-      // 7. Cleanup old player
       await oldPlayer.dispose();
       return;
     }
@@ -472,13 +476,8 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent> {
       startPos = widget.state.startPosition!;
     }
 
-    // Note: We skip the "Resume Dialog" for miniplayer to keep it seamless.
-    // Or we could implement it, but showing dialog in Miniplayer might be weird if minimized.
-    // For now, auto-resume if startPos passed.
+    await player.open(Media(url, httpHeaders: headers), play: false);
 
-    await player.open(Media(url), play: false);
-
-    // Seek
     if (startPos > Duration.zero) {
       try {
         await player.stream.duration
@@ -497,9 +496,20 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent> {
     await player.play();
   }
 
+  // Moved helper logic inside here if needed or removed if used via new widget
+  // The _selectLinkByQuality logic was moved to expanded_player_content?
+  // Wait, _buildVideoPlayer uses it to AUTO play. So we need it here.
+  // BUT the ExpandedContent handles the MANUAL selection.
+  // So I will keep a copy or helper here for the AUTO play logic.
+
+  // Wait, I see I removed StreamingLink import in my thought but added it back in the write.
+  // I need to make sure _selectLinkByQuality is available if used below.
+
+  // Let's re-add _selectLinkByQuality here since _buildVideoPlayer uses it.
+  // Or I could move it to a utility file. For now, keeping it here is fine.
+
   @override
   Widget build(BuildContext context) {
-    // Provide the LOCAL streaming cubit to children
     return BlocProvider.value(
       value: _streamingCubit,
       child: Material(
@@ -518,12 +528,26 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent> {
                   child: _buildVideoPlayer(),
                 ),
 
-              // Content Area
+              // Expanded Content Area (Refactored)
               if (!widget.isMini)
                 Expanded(
                   child: 250 >= widget.height
                       ? const SizedBox.shrink()
-                      : _buildExpandedContent(),
+                      : ExpandedPlayerContent(
+                          state: widget.state,
+                          currentServer: _currentServer ?? 'vidcloud',
+                          defaultQuality: _defaultQuality,
+                          onServerSelected: _switchServer,
+                          onQualitySelected: (url, subUrl, subLang, headers) {
+                            _playVideo(
+                              url,
+                              subtitleUrl: subUrl,
+                              subtitleLang: subLang,
+                              headers: headers,
+                              isQualitySwitch: true,
+                            );
+                          },
+                        ),
                 ),
             ],
           ),
@@ -532,14 +556,76 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent> {
     );
   }
 
+  // We need the helper function for auto-play logic
+  StreamingLink _selectLinkByQuality(
+    List<StreamingLink> links,
+    VideoQuality defaultQuality,
+  ) {
+    if (links.isEmpty) throw Exception('No streaming links');
+
+    String qualityTarget;
+    switch (defaultQuality) {
+      case VideoQuality.hd1080:
+        qualityTarget = '1080p';
+        break;
+      case VideoQuality.hd720:
+        qualityTarget = '720p';
+        break;
+      case VideoQuality.sd480:
+        qualityTarget = '480p';
+        break;
+      case VideoQuality.sd360:
+        qualityTarget = '360p';
+        break;
+      case VideoQuality.auto:
+      default:
+        qualityTarget = 'auto';
+        break;
+    }
+
+    try {
+      if (qualityTarget == 'auto') {
+        return links.firstWhere(
+          (l) => l.quality == 'auto' || l.isM3U8,
+          orElse: () => links.first,
+        );
+      }
+      return links.firstWhere((l) => l.quality == qualityTarget);
+    } catch (_) {
+      return links.firstWhere(
+        (l) => l.quality == 'auto' || l.isM3U8,
+        orElse: () => links.first,
+      );
+    }
+  }
+
   Widget _buildVideoPlayer() {
     return BlocConsumer<StreamingCubit, StreamingState>(
       listener: (context, state) {
-        if (state is StreamingLoaded && state.links.isNotEmpty) {
-          final link = state.links.firstWhere(
-            (l) => l.quality == 'auto' || l.isM3U8,
-            orElse: () => state.links.first,
+        if (state is StreamingError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Error: ${state.message}'),
+              backgroundColor: Colors.red,
+              behavior: SnackBarBehavior.floating,
+              action: SnackBarAction(
+                label: 'Retry',
+                textColor: Colors.white,
+                onPressed: () {
+                  _loadVideo();
+                },
+              ),
+            ),
           );
+        }
+
+        if (state is StreamingLoaded && state.links.isNotEmpty) {
+          // Sync local state with actual server used by Cubit
+          if (state.selectedServer != null) {
+            _currentServer = state.selectedServer;
+          }
+
+          final link = _selectLinkByQuality(state.links, _defaultQuality);
 
           String? subUrl;
           String? subLang;
@@ -552,11 +638,24 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent> {
               subLang = englishSub.lang;
             } catch (_) {}
           }
-          _playVideo(link.url, subtitleUrl: subUrl, subtitleLang: subLang);
+
+          // Debug logging
+          print('🎬 Playing video:');
+          print('  URL: ${link.url}');
+          print('  Quality: ${link.quality}');
+          print('  isM3U8: ${link.isM3U8}');
+          print('  Headers: ${link.headers}');
+          print('  Subtitle: $subUrl');
+
+          _playVideo(
+            link.url,
+            subtitleUrl: subUrl,
+            subtitleLang: subLang,
+            headers: link.headers,
+          );
         }
       },
       builder: (context, state) {
-        // Show Poster if loading or error or idle
         if (state is StreamingLoading || state is StreamingInitial) {
           return Stack(
             children: [
@@ -574,11 +673,10 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent> {
           );
         }
 
-        // Miniplayer Controls vs Full Controls
+        // Miniplayer Controls
         if (widget.isMini) {
           return Row(
             children: [
-              // Tiny Video Preview - Constrained Size
               SizedBox(
                 height: widget.miniplayerHeight - 10,
                 width: (widget.miniplayerHeight - 10) * 16 / 9,
@@ -614,11 +712,10 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent> {
                   ),
                 ),
               ),
-              // Mini Controls
               IconButton(
                 icon: StreamBuilder<bool>(
                   stream: player.stream.playing,
-                  initialData: player.state.playing, // Add initial data
+                  initialData: player.state.playing,
                   builder: (context, snapshot) {
                     final playing = snapshot.data ?? false;
                     return Icon(playing ? Icons.pause : Icons.play_arrow);
@@ -636,11 +733,10 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent> {
           );
         }
 
-        // Full Player
+        // Full Player with Custom Controls
         return Video(
           controller: controller,
           controls: (state) {
-            // Determine if Next/Prev is available
             final movie = widget.state.movie;
             bool hasNext = false;
             bool hasPrev = false;
@@ -655,10 +751,8 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent> {
             }
 
             return GestureDetector(
-              onTap: () {
-                // Prevent Miniplayer from handling tap
-              },
-              child: _CustomVideoControls(
+              onTap: () {},
+              child: CustomVideoControls(
                 state: state,
                 player: player,
                 title: widget.state.title ?? '',
@@ -676,318 +770,6 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent> {
           },
         );
       },
-    );
-  }
-
-  Widget _buildExpandedContent() {
-    return BlocBuilder<StreamingCubit, StreamingState>(
-      builder: (context, streamingState) {
-        String? description;
-        final movie = widget.state.movie;
-        if (movie != null) {
-          description = movie.description;
-        }
-
-        return ListView(
-          padding: const EdgeInsets.all(16),
-          children: [
-            Text(
-              '${widget.state.title}${widget.state.episodeTitle != null ? " - ${widget.state.episodeTitle}" : ""}',
-              style: const TextStyle(
-                color: kOrangeColor,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 16),
-
-            // Server Selector
-            Row(
-              children: [
-                const Text('Server', style: TextStyle(color: Colors.grey)),
-                const SizedBox(width: 8),
-                _buildVipButton(
-                  'VidCloud',
-                  kGreenVIP,
-                  _currentServer == 'vidcloud',
-                  () => _switchServer('vidcloud'),
-                ),
-                const SizedBox(width: 8),
-                _buildVipButton(
-                  'UpCloud',
-                  kBlueVIP,
-                  _currentServer == 'upcloud',
-                  () => _switchServer('upcloud'),
-                ),
-                const SizedBox(width: 8),
-                _buildVipButton(
-                  'VidStream',
-                  kOrangeColor,
-                  _currentServer == 'vidstream',
-                  () => _switchServer('vidstream'),
-                ),
-                const SizedBox(width: 8),
-                _buildVipButton(
-                  'MixDrop',
-                  const Color(0xFF8E24AA),
-                  _currentServer == 'mixdrop',
-                  () => _switchServer('mixdrop'),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-
-            // Quality Selector
-            if (streamingState is StreamingLoaded &&
-                streamingState.links.isNotEmpty) ...[
-              Builder(
-                builder: (context) {
-                  final uniqueLinks = <String, String>{};
-                  for (var link in streamingState.links) {
-                    if (!uniqueLinks.containsKey(link.quality)) {
-                      uniqueLinks[link.quality] = link.url;
-                    }
-                  }
-                  if (uniqueLinks.length <= 1) return const SizedBox.shrink();
-
-                  return Container(
-                    height: 40,
-                    margin: const EdgeInsets.only(bottom: 16),
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        const Center(
-                          child: Text(
-                            "Quality: ",
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        ...uniqueLinks.entries.map((entry) {
-                          return Padding(
-                            padding: const EdgeInsets.only(right: 8),
-                            child: OutlinedButton(
-                              style: OutlinedButton.styleFrom(
-                                side: const BorderSide(color: kOrangeColor),
-                                foregroundColor: kOrangeColor,
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 12,
-                                ),
-                                visualDensity: VisualDensity.compact,
-                              ),
-                              onPressed: () {
-                                String? subUrl;
-                                String? subLang;
-                                if (streamingState.subtitles != null &&
-                                    streamingState.subtitles!.isNotEmpty) {
-                                  try {
-                                    final englishSub = streamingState.subtitles!
-                                        .firstWhere(
-                                          (s) => s.lang.toLowerCase().contains(
-                                            'english',
-                                          ),
-                                        );
-                                    subUrl = englishSub.url;
-                                    subLang = englishSub.lang;
-                                  } catch (_) {}
-                                }
-                                _playVideo(
-                                  entry.value,
-                                  subtitleUrl: subUrl,
-                                  subtitleLang: subLang,
-                                  isQualitySwitch:
-                                      true, // Enable seamless switch
-                                );
-                              },
-                              child: Text(entry.key.toUpperCase()),
-                            ),
-                          );
-                        }),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ],
-
-            if (description != null)
-              Text(description, style: const TextStyle(color: Colors.grey)),
-          ],
-        );
-      },
-    );
-  }
-
-  Widget _buildVipButton(
-    String label,
-    Color color,
-    bool isSelected,
-    VoidCallback onTap,
-  ) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-        decoration: BoxDecoration(
-          color: isSelected ? color : color.withOpacity(0.2),
-          borderRadius: BorderRadius.circular(4),
-          border: isSelected
-              ? Border.all(color: Colors.white, width: 1)
-              : Border.all(color: Colors.transparent),
-        ),
-        child: Text(
-          label,
-          style: TextStyle(
-            color: isSelected ? Colors.white : Colors.white70,
-            fontWeight: FontWeight.bold,
-            fontSize: 13,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-// Add this new widget class at the end of the file or in a separate file
-class _CustomVideoControls extends StatelessWidget {
-  final VideoState state;
-  final Player player;
-  final String title;
-  final VoidCallback onMinimize;
-  final VoidCallback onNext;
-  final VoidCallback onPrev;
-  final bool hasNext;
-  final bool hasPrev;
-
-  const _CustomVideoControls({
-    required this.state,
-    required this.player,
-    required this.title,
-    required this.onMinimize,
-    required this.onNext,
-    required this.onPrev,
-    required this.hasNext,
-    required this.hasPrev,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialDesktopVideoControlsTheme(
-      normal: const MaterialDesktopVideoControlsThemeData(
-        seekBarThumbColor: kRedColor,
-        seekBarPositionColor: kRedColor,
-        toggleFullscreenOnDoublePress: true,
-      ),
-      fullscreen: const MaterialDesktopVideoControlsThemeData(
-        seekBarThumbColor: kRedColor,
-        seekBarPositionColor: kRedColor,
-      ),
-      child: Stack(
-        children: [
-          // Use MaterialVideoControls but wrap the bottom bar to block gestures?
-          // media_kit's MaterialVideoControls is a complex widget.
-          // We can't easily modify its internal structure without reimplementing it.
-          // However, we can put a transparent Listener over the Seek Bar area if we knew where it is.
-          // Better approach: Re-implement a simple overlay using AdaptiveVideoControls logic or similar.
-          // But that's a lot of code.
-
-          // Workaround for Gesture Conflict:
-          // The Miniplayer minimizes when dragging down.
-          // If we wrap the MaterialVideoControls in a GestureDetector that handles vertical drag
-          // and does nothing, it might stop the propagation.
-          GestureDetector(
-            onVerticalDragUpdate: (details) {}, // Consume vertical drag
-            child: MaterialVideoControls(state),
-          ),
-
-          // Custom Top Bar (Minimize Button)
-          // We wrap in SafeArea to avoid notch/status bar issues
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: SafeArea(
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
-                ),
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Colors.black54, Colors.transparent],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ),
-                ),
-                child: Row(
-                  children: [
-                    IconButton(
-                      icon: const Icon(
-                        Icons.keyboard_arrow_down,
-                        color: Colors.white,
-                        size: 30,
-                      ),
-                      onPressed: onMinimize,
-                    ),
-                    Expanded(
-                      child: Text(
-                        title,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-
-          // Custom Center Controls (Next/Prev)
-          // We overlay these on top of MaterialVideoControls.
-          // Note: MaterialVideoControls puts Play/Pause in the center.
-          // We can put Next/Prev to the left and right of the center.
-          Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                if (hasPrev)
-                  IconButton(
-                    icon: const Icon(
-                      Icons.skip_previous,
-                      color: Colors.white,
-                      size: 40,
-                    ),
-                    onPressed: onPrev,
-                  )
-                else
-                  const SizedBox(width: 40), // Placeholder
-
-                const SizedBox(width: 80), // Space for Play/Pause button
-
-                if (hasNext)
-                  IconButton(
-                    icon: const Icon(
-                      Icons.skip_next,
-                      color: Colors.white,
-                      size: 40,
-                    ),
-                    onPressed: onNext,
-                  )
-                else
-                  const SizedBox(width: 40), // Placeholder
-              ],
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

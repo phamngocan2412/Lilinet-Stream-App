@@ -62,7 +62,7 @@ class _SearchPageViewState extends State<SearchPageView> {
           autofocus: true,
           style: Theme.of(context).textTheme.bodyLarge,
           decoration: InputDecoration(
-            hintText: 'Search movies, TV shows...',
+            hintText: 'Search anime...',
             border: InputBorder.none,
             enabledBorder: InputBorder.none,
             focusedBorder: InputBorder.none,
@@ -78,15 +78,44 @@ class _SearchPageViewState extends State<SearchPageView> {
             context.read<SearchBloc>().add(SearchQueryChanged(query));
           },
         ),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(50),
+          child: BlocBuilder<SearchBloc, SearchState>(
+            builder: (context, state) {
+              return SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
+                child: Row(
+                  children: [
+                    _buildFilterChip(context, 'All', state.activeFilter),
+                    const SizedBox(width: 8),
+                    _buildFilterChip(context, 'TV Series', state.activeFilter),
+                    const SizedBox(width: 8),
+                    _buildFilterChip(context, 'Movie', state.activeFilter),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
       ),
       body: BlocBuilder<SearchBloc, SearchState>(
         builder: (context, state) {
           if (state.query.isEmpty) {
             return const EmptyStateWidget(
               icon: Icons.search,
-              message: 'Search for movies and TV shows',
+              message: 'Search for anime',
             );
           }
+
+          final filteredMovies = state.activeFilter == 'All'
+              ? state.movies
+              : state.movies
+                    .where((m) => m.type == state.activeFilter)
+                    .toList();
 
           if (state.isLoading && state.movies.isEmpty) {
             return const Center(child: LoadingIndicator());
@@ -105,10 +134,14 @@ class _SearchPageViewState extends State<SearchPageView> {
             );
           }
 
-          if (state.movies.isEmpty) {
+          if (filteredMovies.isEmpty) {
+            if (state.isLoading) {
+              return const Center(child: LoadingIndicator());
+            }
             return EmptyStateWidget(
               icon: Icons.movie_outlined,
-              message: 'No results found for "${state.query}"',
+              message:
+                  'No ${state.activeFilter == 'All' ? '' : state.activeFilter} results found for "${state.query}"',
             );
           }
 
@@ -126,15 +159,15 @@ class _SearchPageViewState extends State<SearchPageView> {
               crossAxisSpacing: 12,
               mainAxisSpacing: 12,
             ),
-            itemCount: state.movies.length + (state.isLoading ? 1 : 0),
+            itemCount: filteredMovies.length + (state.isLoading ? 1 : 0),
             addAutomaticKeepAlives: false, // Reduce memory overhead
             addRepaintBoundaries: true, // Optimize repaints
             itemBuilder: (context, index) {
-              if (index >= state.movies.length) {
+              if (index >= filteredMovies.length) {
                 return const Center(child: LoadingIndicator());
               }
 
-              final movie = state.movies[index];
+              final movie = filteredMovies[index];
               return MovieCard(
                 movie: movie,
                 onTap: () => context.push(
@@ -147,6 +180,34 @@ class _SearchPageViewState extends State<SearchPageView> {
           );
         },
       ),
+    );
+  }
+
+  Widget _buildFilterChip(
+    BuildContext context,
+    String label,
+    String currentFilter,
+  ) {
+    final isSelected = label == currentFilter;
+    return FilterChip(
+      label: Text(label),
+      selected: isSelected,
+      onSelected: (selected) {
+        context.read<SearchBloc>().add(SearchFilterChanged(label));
+      },
+      backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+      selectedColor: Theme.of(context).colorScheme.primaryContainer,
+      labelStyle: TextStyle(
+        color: isSelected
+            ? Theme.of(context).colorScheme.onPrimaryContainer
+            : Theme.of(context).colorScheme.onSurfaceVariant,
+        fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+        side: BorderSide.none,
+      ),
+      showCheckmark: false,
     );
   }
 }

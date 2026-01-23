@@ -30,8 +30,10 @@ class ExploreRepositoryImpl implements ExploreRepository {
     int page = 1,
   }) async {
     try {
-      final response =
-          await remoteDataSource.getMoviesByGenre(genreId, page: page);
+      final response = await remoteDataSource.getMoviesByGenre(
+        genreId,
+        page: page,
+      );
       final movies = response.results.map((m) => m.toEntity()).toList();
 
       // Note: Client-side filtering by genre would go here if needed
@@ -50,7 +52,7 @@ class ExploreRepositoryImpl implements ExploreRepository {
     int page = 1,
   }) async {
     try {
-      String type = 'all';
+      String type = 'tv';
       if (options.mediaType == MediaType.movie) {
         type = 'movie';
       } else if (options.mediaType == MediaType.tvSeries) {
@@ -129,9 +131,7 @@ class ExploreRepositoryImpl implements ExploreRepository {
   }
 
   @override
-  Future<Either<Failure, List<Movie>>> getTopRatedMovies({
-    int page = 1,
-  }) async {
+  Future<Either<Failure, List<Movie>>> getTopRatedMovies({int page = 1}) async {
     try {
       final response = await remoteDataSource.getPopularMovies(page: page);
       var movies = response.results.map((m) => m.toEntity()).toList();
@@ -152,9 +152,7 @@ class ExploreRepositoryImpl implements ExploreRepository {
   }
 
   @override
-  Future<Either<Failure, List<Movie>>> getRecentlyAdded({
-    int page = 1,
-  }) async {
+  Future<Either<Failure, List<Movie>>> getRecentlyAdded({int page = 1}) async {
     try {
       final response = await remoteDataSource.getPopularMovies(page: page);
       var movies = response.results.map((m) => m.toEntity()).toList();

@@ -453,58 +453,6 @@ class SettingsView extends StatelessWidget {
     return Column(
       children: [
         ListTile(
-          title: const Text('Movie Source'),
-          subtitle: Text(settings.movieProvider.toUpperCase()),
-          leading: const Icon(Icons.movie),
-          trailing: const Icon(Icons.chevron_right),
-          onTap: () {
-            final settingsBloc = context.read<SettingsBloc>();
-            showModalBottomSheet(
-              context: context,
-              builder: (bottomSheetContext) => BlocProvider.value(
-                value: settingsBloc,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    _buildProviderOption(
-                      context,
-                      settingsBloc,
-                      settings,
-                      'goku',
-                      'Goku (Standard)',
-                      isMovie: true,
-                    ),
-                    _buildProviderOption(
-                      context,
-                      settingsBloc,
-                      settings,
-                      'himovies',
-                      'HiMovies (Recommended)', // Fastest
-                      isMovie: true,
-                    ),
-                    _buildProviderOption(
-                      context,
-                      settingsBloc,
-                      settings,
-                      'sflix',
-                      'SFlix (Fast)',
-                      isMovie: true,
-                    ),
-                    _buildProviderOption(
-                      context,
-                      settingsBloc,
-                      settings,
-                      'flixhq',
-                      'FlixHQ (Alternative)',
-                      isMovie: true,
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
-        ),
-        ListTile(
           title: const Text('Anime Source'),
           subtitle: Text(settings.animeProvider.toUpperCase()),
           leading: const Icon(Icons.animation),
@@ -522,16 +470,24 @@ class SettingsView extends StatelessWidget {
                       context,
                       settingsBloc,
                       settings,
-                      'hianime',
-                      'HiAnime (Popular)',
+                      'animepahe',
+                      'AnimePahe (Recommended)',
                       isMovie: false,
                     ),
                     _buildProviderOption(
                       context,
                       settingsBloc,
                       settings,
-                      'animepahe',
-                      'AnimePahe (Fast)',
+                      'gogoanime',
+                      'GogoAnime (Stable)',
+                      isMovie: false,
+                    ),
+                    _buildProviderOption(
+                      context,
+                      settingsBloc,
+                      settings,
+                      'zoro',
+                      'Zoro / HiAnime (Best Quality)',
                       isMovie: false,
                     ),
                     _buildProviderOption(
@@ -539,8 +495,44 @@ class SettingsView extends StatelessWidget {
                       settingsBloc,
                       settings,
                       'animekai',
-                      'AnimeKai (Recommended)', // Fastest
+                      'AnimeKai',
                       isMovie: false,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+        ListTile(
+          title: const Text('Movie Source'),
+          subtitle: Text(settings.movieProvider.toUpperCase()),
+          leading: const Icon(Icons.movie),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () {
+            final settingsBloc = context.read<SettingsBloc>();
+            showModalBottomSheet(
+              context: context,
+              builder: (bottomSheetContext) => BlocProvider.value(
+                value: settingsBloc,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _buildProviderOption(
+                      context,
+                      settingsBloc,
+                      settings,
+                      'flixhq',
+                      'FlixHQ (Recommended)',
+                      isMovie: true,
+                    ),
+                    _buildProviderOption(
+                      context,
+                      settingsBloc,
+                      settings,
+                      'viewasian',
+                      'ViewAsian / DramaCool',
+                      isMovie: true,
                     ),
                   ],
                 ),

@@ -3,6 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'core/theme/app_theme.dart';
 import 'routes/app_router.dart';
 import 'injection_container.dart';
+import 'features/movies/presentation/bloc/trending_movies/trending_movies_bloc.dart';
+import 'features/movies/presentation/bloc/trending_movies/trending_movies_event.dart';
+import 'features/explore/presentation/bloc/explore_bloc.dart';
+import 'features/explore/presentation/bloc/explore_event.dart';
 import 'features/auth/presentation/bloc/auth_bloc.dart';
 import 'features/auth/presentation/bloc/auth_event.dart';
 import 'features/auth/presentation/bloc/auth_state.dart';
@@ -31,16 +35,18 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => getIt<FavoritesBloc>()..add(LoadFavorites()),
         ),
-        // History BLoC - Available globally (Added)
-        BlocProvider(create: (context) => getIt<HistoryBloc>()..loadHistory()),
+        // History BLoC
+        BlocProvider.value(value: getIt<HistoryBloc>()),
+        // Trending Movies BLoC
+        BlocProvider.value(value: getIt<TrendingMoviesBloc>()),
+        // Explore BLoC
+        BlocProvider.value(value: getIt<ExploreBloc>()),
         // Settings BLoC - Available globally
         BlocProvider(
           create: (context) => getIt<SettingsBloc>()..add(LoadSettings()),
         ),
-        // Video Player BLoC - Available globally
-        BlocProvider<VideoPlayerBloc>(
-          create: (context) => getIt<VideoPlayerBloc>(),
-        ),
+        // Video Player BLoC
+        BlocProvider.value(value: getIt<VideoPlayerBloc>()),
         // Navigation Cubit - Available globally
         BlocProvider(create: (context) => getIt<NavigationCubit>()),
       ],

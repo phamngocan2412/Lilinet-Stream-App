@@ -13,12 +13,16 @@ class TrendingMoviesInitial extends TrendingMoviesState {}
 class TrendingMoviesLoading extends TrendingMoviesState {}
 
 class TrendingMoviesLoaded extends TrendingMoviesState {
-  final List<Movie> movies;
+  final List<Movie> trending;
+  final Map<String, List<Movie>> categories;
 
-  const TrendingMoviesLoaded(this.movies);
+  const TrendingMoviesLoaded({
+    required this.trending,
+    this.categories = const {},
+  });
 
   @override
-  List<Object> get props => [movies];
+  List<Object> get props => [trending, categories];
 }
 
 class TrendingMoviesError extends TrendingMoviesState {

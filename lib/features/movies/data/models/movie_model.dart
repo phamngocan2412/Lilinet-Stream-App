@@ -34,6 +34,7 @@ abstract class MovieModel with _$MovieModel {
     @HiveField(17) List<String>? casts,
     @HiveField(18) List<String>? tags,
     @HiveField(19) @AnyToStringNullableConverter() String? image,
+    @HiveField(20) @AnyToStringNullableConverter() String? provider,
   }) = _MovieModel;
 
   factory MovieModel.fromJson(Map<String, dynamic> json) =>
@@ -71,6 +72,7 @@ abstract class MovieModel with _$MovieModel {
       production: production,
       casts: casts,
       tags: tags,
+      provider: provider,
     );
   }
 }

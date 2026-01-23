@@ -37,13 +37,14 @@ class MovieModelAdapter extends TypeAdapter<MovieModel> {
       casts: (fields[17] as List?)?.cast<String>(),
       tags: (fields[18] as List?)?.cast<String>(),
       image: fields[19] as String?,
+      provider: fields[20] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, MovieModel obj) {
     writer
-      ..writeByte(20)
+      ..writeByte(21)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -83,7 +84,9 @@ class MovieModelAdapter extends TypeAdapter<MovieModel> {
       ..writeByte(18)
       ..write(obj.tags)
       ..writeByte(19)
-      ..write(obj.image);
+      ..write(obj.image)
+      ..writeByte(20)
+      ..write(obj.provider);
   }
 
   @override
@@ -174,6 +177,7 @@ _MovieModel _$MovieModelFromJson(Map<String, dynamic> json) => _MovieModel(
   casts: (json['casts'] as List<dynamic>?)?.map((e) => e as String).toList(),
   tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
   image: const AnyToStringNullableConverter().fromJson(json['image']),
+  provider: const AnyToStringNullableConverter().fromJson(json['provider']),
 );
 
 Map<String, dynamic> _$MovieModelToJson(
@@ -205,6 +209,7 @@ Map<String, dynamic> _$MovieModelToJson(
   'casts': instance.casts,
   'tags': instance.tags,
   'image': const AnyToStringNullableConverter().toJson(instance.image),
+  'provider': const AnyToStringNullableConverter().toJson(instance.provider),
 };
 
 _MovieListResponse _$MovieListResponseFromJson(Map<String, dynamic> json) =>

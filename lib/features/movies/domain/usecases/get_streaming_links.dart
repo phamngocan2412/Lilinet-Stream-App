@@ -14,7 +14,7 @@ class GetStreamingLinks {
     required String episodeId,
     required String mediaId,
     String? server,
-    String provider = 'himovies',
+    String provider = 'animekai',
   }) async {
     return await _repository.getStreamingLinks(
       episodeId: episodeId,

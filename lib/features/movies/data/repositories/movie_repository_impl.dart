@@ -72,10 +72,7 @@ class MovieRepositoryImpl implements MovieRepository {
     }
 
     try {
-      final response = await _remoteDataSource.getTrendingMovies(
-        type: type,
-        page: page,
-      );
+      final response = await _remoteDataSource.getTrendingMovies(page: page);
       // Save to cache (only first page)
       if (page == 1) {
         _localDataSource.cacheTrendingMovies(response);
@@ -134,24 +131,25 @@ class MovieRepositoryImpl implements MovieRepository {
 
   @override
   Future<Either<Failure, Movie>> getMovieDetails(
-    String id,
-    String type, {
+    String id, {
+    String? provider,
+    String? type,
     bool fastMode = false,
   }) async {
     try {
       // Fetch from API
-      final model = await _remoteDataSource.getMovieDetails(
+      final movieModel = await _remoteDataSource.getMovieDetails(
         id,
+        provider: provider,
         type: type,
-        fastMode: fastMode,
       );
 
       // Only cache if it's full data (not fast mode)
       if (!fastMode) {
-        await _localDataSource.cacheMovieDetails(id, model);
+        await _localDataSource.cacheMovieDetails(id, movieModel);
       }
 
-      return Right(model.toEntity());
+      return Right(movieModel.toEntity());
     } on DioException catch (e) {
       // If network fails, return cached data if available
       final cachedModel = _localDataSource.getCachedMovieDetails(id);
@@ -169,7 +167,7 @@ class MovieRepositoryImpl implements MovieRepository {
     required String episodeId,
     required String mediaId,
     String? server,
-    String provider = 'himovies', // Default provider
+    String provider = 'animekai', // Default provider
   }) async {
     try {
       final response = await _remoteDataSource.getStreamingLinks(

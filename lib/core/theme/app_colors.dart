@@ -16,14 +16,20 @@ class AppColors {
   static const lightTextTertiary = Color(0xFF94A3B8); // Slate 400
   static const lightBorder = Color(0xFFE2E8F0); // Slate 200
 
-  // Dark Mode Palette (Netflix Style)
-  static const darkBackground = Color(0xFF000000); // Pure Black
-  static const darkSurface = Color(0xFF121212); // Standard Dark Surface
-  static const darkSurfaceVariant = Color(0xFF2B2B2B); // Lighter Grey
-  static const darkTextPrimary = Color(0xFFFFFFFF); // Pure White
+  // Dark Mode Palette (Netflix Style - Softened for comfort)
+  static const darkBackground = Color(
+    0xFF141414,
+  ); // Soft Black (Netflix uses this over #000)
+  static const darkSurface = Color(0xFF1F1F1F); // Slightly lighter surface
+  static const darkSurfaceVariant = Color(0xFF333333); // Lighter Grey
+  static const darkTextPrimary = Color(
+    0xFFE6E6E6,
+  ); // 90% White (Less harsh than #FFF)
   static const darkTextSecondary = Color(0xFFB3B3B3); // Light Grey
   static const darkTextTertiary = Color(0xFF808080); // Darker Grey
-  static const darkBorder = Color(0xFF404040); // Dark Grey Border
+  static const darkBorder = Color(
+    0xFF2A2A2A,
+  ); // Subtle Dark Border (Reduced from #404040)
 
   // Semantic Colors
   static const error = Color(0xFFEF4444); // Red 500

@@ -36,15 +36,14 @@ class ExploreRemoteDataSource {
 
   // Use trending endpoint filtered by type
   Future<MovieListResponse> getMoviesByType(String type, {int page = 1}) {
-    return movieDataSource.getTrendingMovies(
-      type: type,
-      page: page,
-    );
+    return movieDataSource.getTrendingMovies(page: page);
   }
 
   // Use search to filter by genre (since API doesn't support direct filtering)
-  Future<MovieListResponse> getMoviesByGenre(String genreId,
-      {int page = 1}) async {
+  Future<MovieListResponse> getMoviesByGenre(
+    String genreId, {
+    int page = 1,
+  }) async {
     // Find genre name from ID
     final genres = await getGenres();
     final genre = genres.firstWhere(
@@ -63,9 +62,6 @@ class ExploreRemoteDataSource {
 
   // Popular movies (using trending)
   Future<MovieListResponse> getPopularMovies({int page = 1}) {
-    return movieDataSource.getTrendingMovies(
-      type: 'all',
-      page: page,
-    );
+    return movieDataSource.getTrendingMovies(page: page);
   }
 }

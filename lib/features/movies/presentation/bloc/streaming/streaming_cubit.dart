@@ -9,50 +9,91 @@ class StreamingCubit extends Cubit<StreamingState> {
 
   StreamingCubit(this._getStreamingLinks) : super(StreamingInitial());
 
-  static const _servers = ['vidcloud', 'upcloud', 'vidstream', 'mixdrop'];
+  // Valid servers
+  static const _servers = ['vidcloud', 'upcloud', 'megaup'];
+
+  // Backup providers
+  static const _animeProviders = ['zoro', 'gogoanime', 'animepahe', 'animekai'];
+  static const _movieProviders = ['flixhq', 'viewasian'];
 
   Future<void> loadLinks({
     required String episodeId,
     required String mediaId,
     String? server,
-    String provider = 'himovies',
+    String provider = 'animekai',
   }) async {
     if (isClosed) return;
     emit(StreamingLoading());
 
-    // If a specific server is requested, try only that one
+    // 1. Try the requested provider first
+    bool success = await _tryProvider(provider, episodeId, mediaId, server);
+    if (success) return;
+
+    // 2. If specific server was requested, don't try fallbacks (user explicit choice)
     if (server != null) {
-      final result = await _getStreamingLinks(
-        episodeId: episodeId,
-        mediaId: mediaId,
-        server: server,
-        provider: provider,
-      );
-      if (isClosed) return;
-      result.fold(
-        (failure) {
-          if (!isClosed) emit(StreamingError(failure.message));
-        },
-        (response) {
-          if (!isClosed) {
-            emit(
-              StreamingLoaded(
-                links: response.links,
-                selectedServer: server,
-                subtitles: response.subtitles,
-              ),
-            );
-          }
-        },
-      );
+      // Error is already emitted by _tryProvider if it failed
       return;
     }
 
-    String? lastErrorMessage;
+    // 3. Auto-fallback to other providers
+    print('⚠️ Primary provider $provider failed. Attempting fallbacks...');
 
-    // Auto-fallback logic: Try each server in order until one works
+    final isAnime = _animeProviders.contains(provider);
+    final backups = isAnime ? _animeProviders : _movieProviders;
+
+    for (final backup in backups) {
+      if (backup == provider) continue; // Skip already tried
+
+      print('🔄 Trying fallback provider: $backup');
+      success = await _tryProvider(backup, episodeId, mediaId, null);
+      if (success) return;
+    }
+
+    // 4. If all fail
+    if (!isClosed && state is! StreamingLoaded) {
+      emit(
+        const StreamingError(
+          'No streaming links available. Please try a different server or provider in Settings.',
+        ),
+      );
+    }
+  }
+
+  Future<bool> _tryProvider(
+    String provider,
+    String episodeId,
+    String mediaId,
+    String? specificServer,
+  ) async {
+    // If specific server requested
+    if (specificServer != null) {
+      final result = await _getStreamingLinks(
+        episodeId: episodeId,
+        mediaId: mediaId,
+        server: specificServer,
+        provider: provider,
+      );
+
+      bool found = false;
+      if (isClosed) return false;
+
+      result.fold(
+        (failure) {
+          // Don't emit error here, just return false to try next server/provider
+          // if (state is! StreamingLoaded) emit(StreamingError(failure.message));
+        },
+        (response) {
+          _emitLoaded(response, provider, specificServer);
+          found = true;
+        },
+      );
+      return found;
+    }
+
+    // Loop through servers
     for (final s in _servers) {
-      if (isClosed) return;
+      if (isClosed) return false;
+
       final result = await _getStreamingLinks(
         episodeId: episodeId,
         mediaId: mediaId,
@@ -60,38 +101,37 @@ class StreamingCubit extends Cubit<StreamingState> {
         provider: provider,
       );
 
-      if (isClosed) return;
+      if (isClosed) return false;
 
       bool found = false;
       result.fold(
-        (failure) {
-          lastErrorMessage = failure.message;
-        },
+        (_) {}, // Ignore individual server errors during auto-scan
         (response) {
           if (response.links.isNotEmpty) {
-            if (!isClosed) {
-              emit(
-                StreamingLoaded(
-                  links: response.links,
-                  selectedServer: s,
-                  subtitles: response.subtitles,
-                ),
-              );
-            }
+            _emitLoaded(response, provider, s);
             found = true;
           }
         },
       );
 
-      if (found) return;
+      if (found) return true;
     }
 
-    // If all servers fail
+    return false;
+  }
+
+  void _emitLoaded(dynamic response, String provider, String server) {
     if (!isClosed) {
+      print('✅ Streaming links loaded successfully:');
+      print('  Provider: $provider');
+      print('  Server: $server');
+      print('  Sources: ${response.links.length}');
+
       emit(
-        StreamingError(
-          lastErrorMessage ??
-              'No streaming links available. Please try again later.',
+        StreamingLoaded(
+          links: response.links,
+          selectedServer: server,
+          subtitles: response.subtitles,
         ),
       );
     }
