@@ -10,6 +10,8 @@ class MovieCard extends StatelessWidget {
   final VoidCallback? onTap;
   final String? heroTag;
   final bool showTitle;
+  final double? width;
+  final double? height;
 
   const MovieCard({
     super.key,
@@ -17,6 +19,8 @@ class MovieCard extends StatelessWidget {
     this.onTap,
     this.heroTag,
     this.showTitle = true,
+    this.width,
+    this.height,
   });
 
   @override
@@ -54,8 +58,8 @@ class MovieCard extends StatelessWidget {
                   AppCachedImage(
                     imageUrl: movie.poster ?? '',
                     fit: BoxFit.cover,
-                    width: double.infinity,
-                    height: double.infinity,
+                    width: width ?? double.infinity,
+                    height: height ?? double.infinity,
                   ),
                   // 2. Gradient Overlay (Bottom)
                   // Use theme-aware gradient or keep black for text readability
