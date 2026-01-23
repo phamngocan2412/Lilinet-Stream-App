@@ -49,6 +49,13 @@ class _ExploreViewState extends State<ExploreView>
   @override
   Widget build(BuildContext context) {
     super.build(context); // Required for AutomaticKeepAliveClientMixin
+
+    // Optimization: Calculate optimal memory cache size for images.
+    final screenWidth = MediaQuery.of(context).size.width;
+    final itemWidth = (screenWidth - 32 - 12) / 2;
+    final pixelRatio = MediaQuery.of(context).devicePixelRatio;
+    final memCacheWidth = (itemWidth * pixelRatio).toInt();
+
     return Scaffold(
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) {
@@ -205,6 +212,7 @@ class _ExploreViewState extends State<ExploreView>
                         extra: movie,
                       );
                     },
+                    memCacheWidth: memCacheWidth,
                   );
                 },
               );

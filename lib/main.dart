@@ -60,17 +60,20 @@ void main() async {
                 ),
                 Text(e.toString()),
                 const SizedBox(height: 16),
-                Text(
-                  'Stack Trace:',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey[700],
+                if (kDebugMode) ...[
+                  Text(
+                    'Stack Trace:',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey[700],
+                    ),
                   ),
-                ),
-                Text(
-                  stackTrace.toString(),
-                  style: const TextStyle(fontSize: 12, fontFamily: 'monospace'),
-                ),
+                  Text(
+                    stackTrace.toString(),
+                    style: const TextStyle(
+                        fontSize: 12, fontFamily: 'monospace'),
+                  ),
+                ],
               ],
             ),
           ),
