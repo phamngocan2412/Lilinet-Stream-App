@@ -12,6 +12,8 @@ class MovieCard extends StatelessWidget {
   final bool showTitle;
   final double? width;
   final double? height;
+  final int? memCacheWidth;
+  final int? memCacheHeight;
 
   const MovieCard({
     super.key,
@@ -21,6 +23,8 @@ class MovieCard extends StatelessWidget {
     this.showTitle = true,
     this.width,
     this.height,
+    this.memCacheWidth,
+    this.memCacheHeight,
   });
 
   @override
@@ -60,6 +64,8 @@ class MovieCard extends StatelessWidget {
                     fit: BoxFit.cover,
                     width: width ?? double.infinity,
                     height: height ?? double.infinity,
+                    memCacheWidth: memCacheWidth,
+                    memCacheHeight: memCacheHeight,
                   ),
                   // 2. Gradient Overlay (Bottom)
                   // Use theme-aware gradient or keep black for text readability

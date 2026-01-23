@@ -46,66 +46,39 @@ class AppCachedImage extends StatelessWidget {
       return errorWidget;
     }
 
-    final pixelRatio = MediaQuery.of(context).devicePixelRatio;
-
-    final image = CachedNetworkImage(
-      imageUrl: imageUrl,
-      width: width,
-      height: height,
-      fit: fit,
-      fadeInDuration: const Duration(milliseconds: 300),
-      fadeOutDuration: const Duration(milliseconds: 100),
-      memCacheWidth: memCacheWidth ??
-          ((width != null && width!.isFinite)
-              ? (width! * pixelRatio).toInt()
-              : 700), // Fallback to prevent OOM with infinite width
-      memCacheHeight: memCacheHeight ??
-          ((height != null && height!.isFinite)
-              ? (height! * pixelRatio).toInt()
-              : null),
-      maxWidthDiskCache: 800, // Limit disk cache size
-      maxHeightDiskCache: 1200,
-      placeholder: (context, url) => Container(
-        color: Colors.grey[850],
-        child: const Center(
-          child: LoadingIndicator(size: 30),
-        ),
-      ),
-      errorWidget: (context, url, error) => Container(
-        width: width,
-        height: height,
-        color: Colors.grey[800],
-        child: const Icon(Icons.broken_image, color: Colors.white54),
-      ),
-    );
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
 
         // Calculate optimal cache width
-        int? memCacheWidth;
+        int? optimalMemCacheWidth = memCacheWidth;
 
         // 1. Use explicit width if valid
-        if (width != null && width!.isFinite) {
-          memCacheWidth = (width! * devicePixelRatio).toInt();
-        }
-        // 2. Use constraint width if explicit width is infinite/null and constraint is finite
-        else if (constraints.hasBoundedWidth) {
-          memCacheWidth = (constraints.maxWidth * devicePixelRatio).toInt();
-        }
-        // 3. Fallback
-        else {
-          memCacheWidth = 700;
+        if (optimalMemCacheWidth == null) {
+          if (width != null && width!.isFinite) {
+            optimalMemCacheWidth = (width! * devicePixelRatio).toInt();
+          }
+          // 2. Use constraint width if explicit width is infinite/null and constraint is finite
+          else if (constraints.hasBoundedWidth) {
+            optimalMemCacheWidth = (constraints.maxWidth * devicePixelRatio).toInt();
+          }
+          // 3. Fallback
+          else {
+            optimalMemCacheWidth = 700;
+          }
         }
 
         // Ensure minimum cache width of 1 to prevent errors
-        if (memCacheWidth != null && memCacheWidth < 1) {
-          memCacheWidth = 1;
+        if (optimalMemCacheWidth != null && optimalMemCacheWidth < 1) {
+          optimalMemCacheWidth = 1;
         }
 
         // Calculate optimal cache height (only if explicit height is provided)
-        int? memCacheHeight;
-        if (height != null && height!.isFinite) {
-          memCacheHeight = (height! * devicePixelRatio).toInt();
+        int? optimalMemCacheHeight = memCacheHeight;
+        if (optimalMemCacheHeight == null && height != null && height!.isFinite) {
+          optimalMemCacheHeight = (height! * devicePixelRatio).toInt();
           // Ensure minimum cache height
-          if (memCacheHeight < 1) memCacheHeight = 1;
+          if (optimalMemCacheHeight < 1) optimalMemCacheHeight = 1;
         }
 
         final image = CachedNetworkImage(
@@ -115,8 +88,8 @@ class AppCachedImage extends StatelessWidget {
           fit: fit,
           fadeInDuration: const Duration(milliseconds: 300),
           fadeOutDuration: const Duration(milliseconds: 100),
-          memCacheWidth: memCacheWidth,
-          memCacheHeight: memCacheHeight,
+          memCacheWidth: optimalMemCacheWidth,
+          memCacheHeight: optimalMemCacheHeight,
           maxWidthDiskCache: 800, // Limit disk cache size
           maxHeightDiskCache: 1200,
           placeholder: (context, url) => Container(
