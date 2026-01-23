@@ -1,4 +1,4 @@
-## 2024-05-22 - [Data Leakage via Logging]
-**Vulnerability:** Network request headers and bodies were being logged unconditionally using `PrettyDioLogger`.
-**Learning:** Development tools often default to verbose output which is dangerous in production.
-**Prevention:** Always wrap debug loggers in `kDebugMode` or environment checks.
+## 2024-05-23 - Unconditional Network Logging in Production
+**Vulnerability:** The `PrettyDioLogger` was being added to the Dio interceptors unconditionally, which means all network requests and responses (including potential sensitive data like tokens or PII) would be logged to the console in production builds.
+**Learning:** Development tools that log sensitive information must always be guarded by environment checks (e.g., `kDebugMode`). Developers often forget that "Release" builds strip some debugging info but `print` or `log` statements might still function depending on the implementation, and specifically `PrettyDioLogger` uses `log` which can leak info if not disabled.
+**Prevention:** Always wrap logging interceptors or verbose logging logic in `if (kDebugMode) { ... }` blocks. Review `Dio` client setup during code reviews.
