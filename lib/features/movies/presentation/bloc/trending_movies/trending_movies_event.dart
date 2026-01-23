@@ -10,7 +10,7 @@ abstract class TrendingMoviesEvent extends Equatable {
 class LoadTrendingMovies extends TrendingMoviesEvent {
   final String type;
 
-  const LoadTrendingMovies({this.type = 'all'});
+  const LoadTrendingMovies({this.type = 'tv'});
 
   @override
   List<Object> get props => [type];

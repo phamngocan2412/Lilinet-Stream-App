@@ -13,6 +13,7 @@ class VideoPlayerState extends Equatable {
   final Duration? startPosition;
   final String? mediaType;
   final Movie? movie; // Added to hold full movie context
+  final int? timestamp; // Added to force state updates
 
   const VideoPlayerState({
     this.status = VideoPlayerStatus.closed,
@@ -24,6 +25,7 @@ class VideoPlayerState extends Equatable {
     this.startPosition,
     this.mediaType,
     this.movie,
+    this.timestamp,
   });
 
   VideoPlayerState copyWith({
@@ -36,6 +38,7 @@ class VideoPlayerState extends Equatable {
     Duration? startPosition,
     String? mediaType,
     Movie? movie,
+    int? timestamp,
   }) {
     return VideoPlayerState(
       status: status ?? this.status,
@@ -47,6 +50,7 @@ class VideoPlayerState extends Equatable {
       startPosition: startPosition ?? this.startPosition,
       mediaType: mediaType ?? this.mediaType,
       movie: movie ?? this.movie,
+      timestamp: timestamp ?? this.timestamp,
     );
   }
 
@@ -61,5 +65,6 @@ class VideoPlayerState extends Equatable {
     startPosition,
     mediaType,
     movie,
+    timestamp,
   ];
 }

@@ -4,6 +4,7 @@ import '../../../domain/repositories/movie_repository.dart';
 import '../../../domain/usecases/get_movie_details.dart';
 import '../../../domain/entities/movie.dart';
 import '../../../domain/entities/episode.dart';
+import '../../../../settings/domain/repositories/settings_repository.dart';
 import 'movie_details_event.dart';
 import 'movie_details_state.dart';
 
@@ -11,9 +12,13 @@ import 'movie_details_state.dart';
 class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
   final GetMovieDetails _getMovieDetails;
   final MovieRepository _repository;
+  final SettingsRepository _settingsRepository;
 
-  MovieDetailsBloc(this._getMovieDetails, this._repository)
-    : super(MovieDetailsInitial()) {
+  MovieDetailsBloc(
+    this._getMovieDetails,
+    this._repository,
+    this._settingsRepository,
+  ) : super(MovieDetailsInitial()) {
     on<LoadMovieDetails>(_onLoadMovieDetails);
     on<SetMovieDetails>(_onSetMovieDetails);
     on<SelectSeason>(_onSelectSeason);
@@ -73,9 +78,7 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
     // This allows the user to see the page content almost instantly.
     // Note: This result might not have episodes if the provider is slow.
     final fastResult = await _getMovieDetails(
-      event.id,
-      event.type,
-      fastMode: true,
+      GetMovieDetailsParams(id: event.id, type: event.type, fastMode: true),
     );
 
     fastResult.fold(
@@ -98,11 +101,100 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
     );
 
     // 3. Fetch FULL data (Episodes) - INCLUDES provider scraping
-    // This might take longer (~10-15s)
+    // Determine provider from settings
+    String? provider;
+    final settingsResult = await _settingsRepository.getSettings();
+    settingsResult.fold(
+      (l) => null, // Use default if settings fail
+      (settings) {
+        if (event.type.toLowerCase() == 'movie' ||
+            event.type.toLowerCase().contains('tv')) {
+          // Detect if content is anime
+          // TMDB uses "Animation" for both anime and western animation
+          // We need additional heuristics to distinguish
+          bool isAnime = false;
+
+          fastResult.fold(
+            (failure) {
+              print(
+                '⚠️ Fast fetch failed, cannot detect anime: ${failure.message}',
+              );
+              // Fallback: If it's TV Series with Animation, likely anime
+              // Most western animated shows are categorized differently
+              if (event.type.toLowerCase().contains('tv')) {
+                print('   Defaulting to anime provider for TV Series');
+                isAnime = true;
+              }
+            },
+            (movie) {
+              // Check for Animation genre (TMDB's way of marking anime)
+              final hasAnimation = movie.genres.any(
+                (g) => g.toLowerCase().contains('animation'),
+              );
+
+              if (hasAnimation) {
+                // Additional heuristics to distinguish anime from western animation
+                // 1. TV Series + Animation = likely anime
+                // 2. Check for common anime keywords in title
+                final title = movie.title.toLowerCase();
+                final animeKeywords = [
+                  'jujutsu',
+                  'naruto',
+                  'one piece',
+                  'bleach',
+                  'dragon ball',
+                  'attack on titan',
+                  'demon slayer',
+                  'my hero',
+                  'hunter',
+                  'tokyo',
+                  'sword art',
+                  'fullmetal',
+                  'death note',
+                  'code geass',
+                ];
+
+                final hasAnimeKeyword = animeKeywords.any(
+                  (keyword) => title.contains(keyword),
+                );
+
+                if (event.type.toLowerCase().contains('tv') ||
+                    hasAnimeKeyword) {
+                  isAnime = true;
+                  print('✅ Detected anime content: ${movie.title}');
+                  print(
+                    '   Reason: Animation genre + ${event.type.toLowerCase().contains('tv') ? "TV Series" : "anime keyword"}',
+                  );
+                } else {
+                  print('ℹ️ Detected western animation: ${movie.title}');
+                }
+              } else {
+                print('ℹ️ Detected non-anime content: ${movie.title}');
+                print('   Genres: ${movie.genres.join(", ")}');
+              }
+            },
+          );
+
+          // IMPORTANT: Always use anime provider for anime content
+          // Movie providers (flixhq, goku, etc.) don't work with anime IDs
+          if (isAnime) {
+            provider = settings.animeProvider;
+            print('📺 Using anime provider: $provider');
+          } else {
+            provider = settings.movieProvider;
+            print('🎬 Using movie provider: $provider');
+          }
+        }
+      },
+    );
+
     final fullResult = await _getMovieDetails(
-      event.id,
-      event.type,
-      fastMode: false,
+      GetMovieDetailsParams(
+        id: event.id,
+        type: event.type,
+        provider: provider,
+        fastMode: false,
+      ),
     );
 
     fullResult.fold(

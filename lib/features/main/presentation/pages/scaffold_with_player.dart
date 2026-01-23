@@ -21,6 +21,7 @@ class ScaffoldWithPlayer extends StatelessWidget {
     return BlocBuilder<NavigationCubit, int>(
       builder: (context, navIndex) {
         return BlocBuilder<VideoPlayerBloc, VideoPlayerState>(
+          buildWhen: (previous, current) => previous.status != current.status,
           builder: (context, playerState) {
             final isExpanded = playerState.status == VideoPlayerStatus.expanded;
             final isClosed = playerState.status == VideoPlayerStatus.closed;

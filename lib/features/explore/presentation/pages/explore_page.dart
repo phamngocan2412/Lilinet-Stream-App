@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../injection_container.dart';
 import '../../../../core/widgets/loading_indicator.dart';
 import '../../../../core/widgets/error_widget.dart';
 import '../../../movies/presentation/widgets/movie_card.dart';
@@ -16,10 +15,7 @@ class ExplorePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<ExploreBloc>()..add(LoadGenres()),
-      child: const ExploreView(),
-    );
+    return const ExploreView();
   }
 }
 
@@ -53,6 +49,13 @@ class _ExploreViewState extends State<ExploreView>
   @override
   Widget build(BuildContext context) {
     super.build(context); // Required for AutomaticKeepAliveClientMixin
+
+    // Optimization: Calculate optimal memory cache size for images.
+    final screenWidth = MediaQuery.of(context).size.width;
+    final itemWidth = (screenWidth - 32 - 12) / 2;
+    final pixelRatio = MediaQuery.of(context).devicePixelRatio;
+    final memCacheWidth = (itemWidth * pixelRatio).toInt();
+
     return Scaffold(
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) {
@@ -209,6 +212,7 @@ class _ExploreViewState extends State<ExploreView>
                         extra: movie,
                       );
                     },
+                    memCacheWidth: memCacheWidth,
                   );
                 },
               );

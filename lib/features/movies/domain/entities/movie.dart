@@ -20,6 +20,7 @@ class Movie extends Equatable {
   final String? production;
   final List<String>? casts;
   final List<String>? tags;
+  final String? provider;
 
   const Movie({
     required this.id,
@@ -40,23 +41,29 @@ class Movie extends Equatable {
     this.production,
     this.casts,
     this.tags,
+    this.provider,
   });
 
   @override
   List<Object?> get props => [
-        id,
-        title,
-        poster,
-        cover,
-        description,
-        rating,
-        releaseDate,
-        type,
-        episodeId,
-        genres,
-        totalEpisodes,
-        duration,
-        country,
-        production
-      ];
+    id,
+    title,
+    poster,
+    cover,
+    description,
+    rating,
+    releaseDate,
+    type,
+    episodeId,
+    genres,
+    totalEpisodes,
+    duration,
+    episodes,
+    recommendations,
+    country,
+    production,
+    casts,
+    tags,
+    provider,
+  ];
 }

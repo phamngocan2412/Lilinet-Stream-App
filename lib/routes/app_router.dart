@@ -6,6 +6,7 @@ import '../features/movies/domain/entities/movie.dart';
 import '../features/movies/presentation/pages/search_page.dart';
 import '../features/settings/presentation/pages/settings_page.dart';
 import '../features/splash/presentation/pages/splash_page.dart';
+import '../features/explore/presentation/pages/genre_movies_page.dart';
 
 class AppRouter {
   static final router = GoRouter(
@@ -37,11 +38,20 @@ class AppRouter {
             builder: (context, state) => const SettingsPage(),
           ),
           GoRoute(
+            path: '/genre/:id',
+            name: 'genreMovies',
+            builder: (context, state) {
+              final id = state.pathParameters['id']!;
+              final name = state.uri.queryParameters['name'] ?? 'Movies';
+              return GenreMoviesPage(genreId: id, genreName: name);
+            },
+          ),
+          GoRoute(
             path: '/movie/:id',
             name: 'movieDetails',
             builder: (context, state) {
               final id = state.pathParameters['id']!;
-              final type = state.uri.queryParameters['type'] ?? 'Movie';
+              final type = state.uri.queryParameters['type'] ?? 'TV Series';
               // Check if a Movie object was passed in 'extra'
               final moviePreview = state.extra is Movie
                   ? state.extra as Movie

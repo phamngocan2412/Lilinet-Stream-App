@@ -9,6 +9,7 @@ class SearchState extends Equatable {
   final String errorMessage;
   final int currentPage;
   final bool hasMore;
+  final String activeFilter; // 'All', 'TV Series', 'Movie'
 
   const SearchState({
     this.query = '',
@@ -18,6 +19,7 @@ class SearchState extends Equatable {
     this.errorMessage = '',
     this.currentPage = 1,
     this.hasMore = true,
+    this.activeFilter = 'All',
   });
 
   SearchState copyWith({
@@ -28,6 +30,7 @@ class SearchState extends Equatable {
     String? errorMessage,
     int? currentPage,
     bool? hasMore,
+    String? activeFilter,
   }) {
     return SearchState(
       query: query ?? this.query,
@@ -37,17 +40,19 @@ class SearchState extends Equatable {
       errorMessage: errorMessage ?? this.errorMessage,
       currentPage: currentPage ?? this.currentPage,
       hasMore: hasMore ?? this.hasMore,
+      activeFilter: activeFilter ?? this.activeFilter,
     );
   }
 
   @override
   List<Object> get props => [
-        query,
-        movies,
-        isLoading,
-        hasError,
-        errorMessage,
-        currentPage,
-        hasMore,
-      ];
+    query,
+    movies,
+    isLoading,
+    hasError,
+    errorMessage,
+    currentPage,
+    hasMore,
+    activeFilter,
+  ];
 }

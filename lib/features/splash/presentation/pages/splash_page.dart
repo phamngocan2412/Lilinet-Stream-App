@@ -35,7 +35,7 @@ class _SplashPageState extends State<SplashPage>
     _controller.forward();
 
     // Navigate to next screen after animation + delay
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 2), () {
       if (mounted) {
         // Replace with your actual home route path
         context.go('/');
@@ -60,8 +60,8 @@ class _SplashPageState extends State<SplashPage>
             scale: _scaleAnimation,
             child: Image.asset(
               'assets/images/logo.png',
-              width: 150, // Adjust size as needed
-              height: 150,
+              width: 250, // Adjust size as needed
+              height: 250,
             ),
           ),
         ),

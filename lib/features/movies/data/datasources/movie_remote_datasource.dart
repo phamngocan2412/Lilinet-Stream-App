@@ -10,110 +10,148 @@ MovieModel _parseMovieModel(Map<String, dynamic> json) {
   return MovieModel.fromJson(json);
 }
 
+MovieListResponse _parseMovieList(Map<String, dynamic> json) {
+  return MovieListResponse.fromJson(json);
+}
+
 @lazySingleton
 class MovieRemoteDataSource {
   final Dio _dio;
 
   MovieRemoteDataSource(this._dio);
 
-  Future<MovieListResponse> getTrendingMovies({
-    String type = 'all',
-    String timePeriod = 'week',
-    int page = 1,
-  }) async {
+  Future<MovieListResponse> getTrendingMovies({int page = 1}) async {
+    debugPrint('Fetching trending via TMDB... Page: $page');
+    debugPrint(
+      'Requesting URL: ${ApiConstants.trendingMovies} with params: page=$page',
+    );
+
     final response = await _dio.get(
       ApiConstants.trendingMovies,
-      queryParameters: {'type': type, 'timePeriod': timePeriod, 'page': page},
+      queryParameters: {'page': page},
     );
-    return MovieListResponse.fromJson(response.data);
+
+    // Null safety check
+    if (response.data == null) {
+      throw Exception(
+        'TMDB trending API returned null data. Status: ${response.statusCode}, Data: ${response.data}',
+      );
+    }
+
+    return await compute(
+      _parseMovieList,
+      response.data as Map<String, dynamic>,
+    );
   }
 
   Future<MovieListResponse> searchMovies(String query, {int page = 1}) async {
+    debugPrint('Searching for: $query via TMDB');
+
     final encodedQuery = Uri.encodeComponent(query);
     final response = await _dio.get(
       '${ApiConstants.searchMovies}/$encodedQuery',
       queryParameters: {'page': page},
     );
-    return MovieListResponse.fromJson(response.data);
-  }
 
-  Future<MovieModel> getMovieDetails(
-    String id, {
-    required String type,
-    bool fastMode = false,
-  }) async {
-    // Extract numeric TMDB ID if the ID contains provider path
-    // e.g., "tv/watch-jujutsu-kaisen-66956" -> "66956"
-    final cleanId = _extractTmdbId(id);
-
-    final queryParams = {'type': type};
-    if (fastMode) {
-      queryParams['fast'] = 'true';
-    } else {
-      // Use HiMovies for faster scraping (user preference)
-      queryParams['provider'] = 'himovies';
+    // Null safety check
+    if (response.data == null) {
+      throw Exception('TMDB search API returned null data');
     }
 
-    final response = await _dio.get(
-      '${ApiConstants.movieInfo}/$cleanId',
-      queryParameters: queryParams,
-    );
-
-    // Use compute to parse JSON in background isolate
-    // Casting response.data to Map<String, dynamic> is needed
     return await compute(
-      _parseMovieModel,
+      _parseMovieList,
       response.data as Map<String, dynamic>,
     );
   }
 
-  /// Extracts numeric TMDB ID from provider ID or returns the ID as-is
-  /// Examples:
-  /// - "tv/watch-jujutsu-kaisen-66956" -> "66956"
-  /// - "movie/watch-the-matrix-603" -> "603"
-  /// - "watch-jujutsu-kaisen-95479" -> "95479"
-  /// - "95479" -> "95479"
-  String _extractTmdbId(String id) {
-    // Check if ID contains hyphens (provider ID pattern)
-    if (id.contains('-')) {
-      // Extract the numeric part after the last hyphen
-      final parts = id.split('-');
-      if (parts.isNotEmpty) {
-        final lastPart = parts.last;
-        // Check if it's numeric
-        if (int.tryParse(lastPart) != null) {
-          return lastPart;
-        }
-      }
+  Future<MovieModel> getMovieDetails(
+    String id, {
+    String? provider,
+    String? type,
+  }) async {
+    debugPrint('Getting details for ID: $id via TMDB (Type: $type)');
+
+    final queryParams = <String, dynamic>{};
+    if (provider != null) {
+      queryParams['provider'] = provider;
     }
-    // Return as-is if it's already numeric or doesn't match expected pattern
-    return id;
+    if (type != null) {
+      queryParams['type'] = type;
+    }
+
+    final response = await _dio.get(
+      '${ApiConstants.movieInfo}/$id',
+      queryParameters: queryParams,
+    );
+
+    if (response.data == null) {
+      throw Exception('API returned null data');
+    }
+
+    final model = await compute(
+      _parseMovieModel,
+      response.data as Map<String, dynamic>,
+    );
+
+    return model.copyWith(provider: provider);
   }
 
   Future<StreamingResponseModel> getStreamingLinks({
     required String episodeId,
     required String mediaId,
     String? server,
-    String provider = 'himovies', // Default to fastest
+    String provider = 'animekai', // Default to animekai
   }) async {
-    // Determine category based on provider known list or assume movies if unknown
-    // This is a simple heuristic. Ideally, the provider type should be passed.
-    final isAnime = [
-      'hianime',
-      'animepahe',
+    // Normalize provider key
+    final providerKey = provider.toLowerCase().trim();
+
+    // Determine category based on provider known list
+    final animeProviders = [
       'animekai',
       'gogoanime',
-    ].contains(provider.toLowerCase());
+      'animepahe',
+      'animesaturn',
+      'animeunity',
+    ];
+    final isAnime = animeProviders.contains(providerKey);
     final category = isAnime ? 'anime' : 'movies';
 
-    final response = await _dio.get(
-      ApiConstants.getWatchEndpoint(category, provider),
-      queryParameters: {
-        'episodeId': episodeId,
-        'mediaId': mediaId,
-        'server': server,
-      },
+    debugPrint(
+      'getStreamingLinks: provider=$provider ($providerKey), isAnime=$isAnime, category=$category',
     );
-    return StreamingResponseModel.fromJson(response.data);
+
+    // Anime providers use path param: /watch/:episodeId
+    // Movie providers use query param: /watch?episodeId=xxx&mediaId=xxx
+    // EXCEPTION: animepahe uses query param
+    if (isAnime && providerKey != 'animepahe') {
+      debugPrint('Using PATH param strategy for $providerKey');
+      final response = await _dio.get(
+        '/$category/$providerKey/watch/${Uri.encodeComponent(episodeId)}',
+        queryParameters: {if (server != null) 'server': server},
+      );
+      return StreamingResponseModel.fromJson(response.data);
+    } else {
+      // Movies OR animepahe
+      debugPrint(
+        'Using QUERY param strategy for $providerKey (Movies/AnimePahe)',
+      );
+      final queryParams = {
+        'episodeId': episodeId,
+        if (server != null) 'server': server,
+      };
+
+      // Only mmovies need mediaId
+      if (!isAnime) {
+        queryParams['mediaId'] = mediaId;
+      }
+
+      final response = await _dio.get(
+        isAnime
+            ? '/$category/$providerKey/watch'
+            : ApiConstants.getWatchEndpoint(category, providerKey),
+        queryParameters: queryParams,
+      );
+      return StreamingResponseModel.fromJson(response.data);
+    }
   }
 }
