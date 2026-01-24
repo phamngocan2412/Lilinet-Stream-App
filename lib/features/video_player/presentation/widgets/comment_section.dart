@@ -22,12 +22,10 @@ class CommentModel {
     required this.createdAt,
   });
 
-  // Factory to create from Supabase JSON later
   factory CommentModel.fromJson(Map<String, dynamic> json) {
     return CommentModel(
       id: json['id'] as String,
-      userName:
-          json['user_name'] ?? 'Anonymous', // Adjust based on your DB schema
+      userName: json['user_name'] ?? 'Anonymous',
       userAvatarUrl: json['avatar_url'],
       content: json['content'] as String,
       createdAt: DateTime.parse(json['created_at']),
@@ -135,9 +133,9 @@ class _CommentSectionViewState extends State<_CommentSectionView> {
           comments = state.comments;
           isLoading = false;
         } else if (state is CommentsLoaded) {
-           // Different video loaded in singleton? Reload
-           // But initState should catch this.
-           // Just show loading if ID mismatch or wait for event.
+           // Different video loaded in singleton? Reload or wait
+        } else if (state is CommentsError) {
+           isLoading = false;
         }
 
         return Column(
@@ -185,191 +183,6 @@ class _CommentSectionViewState extends State<_CommentSectionView> {
           ],
         );
       },
-    );
-  }
-
-class _CommentSectionState extends State<CommentSection> {
-  final TextEditingController _controller = TextEditingController();
-  final ScrollController _scrollController = ScrollController();
-
-  List<CommentModel> _comments = [];
-  bool _isLoading = true;
-  bool _isPosting = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _fetchComments();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  // ==========================================
-  // 3. Functional Logic (Mock + Supabase Ready)
-  // ==========================================
-
-  Future<void> _fetchComments() async {
-    setState(() => _isLoading = true);
-
-    // --- MOCK API CALL (Replace with Supabase) ---
-    await Future.delayed(const Duration(seconds: 1)); // Simulate network
-
-    final List<CommentModel> mockComments = [
-      CommentModel(
-        id: '1',
-        userName: 'Sarah Jenkins',
-        userAvatarUrl: 'https://i.pravatar.cc/150?u=1',
-        content:
-            'This episode was absolutely mind-blowing! The animation quality has improved so much.',
-        createdAt: DateTime.now().subtract(const Duration(minutes: 45)),
-      ),
-      CommentModel(
-        id: '2',
-        userName: 'OtakuKing99',
-        content: 'Does anyone know the name of the OST playing at 12:30?',
-        createdAt: DateTime.now().subtract(const Duration(hours: 2)),
-      ),
-      CommentModel(
-        id: '3',
-        userName: 'AnimeLover',
-        userAvatarUrl: 'https://i.pravatar.cc/150?u=3',
-        content: 'Can\'t wait for the next season!',
-        createdAt: DateTime.now().subtract(const Duration(days: 1)),
-      ),
-    ];
-    // ---------------------------------------------
-
-    /* SUPABASE IMPLEMENTATION EXAMPLE:
-    final response = await Supabase.instance.client
-        .from('comments')
-        .select()
-        .eq('video_id', widget.videoId)
-        .order('created_at', ascending: false);
-    
-    final fetchedComments = (response as List).map((e) => CommentModel.fromJson(e)).toList();
-    */
-
-    if (mounted) {
-      setState(() {
-        _comments = mockComments; // Replace with fetchedComments
-        _isLoading = false;
-      });
-    }
-  }
-
-  Future<void> _postComment() async {
-    final content = _controller.text.trim();
-    if (content.isEmpty) return;
-
-    setState(() => _isPosting = true);
-
-    // --- MOCK POST CALL (Replace with Supabase) ---
-    await Future.delayed(const Duration(milliseconds: 500));
-
-    final newComment = CommentModel(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
-      userName: 'You', // In real app, get from Auth Provider
-      content: content,
-      createdAt: DateTime.now(),
-    );
-    // ---------------------------------------------
-
-    /* SUPABASE IMPLEMENTATION EXAMPLE:
-    final user = Supabase.instance.client.auth.currentUser;
-    if (user == null) return;
-
-    await Supabase.instance.client.from('comments').insert({
-      'video_id': widget.videoId,
-      'user_id': user.id,
-      'content': content,
-      'user_name': user.userMetadata?['name'] ?? 'User', // Store denormalized or join
-    });
-    // Then refresh or insert locally
-    */
-
-    if (mounted) {
-      setState(() {
-        // Add to top of list
-        _comments.insert(0, newComment);
-        _controller.clear();
-        _isPosting = false;
-      });
-      // Scroll to top
-      _scrollController.animateTo(
-        0,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeOut,
-      );
-    }
-  }
-
-  // Helper for "Time Ago" format
-  String _timeAgo(DateTime date) {
-    final diff = DateTime.now().difference(date);
-    if (diff.inDays > 365) return '${(diff.inDays / 365).floor()}y ago';
-    if (diff.inDays > 30) return '${(diff.inDays / 30).floor()}mo ago';
-    if (diff.inDays > 0) return '${diff.inDays}d ago';
-    if (diff.inHours > 0) return '${diff.inHours}h ago';
-    if (diff.inMinutes > 0) return '${diff.inMinutes}m ago';
-    return 'Just now';
-  }
-
-  // ==========================================
-  // 4. UI Design
-  // ==========================================
-
-  @override
-  Widget build(BuildContext context) {
-    // Using app theme colors
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return Column(
-      children: [
-        // --- Header ---
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          child: Row(
-            children: [
-              Text(
-                'Comments',
-                style: Theme.of(
-                  context,
-                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(width: 8),
-              Text(
-                '${_comments.length}',
-                style: TextStyle(color: Colors.grey[400]),
-              ),
-            ],
-          ),
-        ),
-        const Divider(height: 1, color: Colors.white10),
-
-        // --- Comment List ---
-        Expanded(
-          child: _isLoading
-              ? const Center(child: CircularProgressIndicator())
-              : _comments.isEmpty
-              ? _buildEmptyState()
-              : ListView.builder(
-                  controller: _scrollController,
-                  itemCount: _comments.length,
-                  padding: const EdgeInsets.only(bottom: 16),
-                  itemBuilder: (context, index) {
-                    return _buildCommentItem(_comments[index]);
-                  },
-                ),
-        ),
-
-        // --- Input Field ---
-        _buildInputArea(colorScheme),
-      ],
     );
   }
 
@@ -431,8 +244,7 @@ class _CommentSectionState extends State<CommentSection> {
                       style: const TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
-                        color: Colors
-                            .white, // Or Theme.of(context).colorScheme.onSurface
+                        color: Colors.white,
                       ),
                     ),
                     const SizedBox(width: 8),
@@ -448,8 +260,7 @@ class _CommentSectionState extends State<CommentSection> {
                   comment.content,
                   style: const TextStyle(
                     fontSize: 14,
-                    color: Colors
-                        .white70, // Or Theme.of(context).colorScheme.onSurfaceVariant
+                    color: Colors.white70,
                     height: 1.4,
                   ),
                 ),
@@ -465,7 +276,7 @@ class _CommentSectionState extends State<CommentSection> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: const BoxDecoration(
-        color: Color(0xFF1E1E1E), // Slightly lighter than background
+        color: Color(0xFF1E1E1E),
         border: Border(top: BorderSide(color: Colors.white10)),
       ),
       child: Row(
