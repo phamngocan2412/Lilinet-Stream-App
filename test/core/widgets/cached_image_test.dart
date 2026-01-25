@@ -108,4 +108,57 @@ void main() {
     // Expected: 700 (fallback)
     expect(cachedImage.memCacheWidth, equals(700));
   });
+
+  testWidgets('AppCachedImage skips LayoutBuilder when memCacheWidth is provided',
+      (WidgetTester tester) async {
+    const imageUrl = 'https://example.com/image.jpg';
+
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: AppCachedImage(
+          imageUrl: imageUrl,
+          memCacheWidth: 200,
+        ),
+      ),
+    );
+
+    // Should NOT find LayoutBuilder
+    expect(find.byType(LayoutBuilder), findsNothing);
+    // Should find CachedNetworkImage
+    expect(find.byType(CachedNetworkImage), findsOneWidget);
+  });
+
+  testWidgets('AppCachedImage skips LayoutBuilder when width is finite',
+      (WidgetTester tester) async {
+    const imageUrl = 'https://example.com/image.jpg';
+
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: AppCachedImage(
+          imageUrl: imageUrl,
+          width: 100,
+        ),
+      ),
+    );
+
+    expect(find.byType(LayoutBuilder), findsNothing);
+    expect(find.byType(CachedNetworkImage), findsOneWidget);
+  });
+
+  testWidgets('AppCachedImage uses LayoutBuilder when dimensions are missing',
+      (WidgetTester tester) async {
+    const imageUrl = 'https://example.com/image.jpg';
+
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: AppCachedImage(
+          imageUrl: imageUrl,
+          // No width, no memCacheWidth
+        ),
+      ),
+    );
+
+    expect(find.byType(LayoutBuilder), findsOneWidget);
+    expect(find.byType(CachedNetworkImage), findsOneWidget);
+  });
 }
