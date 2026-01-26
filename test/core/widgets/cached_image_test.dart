@@ -44,6 +44,9 @@ void main() {
     final expectedCacheWidth = (containerWidth * devicePixelRatio).toInt();
 
     expect(cachedImage.memCacheWidth, equals(expectedCacheWidth));
+
+    // Verify LayoutBuilder IS present in this fallback case
+    expect(find.byType(LayoutBuilder), findsOneWidget);
   });
 
   testWidgets('AppCachedImage uses provided width if available',
@@ -75,6 +78,9 @@ void main() {
     final expectedCacheWidth = (explicitWidth * devicePixelRatio).toInt();
 
     expect(cachedImage.memCacheWidth, equals(expectedCacheWidth));
+
+    // Verify LayoutBuilder is SKIPPED in this optimized case
+    expect(find.byType(LayoutBuilder), findsNothing);
   });
 
   testWidgets('AppCachedImage falls back to default if unbounded',
@@ -107,5 +113,28 @@ void main() {
 
     // Expected: 700 (fallback)
     expect(cachedImage.memCacheWidth, equals(700));
+  });
+
+  testWidgets('AppCachedImage skips LayoutBuilder when memCacheWidth is provided',
+      (WidgetTester tester) async {
+    const imageUrl = 'https://example.com/image.jpg';
+    const int explicitMemCacheWidth = 100;
+
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Center(
+          child: AppCachedImage(
+            imageUrl: imageUrl,
+            memCacheWidth: explicitMemCacheWidth,
+          ),
+        ),
+      ),
+    );
+
+    // Verify CachedNetworkImage is present
+    expect(find.byType(CachedNetworkImage), findsOneWidget);
+
+    // Verify LayoutBuilder is NOT present (optimization check)
+    expect(find.byType(LayoutBuilder), findsNothing);
   });
 }
