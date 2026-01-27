@@ -7,5 +7,5 @@
 **Action:** Wrap `CachedNetworkImage` in `LayoutBuilder` to use `constraints.maxWidth` as a fallback for `memCacheWidth` calculation, ensuring memory efficiency even in flexible layouts.
 
 ## 2024-05-25 - Conditional LayoutBuilder Optimization
-**Learning:** `LayoutBuilder` adds an expensive layout pass. When dimensions (`memCacheWidth` or `width`) are known upfront, wrapping widgets in `LayoutBuilder` is unnecessary overhead.
-**Action:** Conditionally skip `LayoutBuilder` in `AppCachedImage` by checking for explicit dimensions first, using `LayoutBuilder` only as a fallback for fluid layouts.
+**Learning:** `LayoutBuilder` adds unnecessary overhead (layout pass) when dimensions are already known via explicit parameters (e.g. `memCacheWidth` or finite `width`).
+**Action:** Skip `LayoutBuilder` wrapper in `AppCachedImage` when `memCacheWidth` is provided or `width` is finite, reducing widget depth and layout callbacks for list/grid items.

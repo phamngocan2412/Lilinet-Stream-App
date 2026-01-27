@@ -11,3 +11,8 @@
 **Vulnerability:** Weak password requirements (< 8 chars) allowed weak passwords.
 **Learning:** Simply increasing client-side validation length (e.g., 6 -> 8) on a shared `AuthDialog` (used for both Login and Register) can lock out existing users with legacy passwords.
 **Prevention:** Decouple Login and Registration validation logic. Enforce strict policies on Registration/Password Change, but allow legacy passwords on Login (potentially with a warning/prompt to upgrade).
+
+## 2026-10-24 - Secure Network Logging
+**Vulnerability:** `PrettyDioLogger` was configured to log request bodies in `kDebugMode`, which exposed plaintext passwords and tokens in the debug console.
+**Learning:** Even in debug mode, sensitive data should not be logged to avoid accidental exposure or persistence in log files.
+**Prevention:** Use a custom `SecureInterceptor` that redacts sensitive keys (`password`, `token`) before logging, and disable raw body logging in `PrettyDioLogger`.
