@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -272,7 +273,7 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent>
 
     // Listen for errors
     _errorSub = player.stream.error.listen((error) {
-      if (!_isDisposed) {
+      if (!_isDisposed && kDebugMode) {
         print('❌ Media Player Error: $error');
       }
     });
@@ -452,7 +453,7 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent>
       });
 
       _errorSub = player.stream.error.listen((error) {
-        if (!_isDisposed) {
+        if (!_isDisposed && kDebugMode) {
           print('❌ Media Player Error: $error');
         }
       });
@@ -640,12 +641,14 @@ class _VideoPlayerContentState extends State<_VideoPlayerContent>
           }
 
           // Debug logging
-          print('🎬 Playing video:');
-          print('  URL: ${link.url}');
-          print('  Quality: ${link.quality}');
-          print('  isM3U8: ${link.isM3U8}');
-          print('  Headers: ${link.headers}');
-          print('  Subtitle: $subUrl');
+          if (kDebugMode) {
+            print('🎬 Playing video:');
+            print('  URL: ${link.url}');
+            print('  Quality: ${link.quality}');
+            print('  isM3U8: ${link.isM3U8}');
+            print('  Headers: ${link.headers}');
+            print('  Subtitle: $subUrl');
+          }
 
           _playVideo(
             link.url,

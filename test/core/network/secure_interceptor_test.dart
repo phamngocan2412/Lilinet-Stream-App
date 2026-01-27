@@ -1,56 +1,75 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:dio/dio.dart';
 import 'package:lilinet_app/core/network/secure_interceptor.dart';
-import 'package:mocktail/mocktail.dart';
-
-class MockRequestInterceptorHandler extends Mock implements RequestInterceptorHandler {}
-class MockResponseInterceptorHandler extends Mock implements ResponseInterceptorHandler {}
-class MockErrorInterceptorHandler extends Mock implements ErrorInterceptorHandler {}
 
 void main() {
-  late SecureInterceptor interceptor;
-  late MockRequestInterceptorHandler requestHandler;
+  group('SecureInterceptor', () {
+    test('redacts password from JSON body', () {
+      final logs = <String>[];
+      final interceptor = SecureInterceptor(
+        logCallback: (message, {name = ''}) {
+          logs.add(message);
+        },
+      );
 
-  setUp(() {
-    interceptor = SecureInterceptor();
-    requestHandler = MockRequestInterceptorHandler();
-  });
+      final options = RequestOptions(
+        path: '/login',
+        data: {
+          'email': 'test@example.com',
+          'password': 'secret_password',
+        },
+      );
 
-  // Note: We cannot easily assert what was logged to developer.log in a unit test
-  // without a custom zone or intercepting print (if it used print).
-  // However, we can verifying the logic of _sanitize indirectly or by
-  // trusting the code structure.
-  // Since _sanitize is private, we can't test it directly.
-  // We will verify that it does NOT modify the original request options.
+      final handler = RequestInterceptorHandler();
+      interceptor.onRequest(options, handler);
 
-  test('onRequest should not modify sensitive data in the original request object', () {
-    final data = {'password': 'secret123', 'username': 'user'};
-    final options = RequestOptions(path: '/login', data: data);
+      expect(logs.length, 1);
+      expect(logs.first, contains('"password": "***REDACTED***"'));
+      expect(logs.first, contains('"email": "test@example.com"'));
+      expect(logs.first, isNot(contains('secret_password')));
+    });
 
-    interceptor.onRequest(options, requestHandler);
+    test('redacts token from JSON body', () {
+      final logs = <String>[];
+      final interceptor = SecureInterceptor(
+        logCallback: (message, {name = ''}) {
+          logs.add(message);
+        },
+      );
 
-    // Verify next is called
-    verify(() => requestHandler.next(options)).called(1);
+      final options = RequestOptions(
+        path: '/refresh',
+        data: {
+          'token': 'secret_token',
+        },
+      );
 
-    // Verify original data is untouched
-    expect(options.data['password'], 'secret123');
-    expect(options.data['username'], 'user');
-  });
+      final handler = RequestInterceptorHandler();
+      interceptor.onRequest(options, handler);
 
-  test('onRequest should handle list data without crashing', () {
-    final data = [{'id': 1}, {'id': 2}];
-    final options = RequestOptions(path: '/list', data: data);
+      expect(logs.length, 1);
+      expect(logs.first, contains('"token": "***REDACTED***"'));
+      expect(logs.first, isNot(contains('secret_token')));
+    });
 
-    interceptor.onRequest(options, requestHandler);
+    test('handles non-map data gracefully', () {
+      final logs = <String>[];
+      final interceptor = SecureInterceptor(
+        logCallback: (message, {name = ''}) {
+          logs.add(message);
+        },
+      );
 
-    verify(() => requestHandler.next(options)).called(1);
-  });
+      final options = RequestOptions(
+        path: '/search',
+        data: 'plain text query',
+      );
 
-   test('onRequest should handle null data without crashing', () {
-    final options = RequestOptions(path: '/empty');
+      final handler = RequestInterceptorHandler();
+      interceptor.onRequest(options, handler);
 
-    interceptor.onRequest(options, requestHandler);
-
-    verify(() => requestHandler.next(options)).called(1);
+      expect(logs.length, 1);
+      expect(logs.first, contains('plain text query'));
+    });
   });
 }
