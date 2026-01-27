@@ -65,37 +65,26 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     final email = '${event.username.trim()}@lilinet.app';
     final password = event.password;
 
-    // Try to sign in first
-    final signInResult = await signInWithEmail(
-      email: email,
-      password: password,
-    );
-
-    await signInResult.fold(
-      (failure) async {
-        // If sign in fails, try to sign up (auto-register)
-        final signUpResult = await signUpWithEmail(
-          email: email,
-          password: password,
-          displayName: event.username,
-        );
-        signUpResult.fold(
-          (failure) {
-            // If both signin and signup fail
-            if (failure.message.contains('User already registered') ||
-                failure.message.contains('Database error')) {
-              emit(const AuthError('Incorrect password or email taken'));
-            } else {
-              emit(AuthError(failure.message));
-            }
-          },
-          (user) => emit(Authenticated(user)),
-        );
-      },
-      (user) async {
-        emit(Authenticated(user));
-      },
-    );
+    if (event.isLogin) {
+      final signInResult = await signInWithEmail(
+        email: email,
+        password: password,
+      );
+      signInResult.fold(
+        (failure) => emit(AuthError(failure.message)),
+        (user) => emit(Authenticated(user)),
+      );
+    } else {
+      final signUpResult = await signUpWithEmail(
+        email: email,
+        password: password,
+        displayName: event.username,
+      );
+      signUpResult.fold(
+        (failure) => emit(AuthError(failure.message)),
+        (user) => emit(Authenticated(user)),
+      );
+    }
   }
 
   Future<void> _onSignInRequested(
