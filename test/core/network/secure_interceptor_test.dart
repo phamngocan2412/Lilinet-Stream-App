@@ -4,6 +4,50 @@ import 'package:lilinet_app/core/network/secure_interceptor.dart';
 
 void main() {
   group('SecureInterceptor', () {
+    test('logs request method and URI', () {
+      final logs = <String>[];
+      final interceptor = SecureInterceptor(
+        logCallback: (message, {name = ''}) {
+          logs.add(message);
+        },
+      );
+
+      final options = RequestOptions(
+        path: '/test-endpoint',
+        method: 'GET',
+      );
+
+      final handler = RequestInterceptorHandler();
+      interceptor.onRequest(options, handler);
+
+      expect(logs.any((log) => log.contains('Request: GET /test-endpoint')), isTrue);
+    });
+
+    test('redacts Authorization header', () {
+      final logs = <String>[];
+      final interceptor = SecureInterceptor(
+        logCallback: (message, {name = ''}) {
+          logs.add(message);
+        },
+      );
+
+      final options = RequestOptions(
+        path: '/protected',
+        headers: {
+          'Authorization': 'Bearer secret_token',
+          'Content-Type': 'application/json',
+        },
+      );
+
+      final handler = RequestInterceptorHandler();
+      interceptor.onRequest(options, handler);
+
+      final headerLog = logs.firstWhere((log) => log.contains('Request Headers:'));
+      expect(headerLog, contains('Authorization: ***REDACTED***'));
+      expect(headerLog, contains('Content-Type: application/json'));
+      expect(headerLog, isNot(contains('secret_token')));
+    });
+
     test('redacts password from JSON body', () {
       final logs = <String>[];
       final interceptor = SecureInterceptor(
@@ -23,10 +67,10 @@ void main() {
       final handler = RequestInterceptorHandler();
       interceptor.onRequest(options, handler);
 
-      expect(logs.length, 1);
-      expect(logs.first, contains('"password": "***REDACTED***"'));
-      expect(logs.first, contains('"email": "test@example.com"'));
-      expect(logs.first, isNot(contains('secret_password')));
+      final bodyLog = logs.firstWhere((log) => log.contains('Request Body:'));
+      expect(bodyLog, contains('"password": "***REDACTED***"'));
+      expect(bodyLog, contains('"email": "test@example.com"'));
+      expect(bodyLog, isNot(contains('secret_password')));
     });
 
     test('redacts token from JSON body', () {
@@ -47,9 +91,9 @@ void main() {
       final handler = RequestInterceptorHandler();
       interceptor.onRequest(options, handler);
 
-      expect(logs.length, 1);
-      expect(logs.first, contains('"token": "***REDACTED***"'));
-      expect(logs.first, isNot(contains('secret_token')));
+      final bodyLog = logs.firstWhere((log) => log.contains('Request Body:'));
+      expect(bodyLog, contains('"token": "***REDACTED***"'));
+      expect(bodyLog, isNot(contains('secret_token')));
     });
 
     test('handles non-map data gracefully', () {
@@ -68,8 +112,8 @@ void main() {
       final handler = RequestInterceptorHandler();
       interceptor.onRequest(options, handler);
 
-      expect(logs.length, 1);
-      expect(logs.first, contains('plain text query'));
+      final bodyLog = logs.firstWhere((log) => log.contains('Request Body:'));
+      expect(bodyLog, contains('plain text query'));
     });
   });
 }

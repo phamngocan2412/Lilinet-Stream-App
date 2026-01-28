@@ -16,6 +16,28 @@ class SecureInterceptor extends Interceptor {
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     if (kDebugMode) {
       try {
+        // Log Method and URI
+        _log('Request: ${options.method} ${options.uri}', name: 'SecureLogger');
+
+        // Log Headers with Redaction
+        final headers = options.headers;
+        if (headers.isNotEmpty) {
+          final sanitizedHeaders = Map<String, dynamic>.from(headers);
+          const sensitiveHeaders = [
+            'authorization',
+            'cookie',
+            'x-auth-token',
+            'access_token'
+          ];
+
+          for (final key in sanitizedHeaders.keys) {
+            if (sensitiveHeaders.contains(key.toLowerCase())) {
+              sanitizedHeaders[key] = '***REDACTED***';
+            }
+          }
+          _log('Request Headers: $sanitizedHeaders', name: 'SecureLogger');
+        }
+
         final data = options.data;
         if (data != null) {
           if (data is Map<String, dynamic>) {

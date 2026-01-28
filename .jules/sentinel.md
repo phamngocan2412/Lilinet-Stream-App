@@ -16,3 +16,8 @@
 **Vulnerability:** `PrettyDioLogger` was configured to log request bodies in `kDebugMode`, which exposed plaintext passwords and tokens in the debug console.
 **Learning:** Even in debug mode, sensitive data should not be logged to avoid accidental exposure or persistence in log files.
 **Prevention:** Use a custom `SecureInterceptor` that redacts sensitive keys (`password`, `token`) before logging, and disable raw body logging in `PrettyDioLogger`.
+
+## 2026-10-25 - Insecure Header Logging
+**Vulnerability:** `PrettyDioLogger` with `requestHeader: true` logs sensitive headers like `Authorization` in plaintext.
+**Learning:** Disabling `requestHeader` is not enough if you need to debug; you must implement custom redaction. Standard loggers often lack granular control.
+**Prevention:** Implement custom interceptors for logging that specifically target and redact sensitive keys in both Body and Headers.

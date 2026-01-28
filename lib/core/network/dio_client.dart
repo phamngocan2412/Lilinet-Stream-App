@@ -29,7 +29,7 @@ class NetworkModule {
       dio.interceptors.add(SecureInterceptor());
       dio.interceptors.add(
         PrettyDioLogger(
-          requestHeader: true,
+          requestHeader: false, // Handled by SecureInterceptor
           requestBody: false, // Handled by SecureInterceptor
           responseBody: false, // Disabled huge body logging
           responseHeader: false,
