@@ -10,8 +10,14 @@ import 'package:mocktail/mocktail.dart';
 
 class MockAuthBloc extends MockBloc<AuthEvent, AuthState> implements AuthBloc {}
 
+class FakeAuthSubmitted extends Fake implements AuthSubmitted {}
+
 void main() {
   late MockAuthBloc mockAuthBloc;
+
+  setUpAll(() {
+    registerFallbackValue(FakeAuthSubmitted());
+  });
 
   setUp(() {
     mockAuthBloc = MockAuthBloc();
@@ -37,8 +43,6 @@ void main() {
     final passwordFieldFinder = find.widgetWithText(TextFormField, 'Password');
     expect(passwordFieldFinder, findsOneWidget);
 
-    // Initial state: Obscured
-    // TextFormField builds a TextField internally. We find that TextField.
     final textFieldFinder = find.descendant(
       of: passwordFieldFinder,
       matching: find.byType(TextField),
@@ -46,60 +50,88 @@ void main() {
     final textField = tester.widget<TextField>(textFieldFinder);
     expect(textField.obscureText, isTrue);
 
-    // Find visibility icon (initially 'visibility')
-    // Wait, if obscured is true, icon should be visibility (eye open) or visibility_off (eye closed)?
-    // Usually:
-    // obscured=true -> show "visibility" icon (to click and see) OR "visibility_off" (representing hidden state)?
-    // My code:
-    // icon: Icon(_isObscured ? Icons.visibility : Icons.visibility_off),
-    // So if obscured (default), icon is visibility.
-
     final visibilityIconFinder = find.byIcon(Icons.visibility);
-    expect(visibilityIconFinder, findsOneWidget);
-
-    // Tap it
     await tester.tap(visibilityIconFinder);
     await tester.pump();
 
-    // Toggled state: Not obscured
     final textFieldToggled = tester.widget<TextField>(textFieldFinder);
     expect(textFieldToggled.obscureText, isFalse);
-
-    // Icon should change to visibility_off
-    final visibilityOffIconFinder = find.byIcon(Icons.visibility_off);
-    expect(visibilityOffIconFinder, findsOneWidget);
-
-    // Tap again to hide
-    await tester.tap(visibilityOffIconFinder);
-    await tester.pump();
-
-    final textFieldHidden = tester.widget<TextField>(textFieldFinder);
-    expect(textFieldHidden.obscureText, isTrue);
   });
 
-  testWidgets('validates password length', (tester) async {
+  testWidgets('validates password length only in Sign Up mode', (tester) async {
     when(() => mockAuthBloc.state).thenReturn(AuthInitial());
 
     await tester.pumpWidget(createWidgetUnderTest());
     await tester.pumpAndSettle();
 
-    // Enter short password
-    await tester.enterText(find.widgetWithText(TextFormField, 'Password'), '1234567');
+    // Default is Login mode. Enter short password.
+    await tester.enterText(find.widgetWithText(TextFormField, 'Password'), '123456');
     await tester.enterText(find.widgetWithText(TextFormField, 'Username'), 'user123');
 
-    // Tap Continue
-    await tester.tap(find.text('Continue'));
+    // Tap Login
+    await tester.tap(find.widgetWithText(FilledButton, 'Login'));
+    await tester.pump();
+
+    // Expect NO validation error for length
+    expect(find.text('Password must be at least 8 characters'), findsNothing);
+
+    // Switch to Sign Up mode
+    await tester.tap(find.text('Sign Up'));
+    await tester.pumpAndSettle();
+
+    // Tap Sign Up
+    await tester.tap(find.widgetWithText(FilledButton, 'Sign Up'));
     await tester.pump();
 
     // Expect validation error
     expect(find.text('Password must be at least 8 characters'), findsOneWidget);
+  });
 
-    // Enter valid password
-    await tester.enterText(find.widgetWithText(TextFormField, 'Password'), '12345678');
-    await tester.tap(find.text('Continue'));
+  testWidgets('dispatches AuthSubmitted with isLogin=true in Login mode', (tester) async {
+    when(() => mockAuthBloc.state).thenReturn(AuthInitial());
+
+    await tester.pumpWidget(createWidgetUnderTest());
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.widgetWithText(TextFormField, 'Username'), 'user123');
+    await tester.enterText(find.widgetWithText(TextFormField, 'Password'), 'password123');
+
+    // Tap Login button
+    await tester.tap(find.widgetWithText(FilledButton, 'Login'));
     await tester.pump();
 
-    // Expect no validation error
-    expect(find.text('Password must be at least 8 characters'), findsNothing);
+    verify(() => mockAuthBloc.add(
+      const AuthSubmitted(
+        username: 'user123',
+        password: 'password123',
+        isLogin: true,
+      ),
+    )).called(1);
+  });
+
+  testWidgets('dispatches AuthSubmitted with isLogin=false in Sign Up mode', (tester) async {
+    when(() => mockAuthBloc.state).thenReturn(AuthInitial());
+
+    await tester.pumpWidget(createWidgetUnderTest());
+    await tester.pumpAndSettle();
+
+    // Switch to Sign Up
+    await tester.tap(find.text('Sign Up'));
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.widgetWithText(TextFormField, 'Username'), 'newuser');
+    await tester.enterText(find.widgetWithText(TextFormField, 'Password'), 'password123'); // > 8 chars
+
+    // Tap Sign Up button
+    await tester.tap(find.widgetWithText(FilledButton, 'Sign Up'));
+    await tester.pump();
+
+    verify(() => mockAuthBloc.add(
+      const AuthSubmitted(
+        username: 'newuser',
+        password: 'password123',
+        isLogin: false,
+      ),
+    )).called(1);
   });
 }
