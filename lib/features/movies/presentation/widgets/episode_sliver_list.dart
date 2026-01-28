@@ -72,6 +72,8 @@ class EpisodeSliverList extends StatelessWidget {
                           ? AppCachedImage(
                               imageUrl: imageUrl,
                               fit: BoxFit.cover,
+                              width: 100,
+                              height: 56,
                             )
                           : Container(
                               color: Theme.of(

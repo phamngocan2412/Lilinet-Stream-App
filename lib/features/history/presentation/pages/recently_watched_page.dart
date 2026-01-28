@@ -90,6 +90,8 @@ class RecentlyWatchedPage extends StatelessWidget {
                               AppCachedImage(
                                 imageUrl: item.posterUrl ?? '',
                                 fit: BoxFit.cover,
+                                width: 120,
+                                height: 80,
                               ),
                               Container(color: Colors.black38),
                               const Center(

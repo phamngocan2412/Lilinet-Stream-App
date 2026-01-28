@@ -74,7 +74,12 @@ class EpisodeList extends StatelessWidget {
                   fit: StackFit.expand,
                   children: [
                     imageUrl != null && imageUrl.isNotEmpty
-                        ? AppCachedImage(imageUrl: imageUrl, fit: BoxFit.cover)
+                        ? AppCachedImage(
+                            imageUrl: imageUrl,
+                            fit: BoxFit.cover,
+                            width: 100,
+                            height: 56,
+                          )
                         : Container(
                             color: Colors.grey.shade800,
                             child: const Icon(
