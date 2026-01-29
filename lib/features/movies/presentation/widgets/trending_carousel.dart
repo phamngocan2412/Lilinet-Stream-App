@@ -6,11 +6,13 @@ import '../../../../core/widgets/cached_image.dart';
 class TrendingCarousel extends StatefulWidget {
   final List<Movie> movies;
   final Function(Movie) onMovieTap;
+  final int? memCacheWidth;
 
   const TrendingCarousel({
     super.key,
     required this.movies,
     required this.onMovieTap,
+    this.memCacheWidth,
   });
 
   @override
@@ -50,6 +52,8 @@ class _TrendingCarouselState extends State<TrendingCarousel> {
                       child: AppCachedImage(
                         imageUrl: movie.poster ?? movie.cover ?? '',
                         fit: BoxFit.cover,
+                        // Optimization: Skip LayoutBuilder overhead by providing cache size explicitly
+                        memCacheWidth: widget.memCacheWidth,
                       ),
                     ),
                     // Gradient Overlay

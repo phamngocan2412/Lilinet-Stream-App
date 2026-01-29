@@ -151,6 +151,10 @@ class HomePageView extends StatelessWidget {
                             const SizedBox(height: 16),
                             TrendingCarousel(
                               movies: trendingMovies.take(5).toList(),
+                              // Optimization: Calculate explicit cache width to avoid LayoutBuilder overhead
+                              memCacheWidth: ((MediaQuery.of(context).size.width - 32) *
+                                      MediaQuery.of(context).devicePixelRatio)
+                                  .toInt(),
                               onMovieTap: (movie) => context.push(
                                 '/movie/${movie.id}?type=${movie.type}',
                                 extra: movie,
