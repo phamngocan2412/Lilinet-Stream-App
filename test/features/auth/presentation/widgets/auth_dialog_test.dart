@@ -1,5 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lilinet_app/features/auth/presentation/bloc/auth_bloc.dart';
@@ -85,6 +86,29 @@ void main() {
 
     // Expect validation error
     expect(find.text('Password must be at least 8 characters'), findsOneWidget);
+  });
+
+  testWidgets('enforces username input formatters and max length', (tester) async {
+    when(() => mockAuthBloc.state).thenReturn(AuthInitial());
+
+    await tester.pumpWidget(createWidgetUnderTest());
+    await tester.pumpAndSettle();
+
+    final usernameFieldFinder = find.widgetWithText(TextFormField, 'Username');
+    expect(usernameFieldFinder, findsOneWidget);
+
+    final textFieldFinder = find.descendant(
+      of: usernameFieldFinder,
+      matching: find.byType(TextField),
+    );
+    final textField = tester.widget<TextField>(textFieldFinder);
+
+    // Check maxLength
+    expect(textField.maxLength, 30);
+
+    // Check input formatters
+    expect(textField.inputFormatters, isNotEmpty);
+    expect(textField.inputFormatters!.first, isA<FilteringTextInputFormatter>());
   });
 
   testWidgets('dispatches AuthSubmitted with isLogin=true in Login mode', (tester) async {

@@ -60,9 +60,11 @@ class _SearchPageViewState extends State<SearchPageView> {
         title: TextField(
           controller: _controller,
           autofocus: true,
+          maxLength: 100,
           style: Theme.of(context).textTheme.bodyLarge,
           decoration: InputDecoration(
             hintText: 'Search anime...',
+            counterText: "",
             border: InputBorder.none,
             enabledBorder: InputBorder.none,
             focusedBorder: InputBorder.none,

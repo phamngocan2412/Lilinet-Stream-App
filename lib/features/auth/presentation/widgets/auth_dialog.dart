@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/auth_bloc.dart';
@@ -102,10 +103,16 @@ class _AuthDialogState extends State<AuthDialog> {
                     const SizedBox(height: 24),
                     TextFormField(
                       controller: _usernameController,
+                      maxLength: 30,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'[a-zA-Z0-9_.]')),
+                      ],
                       decoration: const InputDecoration(
                         labelText: 'Username',
                         border: OutlineInputBorder(),
                         prefixIcon: Icon(Icons.person),
+                        counterText: "",
                       ),
                       enabled: !isLoading,
                       validator: (value) {
@@ -121,10 +128,12 @@ class _AuthDialogState extends State<AuthDialog> {
                     const SizedBox(height: 16),
                     TextFormField(
                       controller: _passwordController,
+                      maxLength: 100,
                       decoration: InputDecoration(
                         labelText: 'Password',
                         border: const OutlineInputBorder(),
                         prefixIcon: const Icon(Icons.lock),
+                        counterText: "",
                         suffixIcon: IconButton(
                           icon: Icon(
                             _isObscured
