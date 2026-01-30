@@ -47,6 +47,7 @@ android
 .env
 .agent
 SUPABASE_FAVORITES_GUIDE.md
+supabase/
 
 # Flutter repo-specific
 /bin/cache/

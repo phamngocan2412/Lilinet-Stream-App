@@ -20,7 +20,7 @@ class ExploreRepositoryImpl implements ExploreRepository {
       final genres = await remoteDataSource.getGenres();
       return Right(genres.map((g) => g.toEntity()).toList());
     } catch (e) {
-      return const Left(ServerFailure('Failed to load genres'));
+      return const Left(Failure.server('Failed to load genres'));
     }
   }
 
@@ -42,7 +42,7 @@ class ExploreRepositoryImpl implements ExploreRepository {
     } on DioException catch (e) {
       return Left(_handleDioError(e));
     } catch (e) {
-      return Left(ServerFailure(e.toString()));
+      return Left(Failure.server(e.toString()));
     }
   }
 
@@ -113,7 +113,7 @@ class ExploreRepositoryImpl implements ExploreRepository {
     } on DioException catch (e) {
       return Left(_handleDioError(e));
     } catch (e) {
-      return Left(ServerFailure(e.toString()));
+      return Left(Failure.server(e.toString()));
     }
   }
 
@@ -126,7 +126,7 @@ class ExploreRepositoryImpl implements ExploreRepository {
     } on DioException catch (e) {
       return Left(_handleDioError(e));
     } catch (e) {
-      return Left(ServerFailure(e.toString()));
+      return Left(Failure.server(e.toString()));
     }
   }
 
@@ -147,7 +147,7 @@ class ExploreRepositoryImpl implements ExploreRepository {
     } on DioException catch (e) {
       return Left(_handleDioError(e));
     } catch (e) {
-      return Left(ServerFailure(e.toString()));
+      return Left(Failure.server(e.toString()));
     }
   }
 
@@ -168,7 +168,7 @@ class ExploreRepositoryImpl implements ExploreRepository {
     } on DioException catch (e) {
       return Left(_handleDioError(e));
     } catch (e) {
-      return Left(ServerFailure(e.toString()));
+      return Left(Failure.server(e.toString()));
     }
   }
 
@@ -177,18 +177,18 @@ class ExploreRepositoryImpl implements ExploreRepository {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:
       case DioExceptionType.receiveTimeout:
-        return const NetworkFailure('Connection timeout');
+        return const Failure.network('Connection timeout');
       case DioExceptionType.badResponse:
-        return const ServerFailure('Server error');
+        return const Failure.server('Server error');
       case DioExceptionType.cancel:
-        return const NetworkFailure('Request cancelled');
+        return const Failure.network('Request cancelled');
       case DioExceptionType.unknown:
         if (error.error.toString().contains('SocketException')) {
-          return const NetworkFailure('No internet connection');
+          return const Failure.network('No internet connection');
         }
-        return const NetworkFailure('Unexpected error');
+        return const Failure.network('Unexpected error');
       default:
-        return const NetworkFailure('Network error');
+        return const Failure.network('Network error');
     }
   }
 }

@@ -24,9 +24,9 @@ class AuthRepositoryImpl implements AuthRepository {
       );
       return Right(user.toEntity());
     } on supabase.AuthException catch (e) {
-      return Left(ServerFailure(e.message));
+      return Left(Failure.server(e.message));
     } catch (e) {
-      return Left(ServerFailure('Sign in failed: ${e.toString()}'));
+      return Left(Failure.server('Sign in failed: ${e.toString()}'));
     }
   }
 
@@ -44,9 +44,9 @@ class AuthRepositoryImpl implements AuthRepository {
       );
       return Right(user.toEntity());
     } on supabase.AuthException catch (e) {
-      return Left(ServerFailure(e.message));
+      return Left(Failure.server(e.message));
     } catch (e) {
-      return Left(ServerFailure('Sign up failed: ${e.toString()}'));
+      return Left(Failure.server('Sign up failed: ${e.toString()}'));
     }
   }
 
@@ -56,7 +56,7 @@ class AuthRepositoryImpl implements AuthRepository {
       await dataSource.signOut();
       return const Right(null);
     } catch (e) {
-      return Left(ServerFailure('Sign out failed: ${e.toString()}'));
+      return Left(Failure.server('Sign out failed: ${e.toString()}'));
     }
   }
 
@@ -66,7 +66,7 @@ class AuthRepositoryImpl implements AuthRepository {
       final user = await dataSource.getCurrentUser();
       return Right(user?.toEntity());
     } catch (e) {
-      return Left(ServerFailure('Get current user failed: ${e.toString()}'));
+      return Left(Failure.server('Get current user failed: ${e.toString()}'));
     }
   }
 

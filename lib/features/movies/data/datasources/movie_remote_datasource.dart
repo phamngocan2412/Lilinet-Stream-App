@@ -112,6 +112,7 @@ class MovieRemoteDataSource {
       'animepahe',
       'animesaturn',
       'animeunity',
+      'zoro',
     ];
     final isAnime = animeProviders.contains(providerKey);
     final category = isAnime ? 'anime' : 'movies';

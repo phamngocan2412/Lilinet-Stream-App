@@ -1,35 +1,18 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../../domain/entities/movie.dart';
 
-abstract class TrendingMoviesState extends Equatable {
-  const TrendingMoviesState();
+part 'trending_movies_state.freezed.dart';
 
-  @override
-  List<Object> get props => [];
-}
+@freezed
+class TrendingMoviesState with _$TrendingMoviesState {
+  const factory TrendingMoviesState.initial() = _Initial;
 
-class TrendingMoviesInitial extends TrendingMoviesState {}
+  const factory TrendingMoviesState.loading() = _Loading;
 
-class TrendingMoviesLoading extends TrendingMoviesState {}
+  const factory TrendingMoviesState.loaded({
+    required List<Movie> trending,
+    @Default({}) Map<String, List<Movie>> categories,
+  }) = _Loaded;
 
-class TrendingMoviesLoaded extends TrendingMoviesState {
-  final List<Movie> trending;
-  final Map<String, List<Movie>> categories;
-
-  const TrendingMoviesLoaded({
-    required this.trending,
-    this.categories = const {},
-  });
-
-  @override
-  List<Object> get props => [trending, categories];
-}
-
-class TrendingMoviesError extends TrendingMoviesState {
-  final String message;
-
-  const TrendingMoviesError(this.message);
-
-  @override
-  List<Object> get props => [message];
+  const factory TrendingMoviesState.error(String message) = _Error;
 }

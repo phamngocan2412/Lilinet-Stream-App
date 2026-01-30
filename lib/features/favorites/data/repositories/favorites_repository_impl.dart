@@ -17,7 +17,7 @@ class FavoritesRepositoryImpl implements FavoritesRepository {
       final favorites = await dataSource.getFavorites();
       return Right(favorites.map((f) => f.toEntity()).toList());
     } catch (e) {
-      return Left(ServerFailure('Failed to get favorites: ${e.toString()}'));
+      return Left(Failure.server('Failed to get favorites: ${e.toString()}'));
     }
   }
 
@@ -37,7 +37,7 @@ class FavoritesRepositoryImpl implements FavoritesRepository {
       );
       return Right(favorite.toEntity());
     } catch (e) {
-      return Left(ServerFailure('Failed to add favorite: ${e.toString()}'));
+      return Left(Failure.server('Failed to add favorite: ${e.toString()}'));
     }
   }
 
@@ -47,7 +47,7 @@ class FavoritesRepositoryImpl implements FavoritesRepository {
       await dataSource.removeFavorite(movieId);
       return const Right(null);
     } catch (e) {
-      return Left(ServerFailure('Failed to remove favorite: ${e.toString()}'));
+      return Left(Failure.server('Failed to remove favorite: ${e.toString()}'));
     }
   }
 
@@ -57,7 +57,7 @@ class FavoritesRepositoryImpl implements FavoritesRepository {
       final result = await dataSource.isFavorite(movieId);
       return Right(result);
     } catch (e) {
-      return Left(ServerFailure('Failed to check favorite: ${e.toString()}'));
+      return Left(Failure.server('Failed to check favorite: ${e.toString()}'));
     }
   }
 }

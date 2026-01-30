@@ -1,18 +1,13 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class StreamingLink extends Equatable {
-  final String url;
-  final String quality;
-  final bool isM3U8;
-  final Map<String, String>? headers;
+part 'streaming_link.freezed.dart';
 
-  const StreamingLink({
-    required this.url,
-    required this.quality,
-    required this.isM3U8,
-    this.headers,
-  });
-
-  @override
-  List<Object?> get props => [url, quality, isM3U8, headers];
+@freezed
+abstract class StreamingLink with _$StreamingLink {
+  const factory StreamingLink({
+    required String url,
+    required String quality,
+    required bool isM3U8,
+    Map<String, String>? headers,
+  }) = _StreamingLink;
 }

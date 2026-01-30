@@ -1,27 +1,20 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class WatchProgress extends Equatable {
-  final String mediaId;
-  final String title;
-  final String? posterUrl;
-  final String? episodeId;
-  final String? episodeTitle;
-  final int positionSeconds;
-  final int durationSeconds;
-  final DateTime lastUpdated;
-  final bool isFinished;
+part 'watch_progress.freezed.dart';
 
-  const WatchProgress({
-    required this.mediaId,
-    required this.title,
-    this.posterUrl,
-    this.episodeId,
-    this.episodeTitle,
-    required this.positionSeconds,
-    required this.durationSeconds,
-    required this.lastUpdated,
-    required this.isFinished,
-  });
+@freezed
+abstract class WatchProgress with _$WatchProgress {
+  const factory WatchProgress({
+    required String mediaId,
+    required String title,
+    String? posterUrl,
+    String? episodeId,
+    String? episodeTitle,
+    required int positionSeconds,
+    required int durationSeconds,
+    required DateTime lastUpdated,
+    required bool isFinished,
+  }) = _WatchProgress;
 
   factory WatchProgress.empty() {
     return WatchProgress(
@@ -33,17 +26,4 @@ class WatchProgress extends Equatable {
       isFinished: false,
     );
   }
-
-  @override
-  List<Object?> get props => [
-        mediaId,
-        title,
-        posterUrl,
-        episodeId,
-        episodeTitle,
-        positionSeconds,
-        durationSeconds,
-        lastUpdated,
-        isFinished,
-      ];
 }

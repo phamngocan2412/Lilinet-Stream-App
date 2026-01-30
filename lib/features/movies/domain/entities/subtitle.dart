@@ -1,9 +1,9 @@
-class Subtitle {
-  final String url;
-  final String lang;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  const Subtitle({
-    required this.url,
-    required this.lang,
-  });
+part 'subtitle.freezed.dart';
+
+@freezed
+abstract class Subtitle with _$Subtitle {
+  const factory Subtitle({required String url, required String lang}) =
+      _Subtitle;
 }

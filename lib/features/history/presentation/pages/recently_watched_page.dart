@@ -44,6 +44,7 @@ class RecentlyWatchedPage extends StatelessWidget {
             );
           } else if (state is HistoryLoaded) {
             return ListView.builder(
+              cacheExtent: 300,
               padding: const EdgeInsets.all(8),
               itemCount: state.history.length,
               itemBuilder: (context, index) {

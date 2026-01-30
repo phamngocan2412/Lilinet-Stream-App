@@ -1,5 +1,7 @@
+import 'package:injectable/injectable.dart';
 import '../../domain/repositories/history_repository.dart';
 
+@injectable
 class DeleteWatchProgress {
   final HistoryRepository _repository;
 

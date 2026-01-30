@@ -4,9 +4,7 @@ import 'core/theme/app_theme.dart';
 import 'routes/app_router.dart';
 import 'injection_container.dart';
 import 'features/movies/presentation/bloc/trending_movies/trending_movies_bloc.dart';
-import 'features/movies/presentation/bloc/trending_movies/trending_movies_event.dart';
 import 'features/explore/presentation/bloc/explore_bloc.dart';
-import 'features/explore/presentation/bloc/explore_event.dart';
 import 'features/auth/presentation/bloc/auth_bloc.dart';
 import 'features/auth/presentation/bloc/auth_event.dart';
 import 'features/auth/presentation/bloc/auth_state.dart';
@@ -18,7 +16,7 @@ import 'features/settings/presentation/bloc/settings_state.dart';
 import 'features/settings/domain/entities/app_settings.dart' as domain;
 import 'features/video_player/presentation/bloc/video_player_bloc.dart';
 import 'features/history/presentation/bloc/history_bloc.dart';
-import 'features/main/presentation/bloc/navigation_cubit.dart'; // Added
+import 'features/main/presentation/bloc/navigation_cubit.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

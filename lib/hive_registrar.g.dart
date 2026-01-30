@@ -3,6 +3,7 @@
 // Check in to version control
 
 import 'package:hive_ce/hive.dart';
+import 'package:lilinet_app/features/comments/data/models/local_comment_model.dart';
 import 'package:lilinet_app/features/explore/data/models/category_model.dart';
 import 'package:lilinet_app/features/explore/data/models/genre_model.dart';
 import 'package:lilinet_app/features/history/data/models/watch_progress_model.dart';
@@ -16,6 +17,7 @@ extension HiveRegistrar on HiveInterface {
     registerAdapter(CategoryModelAdapter());
     registerAdapter(EpisodeModelAdapter());
     registerAdapter(GenreModelAdapter());
+    registerAdapter(LocalCommentModelAdapter());
     registerAdapter(MovieListResponseAdapter());
     registerAdapter(MovieModelAdapter());
     registerAdapter(SeasonModelAdapter());
@@ -31,6 +33,7 @@ extension IsolatedHiveRegistrar on IsolatedHiveInterface {
     registerAdapter(CategoryModelAdapter());
     registerAdapter(EpisodeModelAdapter());
     registerAdapter(GenreModelAdapter());
+    registerAdapter(LocalCommentModelAdapter());
     registerAdapter(MovieListResponseAdapter());
     registerAdapter(MovieModelAdapter());
     registerAdapter(SeasonModelAdapter());

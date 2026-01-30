@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:injectable/injectable.dart';
 import '../../domain/entities/watch_progress.dart';
 import '../../domain/usecases/get_watch_history.dart';
 import '../../domain/usecases/save_watch_progress.dart';
@@ -7,6 +8,7 @@ import '../../domain/usecases/delete_watch_progress.dart';
 
 part 'history_state.dart';
 
+@lazySingleton
 class HistoryBloc extends Cubit<HistoryState> {
   final GetWatchHistory _getWatchHistory;
   final SaveWatchProgress _saveWatchProgress;
@@ -16,10 +18,10 @@ class HistoryBloc extends Cubit<HistoryState> {
     required GetWatchHistory getWatchHistory,
     required SaveWatchProgress saveWatchProgress,
     required DeleteWatchProgress deleteWatchProgress,
-  })  : _getWatchHistory = getWatchHistory,
-        _saveWatchProgress = saveWatchProgress,
-        _deleteWatchProgress = deleteWatchProgress,
-        super(HistoryInitial());
+  }) : _getWatchHistory = getWatchHistory,
+       _saveWatchProgress = saveWatchProgress,
+       _deleteWatchProgress = deleteWatchProgress,
+       super(HistoryInitial());
 
   Future<void> loadHistory() async {
     emit(HistoryLoading());

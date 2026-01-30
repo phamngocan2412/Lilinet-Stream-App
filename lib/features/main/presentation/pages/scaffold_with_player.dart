@@ -63,11 +63,10 @@ class ScaffoldWithPlayer extends StatelessWidget {
                       bottom: 0,
                       top: isExpanded ? 0 : null,
                       child: MiniplayerWidget(
+                        // Fixed height to prevent inconsistency when navigating
+                        // Always add bottom padding for safe area consistency
                         miniplayerHeight:
-                            60 +
-                            (showNavBar
-                                ? 0
-                                : MediaQuery.of(context).padding.bottom),
+                            60 + MediaQuery.of(context).padding.bottom,
                         maxWidth: MediaQuery.of(context).size.width,
                       ),
                     ),

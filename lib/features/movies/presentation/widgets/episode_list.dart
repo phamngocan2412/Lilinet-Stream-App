@@ -28,6 +28,7 @@ class EpisodeList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      cacheExtent: 300,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: episodes.length,

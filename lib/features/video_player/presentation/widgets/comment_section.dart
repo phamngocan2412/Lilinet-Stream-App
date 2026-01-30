@@ -39,10 +39,7 @@ class CommentModel {
 class CommentSection extends StatelessWidget {
   final String videoId;
 
-  const CommentSection({
-    super.key,
-    required this.videoId,
-  });
+  const CommentSection({super.key, required this.videoId});
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +90,7 @@ class _CommentSectionViewState extends State<_CommentSectionView> {
     if (content.isEmpty) return;
 
     setState(() => _isPosting = true);
-    
+
     await context.read<CommentsCubit>().addComment(widget.videoId, content);
 
     if (mounted) {
@@ -133,9 +130,9 @@ class _CommentSectionViewState extends State<_CommentSectionView> {
           comments = state.comments;
           isLoading = false;
         } else if (state is CommentsLoaded) {
-           // Different video loaded in singleton? Reload or wait
-        } else if (state is CommentsError) {
-           isLoading = false;
+          // Different video loaded in singleton? Reload
+          // But initState should catch this.
+          // Just show loading if ID mismatch or wait for event.
         }
 
         return Column(
@@ -148,8 +145,8 @@ class _CommentSectionViewState extends State<_CommentSectionView> {
                   Text(
                     'Comments',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(width: 8),
                   if (!isLoading)
@@ -167,15 +164,16 @@ class _CommentSectionViewState extends State<_CommentSectionView> {
               child: isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : comments.isEmpty
-                      ? _buildEmptyState()
-                      : ListView.builder(
-                          controller: _scrollController,
-                          itemCount: comments.length,
-                          padding: const EdgeInsets.only(bottom: 16),
-                          itemBuilder: (context, index) {
-                            return _buildCommentItem(comments[index]);
-                          },
-                        ),
+                  ? _buildEmptyState()
+                  : ListView.builder(
+                      cacheExtent: 300,
+                      controller: _scrollController,
+                      itemCount: comments.length,
+                      padding: const EdgeInsets.only(bottom: 16),
+                      itemBuilder: (context, index) {
+                        return _buildCommentItem(comments[index]);
+                      },
+                    ),
             ),
 
             // --- Input Field ---
@@ -222,7 +220,9 @@ class _CommentSectionViewState extends State<_CommentSectionView> {
                 : null,
             child: comment.userAvatarUrl == null
                 ? Text(
-                    comment.userName[0].toUpperCase(),
+                    comment.userName.isNotEmpty
+                        ? comment.userName[0].toUpperCase()
+                        : '?',
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,

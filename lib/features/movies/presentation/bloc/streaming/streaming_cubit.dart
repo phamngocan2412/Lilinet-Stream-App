@@ -35,21 +35,35 @@ class StreamingCubit extends Cubit<StreamingState> {
       return;
     }
 
-    // 3. Auto-fallback to other providers
+    // 3. Auto-fallback to other providers in the SAME category
     print('⚠️ Primary provider $provider failed. Attempting fallbacks...');
 
     final isAnime = _animeProviders.contains(provider);
-    final backups = isAnime ? _animeProviders : _movieProviders;
+    final primaryBackups = isAnime ? _animeProviders : _movieProviders;
+    final secondaryBackups = isAnime ? _movieProviders : _animeProviders;
 
-    for (final backup in backups) {
+    // Try same-category backups
+    for (final backup in primaryBackups) {
       if (backup == provider) continue; // Skip already tried
 
-      print('🔄 Trying fallback provider: $backup');
+      print('🔄 Trying fallback provider (Same Category): $backup');
       success = await _tryProvider(backup, episodeId, mediaId, null);
       if (success) return;
     }
 
-    // 4. If all fail
+    // 4. Try cross-category backups (Last Resort)
+    // This handles cases where a Movie is wrongly classified as Anime or vice versa
+    print(
+      '⚠️ All ${isAnime ? "Anime" : "Movie"} providers failed. Trying cross-category...',
+    );
+
+    for (final backup in secondaryBackups) {
+      print('🔄 Trying fallback provider (Cross Category): $backup');
+      success = await _tryProvider(backup, episodeId, mediaId, null);
+      if (success) return;
+    }
+
+    // 5. If all fail
     if (!isClosed && state is! StreamingLoaded) {
       emit(
         const StreamingError(

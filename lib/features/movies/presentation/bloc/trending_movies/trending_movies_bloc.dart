@@ -2,50 +2,55 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import '../../../domain/usecases/get_trending_movies.dart';
 import '../../../domain/usecases/get_cached_trending_movies.dart';
-import '../../../../explore/domain/usecases/get_movies_by_genre.dart'; // Import
-import '../../../../movies/domain/entities/movie.dart'; // Import Movie
+import '../../../../explore/domain/usecases/get_movies_by_genre.dart';
+import '../../../../movies/domain/entities/movie.dart';
 import 'trending_movies_event.dart';
 import 'trending_movies_state.dart';
 
-@injectable
+@lazySingleton
 class TrendingMoviesBloc
     extends Bloc<TrendingMoviesEvent, TrendingMoviesState> {
   final GetTrendingMovies _getTrendingMovies;
   final GetCachedTrendingMovies _getCachedTrendingMovies;
-  final GetMoviesByGenre _getMoviesByGenre; // Add this
+  final GetMoviesByGenre _getMoviesByGenre;
 
   TrendingMoviesBloc(
     this._getTrendingMovies,
     this._getCachedTrendingMovies,
-    this._getMoviesByGenre, // Add this
-  ) : super(TrendingMoviesInitial()) {
-    on<LoadTrendingMovies>(_onLoadTrendingMovies);
-    on<RefreshTrendingMovies>(_onRefreshTrendingMovies);
+    this._getMoviesByGenre,
+  ) : super(const TrendingMoviesState.initial()) {
+    on<LoadTrendingMovies>(_onLoad);
+    on<RefreshTrendingMovies>(_onRefresh);
   }
 
-  Future<void> _onLoadTrendingMovies(
+  Future<void> _onLoad(
     LoadTrendingMovies event,
     Emitter<TrendingMoviesState> emit,
   ) async {
-    emit(TrendingMoviesLoading());
+    emit(const TrendingMoviesState.loading());
 
-    // 1. Try Cache First (Only for trending for now, or expand cache later)
-    final cachedMovies = _getCachedTrendingMovies();
-    if (cachedMovies != null && cachedMovies.isNotEmpty) {
-      emit(TrendingMoviesLoaded(trending: cachedMovies));
+    // 1. Try Cache First (Sync if possible, but UseCases are usually async or sync)
+    // GetCachedTrendingMovies is synchronous in previous implementation?
+    // Let's check. Yes, it returns List<Movie>?.
+    try {
+      final cached = _getCachedTrendingMovies();
+      if (cached != null && cached.isNotEmpty) {
+        emit(TrendingMoviesState.loaded(trending: cached));
+      }
+    } catch (_) {
+      // Ignore cache errors
     }
 
     // 2. Fetch All Data in Parallel
-    // We fetch Trending + 4 Categories
     final results = await Future.wait([
-      _getTrendingMovies(type: event.type, page: 1), // Index 0: Trending
+      _getTrendingMovies(TrendingParams(type: event.type, page: 1)),
       _getMoviesByGenre(genreId: '16', page: 1), // Index 1: Anime
       _getMoviesByGenre(genreId: '28', page: 1), // Index 2: Action
       _getMoviesByGenre(genreId: '27', page: 1), // Index 3: Horror
       _getMoviesByGenre(genreId: '10749', page: 1), // Index 4: Romance
     ]);
 
-    final trendingResult = results[0];
+    final trendingResult = results[0]; // Either<Failure, List<Movie>>
     final animeResult = results[1];
     final actionResult = results[2];
     final horrorResult = results[3];
@@ -55,40 +60,60 @@ class TrendingMoviesBloc
     Map<String, List<Movie>> categories = {};
 
     // Process Trending
-    trendingResult.fold((failure) {
-      // If trending fails and we have no cache, that's an issue.
-      // But if we have cache, we might survive.
-    }, (movies) => trendingMovies = movies);
+    // We need to cast because Future.wait returns List<dynamic> or common ancestor
+    // Actually results[0] is Either<Failure, List<Movie>>
 
-    // Process Categories (If one fails, we just don't show it)
-    animeResult.fold((_) {}, (movies) => categories['Top Anime'] = movies);
-    actionResult.fold((_) {}, (movies) => categories['Action Movies'] = movies);
-    horrorResult.fold((_) {}, (movies) => categories['Horror'] = movies);
-    romanceResult.fold((_) {}, (movies) => categories['Romance'] = movies);
+    (trendingResult as dynamic).fold(
+      (failure) {},
+      (movies) => trendingMovies = movies,
+    );
+
+    // Process Categories
+    (animeResult as dynamic).fold(
+      (_) {},
+      (movies) => categories['Top Anime'] = movies,
+    );
+    (actionResult as dynamic).fold(
+      (_) {},
+      (movies) => categories['Action Movies'] = movies,
+    );
+    (horrorResult as dynamic).fold(
+      (_) {},
+      (movies) => categories['Horror'] = movies,
+    );
+    (romanceResult as dynamic).fold(
+      (_) {},
+      (movies) => categories['Romance'] = movies,
+    );
 
     if (trendingMovies.isEmpty && categories.isEmpty) {
-      if (state is! TrendingMoviesLoaded) {
-        emit(const TrendingMoviesError('Failed to load content'));
+      final isLoaded = state.maybeMap(loaded: (_) => true, orElse: () => false);
+
+      if (!isLoaded) {
+        // If we are not already showing data (from cache), show error
+        // Assuming results[0] failure message is relevant
+        String message = 'Failed to load content';
+        (trendingResult as dynamic).fold((f) => message = f.message, (_) {});
+        emit(TrendingMoviesState.error(message));
       }
     } else {
+      // Merge with existing state if needed, or just emit new
+      // If we emitted Cached data earlier, this will replace it with fresh data.
       emit(
-        TrendingMoviesLoaded(
+        TrendingMoviesState.loaded(
           trending: trendingMovies.isNotEmpty
               ? trendingMovies
-              : (state is TrendingMoviesLoaded
-                    ? (state as TrendingMoviesLoaded).trending
-                    : []),
+              : (state.mapOrNull(loaded: (s) => s.trending) ?? []),
           categories: categories,
         ),
       );
     }
   }
 
-  Future<void> _onRefreshTrendingMovies(
+  Future<void> _onRefresh(
     RefreshTrendingMovies event,
     Emitter<TrendingMoviesState> emit,
   ) async {
-    // Re-trigger load
-    add(const LoadTrendingMovies());
+    add(const TrendingMoviesEvent.load());
   }
 }

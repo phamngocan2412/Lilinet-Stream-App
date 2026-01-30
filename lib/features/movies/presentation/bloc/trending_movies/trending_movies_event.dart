@@ -1,21 +1,11 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-abstract class TrendingMoviesEvent extends Equatable {
-  const TrendingMoviesEvent();
+part 'trending_movies_event.freezed.dart';
 
-  @override
-  List<Object> get props => [];
-}
+@freezed
+class TrendingMoviesEvent with _$TrendingMoviesEvent {
+  const factory TrendingMoviesEvent.load({@Default('all') String type}) =
+      LoadTrendingMovies;
 
-class LoadTrendingMovies extends TrendingMoviesEvent {
-  final String type;
-
-  const LoadTrendingMovies({this.type = 'tv'});
-
-  @override
-  List<Object> get props => [type];
-}
-
-class RefreshTrendingMovies extends TrendingMoviesEvent {
-  const RefreshTrendingMovies();
+  const factory TrendingMoviesEvent.refresh() = RefreshTrendingMovies;
 }

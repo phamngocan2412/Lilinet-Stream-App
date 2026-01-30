@@ -68,7 +68,7 @@ class FeaturedCommentBanner extends StatelessWidget {
         final episode = comment['episode_number'] ?? '1';
         final content = comment['content'] ?? '';
         final movieId = comment['movie_id'];
-        final episodeId = comment['episode_id'];
+        // final episodeId = comment['episode_id'];
         final movieType =
             comment['movie_type'] ?? 'TV Series'; // Default for nav
 

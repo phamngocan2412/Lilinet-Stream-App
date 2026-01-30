@@ -1,8 +1,10 @@
 import 'package:hive_ce/hive_ce.dart';
+import 'package:injectable/injectable.dart';
 import '../../domain/entities/watch_progress.dart';
 import '../models/watch_progress_model.dart';
 import 'history_local_datasource.dart';
 
+@LazySingleton(as: HistoryLocalDataSource)
 class HistoryLocalDataSourceImpl implements HistoryLocalDataSource {
   final Box<WatchProgressModel> _box;
 
@@ -29,21 +31,24 @@ class HistoryLocalDataSourceImpl implements HistoryLocalDataSource {
 
   @override
   Future<List<WatchProgress>> getHistory() async {
-    final history = _box.values
-        .where((e) => !e.isFinished) // Only return unfinished items
-        .map((e) => WatchProgress(
-              mediaId: e.mediaId,
-              title: e.title,
-              posterUrl: e.posterUrl,
-              episodeId: e.episodeId,
-              episodeTitle: e.episodeTitle,
-              positionSeconds: e.positionSeconds,
-              durationSeconds: e.durationSeconds,
-              lastUpdated: e.lastUpdated,
-              isFinished: e.isFinished,
-            ))
-        .toList()
-      ..sort((a, b) => b.lastUpdated.compareTo(a.lastUpdated));
+    final history =
+        _box.values
+            .where((e) => !e.isFinished) // Only return unfinished items
+            .map(
+              (e) => WatchProgress(
+                mediaId: e.mediaId,
+                title: e.title,
+                posterUrl: e.posterUrl,
+                episodeId: e.episodeId,
+                episodeTitle: e.episodeTitle,
+                positionSeconds: e.positionSeconds,
+                durationSeconds: e.durationSeconds,
+                lastUpdated: e.lastUpdated,
+                isFinished: e.isFinished,
+              ),
+            )
+            .toList()
+          ..sort((a, b) => b.lastUpdated.compareTo(a.lastUpdated));
 
     // Deduplicate: Keep only the newest entry for each episode
     final seen = <String>{};

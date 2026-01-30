@@ -3,7 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'video_player_event.dart';
 import 'video_player_state.dart';
 
-@injectable
+@lazySingleton
 class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
   VideoPlayerBloc() : super(const VideoPlayerState()) {
     on<PlayVideo>(_onPlayVideo);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:media_kit/media_kit.dart';
 import 'core/supabase/supabase_config.dart';
 import 'app.dart';
@@ -9,27 +10,95 @@ import 'features/explore/presentation/bloc/explore_bloc.dart';
 import 'features/explore/presentation/bloc/explore_event.dart';
 import 'injection_container.dart';
 
-void main() async {
+void main() {
+  // Ensure Flutter is initialized
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Set system UI mode early
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      systemNavigationBarColor: Colors.transparent,
+    ),
+  );
+
+  // Run the app with a splash/loading screen first
+  runApp(const SplashApp());
+
+  // Initialize everything in the background
+  _initializeApp();
+}
+
+class SplashApp extends StatelessWidget {
+  const SplashApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        backgroundColor: const Color(0xFF101010),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // App logo or icon
+              Container(
+                width: 80,
+                height: 80,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFC6A664),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: const Icon(
+                  Icons.play_arrow,
+                  size: 48,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(height: 24),
+              const Text(
+                'LILINET',
+                style: TextStyle(
+                  color: Color(0xFFC6A664),
+                  fontSize: 28,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: 2,
+                ),
+              ),
+              const SizedBox(height: 32),
+              const SizedBox(
+                width: 40,
+                height: 40,
+                child: CircularProgressIndicator(
+                  strokeWidth: 3,
+                  valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFC6A664)),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+Future<void> _initializeApp() async {
   try {
-    // Initialize MediaKit
+    // Initialize MediaKit (lightweight call)
     MediaKit.ensureInitialized();
 
     // Initialize Supabase
     await SupabaseConfig.initialize();
 
-    // Initialize Dependency Injection
+    // Initialize DI
     await configureDependencies();
 
-    // Load Watch History
-    getIt<HistoryBloc>().loadHistory();
-
-    // Trigger Initial Data Loads
-    getIt<TrendingMoviesBloc>().add(const LoadTrendingMovies());
-    getIt<ExploreBloc>().add(LoadGenres());
-
+    // Switch to main app
     runApp(const MyApp());
+
+    // Load data in background AFTER app is running
+    _loadBackgroundData();
   } catch (e, stackTrace) {
     runApp(
       MaterialApp(
@@ -81,4 +150,28 @@ void main() async {
       ),
     );
   }
+}
+
+void _loadBackgroundData() {
+  // Use microtask to avoid blocking
+  Future.microtask(() async {
+    try {
+      // Load history
+      getIt<HistoryBloc>().loadHistory();
+
+      // Small delay between operations
+      await Future.delayed(const Duration(milliseconds: 100));
+
+      // Load trending with delay to stagger
+      getIt<TrendingMoviesBloc>().add(const LoadTrendingMovies());
+
+      await Future.delayed(const Duration(milliseconds: 100));
+
+      // Load genres last
+      getIt<ExploreBloc>().add(LoadGenres());
+    } catch (e) {
+      // Silently fail - data will load when screens open
+      debugPrint('Background data load error: $e');
+    }
+  });
 }

@@ -17,7 +17,7 @@ class SettingsRepositoryImpl implements SettingsRepository {
       final settings = await localDataSource.getSettings();
       return Right(settings);
     } catch (e) {
-      return const Left(CacheFailure('Failed to load settings'));
+      return const Left(Failure.cache('Failed to load settings'));
     }
   }
 
@@ -27,7 +27,7 @@ class SettingsRepositoryImpl implements SettingsRepository {
       await localDataSource.saveSettings(settings);
       return const Right(null);
     } catch (e) {
-      return const Left(CacheFailure('Failed to save settings'));
+      return const Left(Failure.cache('Failed to save settings'));
     }
   }
 
@@ -37,7 +37,7 @@ class SettingsRepositoryImpl implements SettingsRepository {
       await localDataSource.resetSettings();
       return const Right(null);
     } catch (e) {
-      return const Left(CacheFailure('Failed to reset settings'));
+      return const Left(Failure.cache('Failed to reset settings'));
     }
   }
 
@@ -47,7 +47,7 @@ class SettingsRepositoryImpl implements SettingsRepository {
       await localDataSource.clearCache();
       return const Right(null);
     } catch (e) {
-      return const Left(CacheFailure('Failed to clear cache'));
+      return const Left(Failure.cache('Failed to clear cache'));
     }
   }
 }
