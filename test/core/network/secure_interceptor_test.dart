@@ -115,5 +115,56 @@ void main() {
       final bodyLog = logs.firstWhere((log) => log.contains('Request Body:'));
       expect(bodyLog, contains('plain text query'));
     });
+
+    test('redacts nested sensitive data', () {
+      final logs = <String>[];
+      final interceptor = SecureInterceptor(
+        logCallback: (message, {name = ''}) {
+          logs.add(message);
+        },
+      );
+
+      final options = RequestOptions(
+        path: '/nested',
+        data: {
+          'user': {
+            'password': 'nested_secret_password',
+            'email': 'test@example.com'
+          }
+        },
+      );
+
+      final handler = RequestInterceptorHandler();
+      interceptor.onRequest(options, handler);
+
+      final bodyLog = logs.firstWhere((log) => log.contains('Request Body:'));
+      expect(bodyLog, contains('"password": "***REDACTED***"'));
+      expect(bodyLog, isNot(contains('nested_secret_password')));
+    });
+
+    test('redacts sensitive data in lists', () {
+      final logs = <String>[];
+      final interceptor = SecureInterceptor(
+        logCallback: (message, {name = ''}) {
+          logs.add(message);
+        },
+      );
+
+      final options = RequestOptions(
+        path: '/bulk',
+        data: [
+          {'password': 'secret_pass_1'},
+          {'password': 'secret_pass_2'}
+        ],
+      );
+
+      final handler = RequestInterceptorHandler();
+      interceptor.onRequest(options, handler);
+
+      final bodyLog = logs.firstWhere((log) => log.contains('Request Body:'));
+      expect(bodyLog, contains('"password": "***REDACTED***"'));
+      expect(bodyLog, isNot(contains('secret_pass_1')));
+      expect(bodyLog, isNot(contains('secret_pass_2')));
+    });
   });
 }

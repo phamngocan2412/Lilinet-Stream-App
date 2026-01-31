@@ -21,3 +21,8 @@
 **Vulnerability:** `PrettyDioLogger` with `requestHeader: true` logs sensitive headers like `Authorization` in plaintext.
 **Learning:** Disabling `requestHeader` is not enough if you need to debug; you must implement custom redaction. Standard loggers often lack granular control.
 **Prevention:** Implement custom interceptors for logging that specifically target and redact sensitive keys in both Body and Headers.
+
+## 2026-10-26 - Nested Data Redaction Failure
+**Vulnerability:** The custom `SecureInterceptor` only redacted sensitive keys in top-level JSON maps, leaking sensitive data nested in objects or lists (e.g., `user.password` or `[{"token": "..."}]`).
+**Learning:** Shallow redaction is insufficient for complex API payloads. Security logging must account for recursive data structures.
+**Prevention:** Implement recursive redaction logic that traverses Maps and Lists to locate and scrub sensitive keys at any depth.
