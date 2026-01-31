@@ -67,7 +67,25 @@ Thư mục này chứa tài liệu chi tiết về dự án Lilinet App - ứng 
 - Self-hosting guide
 - Rate limiting & best practices
 
-### 9. [99_THIEU_GI_CAN_LAM.md](99_THIEU_GI_CAN_LAM.md) ⚠️ **QUAN TRỌNG NHẤT**
+### 9. [08_SUPABASE_SCHEMA.md](08_SUPABASE_SCHEMA.md) 🗄️ **NEW**
+**Backend: Supabase Database Schema**
+- ERD Diagram
+- Table definitions (SQL)
+- Row Level Security (RLS) policies
+- Functions & Triggers
+- Real-time subscriptions
+- Migration scripts
+
+### 10. [09_SETUP_GUIDE.md](09_SETUP_GUIDE.md) 🛠️ **NEW**
+**Environment Setup Guide**
+- Prerequisites & software
+- Project setup
+- .env configuration
+- Supabase setup
+- Consumet API setup
+- Common issues & solutions
+
+### 11. [99_THIEU_GI_CAN_LAM.md](99_THIEU_GI_CAN_LAM.md) ⚠️ **QUAN TRỌNG NHẤT**
 **Tổng hợp những gì đang thiếu**
 - Các feature cần làm ngay (High Priority)
 - Medium & Low priority features

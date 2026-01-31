@@ -1033,7 +1033,7 @@ packages:
     source: hosted
     version: "6.0.3"
   postgrest:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: postgrest
       sha256: f4b6bb24b465c47649243ef0140475de8a0ec311dc9c75ebe573b2dcabb10460

@@ -5,6 +5,35 @@ import '../bloc/comments/comments_cubit.dart';
 import '../bloc/comments/comments_state.dart';
 
 // ==========================================
+// 0. String Resources (i18n-ready structure)
+// ==========================================
+/// Localized strings for CommentSection
+/// Following SRP: All strings in one place, easy to maintain and extend for full i18n
+class _CommentSectionStrings {
+  // Section title
+  static const String commentsTitle = 'Comments';
+
+  // Empty states
+  static const String noCommentsYet = 'No comments yet';
+  static const String beTheFirst = 'Be the first to share your thoughts!';
+
+  // Input hints
+  static const String addComment = 'Add a comment...';
+
+  // Avatar fallback
+  static const String anonymous = 'Anonymous';
+  static const String unknownUserInitial = '?';
+
+  // Time formatting - Relative time units
+  static const String timeJustNow = 'Just now';
+  static String timeYearsAgo(int years) => '${years}y ago';
+  static String timeMonthsAgo(int months) => '${months}mo ago';
+  static String timeDaysAgo(int days) => '${days}d ago';
+  static String timeHoursAgo(int hours) => '${hours}h ago';
+  static String timeMinutesAgo(int minutes) => '${minutes}m ago';
+}
+
+// ==========================================
 // 1. Data Model
 // ==========================================
 class CommentModel {
@@ -25,7 +54,7 @@ class CommentModel {
   factory CommentModel.fromJson(Map<String, dynamic> json) {
     return CommentModel(
       id: json['id'] as String,
-      userName: json['user_name'] ?? 'Anonymous',
+      userName: json['user_name'] ?? _CommentSectionStrings.anonymous,
       userAvatarUrl: json['avatar_url'],
       content: json['content'] as String,
       createdAt: DateTime.parse(json['created_at']),
@@ -107,14 +136,26 @@ class _CommentSectionViewState extends State<_CommentSectionView> {
   }
 
   // Helper for "Time Ago" format
+  /// Formats DateTime to relative time string
+  /// Following OCP: Easy to extend for localization without modifying logic
   String _timeAgo(DateTime date) {
     final diff = DateTime.now().difference(date);
-    if (diff.inDays > 365) return '${(diff.inDays / 365).floor()}y ago';
-    if (diff.inDays > 30) return '${(diff.inDays / 30).floor()}mo ago';
-    if (diff.inDays > 0) return '${diff.inDays}d ago';
-    if (diff.inHours > 0) return '${diff.inHours}h ago';
-    if (diff.inMinutes > 0) return '${diff.inMinutes}m ago';
-    return 'Just now';
+    if (diff.inDays > 365) {
+      return _CommentSectionStrings.timeYearsAgo((diff.inDays / 365).floor());
+    }
+    if (diff.inDays > 30) {
+      return _CommentSectionStrings.timeMonthsAgo((diff.inDays / 30).floor());
+    }
+    if (diff.inDays > 0) {
+      return _CommentSectionStrings.timeDaysAgo(diff.inDays);
+    }
+    if (diff.inHours > 0) {
+      return _CommentSectionStrings.timeHoursAgo(diff.inHours);
+    }
+    if (diff.inMinutes > 0) {
+      return _CommentSectionStrings.timeMinutesAgo(diff.inMinutes);
+    }
+    return _CommentSectionStrings.timeJustNow;
   }
 
   @override
@@ -143,7 +184,7 @@ class _CommentSectionViewState extends State<_CommentSectionView> {
               child: Row(
                 children: [
                   Text(
-                    'Comments',
+                    _CommentSectionStrings.commentsTitle,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -192,12 +233,12 @@ class _CommentSectionViewState extends State<_CommentSectionView> {
           Icon(Icons.chat_bubble_outline, size: 48, color: Colors.grey[700]),
           const SizedBox(height: 16),
           Text(
-            'No comments yet',
+            _CommentSectionStrings.noCommentsYet,
             style: TextStyle(color: Colors.grey[500], fontSize: 16),
           ),
           const SizedBox(height: 4),
           Text(
-            'Be the first to share your thoughts!',
+            _CommentSectionStrings.beTheFirst,
             style: TextStyle(color: Colors.grey[600], fontSize: 14),
           ),
         ],
@@ -222,7 +263,7 @@ class _CommentSectionViewState extends State<_CommentSectionView> {
                 ? Text(
                     comment.userName.isNotEmpty
                         ? comment.userName[0].toUpperCase()
-                        : '?',
+                        : _CommentSectionStrings.unknownUserInitial,
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -294,7 +335,7 @@ class _CommentSectionViewState extends State<_CommentSectionView> {
               controller: _controller,
               style: const TextStyle(color: Colors.white),
               decoration: InputDecoration(
-                hintText: 'Add a comment...',
+                hintText: _CommentSectionStrings.addComment,
                 hintStyle: TextStyle(color: Colors.grey[600]),
                 border: InputBorder.none,
                 isDense: true,

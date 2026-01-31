@@ -13,7 +13,7 @@ extension RepositoryHelper on Object {
       return Left(_mapDioErrorToFailure(e));
     } on PostgrestException catch (e) {
       // Handle Supabase/PostgREST errors
-      final message = e.message ?? 'Database error';
+      final message = e.message;
       if (message.contains('JWT') ||
           message.contains('auth') ||
           e.code == '42501') {
@@ -52,8 +52,9 @@ extension RepositoryHelper on Object {
       case DioExceptionType.badResponse:
         final statusCode = error.response?.statusCode;
         if (statusCode == 401) return const Failure.server('Unauthorized');
-        if (statusCode == 404)
+        if (statusCode == 404) {
           return const Failure.server('Resource not found');
+        }
         if (statusCode == 500) return const Failure.server('Server error');
 
         final data = error.response?.data;
