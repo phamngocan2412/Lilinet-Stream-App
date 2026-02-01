@@ -98,7 +98,7 @@ class AuthRepositoryImpl implements AuthRepository {
     } catch (e) {
       developer.log('Send password reset email failed', error: e, name: 'AuthRepository');
       return const Left(
-        Failure.server('An unexpected error occurred during password reset.'),
+        Failure.server('Đã xảy ra lỗi không mong muốn khi gửi email đặt lại mật khẩu.'),
       );
     }
   }
