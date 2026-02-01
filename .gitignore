@@ -55,6 +55,7 @@ CLAUDE.md
 .claude/
 .jules/
 
+
 # Flutter repo-specific
 /bin/cache/
 /bin/internal/bootstrap.bat

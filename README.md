@@ -1,89 +1,199 @@
 # Lilinet
 
-A modern, cross-platform movie streaming application built with Flutter, powered by the Consumet API.
+A modern, cross-platform movie streaming application built with Flutter, following Clean Architecture principles.
 
-## 🚀 Features
+[![Flutter](https://img.shields.io/badge/Flutter-3.8+-02569B?logo=flutter)](https://flutter.dev)
+[![Dart](https://img.shields.io/badge/Dart-3.0+-0175C2?logo=dart)](https://dart.dev)
+[![License](https://img.shields.io/badge/License-Educational-green)](LICENSE)
 
-- **Multi-Source Streaming**: Stream movies and TV shows from various providers (Goku, FlixHQ, etc.).
-- **Cross-Platform**: Runs on Android, iOS, Linux, MacOS, Windows, and Web.
-- **Modern UI/UX**: 
-  - Dark mode support.
-  - Smooth animations and transitions.
-  - Responsive layout for mobile and desktop.
-- **Miniplayer**: Watch while you browse with a persistent, draggable miniplayer (similar to YouTube).
-- **Favorites & History**: Local storage support to save your favorite content and track watch history.
-- **Smart Search**: Real-time search functionality.
-- **Episode Management**: Easy navigation between seasons and episodes.
+## Features
 
-## 🛠 Tech Stack
+| Feature | Description |
+|---------|-------------|
+| **Multi-Source Streaming** | Stream movies and TV shows from various providers (Goku, FlixHQ, etc.) |
+| **Cross-Platform** | Runs on Android, iOS, Linux, MacOS, and Windows |
+| **Dark Mode** | Modern dark theme with Material 3 design |
+| **Miniplayer** | Watch while browsing with a persistent, draggable miniplayer |
+| **Favorites** | Save your favorite movies and TV shows |
+| **Watch History** | Track your viewing progress |
+| **Comments** | Community discussion for each movie |
+| **Smart Search** | Real-time search with debouncing |
+| **Episode Navigation** | Easy navigation between seasons and episodes |
 
-### Core
-- **Framework**: [Flutter](https://flutter.dev/) (SDK >=3.8.0)
-- **Language**: Dart
+## Architecture
 
-### Architecture & State Management
-- **Architecture**: Clean Architecture (Data, Domain, Presentation layers)
-- **State Management**: [Flutter Bloc](https://pub.dev/packages/flutter_bloc) (Cubit/Bloc)
-- **Dependency Injection**: [GetIt](https://pub.dev/packages/get_it) & [Injectable](https://pub.dev/packages/injectable)
-- **Routing**: [GoRouter](https://pub.dev/packages/go_router)
+This project follows **Feature-First Clean Architecture** pattern:
 
-### Networking & Data
-- **HTTP Client**: [Dio](https://pub.dev/packages/dio) with [Retrofit](https://pub.dev/packages/retrofit)
-- **Local Storage**: [Hive CE](https://pub.dev/packages/hive_ce) (Community Edition)
-- **Backend/Auth**: [Supabase](https://supabase.com/)
+```
+lib/
+├── core/                   # Shared utilities (Network, Errors, DI, Theme)
+├── features/
+│   ├── auth/               # Authentication (Supabase)
+│   ├── movies/             # Movie listing & details
+│   ├── explore/            # Search & discovery
+│   ├── favorites/          # Favorites management
+│   ├── history/            # Watch history tracking
+│   ├── comments/           # User comments
+│   ├── video_player/       # Video playback (MediaKit)
+│   └── settings/           # App settings
+└── main.dart
+```
 
-### Media & Playback
-- **Video Player**: [MediaKit](https://pub.dev/packages/media_kit) (powered by mpv)
-- **Wakelock**: [Wakelock Plus](https://pub.dev/packages/wakelock_plus)
+Each feature follows the layered structure:
 
-## 📦 Installation & Setup
+```
+feature/
+├── data/
+│   ├── datasources/        # Remote (API) & Local (Hive)
+│   ├── models/             # DTOs with JSON serialization
+│   └── repositories/       # Repository implementations
+├── domain/
+│   ├── entities/           # Business entities
+│   ├── repositories/       # Abstract interfaces
+│   └── usecases/           # Business logic
+└── presentation/
+    ├── bloc/               # BLoC state management
+    ├── pages/              # Screen widgets
+    └── widgets/            # Reusable components
+```
+
+## Tech Stack
+
+| Category | Technology |
+|----------|------------|
+| **Framework** | Flutter 3.8+ |
+| **State Management** | flutter_bloc + freezed |
+| **Dependency Injection** | get_it + injectable |
+| **Networking** | dio + retrofit |
+| **Local Storage** | hive_ce |
+| **Backend** | Supabase (Auth, Database) |
+| **Video Player** | media_kit (mpv) |
+| **Navigation** | go_router |
+| **Error Handling** | dartz (Either pattern) |
+
+## Getting Started
 
 ### Prerequisites
-- Flutter SDK installed and configured.
-- Git installed.
 
-### 1. Clone the Repository
-```bash
-git clone https://github.com/phamngocan2412/Lilinet-novel-app.git
-cd lilinet_app
-```
+- Flutter SDK >= 3.8.0
+- Dart SDK >= 3.0.0
+- Git
 
-### 2. Install Dependencies
-```bash
-flutter pub get
-```
+### Installation
 
-### 3. Generate Code
-Run the build runner to generate code for JSON serialization, dependency injection, and Retrofit clients:
-```bash
-flutter pub run build_runner build --delete-conflicting-outputs
-```
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/phamngocan2412/Lilinet-novel-app.git
+   cd lilinet_app
+   ```
 
-### 4. Run the App
-**Android/iOS:**
-```bash
-flutter run
-```
+2. **Configure environment**
 
-**Linux/MacOS/Windows:**
-```bash
-flutter run -d linux  # or macos/windows
-```
+   Create a `.env` file in the project root:
+   ```env
+   SUPABASE_URL=your_supabase_url
+   SUPABASE_ANON_KEY=your_supabase_anon_key
+   ```
 
-## 🏗 Build release apps
+3. **Install dependencies**
+   ```bash
+   flutter pub get
+   ```
 
-### Android (APK)
+4. **Generate code**
+   ```bash
+   flutter pub run build_runner build --delete-conflicting-outputs
+   ```
+
+5. **Run the app**
+   ```bash
+   # Mobile (Android/iOS)
+   flutter run
+
+   # Desktop
+   flutter run -d linux    # Linux
+   flutter run -d macos    # MacOS
+   flutter run -d windows  # Windows
+   ```
+
+## Build
+
+### Android
+
 ```bash
 flutter build apk --release
 ```
 
+Output: `build/app/outputs/flutter-apk/app-release.apk`
+
 ### Linux
+
 ```bash
 flutter build linux --release
 ```
 
-## 🤝 Contribution
-Contributions are welcome! Please fork the repository and submit a pull request.
+Output: `build/linux/x64/release/bundle/`
 
-## 📄 License
-This project is for educational purposes.
+### Windows
+
+```bash
+flutter build windows --release
+```
+
+Output: `build/windows/x64/runner/Release/`
+
+## Testing
+
+```bash
+# Run all tests
+flutter test
+
+# Run specific test file
+flutter test test/features/auth/auth_bloc_test.dart
+
+# Run with coverage
+flutter test --coverage
+```
+
+## Project Structure
+
+```
+lilinet_app/
+├── lib/
+│   ├── core/
+│   │   ├── errors/         # Failure classes
+│   │   ├── network/        # Dio client configuration
+│   │   ├── theme/          # App theming
+│   │   └── widgets/        # Shared widgets
+│   ├── features/           # Feature modules
+│   └── injection_container.dart
+├── test/                   # Unit & widget tests
+├── assets/
+│   ├── images/
+│   └── icons/
+├── .env                    # Environment variables
+└── pubspec.yaml
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+### Commit Convention
+
+Follow [Conventional Commits](https://www.conventionalcommits.org/):
+
+- `feat:` New feature
+- `fix:` Bug fix
+- `docs:` Documentation changes
+- `refactor:` Code refactoring
+- `test:` Adding tests
+- `chore:` Maintenance tasks
+
+## License
+
+This project is for educational purposes only.
