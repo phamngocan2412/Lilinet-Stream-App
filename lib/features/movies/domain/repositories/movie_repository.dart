@@ -32,4 +32,11 @@ abstract class MovieRepository {
     String? server,
     String provider = 'animekai',
   });
+
+  /// Get available servers for a specific episode
+  Future<Either<Failure, List<String>>> getAvailableServers({
+    required String episodeId,
+    required String mediaId,
+    String provider = 'flixhq',
+  });
 }

@@ -88,6 +88,7 @@ class SettingsView extends StatelessWidget {
                       },
                     ),
                     _buildQualitySelector(context, settings),
+                    _buildServerSelector(context, settings),
                     _buildProviderSelector(context, settings),
                   ],
                 ),
@@ -444,6 +445,105 @@ class SettingsView extends StatelessWidget {
         );
       },
     );
+  }
+
+  Widget _buildServerSelector(
+    BuildContext context,
+    domain.AppSettings settings,
+  ) {
+    return ListTile(
+      title: const Text('Preferred Server'),
+      subtitle: Text(_getServerLabel(settings.preferredServer)),
+      leading: const Icon(Icons.dns),
+      trailing: const Icon(Icons.chevron_right),
+      onTap: () {
+        final settingsBloc = context.read<SettingsBloc>();
+        showModalBottomSheet(
+          context: context,
+          builder: (bottomSheetContext) => BlocProvider.value(
+            value: settingsBloc,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ListTile(
+                  title: const Text('Auto (Recommended)'),
+                  subtitle: const Text('Automatically select the best available server'),
+                  trailing: settings.preferredServer == domain.PreferredServer.auto
+                      ? const Icon(Icons.check, color: Colors.green)
+                      : null,
+                  onTap: () {
+                    settingsBloc.add(
+                      UpdateSettings(
+                        settings.copyWith(preferredServer: domain.PreferredServer.auto),
+                      ),
+                    );
+                    Navigator.pop(bottomSheetContext);
+                  },
+                ),
+                ListTile(
+                  title: const Text('VidCloud'),
+                  subtitle: const Text('Fast and reliable'),
+                  trailing: settings.preferredServer == domain.PreferredServer.vidcloud
+                      ? const Icon(Icons.check, color: Colors.green)
+                      : null,
+                  onTap: () {
+                    settingsBloc.add(
+                      UpdateSettings(
+                        settings.copyWith(preferredServer: domain.PreferredServer.vidcloud),
+                      ),
+                    );
+                    Navigator.pop(bottomSheetContext);
+                  },
+                ),
+                ListTile(
+                  title: const Text('UpCloud'),
+                  subtitle: const Text('Good for movies'),
+                  trailing: settings.preferredServer == domain.PreferredServer.upcloud
+                      ? const Icon(Icons.check, color: Colors.green)
+                      : null,
+                  onTap: () {
+                    settingsBloc.add(
+                      UpdateSettings(
+                        settings.copyWith(preferredServer: domain.PreferredServer.upcloud),
+                      ),
+                    );
+                    Navigator.pop(bottomSheetContext);
+                  },
+                ),
+                ListTile(
+                  title: const Text('MegaUp'),
+                  subtitle: const Text('Alternative server'),
+                  trailing: settings.preferredServer == domain.PreferredServer.megaup
+                      ? const Icon(Icons.check, color: Colors.green)
+                      : null,
+                  onTap: () {
+                    settingsBloc.add(
+                      UpdateSettings(
+                        settings.copyWith(preferredServer: domain.PreferredServer.megaup),
+                      ),
+                    );
+                    Navigator.pop(bottomSheetContext);
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  String _getServerLabel(domain.PreferredServer server) {
+    switch (server) {
+      case domain.PreferredServer.auto:
+        return 'Auto';
+      case domain.PreferredServer.vidcloud:
+        return 'VidCloud';
+      case domain.PreferredServer.upcloud:
+        return 'UpCloud';
+      case domain.PreferredServer.megaup:
+        return 'MegaUp';
+    }
   }
 
   Widget _buildProviderSelector(

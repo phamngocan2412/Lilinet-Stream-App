@@ -2,37 +2,75 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import '../../../../settings/domain/entities/app_settings.dart';
 import '../../../domain/entities/streaming_response.dart';
 import '../../../domain/usecases/get_streaming_links.dart';
+import '../../../domain/usecases/get_available_servers.dart';
 import 'streaming_state.dart';
 
 @injectable
 class StreamingCubit extends Cubit<StreamingState> {
   final GetStreamingLinks _getStreamingLinks;
+  final GetAvailableServers _getAvailableServers;
 
-  StreamingCubit(this._getStreamingLinks) : super(StreamingInitial());
+  // Cache available servers for current episode
+  List<String>? _cachedAvailableServers;
 
-  // Valid servers
-  static const _servers = ['vidcloud', 'upcloud', 'megaup'];
+  StreamingCubit(this._getStreamingLinks, this._getAvailableServers)
+      : super(StreamingInitial());
+
+  // Valid servers - order matters for fallback
+  static const _defaultServers = ['vidcloud', 'upcloud', 'megaup'];
 
   // Backup providers
   static const _animeProviders = ['zoro', 'gogoanime', 'animepahe', 'animekai'];
   static const _movieProviders = ['flixhq', 'viewasian'];
 
-  // Race timeout for parallel provider attempts
-  static const _raceTimeout = Duration(seconds: 15);
+  /// Get servers list with preferred server first
+  List<String> _getServersWithPreferred(PreferredServer? preferred) {
+    if (preferred == null || preferred == PreferredServer.auto) {
+      return _defaultServers;
+    }
+
+    final preferredName = preferred.name;
+    // Put preferred server first, then others
+    return [
+      preferredName,
+      ..._defaultServers.where((s) => s != preferredName),
+    ];
+  }
 
   Future<void> loadLinks({
     required String episodeId,
     required String mediaId,
     String? server,
     String provider = 'animekai',
+    PreferredServer? preferredServer,
   }) async {
     if (isClosed) return;
     emit(StreamingLoading());
 
+    // Fetch available servers in background (don't wait)
+    _fetchAvailableServers(episodeId, mediaId, provider);
+
+    // Get ordered servers list based on preference
+    final servers = _getServersWithPreferred(preferredServer);
+
+    if (kDebugMode) {
+      debugPrint('🔄 Loading streaming links...');
+      debugPrint('  Provider: $provider');
+      debugPrint('  Preferred Server: ${preferredServer?.name ?? "auto"}');
+      debugPrint('  Server order: $servers');
+    }
+
     // 1. Try the requested provider first (with specific server if requested)
-    bool success = await _tryProvider(provider, episodeId, mediaId, server);
+    bool success = await _tryProvider(
+      provider,
+      episodeId,
+      mediaId,
+      server,
+      servers,
+    );
     if (success) return;
 
     // 2. If specific server was requested, don't try fallbacks
@@ -56,7 +94,7 @@ class StreamingCubit extends Cubit<StreamingState> {
     final fallbackProviders = _getFallbackProviders(provider, isAnime);
 
     if (fallbackProviders.isNotEmpty) {
-      success = await _raceProviders(fallbackProviders, episodeId, mediaId);
+      success = await _raceProviders(fallbackProviders, episodeId, mediaId, servers);
       if (success) return;
     }
 
@@ -82,6 +120,7 @@ class StreamingCubit extends Cubit<StreamingState> {
     List<String> providers,
     String episodeId,
     String mediaId,
+    List<String> servers,
   ) async {
     // Create a completer to handle the first successful result
     final completer = Completer<bool>();
@@ -92,10 +131,11 @@ class StreamingCubit extends Cubit<StreamingState> {
       if (completed || isClosed) return;
 
       try {
-        final result = await _tryProviderWithTimeout(
+        final result = await _tryProviderWithServers(
           provider,
           episodeId,
           mediaId,
+          servers,
         );
 
         if (result && !completed && !isClosed) {
@@ -121,12 +161,13 @@ class StreamingCubit extends Cubit<StreamingState> {
     }
   }
 
-  Future<bool> _tryProviderWithTimeout(
+  Future<bool> _tryProviderWithServers(
     String provider,
     String episodeId,
     String mediaId,
+    List<String> servers,
   ) async {
-    return await _tryProvider(provider, episodeId, mediaId, null);
+    return await _tryProvider(provider, episodeId, mediaId, null, servers);
   }
 
   Future<bool> _tryProvider(
@@ -134,6 +175,7 @@ class StreamingCubit extends Cubit<StreamingState> {
     String episodeId,
     String mediaId,
     String? specificServer,
+    List<String> servers,
   ) async {
     // If specific server requested
     if (specificServer != null) {
@@ -150,7 +192,6 @@ class StreamingCubit extends Cubit<StreamingState> {
       result.fold(
         (failure) {
           // Don't emit error here, just return false to try next server/provider
-          // if (state is! StreamingLoaded) emit(StreamingError(failure.message));
         },
         (response) {
           _emitLoaded(response, provider, specificServer);
@@ -160,8 +201,8 @@ class StreamingCubit extends Cubit<StreamingState> {
       return found;
     }
 
-    // Loop through servers
-    for (final s in _servers) {
+    // Loop through servers in preferred order
+    for (final s in servers) {
       if (isClosed) return false;
 
       final result = await _getStreamingLinks(
@@ -190,6 +231,36 @@ class StreamingCubit extends Cubit<StreamingState> {
     return false;
   }
 
+  /// Fetch available servers from API (async, updates cache)
+  Future<void> _fetchAvailableServers(
+    String episodeId,
+    String mediaId,
+    String provider,
+  ) async {
+    try {
+      final result = await _getAvailableServers(
+        episodeId: episodeId,
+        mediaId: mediaId,
+        provider: provider,
+      );
+
+      result.fold(
+        (_) {
+          // On error, use default servers
+          _cachedAvailableServers = _defaultServers;
+        },
+        (servers) {
+          _cachedAvailableServers = servers.isNotEmpty ? servers : _defaultServers;
+          if (kDebugMode) {
+            debugPrint('📡 Available servers: $_cachedAvailableServers');
+          }
+        },
+      );
+    } catch (e) {
+      _cachedAvailableServers = _defaultServers;
+    }
+  }
+
   void _emitLoaded(StreamingResponse response, String provider, String server) {
     if (!isClosed) {
       if (kDebugMode) {
@@ -197,6 +268,7 @@ class StreamingCubit extends Cubit<StreamingState> {
         debugPrint('  Provider: $provider');
         debugPrint('  Server: $server');
         debugPrint('  Sources: ${response.links.length}');
+        debugPrint('  Available servers: $_cachedAvailableServers');
       }
 
       emit(
@@ -204,6 +276,7 @@ class StreamingCubit extends Cubit<StreamingState> {
           links: response.links,
           selectedServer: server,
           subtitles: response.subtitles,
+          availableServers: _cachedAvailableServers ?? _defaultServers,
         ),
       );
     }

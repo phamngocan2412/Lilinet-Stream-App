@@ -81,6 +81,7 @@ import 'features/movies/data/datasources/movie_remote_datasource.dart' as _i47;
 import 'features/movies/data/models/movie_model.dart' as _i892;
 import 'features/movies/data/repositories/movie_repository_impl.dart' as _i981;
 import 'features/movies/domain/repositories/movie_repository.dart' as _i961;
+import 'features/movies/domain/usecases/get_available_servers.dart' as _i229;
 import 'features/movies/domain/usecases/get_cached_trending_movies.dart'
     as _i442;
 import 'features/movies/domain/usecases/get_movie_details.dart' as _i1004;
@@ -225,6 +226,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i442.GetCachedTrendingMovies>(
       () => _i442.GetCachedTrendingMovies(gh<_i961.MovieRepository>()),
     );
+    gh.factory<_i229.GetAvailableServers>(
+      () => _i229.GetAvailableServers(gh<_i961.MovieRepository>()),
+    );
     gh.factory<_i1004.GetMovieDetails>(
       () => _i1004.GetMovieDetails(gh<_i961.MovieRepository>()),
     );
@@ -250,6 +254,12 @@ extension GetItInjectableX on _i174.GetIt {
         repository: gh<_i309.SettingsRepository>(),
       ),
     );
+    gh.factory<_i1072.StreamingCubit>(
+      () => _i1072.StreamingCubit(
+        gh<_i9.GetStreamingLinks>(),
+        gh<_i229.GetAvailableServers>(),
+      ),
+    );
     gh.lazySingleton<_i191.GetCurrentUser>(
       () => _i191.GetCurrentUser(gh<_i1015.AuthRepository>()),
     );
@@ -273,9 +283,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i603.SaveWatchProgress>(
       () => _i603.SaveWatchProgress(gh<_i190.HistoryRepository>()),
-    );
-    gh.factory<_i1072.StreamingCubit>(
-      () => _i1072.StreamingCubit(gh<_i9.GetStreamingLinks>()),
     );
     gh.factory<_i730.SearchBloc>(
       () => _i730.SearchBloc(gh<_i82.SearchMovies>()),

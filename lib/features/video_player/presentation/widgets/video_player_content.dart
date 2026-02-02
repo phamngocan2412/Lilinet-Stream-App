@@ -77,6 +77,7 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
   String? _movieProvider;
   String? _animeProvider;
   VideoQuality _defaultQuality = VideoQuality.auto;
+  PreferredServer _preferredServer = PreferredServer.auto;
 
   @override
   void initState() {
@@ -110,6 +111,7 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
             _movieProvider = settings.movieProvider;
             _animeProvider = settings.animeProvider;
             _defaultQuality = settings.defaultQuality;
+            _preferredServer = settings.preferredServer;
           });
           _loadVideo();
         }
@@ -128,6 +130,7 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
       episodeId: widget.state.episodeId!,
       mediaId: widget.state.mediaId!,
       provider: provider,
+      preferredServer: _preferredServer,
     );
   }
 

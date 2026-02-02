@@ -114,43 +114,8 @@ class ExpandedPlayerContent extends StatelessWidget {
       ),
       const SizedBox(height: 16),
 
-      // Server Selector
-      SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: [
-            const Text('Server', style: TextStyle(color: Colors.grey)),
-            const SizedBox(width: 8),
-            _buildVipButton(
-              'VidCloud',
-              kGreenVIP,
-              currentServer == 'vidcloud',
-              () => onServerSelected('vidcloud'),
-            ),
-            const SizedBox(width: 8),
-            _buildVipButton(
-              'UpCloud',
-              kBlueVIP,
-              currentServer == 'upcloud',
-              () => onServerSelected('upcloud'),
-            ),
-            const SizedBox(width: 8),
-            _buildVipButton(
-              'VidStream',
-              kOrangeColor,
-              currentServer == 'vidstream',
-              () => onServerSelected('vidstream'),
-            ),
-            const SizedBox(width: 8),
-            _buildVipButton(
-              'MixDrop',
-              const Color(0xFF8E24AA),
-              currentServer == 'mixdrop',
-              () => onServerSelected('mixdrop'),
-            ),
-          ],
-        ),
-      ),
+      // Server Selector - Dynamic based on available servers
+      _buildServerSelector(streamingState),
       const SizedBox(height: 16),
 
       // Quality Selector
@@ -269,5 +234,60 @@ class ExpandedPlayerContent extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _buildServerSelector(StreamingState streamingState) {
+    // Get available servers from state, or use defaults
+    List<String> servers = ['vidcloud', 'upcloud', 'megaup'];
+
+    if (streamingState is StreamingLoaded &&
+        streamingState.availableServers != null &&
+        streamingState.availableServers!.isNotEmpty) {
+      servers = streamingState.availableServers!;
+    }
+
+    // Map server names to display labels and colors
+    final serverConfig = <String, ({String label, Color color})>{
+      'vidcloud': (label: 'VidCloud', color: kGreenVIP),
+      'upcloud': (label: 'UpCloud', color: kBlueVIP),
+      'megaup': (label: 'MegaUp', color: const Color(0xFF8E24AA)),
+      'vidstreaming': (label: 'VidStream', color: kOrangeColor),
+      'mixdrop': (label: 'MixDrop', color: const Color(0xFF8E24AA)),
+      'streamsb': (label: 'StreamSB', color: const Color(0xFFE53935)),
+      'streamtape': (label: 'StreamTape', color: const Color(0xFF00897B)),
+      'filemoon': (label: 'FileMoon', color: const Color(0xFF5E35B1)),
+      'mp4upload': (label: 'MP4Upload', color: const Color(0xFF6D4C41)),
+    };
+
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          const Text('Server', style: TextStyle(color: Colors.grey)),
+          const SizedBox(width: 8),
+          ...servers.map((server) {
+            final serverLower = server.toLowerCase();
+            final config = serverConfig[serverLower];
+            final label = config?.label ?? _capitalizeServer(server);
+            final color = config?.color ?? kOrangeColor;
+
+            return Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: _buildVipButton(
+                label,
+                color,
+                currentServer.toLowerCase() == serverLower,
+                () => onServerSelected(serverLower),
+              ),
+            );
+          }),
+        ],
+      ),
+    );
+  }
+
+  String _capitalizeServer(String server) {
+    if (server.isEmpty) return server;
+    return server[0].toUpperCase() + server.substring(1);
   }
 }

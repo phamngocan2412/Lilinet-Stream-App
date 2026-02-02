@@ -179,3 +179,9 @@ Map<String, dynamic> _$StreamingResponseModelToJson(
   'headers': instance.headers,
   'subtitles': instance.subtitles,
 };
+
+_ServerInfoModel _$ServerInfoModelFromJson(Map<String, dynamic> json) =>
+    _ServerInfoModel(name: json['name'] as String, url: json['url'] as String);
+
+Map<String, dynamic> _$ServerInfoModelToJson(_ServerInfoModel instance) =>
+    <String, dynamic>{'name': instance.name, 'url': instance.url};

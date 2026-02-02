@@ -14,6 +14,13 @@ MovieListResponse _parseMovieList(Map<String, dynamic> json) {
   return MovieListResponse.fromJson(json);
 }
 
+List<String> _parseServerList(List<dynamic> json) {
+  return json
+      .map((item) => (item['name'] as String?)?.toLowerCase() ?? '')
+      .where((name) => name.isNotEmpty)
+      .toList();
+}
+
 @lazySingleton
 class MovieRemoteDataSource {
   final Dio _dio;
@@ -153,6 +160,53 @@ class MovieRemoteDataSource {
         queryParameters: queryParams,
       );
       return StreamingResponseModel.fromJson(response.data);
+    }
+  }
+
+  /// Fetch available servers for a specific episode
+  /// Returns list of server names (lowercase)
+  /// Only works for movie providers (flixhq, etc.) - anime providers don't have /servers endpoint
+  Future<List<String>> getAvailableServers({
+    required String episodeId,
+    required String mediaId,
+    String provider = 'flixhq',
+  }) async {
+    final providerKey = provider.toLowerCase().trim();
+
+    // Anime providers don't have /servers endpoint
+    final animeProviders = [
+      'animekai',
+      'gogoanime',
+      'animepahe',
+      'animesaturn',
+      'animeunity',
+      'zoro',
+    ];
+
+    if (animeProviders.contains(providerKey)) {
+      // Return default servers for anime
+      return ['vidcloud', 'vidstreaming', 'streamsb', 'streamtape'];
+    }
+
+    try {
+      final response = await _dio.get(
+        '/movies/$providerKey/servers',
+        queryParameters: {
+          'episodeId': episodeId,
+          'mediaId': mediaId,
+        },
+      );
+
+      if (response.data is List) {
+        return _parseServerList(response.data as List<dynamic>);
+      }
+
+      // Fallback to default servers
+      return ['upcloud', 'vidcloud', 'mixdrop'];
+    } catch (e) {
+      debugPrint('Failed to fetch servers: $e');
+      // Return default servers on error
+      return ['upcloud', 'vidcloud', 'mixdrop'];
     }
   }
 }

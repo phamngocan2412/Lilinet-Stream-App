@@ -139,4 +139,20 @@ class MovieRepositoryImpl implements MovieRepository {
       return StreamingResponse(links: links, subtitles: subtitles);
     });
   }
+
+  @override
+  Future<Either<Failure, List<String>>> getAvailableServers({
+    required String episodeId,
+    required String mediaId,
+    String provider = 'flixhq',
+  }) async {
+    return safeCall(() async {
+      final servers = await _remoteDataSource.getAvailableServers(
+        episodeId: episodeId,
+        mediaId: mediaId,
+        provider: provider,
+      );
+      return servers;
+    });
+  }
 }

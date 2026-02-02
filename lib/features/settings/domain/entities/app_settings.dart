@@ -4,6 +4,8 @@ enum ThemeMode { light, dark, system }
 
 enum VideoQuality { auto, sd360, sd480, hd720, hd1080 }
 
+enum PreferredServer { auto, vidcloud, upcloud, megaup }
+
 class AppSettings extends Equatable {
   final ThemeMode themeMode;
   final String language;
@@ -16,6 +18,7 @@ class AppSettings extends Equatable {
   final String subtitleLanguage;
   final String movieProvider;
   final String animeProvider;
+  final PreferredServer preferredServer;
 
   const AppSettings({
     this.themeMode = ThemeMode.dark,
@@ -29,6 +32,7 @@ class AppSettings extends Equatable {
     this.subtitleLanguage = 'en',
     this.movieProvider = 'flixhq', // Stable default
     this.animeProvider = 'animepahe', // Fixed and high quality
+    this.preferredServer = PreferredServer.auto, // Auto-select best server
   });
 
   AppSettings copyWith({
@@ -43,6 +47,7 @@ class AppSettings extends Equatable {
     String? subtitleLanguage,
     String? movieProvider,
     String? animeProvider,
+    PreferredServer? preferredServer,
   }) {
     return AppSettings(
       themeMode: themeMode ?? this.themeMode,
@@ -56,6 +61,7 @@ class AppSettings extends Equatable {
       subtitleLanguage: subtitleLanguage ?? this.subtitleLanguage,
       movieProvider: movieProvider ?? this.movieProvider,
       animeProvider: animeProvider ?? this.animeProvider,
+      preferredServer: preferredServer ?? this.preferredServer,
     );
   }
 
@@ -72,6 +78,7 @@ class AppSettings extends Equatable {
       'subtitleLanguage': subtitleLanguage,
       'movieProvider': movieProvider,
       'animeProvider': animeProvider,
+      'preferredServer': preferredServer.name,
     };
   }
 
@@ -94,6 +101,10 @@ class AppSettings extends Equatable {
       subtitleLanguage: json['subtitleLanguage'] ?? 'en',
       movieProvider: json['movieProvider'] ?? 'flixhq',
       animeProvider: json['animeProvider'] ?? 'animepahe',
+      preferredServer: PreferredServer.values.firstWhere(
+        (e) => e.name == (json['preferredServer'] ?? 'auto'),
+        orElse: () => PreferredServer.auto,
+      ),
     );
   }
 
@@ -110,5 +121,6 @@ class AppSettings extends Equatable {
     subtitleLanguage,
     movieProvider,
     animeProvider,
+    preferredServer,
   ];
 }
