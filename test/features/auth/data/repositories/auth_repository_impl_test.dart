@@ -89,4 +89,24 @@ void main() {
       },
     );
   });
+
+  group('sendPasswordResetEmail', () {
+    test(
+      'should return sanitized Failure when a generic Exception occurs',
+      () async {
+        // Arrange
+        when(() => mockDataSource.sendPasswordResetEmail(any()))
+            .thenThrow(Exception(tSensitiveError));
+
+        // Act
+        final result = await repository.sendPasswordResetEmail(tEmail);
+
+        // Assert
+        expect(
+          result,
+          equals(const Left(Failure.server('Đã xảy ra lỗi không mong muốn khi gửi email đặt lại mật khẩu.'))),
+        );
+      },
+    );
+  });
 }

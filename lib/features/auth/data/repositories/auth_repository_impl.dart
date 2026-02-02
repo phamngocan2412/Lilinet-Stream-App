@@ -96,7 +96,10 @@ class AuthRepositoryImpl implements AuthRepository {
     } on supabase.AuthException catch (e) {
       return Left(Failure.server(e.message));
     } catch (e) {
-      return Left(Failure.server('Gửi email đặt lại mật khẩu thất bại: ${e.toString()}'));
+      developer.log('Send password reset email failed', error: e, name: 'AuthRepository');
+      return const Left(
+        Failure.server('Đã xảy ra lỗi không mong muốn khi gửi email đặt lại mật khẩu.'),
+      );
     }
   }
 }
