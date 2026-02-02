@@ -53,6 +53,13 @@ class GenreMoviesPage extends StatelessWidget {
                 );
               }
 
+              // Calculate optimal cache width to improve performance
+              final screenWidth = MediaQuery.of(context).size.width;
+              final devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
+              // Padding (32) + CrossAxisSpacing (12) = 44
+              final cacheWidth =
+                  ((screenWidth - 44) / 2 * devicePixelRatio).ceil();
+
               return GridView.builder(
                 padding: const EdgeInsets.all(16),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -72,6 +79,7 @@ class GenreMoviesPage extends StatelessWidget {
                         extra: movie,
                       );
                     },
+                    memCacheWidth: cacheWidth,
                   );
                 },
               );
