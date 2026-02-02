@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class AppErrorWidget extends StatelessWidget {
@@ -125,7 +126,7 @@ class AppErrorWidget extends StatelessWidget {
                 ),
               ),
               // Show raw error for debugging if needed, but smaller
-              if (message != helpText) ...[
+              if (kDebugMode && message != helpText) ...[
                 const SizedBox(height: 12),
                 Text(
                   message,
