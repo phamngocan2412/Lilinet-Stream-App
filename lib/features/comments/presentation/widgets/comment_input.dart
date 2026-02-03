@@ -73,11 +73,13 @@ class _CommentInputState extends State<CommentInput> {
                 ? TextField(
                     controller: _controller,
                     maxLines: null,
+                    maxLength: 1000,
                     decoration: const InputDecoration(
                       hintText: 'Add a comment...',
                       border: InputBorder.none,
                       isDense: true,
                       contentPadding: EdgeInsets.symmetric(vertical: 8),
+                      counterText: "",
                     ),
                   )
                 : GestureDetector(
