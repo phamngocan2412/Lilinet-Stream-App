@@ -11,8 +11,6 @@ import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../../../../injection_container.dart';
 import '../../../../core/services/video_player_service.dart';
-import '../../../../core/services/cast_service.dart';
-import '../../../../core/services/download_service.dart';
 import '../../../../core/services/video_session_repository.dart';
 import '../../../../core/widgets/loading_indicator.dart';
 import '../../../../core/widgets/cached_image.dart';
@@ -32,11 +30,11 @@ import 'expanded_player_content.dart';
 import 'next_episode_countdown.dart';
 import 'video_error_widget.dart';
 
+import '../../../../core/network/network_cubit.dart';
+
 // Colors
 const kBgColor = Color(0xFF101010);
 const kOrangeColor = Color(0xFFC6A664);
-
-import '../../../../core/network/network_cubit.dart';
 
 class VideoPlayerContent extends StatefulWidget {
   final VideoPlayerState state;
@@ -63,9 +61,10 @@ class VideoPlayerContent extends StatefulWidget {
 class _VideoPlayerContentState extends State<VideoPlayerContent>
     with WidgetsBindingObserver {
   final GlobalKey _videoKey = GlobalKey();
-  late VideoPlayerService _videoService;
-  late CastService _castService;
-  late DownloadService _downloadService;
+
+  // Access video service via Bloc to keep widget "dumb" about service instantiation
+  VideoPlayerService get _videoService => context.read<VideoPlayerBloc>().videoService;
+
   late VideoSessionRepository _videoSessionRepository;
 
   String? _currentServer = 'vidcloud';
@@ -90,11 +89,13 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     WakelockPlus.enable();
+
+    // Services are now handled by Bloc, except VideoSessionRepository which is used for saving state
+    // Ideally this should also be in Bloc, but minimizing changes for now
+    _videoSessionRepository = getIt<VideoSessionRepository>();
+
     _initPlayer();
     _streamingCubit = getIt<StreamingCubit>();
-    _castService = getIt<CastService>();
-    _downloadService = getIt<DownloadService>();
-    _videoSessionRepository = getIt<VideoSessionRepository>();
     _loadSettingsAndVideo();
 
     if (widget.state.status == VideoPlayerStatus.expanded) {
@@ -118,9 +119,8 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
   }
 
   Future<void> _initPlayer() async {
-    _videoService = getIt<VideoPlayerService>();
-
     // Attach callbacks
+    // Note: Ideally these should also be handled by Bloc via streams
     _videoService.onPositionChanged = _saveProgress;
     _videoService.onVideoCompleted = _onVideoCompleted;
     _videoService.onError = (error) {
@@ -132,6 +132,7 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
         if (mounted) setState(() {});
     };
 
+    // Initialize is safe to call multiple times (checked inside service)
     await _videoService.initialize();
     if (mounted) setState(() {});
   }
@@ -163,9 +164,6 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
   }
 
   void _loadVideo() {
-    // Removed _videoService.resetLastUrl() to prevent restarting video on widget rebuilds (e.g. rotation)
-    // The VideoPlayerService checks if the URL is the same and skips reloading if so.
-
     // Use movie's stored provider if it exists, otherwise fall back to genres check
     final provider =
         widget.state.movie?.provider ??
@@ -181,8 +179,6 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
       provider: provider,
       preferredServer: _preferredServer,
     );
-
-    // Removed manual state check to prevent race condition (C-002)
   }
 
   void _switchServer(String server) {
@@ -209,7 +205,7 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.paused) {
-      _videoService.pause();
+      context.read<VideoPlayerBloc>().add(PauseVideoPlayback());
     }
   }
 
@@ -316,7 +312,7 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
     final now = DateTime.now();
     if (_lastSaveTime != null &&
         now.difference(_lastSaveTime!) < _saveDebounceDuration) {
-      return; // Skip nếu chưa đủ 5 giây
+      return; // Skip if less than 5 seconds
     }
     _lastSaveTime = now;
 
@@ -357,13 +353,14 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
     Map<String, String>? headers,
     bool isQualitySwitch = false,
   }) {
-    _videoService.playVideo(
-      url: url,
-      startPosition: widget.state.startPosition,
-      subtitleUrl: subtitleUrl,
-      subtitleLang: subtitleLang,
-      headers: headers,
-      isQualitySwitch: isQualitySwitch,
+    context.read<VideoPlayerBloc>().add(
+      LoadVideo(
+        url: url,
+        subtitleUrl: subtitleUrl,
+        subtitleLang: subtitleLang,
+        headers: headers,
+        isQualitySwitch: isQualitySwitch,
+      ),
     );
   }
 
@@ -377,13 +374,13 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
             _wasPlayingBeforeOffline =
                 _videoService.player.state.playing;
           });
-          _videoService.pause();
+          context.read<VideoPlayerBloc>().add(PauseVideoPlayback());
         } else {
           setState(() {
             _isOffline = false;
           });
           if (_wasPlayingBeforeOffline) {
-            _videoService.play();
+            context.read<VideoPlayerBloc>().add(ResumeVideoPlayback());
           } else {
             // Reload if it failed initially due to network
             if (_streamingCubit.state is StreamingError) {
@@ -467,6 +464,7 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
                       widget.miniplayerController.animateToHeight(
                         state: PanelState.MIN,
                       );
+                      context.read<VideoPlayerBloc>().add(MinimizeVideo());
                     },
                     onDownload: () {
                       final url = _videoService
@@ -482,26 +480,15 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
                                 .replaceAll(RegExp(r'[^\w\s\.-]'), '')
                                 .replaceAll(' ', '_');
 
-                        _downloadService.downloadVideo(
-                          url: url,
-                          fileName: fileName,
-                          movieId: widget.state.mediaId,
-                          movieTitle: widget.state.title,
-                          onCompleted: (path) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('Download completed: $path'),
-                              ),
-                            );
-                          },
-                          onError: (error) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('Download failed: $error'),
-                              ),
-                            );
-                          },
+                        context.read<VideoPlayerBloc>().add(
+                          DownloadCurrentVideo(
+                            url: url,
+                            fileName: fileName,
+                            movieId: widget.state.mediaId,
+                            movieTitle: widget.state.title,
+                          ),
                         );
+
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text('Download started...')),
                         );
@@ -581,7 +568,7 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
       },
       listener: (context, state) async {
         if (state is StreamingLoading) {
-          await _videoService.stop();
+           context.read<VideoPlayerBloc>().add(CloseVideo());
         }
         // Error is now handled in the builder, no need for SnackBar
         // if (state is StreamingError && context.mounted) { ... }
@@ -668,7 +655,7 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
                     return Icon(playing ? Icons.pause : Icons.play_arrow);
                   },
                 ),
-                onPressed: () => _videoService.playOrPause(),
+                onPressed: () => context.read<VideoPlayerBloc>().add(TogglePlayPause()),
               ),
               IconButton(
                 icon: const Icon(Icons.close),
@@ -711,30 +698,22 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
                         widget.miniplayerController.animateToHeight(
                           state: PanelState.MIN,
                         );
+                        context.read<VideoPlayerBloc>().add(MinimizeVideo());
                       },
                       onNext: _playNextEpisode,
                       onPrev: _playPreviousEpisode,
                       onSpeedChanged: (speed) {
-                        _videoService.setRate(speed);
+                        context.read<VideoPlayerBloc>().add(SetPlaybackSpeed(speed));
                       },
                       onEnterPiP: () {
-                        _videoService.enablePiP();
+                        context.read<VideoPlayerBloc>().add(EnterPiP());
                       },
                       onCast: () {
-                        // Start casting the current video
-                        // In a real implementation, this would show a device picker dialog
                         if (widget.state.title != null) {
-                          _castService.startCasting(
-                            videoUrl:
-                                _videoService
-                                    .player
-                                    .state
-                                    .playlist
-                                    .medias
-                                    .firstOrNull
-                                    ?.uri ??
-                                '',
-                            title: widget.state.title!,
+                          context.read<VideoPlayerBloc>().add(
+                            StartCast(
+                              _videoService.player.state.playlist.medias.firstOrNull?.uri ?? '',
+                            ),
                           );
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
@@ -771,4 +750,3 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
     );
   }
 }
-

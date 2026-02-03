@@ -7,6 +7,7 @@ import 'package:dartz/dartz.dart';
 import '../../../../../core/constants/streaming_config.dart';
 import '../../../../settings/domain/entities/app_settings.dart';
 import '../../../../../core/error/failures.dart';
+import '../../../domain/entities/streaming_link.dart';
 import '../../../domain/entities/streaming_response.dart';
 import '../../../domain/usecases/get_streaming_links.dart';
 import '../../../domain/usecases/get_available_servers.dart';
@@ -37,6 +38,28 @@ class StreamingCubit extends Cubit<StreamingState> {
       preferredName,
       ...defaultServers.where((s) => s != preferredName),
     ];
+  }
+
+  Future<void> playLocalFile({
+    required String path,
+    required String episodeId,
+  }) async {
+    if (isClosed) return;
+
+    emit(
+      StreamingLoaded(
+        episodeId: episodeId,
+        links: [
+          StreamingLink(
+            url: path,
+            quality: 'Downloaded',
+            isM3U8: false,
+          ),
+        ],
+        selectedServer: 'Local',
+        availableServers: ['Local'],
+      ),
+    );
   }
 
   Future<void> loadLinks({
