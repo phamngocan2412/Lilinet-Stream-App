@@ -157,9 +157,15 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
     // 1. Media Type
     if (options.mediaType != MediaType.all) {
-      final typeString =
-          options.mediaType == MediaType.movie ? 'Movie' : 'TV Series';
-      result = result.where((m) => m.type == typeString).toList();
+      // Compare against lowercase types from entity
+      result = result.where((m) {
+        final type = m.type.toLowerCase();
+        if (options.mediaType == MediaType.movie) {
+          return type == 'movie';
+        } else {
+          return type.contains('tv') || type.contains('series');
+        }
+      }).toList();
     }
 
     // 2. Min Rating

@@ -4,11 +4,7 @@ class PinCodeDialog extends StatefulWidget {
   final bool isSettingPin; // true = set/change pin, false = verify pin
   final String? currentPin; // Required if verifying
 
-  const PinCodeDialog({
-    super.key,
-    this.isSettingPin = false,
-    this.currentPin,
-  });
+  const PinCodeDialog({super.key, this.isSettingPin = false, this.currentPin});
 
   static Future<bool?> show(
     BuildContext context, {
@@ -18,10 +14,8 @@ class PinCodeDialog extends StatefulWidget {
     return showDialog<bool>(
       context: context,
       barrierDismissible: false,
-      builder: (context) => PinCodeDialog(
-        isSettingPin: isSettingPin,
-        currentPin: currentPin,
-      ),
+      builder: (context) =>
+          PinCodeDialog(isSettingPin: isSettingPin, currentPin: currentPin),
     );
   }
 

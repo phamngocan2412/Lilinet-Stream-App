@@ -59,7 +59,7 @@ abstract class MovieModel with _$MovieModel {
       description: description,
       rating: rating,
       releaseDate: releaseDate,
-      type: type,
+      type: type.toLowerCase(),
       episodeId: episodeId,
       genres: genres,
       totalEpisodes: totalEpisodes,

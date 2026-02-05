@@ -231,6 +231,7 @@ class _CustomVideoControlsState extends State<CustomVideoControls> {
   void _showSpeedMenu(BuildContext context) {
     showModalBottomSheet(
       context: context,
+      useRootNavigator: true, // Show above video player when in fullscreen
       backgroundColor: Colors.transparent,
       builder: (context) => Container(
         decoration: BoxDecoration(

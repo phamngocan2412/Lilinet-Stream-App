@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/services/miniplayer_height_notifier.dart';
 import '../../../../injection_container.dart';
 import '../../../../core/widgets/loading_indicator.dart';
 import '../../../../core/widgets/error_widget.dart';
@@ -53,23 +54,35 @@ class GenreMoviesPage extends StatelessWidget {
                 );
               }
 
-              return GridView.builder(
-                padding: const EdgeInsets.all(16),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 0.7,
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 12,
-                ),
-                itemCount: state.movies.length,
-                itemBuilder: (context, index) {
-                  final movie = state.movies[index];
-                  return MovieCard(
-                    movie: movie,
-                    onTap: () {
-                      context.push(
-                        '/movie/${movie.id}?type=${movie.type}',
-                        extra: movie,
+              return ListenableBuilder(
+                listenable: getIt<MiniplayerHeightNotifier>(),
+                builder: (context, _) {
+                  final miniplayerHeight = getIt<MiniplayerHeightNotifier>().height;
+
+                  return GridView.builder(
+                    padding: EdgeInsets.only(
+                      left: 16,
+                      right: 16,
+                      top: 16,
+                      bottom: 16 + miniplayerHeight,
+                    ),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 0.7,
+                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 12,
+                    ),
+                    itemCount: state.movies.length,
+                    itemBuilder: (context, index) {
+                      final movie = state.movies[index];
+                      return MovieCard(
+                        movie: movie,
+                        onTap: () {
+                          context.push(
+                            '/movie/${movie.id}?type=${movie.type}',
+                            extra: movie,
+                          );
+                        },
                       );
                     },
                   );

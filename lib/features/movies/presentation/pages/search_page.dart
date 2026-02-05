@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/services/miniplayer_height_notifier.dart';
 import '../../../../injection_container.dart';
 import '../../../../core/widgets/loading_indicator.dart';
 import '../../../../core/widgets/error_widget.dart';
@@ -95,6 +96,7 @@ class _SearchPageViewState extends State<SearchPageView> {
                       onPressed: () {
                         showModalBottomSheet(
                           context: context,
+                          useRootNavigator: true, // Show above miniplayer
                           isScrollControlled: true,
                           backgroundColor: Colors.transparent,
                           builder: (_) => FilterBottomSheet(
@@ -150,11 +152,8 @@ class _SearchPageViewState extends State<SearchPageView> {
             );
           }
 
-          final filteredMovies = state.activeFilter == 'All'
-              ? state.movies
-              : state.movies
-                    .where((m) => m.type == state.activeFilter)
-                    .toList();
+          // Bloc already handles filtering based on activeFilter/filterOptions
+          final filteredMovies = state.movies;
 
           if (state.isLoading && state.movies.isEmpty) {
             return const Center(child: LoadingIndicator());
@@ -189,31 +188,43 @@ class _SearchPageViewState extends State<SearchPageView> {
           final devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
           final cacheWidth = ((screenWidth - 32) / 2 * devicePixelRatio).ceil();
 
-          return GridView.builder(
-            controller: _scrollController,
-            padding: const EdgeInsets.all(16),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 0.7,
-              crossAxisSpacing: 12,
-              mainAxisSpacing: 12,
-            ),
-            itemCount: filteredMovies.length + (state.isLoading ? 1 : 0),
-            addAutomaticKeepAlives: false, // Reduce memory overhead
-            addRepaintBoundaries: true, // Optimize repaints
-            itemBuilder: (context, index) {
-              if (index >= filteredMovies.length) {
-                return const Center(child: LoadingIndicator());
-              }
+          return ListenableBuilder(
+            listenable: getIt<MiniplayerHeightNotifier>(),
+            builder: (context, _) {
+              final miniplayerHeight = getIt<MiniplayerHeightNotifier>().height;
 
-              final movie = filteredMovies[index];
-              return MovieCard(
-                movie: movie,
-                onTap: () => context.push(
-                  '/movie/${movie.id}?type=${movie.type}',
-                  extra: movie,
+              return GridView.builder(
+                controller: _scrollController,
+                padding: EdgeInsets.only(
+                  left: 16,
+                  right: 16,
+                  top: 16,
+                  bottom: 16 + miniplayerHeight,
                 ),
-                memCacheWidth: cacheWidth,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.7,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                ),
+                itemCount: filteredMovies.length + (state.isLoading ? 1 : 0),
+                addAutomaticKeepAlives: false, // Reduce memory overhead
+                addRepaintBoundaries: true, // Optimize repaints
+                itemBuilder: (context, index) {
+                  if (index >= filteredMovies.length) {
+                    return const Center(child: LoadingIndicator());
+                  }
+
+                  final movie = filteredMovies[index];
+                  return MovieCard(
+                    movie: movie,
+                    onTap: () => context.push(
+                      '/movie/${movie.id}?type=${movie.type}',
+                      extra: movie,
+                    ),
+                    memCacheWidth: cacheWidth,
+                  );
+                },
               );
             },
           );

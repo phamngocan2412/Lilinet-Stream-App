@@ -2,11 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import '../../../../injection_container.dart';
 import '../../../../core/widgets/loading_indicator.dart';
 import '../../../../core/widgets/error_widget.dart';
-import '../../../../core/widgets/cached_image.dart';
 import '../../../../core/widgets/content_unavailable_widget.dart';
 import '../../../../features/history/presentation/bloc/history_bloc.dart';
 import '../../../../features/history/domain/entities/watch_progress.dart';
@@ -19,10 +17,13 @@ import '../widgets/season_selector.dart';
 import '../widgets/episode_sliver_list.dart';
 import '../../../video_player/presentation/bloc/video_player_bloc.dart';
 import '../../../video_player/presentation/bloc/video_player_event.dart';
+import '../../../../core/services/miniplayer_height_notifier.dart';
 
 // New Imports
 import '../widgets/movie_details_header.dart';
 import '../widgets/movie_info_section.dart';
+import '../widgets/movie_cast_section.dart';
+import '../widgets/movie_recommendations_section.dart';
 
 class MovieDetailsPage extends StatelessWidget {
   final String movieId;
@@ -115,16 +116,6 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
 
   @override
   Widget build(BuildContext context) {
-    // Optimization: Calculate optimal memory cache size for recommendation items.
-    // (Screen Width - Padding - Spacing) / Columns * Pixel Density
-    final screenWidth = MediaQuery.of(context).size.width;
-    final devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
-    // Padding: 16 (left) + 16 (right) = 32
-    // CrossAxisSpacing: 12
-    // Columns: 2
-    final itemWidth = (screenWidth - 32 - 12) / 2;
-    final memCacheWidth = (itemWidth * devicePixelRatio).toInt();
-
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: BlocConsumer<MovieDetailsBloc, MovieDetailsState>(
@@ -150,24 +141,26 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
 
                 // Trigger playback
                 context.read<VideoPlayerBloc>().add(
-                      PlayVideo(
-                        episodeId: episode.id,
-                        mediaId: movie.id,
-                        title: movie.title,
-                        posterUrl: (episode.image != null &&
-                                episode.image!.isNotEmpty)
-                            ? episode.image
-                            : (movie.poster ?? movie.cover),
-                        episodeTitle: episode.title.isNotEmpty
-                            ? episode.title
-                            : 'Episode ${episode.number}',
-                        startPosition: startPos,
-                        mediaType: movie.type,
-                        movie: movie,
-                      ),
-                    );
+                  PlayVideo(
+                    episodeId: episode.id,
+                    mediaId: movie.id,
+                    title: movie.title,
+                    posterUrl:
+                        (episode.image != null && episode.image!.isNotEmpty)
+                        ? episode.image
+                        : (movie.poster ?? movie.cover),
+                    episodeTitle: episode.title.isNotEmpty
+                        ? episode.title
+                        : 'Episode ${episode.number}',
+                    startPosition: startPos,
+                    mediaType: movie.type,
+                    movie: movie,
+                  ),
+                );
               } catch (_) {
-                debugPrint('Initial episode not found: ${widget.initialEpisodeId}');
+                debugPrint(
+                  'Initial episode not found: ${widget.initialEpisodeId}',
+                );
               }
             }
           }
@@ -275,20 +268,16 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
 
             return CustomScrollView(
               slivers: [
-                // 1. Refactored Header
                 MovieDetailsHeader(
                   movie: movie,
                   isLoading: isLoading,
                   onPlayPressed: onPlayPressed,
                 ),
-
-                // 2. Refactored Info Section
                 MovieInfoSection(movie: movie, isLoading: isLoading),
 
                 if (isLoading)
                   const SliverToBoxAdapter(child: SizedBox(height: 100))
                 else ...[
-                  // Episode List
                   if (movie.episodes != null && movie.episodes!.isNotEmpty) ...[
                     SliverToBoxAdapter(
                       child: Padding(
@@ -358,135 +347,24 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
                     const SliverToBoxAdapter(child: SizedBox(height: 32)),
                   ],
 
-                  // Casts
-                  if (movie.casts != null && movie.casts!.isNotEmpty) ...[
-                    const SliverToBoxAdapter(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16),
-                        child: Text(
-                          'Cast',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SliverToBoxAdapter(child: SizedBox(height: 12)),
-                    SliverToBoxAdapter(
-                      child: SizedBox(
-                        height: 50,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          itemCount: movie.casts!.length,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              margin: const EdgeInsets.only(right: 12),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                              ),
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.surfaceContainerHighest,
-                                borderRadius: BorderRadius.circular(25),
-                              ),
-                              child: Text(
-                                movie.casts![index],
-                                style: TextStyle(
-                                  color: Theme.of(
-                                    context,
-                                  ).colorScheme.onSurfaceVariant,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                    const SliverToBoxAdapter(child: SizedBox(height: 32)),
-                  ],
+                  MovieCastSection(movie: movie),
 
-                  // Recommendations
-                  if (_showRecommendations &&
-                      movie.recommendations != null &&
-                      movie.recommendations!.isNotEmpty) ...[
-                    const SliverToBoxAdapter(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16),
-                        child: Text(
-                          'You May Also Like',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SliverToBoxAdapter(child: SizedBox(height: 16)),
-                    SliverPadding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      sliver: SliverGrid(
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              childAspectRatio: 0.7,
-                              crossAxisSpacing: 12,
-                              mainAxisSpacing: 12,
-                            ),
-                        delegate: SliverChildBuilderDelegate((context, index) {
-                          final item = movie.recommendations![index];
-                          return GestureDetector(
-                            onTap: () {
-                              if (item.id.isEmpty) return;
-                              context.push(
-                                '/movie/${item.id}?type=${item.type}',
-                                extra: item,
-                              );
-                            },
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: Hero(
-                                    tag: 'poster_${item.id}',
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(12),
-                                      child: AppCachedImage(
-                                        imageUrl:
-                                            item.poster ?? item.cover ?? '',
-                                        fit: BoxFit.cover,
-                                        width: double.infinity,
-                                        memCacheWidth: memCacheWidth,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  item.title,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.onSurface,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        }, childCount: movie.recommendations!.length),
-                      ),
-                    ),
-                    const SliverToBoxAdapter(child: SizedBox(height: 40)),
-                  ],
+                  MovieRecommendationsSection(
+                    recommendations: movie.recommendations ?? [],
+                    showRecommendations: _showRecommendations,
+                  ),
                 ],
+
+                // Add bottom padding for Miniplayer
+                SliverToBoxAdapter(
+                  child: ListenableBuilder(
+                    listenable: getIt<MiniplayerHeightNotifier>(),
+                    builder: (context, _) {
+                      final height = getIt<MiniplayerHeightNotifier>().height;
+                      return SizedBox(height: height);
+                    },
+                  ),
+                ),
               ],
             );
           }

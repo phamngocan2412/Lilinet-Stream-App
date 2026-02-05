@@ -34,4 +34,8 @@ class CastService {
     await Future.delayed(const Duration(seconds: 1));
     return ['Living Room TV', 'Bedroom Chromecast', 'Office TV'];
   }
+
+  void dispose() {
+    // Cleanup resources
+  }
 }

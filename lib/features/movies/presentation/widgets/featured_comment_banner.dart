@@ -70,17 +70,23 @@ class FeaturedCommentBanner extends StatelessWidget {
         final movieId = comment['movie_id'];
         // final episodeId = comment['episode_id'];
         final movieType =
-            comment['movie_type'] ?? 'TV Series'; // Default for nav
+            comment['movie_type'] ?? 'tv'; // Default for nav
 
         return GestureDetector(
           onTap: () {
             if (movieId != null) {
+              // Normalize type for API
+              final typeParam = movieType.toString().toLowerCase().contains('tv') ||
+                               movieType.toString().toLowerCase().contains('series')
+                               ? 'tv'
+                               : 'movie';
+
               // Navigate to player/details
               // If you have a direct player route:
               // context.push('/player/$movieId/$episodeId');
 
               // Or navigate to Details page first
-              context.push('/movie/$movieId?type=$movieType');
+              context.push('/movie/$movieId?type=$typeParam');
             }
           },
           child: Container(

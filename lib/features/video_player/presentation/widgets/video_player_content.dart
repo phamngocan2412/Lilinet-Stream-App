@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lilinet_app/core/constants/streaming_config.dart';
-import 'package:media_kit_video/media_kit_video.dart';
 import 'package:miniplayer/miniplayer.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
@@ -25,9 +24,9 @@ import '../bloc/video_player_bloc.dart';
 import '../bloc/video_player_event.dart';
 import '../bloc/video_player_state.dart';
 
-import 'custom_video_controls.dart';
+import 'mini_player_content.dart';
+import 'full_player_content.dart';
 import 'expanded_player_content.dart';
-import 'next_episode_countdown.dart';
 import 'video_error_widget.dart';
 
 import '../../../../core/network/network_cubit.dart';
@@ -59,11 +58,14 @@ class VideoPlayerContent extends StatefulWidget {
 }
 
 class _VideoPlayerContentState extends State<VideoPlayerContent>
-    with WidgetsBindingObserver {
+    with WidgetsBindingObserver, AutomaticKeepAliveClientMixin {
   final GlobalKey _videoKey = GlobalKey();
 
+  @override
+  bool get wantKeepAlive => true; // Prevent disposal when scrolling
+
   // Access video service via Bloc to keep widget "dumb" about service instantiation
-  VideoPlayerService get _videoService => context.read<VideoPlayerBloc>().videoService;
+  late final VideoPlayerService _videoService;
 
   late VideoSessionRepository _videoSessionRepository;
 
@@ -84,11 +86,16 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
   bool _showCountdown = false;
   String? _nextEpisodeTitle;
 
+  bool _isPlayerInitialized = false;
+
   @override
   void initState() {
     super.initState();
+    debugPrint('🏗️ VideoPlayerContent: initState');
     WidgetsBinding.instance.addObserver(this);
     WakelockPlus.enable();
+
+    _videoService = context.read<VideoPlayerBloc>().videoService;
 
     // Services are now handled by Bloc, except VideoSessionRepository which is used for saving state
     // Ideally this should also be in Bloc, but minimizing changes for now
@@ -124,17 +131,22 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
     _videoService.onPositionChanged = _saveProgress;
     _videoService.onVideoCompleted = _onVideoCompleted;
     _videoService.onError = (error) {
-        if (kDebugMode) {
-          debugPrint('❌ Video error: $error');
-        }
+      if (kDebugMode) {
+        debugPrint('❌ Video error: $error');
+      }
     };
     _videoService.onQualitySwitchStateChanged = (isSwitching) {
-        if (mounted) setState(() {});
+      if (mounted) setState(() {});
     };
 
     // Initialize is safe to call multiple times (checked inside service)
     await _videoService.initialize();
-    if (mounted) setState(() {});
+    if (mounted) {
+      setState(() {
+        _isPlayerInitialized = true;
+      });
+      debugPrint('✅ VideoPlayerContent: Player initialized');
+    }
   }
 
   bool _autoPlayEnabled = false;
@@ -211,6 +223,7 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
 
   @override
   void dispose() {
+    debugPrint('🗑️ VideoPlayerContent: dispose');
     WidgetsBinding.instance.removeObserver(this);
     WakelockPlus.disable();
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -307,7 +320,7 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
   static const _saveDebounceDuration = Duration(seconds: 5);
 
   void _saveProgress(Duration position) {
-    if (_videoService.isDisposed) return;
+    if (!mounted || _videoService.isDisposed) return;
 
     final now = DateTime.now();
     if (_lastSaveTime != null &&
@@ -353,6 +366,12 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
     Map<String, String>? headers,
     bool isQualitySwitch = false,
   }) {
+    if (!mounted) {
+      debugPrint(
+        '⚠️ VideoPlayerContent: _playVideo called but widget not mounted',
+      );
+      return;
+    }
     context.read<VideoPlayerBloc>().add(
       LoadVideo(
         url: url,
@@ -366,13 +385,13 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context); // Required for AutomaticKeepAliveClientMixin
     return BlocListener<NetworkCubit, bool>(
       listener: (context, isConnected) {
         if (!isConnected) {
           setState(() {
             _isOffline = true;
-            _wasPlayingBeforeOffline =
-                _videoService.player.state.playing;
+            _wasPlayingBeforeOffline = _videoService.player.state.playing;
           });
           context.read<VideoPlayerBloc>().add(PauseVideoPlayback());
         } else {
@@ -445,71 +464,99 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
 
                 // Expanded Content Area
                 if (!widget.isMini && widget.height > 300)
-                Expanded(
-                  child: ExpandedPlayerContent(
-                    state: widget.state,
-                    currentServer: _currentServer ?? 'vidcloud',
-                    defaultQuality: _defaultQuality,
-                    onServerSelected: _switchServer,
-                    onQualitySelected: (url, subUrl, subLang, headers) {
-                      _playVideo(
-                        url,
-                        subtitleUrl: subUrl,
-                        subtitleLang: subLang,
-                        headers: headers,
-                        isQualitySwitch: true,
-                      );
-                    },
-                    onMinimize: () {
-                      widget.miniplayerController.animateToHeight(
-                        state: PanelState.MIN,
-                      );
-                      context.read<VideoPlayerBloc>().add(MinimizeVideo());
-                    },
-                    onDownload: () {
-                      final url = _videoService
-                          .player
-                          .state
-                          .playlist
-                          .medias
-                          .firstOrNull
-                          ?.uri;
-                      if (url != null) {
-                        final fileName =
-                            '${widget.state.title ?? "video"}_${widget.state.episodeTitle ?? "episode"}.mp4'
-                                .replaceAll(RegExp(r'[^\w\s\.-]'), '')
-                                .replaceAll(' ', '_');
+                  Expanded(
+                    child: ExpandedPlayerContent(
+                      state: widget.state,
+                      currentServer: _currentServer ?? 'vidcloud',
+                      defaultQuality: _defaultQuality,
+                      onServerSelected: _switchServer,
+                      onQualitySelected: (url, subUrl, subLang, headers) {
+                        _playVideo(
+                          url,
+                          subtitleUrl: subUrl,
+                          subtitleLang: subLang,
+                          headers: headers,
+                          isQualitySwitch: true,
+                        );
+                      },
+                      onMinimize: () {
+                        widget.miniplayerController.animateToHeight(
+                          state: PanelState.MIN,
+                        );
+                        context.read<VideoPlayerBloc>().add(MinimizeVideo());
+                      },
+                      onDownload: () {
+                        final url = _videoService
+                            .player
+                            .state
+                            .playlist
+                            .medias
+                            .firstOrNull
+                            ?.uri;
+                        if (url != null) {
+                          final fileName =
+                              '${widget.state.title ?? "video"}_${widget.state.episodeTitle ?? "episode"}.mp4'
+                                  .replaceAll(RegExp(r'[^\w\s\.-]'), '')
+                                  .replaceAll(' ', '_');
 
-                        context.read<VideoPlayerBloc>().add(
-                          DownloadCurrentVideo(
-                            url: url,
-                            fileName: fileName,
-                            movieId: widget.state.mediaId,
-                            movieTitle: widget.state.title,
-                          ),
-                        );
+                          context.read<VideoPlayerBloc>().add(
+                            DownloadCurrentVideo(
+                              url: url,
+                              fileName: fileName,
+                              movieId: widget.state.mediaId,
+                              movieTitle: widget.state.title,
+                            ),
+                          );
 
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Download started...')),
-                        );
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('No video loaded to download'),
-                          ),
-                        );
-                      }
-                    },
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Download started...'),
+                            ),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('No video loaded to download'),
+                            ),
+                          );
+                        }
+                      },
+                    ),
                   ),
-                ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  void _onStreamingLoaded(StreamingLoaded state) {
+  void _onStreamingLoaded(StreamingLoaded state) async {
+    debugPrint(
+      '📥 VideoPlayerContent: Streaming links loaded. Initializing playback...',
+    );
+
+    // Wait for player to be fully initialized before loading video
+    if (!_isPlayerInitialized) {
+      debugPrint('⏳ VideoPlayerContent: Waiting for player initialization...');
+      int attempts = 0;
+      while (!_isPlayerInitialized && mounted && attempts < 50) {
+        await Future.delayed(const Duration(milliseconds: 100));
+        attempts++;
+      }
+      if (!_isPlayerInitialized) {
+        debugPrint('❌ VideoPlayerContent: Player initialization timed out');
+        return;
+      }
+    }
+
+    if (!mounted) {
+      debugPrint(
+        '⚠️ VideoPlayerContent: Widget unmounted during streaming load',
+      );
+      return;
+    }
+
     // Sync local state with actual server used by Cubit
     if (state.selectedServer != null) {
       _currentServer = state.selectedServer;
@@ -567,9 +614,6 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
         return true;
       },
       listener: (context, state) async {
-        if (state is StreamingLoading) {
-           context.read<VideoPlayerBloc>().add(CloseVideo());
-        }
         // Error is now handled in the builder, no need for SnackBar
         // if (state is StreamingError && context.mounted) { ... }
 
@@ -578,7 +622,9 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
         }
       },
       builder: (context, state) {
-        if (state is StreamingLoading || state is StreamingInitial) {
+        if (state is StreamingLoading ||
+            state is StreamingInitial ||
+            state is StreamingError) {
           return Stack(
             children: [
               if (widget.state.posterUrl != null)
@@ -595,7 +641,8 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
                 VideoErrorWidget(
                   message: state.message,
                   onRetry: _loadVideo,
-                  onClose: () => context.read<VideoPlayerBloc>().add(CloseVideo()),
+                  onClose: () =>
+                      context.read<VideoPlayerBloc>().add(CloseVideo()),
                 ),
             ],
           );
@@ -603,148 +650,36 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
 
         // Miniplayer Controls
         if (widget.isMini) {
-          return Row(
-            children: [
-              ClipRect(
-                child: SizedBox(
-                  height: widget.miniplayerHeight - 10,
-                  width: (widget.miniplayerHeight - 10) * 16 / 9,
-                  child: Video(
-                    key: _videoKey,
-                    controller: _videoService.controller,
-                    controls: NoVideoControls,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        widget.state.title ?? '',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      if (widget.state.episodeTitle != null)
-                        Text(
-                          widget.state.episodeTitle!,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            color: Colors.white70,
-                            fontSize: 12,
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-              ),
-              IconButton(
-                icon: StreamBuilder<bool>(
-                  stream: _videoService.player.stream.playing,
-                  initialData: _videoService.player.state.playing,
-                  builder: (context, snapshot) {
-                    final playing = snapshot.data ?? false;
-                    return Icon(playing ? Icons.pause : Icons.play_arrow);
-                  },
-                ),
-                onPressed: () => context.read<VideoPlayerBloc>().add(TogglePlayPause()),
-              ),
-              IconButton(
-                icon: const Icon(Icons.close),
-                onPressed: () {
-                  context.read<VideoPlayerBloc>().add(CloseVideo());
-                },
-              ),
-            ],
+          return MiniPlayerContent(
+            state: widget.state,
+            videoService: _videoService,
+            miniplayerHeight: widget.miniplayerHeight,
+            videoKey: _videoKey,
+            miniplayerController: widget.miniplayerController,
           );
         }
 
         // Full Player with Custom Controls
-        // Wrap in ClipRect to prevent surface overflow issues
-        return Stack(
-          children: [
-            ClipRect(
-              child: Video(
-                key: _videoKey,
-                controller: _videoService.controller,
-                controls: (state) {
-                  final movie = widget.state.movie;
-                  bool hasNext = false;
-                  bool hasPrev = false;
-                  if (movie != null && movie.episodes != null) {
-                    final idx = movie.episodes!.indexWhere(
-                      (e) => e.id == widget.state.episodeId,
-                    );
-                    if (idx != -1) {
-                      if (idx < movie.episodes!.length - 1) hasNext = true;
-                      if (idx > 0) hasPrev = true;
-                    }
-                  }
-
-                  return GestureDetector(
-                    onTap: () {},
-                    child: CustomVideoControls(
-                      state: state,
-                      player: _videoService.player,
-                      onMinimize: () {
-                        widget.miniplayerController.animateToHeight(
-                          state: PanelState.MIN,
-                        );
-                        context.read<VideoPlayerBloc>().add(MinimizeVideo());
-                      },
-                      onNext: _playNextEpisode,
-                      onPrev: _playPreviousEpisode,
-                      onSpeedChanged: (speed) {
-                        context.read<VideoPlayerBloc>().add(SetPlaybackSpeed(speed));
-                      },
-                      onEnterPiP: () {
-                        context.read<VideoPlayerBloc>().add(EnterPiP());
-                      },
-                      onCast: () {
-                        if (widget.state.title != null) {
-                          context.read<VideoPlayerBloc>().add(
-                            StartCast(
-                              _videoService.player.state.playlist.medias.firstOrNull?.uri ?? '',
-                            ),
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Casting feature is a prototype'),
-                            ),
-                          );
-                        }
-                      },
-                      hasNext: hasNext,
-                      hasPrev: hasPrev,
-                    ),
-                  );
-                },
-              ),
-            ),
-            if (_showCountdown && _nextEpisodeTitle != null)
-              NextEpisodeCountdown(
-                nextEpisodeTitle: _nextEpisodeTitle!,
-                onPlayNow: () {
-                  setState(() {
-                    _showCountdown = false;
-                  });
-                  _playNextEpisode();
-                },
-                onCancel: () {
-                  setState(() {
-                    _showCountdown = false;
-                  });
-                },
-              ),
-          ],
+        return FullPlayerContent(
+          state: widget.state,
+          videoService: _videoService,
+          videoKey: _videoKey,
+          miniplayerController: widget.miniplayerController,
+          showCountdown: _showCountdown,
+          nextEpisodeTitle: _nextEpisodeTitle,
+          onPlayNext: _playNextEpisode,
+          onPlayPrevious: _playPreviousEpisode,
+          onCancelCountdown: () {
+            setState(() {
+              _showCountdown = false;
+            });
+          },
+          onDismissCountdown: () {
+            setState(() {
+              _showCountdown = false;
+            });
+            _playNextEpisode();
+          },
         );
       },
     );

@@ -32,15 +32,17 @@ class ScaffoldWithPlayer extends StatelessWidget {
 
             // Update miniplayer height notifier
             final miniplayerHeight = 60 + MediaQuery.of(context).padding.bottom;
-            if (isClosed) {
-              miniplayerNotifier.reset();
-            } else if (!isExpanded) {
-              // Only set height when minimized
-              miniplayerNotifier.updateHeight(miniplayerHeight);
-            } else {
-              // When expanded, no need for padding
-              miniplayerNotifier.reset();
-            }
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (isClosed) {
+                miniplayerNotifier.reset();
+              } else if (!isExpanded) {
+                // Only set height when minimized
+                miniplayerNotifier.updateHeight(miniplayerHeight);
+              } else {
+                // When expanded, no need for padding
+                miniplayerNotifier.reset();
+              }
+            });
 
             // Determine if we should show the Navigation Bar
             // We hide it if:
@@ -77,7 +79,6 @@ class ScaffoldWithPlayer extends StatelessWidget {
                       left: 0,
                       right: 0,
                       bottom: 0,
-                      top: isExpanded ? 0 : null,
                       child: MiniplayerWidget(
                         // Fixed height to prevent inconsistency when navigating
                         // Always add bottom padding for safe area consistency

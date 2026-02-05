@@ -28,6 +28,7 @@ class _CollapsedCommentViewContent extends StatelessWidget {
   void _openCommentSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
+      useRootNavigator: true, // Show above miniplayer
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) => CommentBottomSheet(videoId: videoId),

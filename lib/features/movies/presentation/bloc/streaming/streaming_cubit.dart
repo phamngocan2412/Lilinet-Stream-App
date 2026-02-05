@@ -6,7 +6,7 @@ import 'package:injectable/injectable.dart';
 import 'package:dartz/dartz.dart';
 import '../../../../../core/constants/streaming_config.dart';
 import '../../../../settings/domain/entities/app_settings.dart';
-import '../../../../../core/error/failures.dart';
+import '../../../../../core/errors/failures.dart';
 import '../../../domain/entities/streaming_link.dart';
 import '../../../domain/entities/streaming_response.dart';
 import '../../../domain/usecases/get_streaming_links.dart';
@@ -57,7 +57,7 @@ class StreamingCubit extends Cubit<StreamingState> {
           ),
         ],
         selectedServer: 'Local',
-        availableServers: ['Local'],
+        availableServers: const ['Local'],
       ),
     );
   }
@@ -113,16 +113,16 @@ class StreamingCubit extends Cubit<StreamingState> {
       return;
     }
 
-    // 3. Race fallback providers in parallel for faster response
+    // 3. Try fallback providers sequentially (to avoid 429s)
     if (kDebugMode) {
-      debugPrint('⚠️ Primary provider $effectiveProvider failed. Racing fallback providers...');
+      debugPrint('⚠️ Primary provider $effectiveProvider failed. Trying fallback providers...');
     }
 
     final isAnime = StreamingConfig.isAnimeProvider(effectiveProvider);
     final fallbackProviders = StreamingConfig.getFallbackProviders(effectiveProvider, isAnime);
 
     if (fallbackProviders.isNotEmpty) {
-      success = await _raceProviders(fallbackProviders, episodeId, mediaId, servers);
+      success = await _tryFallbackProviders(fallbackProviders, episodeId, mediaId, servers);
       if (success) return;
     }
 
@@ -130,7 +130,7 @@ class StreamingCubit extends Cubit<StreamingState> {
     if (!isClosed && state is! StreamingLoaded) {
       emit(
         const StreamingError(
-          'No streaming links available. Please check your connection or try a different provider in Settings.',
+          'No streaming links available. Please try a different provider in Settings or try again later.',
         ),
       );
     }
@@ -145,7 +145,7 @@ class StreamingCubit extends Cubit<StreamingState> {
   }) async {
     int attempts = 0;
     while (true) {
-      if (isClosed) return Left(ServerFailure('Cubit closed'));
+      if (isClosed) return const Left(ServerFailure('Cubit closed'));
 
       try {
         final result = await _getStreamingLinks(
@@ -160,7 +160,11 @@ class StreamingCubit extends Cubit<StreamingState> {
         attempts++;
         if (attempts > maxRetries) return result;
 
-        final delay = Duration(seconds: pow(2, attempts - 1).toInt()); // 1s, 2s
+        // Exponential backoff with jitter to prevent thundering herd
+        final baseDelay = pow(2, attempts - 1).toInt();
+        final jitter = Random().nextInt(500); // 0-500ms jitter
+        final delay = Duration(milliseconds: (baseDelay * 1000) + jitter);
+
         if (kDebugMode) {
           debugPrint('⚠️ Load failed for $server ($provider). Retrying in ${delay.inSeconds}s (Attempt $attempts)...');
         }
@@ -173,49 +177,42 @@ class StreamingCubit extends Cubit<StreamingState> {
     }
   }
 
-  Future<bool> _raceProviders(
+  Future<bool> _tryFallbackProviders(
     List<String> providers,
     String episodeId,
     String mediaId,
     List<String> servers,
   ) async {
-    // Create a completer to handle the first successful result
-    final completer = Completer<bool>();
-    var completed = false;
+    // Try providers sequentially to avoid 429 Rate Limits
+    for (final provider in providers) {
+      if (isClosed) return false;
 
-    // Launch all providers in parallel with a race
-    final futures = providers.map((provider) async {
-      if (completed || isClosed) return;
+      if (kDebugMode) {
+        debugPrint('🔄 Trying fallback provider: $provider');
+      }
 
       try {
-        final result = await _tryProviderWithServers(
+        final success = await _tryProviderWithServers(
           provider,
           episodeId,
           mediaId,
           servers,
         );
 
-        if (result && !completed && !isClosed) {
-          completed = true;
-          completer.complete(true);
+        if (success) return true;
+
+        // Small delay between providers to be nice to the API
+        if (!isClosed) {
+          await Future.delayed(const Duration(milliseconds: 500));
         }
       } catch (e) {
         if (kDebugMode) {
           debugPrint('❌ Provider $provider failed: $e');
         }
       }
-    }).toList();
-
-    // Wait for either first success or all to complete
-    final raceFuture = completer.future;
-    final allCompleteFuture = Future.wait(futures);
-
-    try {
-      await Future.any([raceFuture, allCompleteFuture.then((_) => false)]);
-      return completed;
-    } catch (e) {
-      return false;
     }
+
+    return false;
   }
 
   Future<bool> _tryProviderWithServers(

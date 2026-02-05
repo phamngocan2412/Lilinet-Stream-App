@@ -155,7 +155,10 @@ class MovieDetailsHeader extends StatelessWidget {
                             borderRadius: BorderRadius.circular(4),
                           ),
                           child: Text(
-                            movie.type == 'TV Series' ? 'TV' : 'HD',
+                            (movie.type.toLowerCase().contains('tv') ||
+                                    movie.type.toLowerCase().contains('series'))
+                                ? 'TV'
+                                : 'HD',
                             style: TextStyle(
                               color: Theme.of(context).colorScheme.onSurface,
                               fontSize: 10,

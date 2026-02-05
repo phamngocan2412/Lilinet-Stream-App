@@ -134,4 +134,11 @@ class DownloadService {
     }
     return null;
   }
+
+  void dispose() {
+    for (final notifier in _progressMap.values) {
+      notifier.dispose();
+    }
+    _progressMap.clear();
+  }
 }

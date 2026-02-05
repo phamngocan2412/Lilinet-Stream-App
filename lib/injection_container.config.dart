@@ -27,7 +27,7 @@ import 'core/services/error_handler_service.dart' as _i488;
 import 'core/services/local_notification_service.dart' as _i102;
 import 'core/services/miniplayer_height_notifier.dart' as _i111;
 import 'core/services/video_player_service.dart' as _i401;
-import 'core/services/video_session_repository.dart' as _i999;
+import 'core/services/video_session_repository.dart' as _i1035;
 import 'features/auth/data/datasources/auth_supabase_datasource.dart' as _i647;
 import 'features/auth/data/repositories/auth_repository_impl.dart' as _i111;
 import 'features/auth/domain/repositories/auth_repository.dart' as _i1015;
@@ -161,10 +161,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i401.VideoPlayerService>(
       () => _i401.VideoPlayerService(),
     );
-    gh.lazySingleton<_i999.VideoSessionRepository>(
-      () => _i999.VideoSessionRepository(),
+    gh.lazySingleton<_i1035.VideoSessionRepository>(
+      () => _i1035.VideoSessionRepository(),
     );
-    gh.lazySingleton<_i692.VideoPlayerBloc>(() => _i692.VideoPlayerBloc());
     gh.lazySingleton<_i361.Dio>(() => registerModule.dio);
     gh.lazySingleton<_i454.SupabaseClient>(() => registerModule.supabaseClient);
     gh.lazySingleton<_i895.Connectivity>(() => registerModule.connectivity);
@@ -219,6 +218,13 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i320.FavoritesRepository>(
       () => _i764.FavoritesRepositoryImpl(
         gh<_i230.FavoritesSupabaseDataSource>(),
+      ),
+    );
+    gh.lazySingleton<_i692.VideoPlayerBloc>(
+      () => _i692.VideoPlayerBloc(
+        gh<_i401.VideoPlayerService>(),
+        gh<_i526.CastService>(),
+        gh<_i803.DownloadService>(),
       ),
     );
     gh.lazySingleton<_i876.CommentRepository>(

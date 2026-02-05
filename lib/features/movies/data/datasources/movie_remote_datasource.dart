@@ -107,7 +107,7 @@ class MovieRemoteDataSource {
       queryParams['provider'] = provider;
     }
     if (type != null) {
-      queryParams['type'] = type;
+      queryParams['type'] = type.toLowerCase();
     }
 
     final response = await _dio.get(
