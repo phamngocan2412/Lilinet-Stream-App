@@ -39,7 +39,7 @@ dependencies:
   wakelock_plus: ^1.2.5
 
   # UI & Styling
-  google_fonts: ^7.0.2
+  google_fonts: ">=6.2.1 <6.3.1"
   cached_network_image: ^3.3.1
   shimmer: ^3.0.0
   flutter_spinkit: ^5.2.1
