@@ -20,13 +20,11 @@ _CommentModel _$CommentModelFromJson(Map<String, dynamic> json) =>
       updatedAt: json['updatedAt'] == null
           ? null
           : DateTime.parse(json['updatedAt'] as String),
-      likeTimestamps:
-          (json['likeTimestamps'] as List<dynamic>?)
+      likeTimestamps: (json['likeTimestamps'] as List<dynamic>?)
               ?.map((e) => DateTime.parse(e as String))
               .toList() ??
           const [],
-      replies:
-          (json['replies'] as List<dynamic>?)
+      replies: (json['replies'] as List<dynamic>?)
               ?.map((e) => CommentModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
@@ -49,9 +47,8 @@ Map<String, dynamic> _$CommentModelToJson(_CommentModel instance) =>
       'repliesCount': instance.repliesCount,
       'createdAt': instance.createdAt.toIso8601String(),
       'updatedAt': instance.updatedAt?.toIso8601String(),
-      'likeTimestamps': instance.likeTimestamps
-          .map((e) => e.toIso8601String())
-          .toList(),
+      'likeTimestamps':
+          instance.likeTimestamps.map((e) => e.toIso8601String()).toList(),
       'replies': instance.replies,
       'parentId': instance.parentId,
       'mediaType': instance.mediaType,

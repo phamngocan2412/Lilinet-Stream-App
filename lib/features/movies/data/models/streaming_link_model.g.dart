@@ -59,7 +59,10 @@ class SubtitleModelAdapter extends TypeAdapter<SubtitleModel> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return SubtitleModel(url: fields[0] as String, lang: fields[1] as String);
+    return SubtitleModel(
+      url: fields[0] as String,
+      lang: fields[1] as String,
+    );
   }
 
   @override
@@ -159,29 +162,35 @@ Map<String, dynamic> _$SubtitleModelToJson(_SubtitleModel instance) =>
     };
 
 _StreamingResponseModel _$StreamingResponseModelFromJson(
-  Map<String, dynamic> json,
-) => _StreamingResponseModel(
-  sources: (json['sources'] as List<dynamic>)
-      .map((e) => StreamingLinkModel.fromJson(e as Map<String, dynamic>))
-      .toList(),
-  headers: (json['headers'] as Map<String, dynamic>?)?.map(
-    (k, e) => MapEntry(k, e as String),
-  ),
-  subtitles: (json['subtitles'] as List<dynamic>?)
-      ?.map((e) => SubtitleModel.fromJson(e as Map<String, dynamic>))
-      .toList(),
-);
+        Map<String, dynamic> json) =>
+    _StreamingResponseModel(
+      sources: (json['sources'] as List<dynamic>)
+          .map((e) => StreamingLinkModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      headers: (json['headers'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as String),
+      ),
+      subtitles: (json['subtitles'] as List<dynamic>?)
+          ?.map((e) => SubtitleModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
 
 Map<String, dynamic> _$StreamingResponseModelToJson(
-  _StreamingResponseModel instance,
-) => <String, dynamic>{
-  'sources': instance.sources,
-  'headers': instance.headers,
-  'subtitles': instance.subtitles,
-};
+        _StreamingResponseModel instance) =>
+    <String, dynamic>{
+      'sources': instance.sources,
+      'headers': instance.headers,
+      'subtitles': instance.subtitles,
+    };
 
 _ServerInfoModel _$ServerInfoModelFromJson(Map<String, dynamic> json) =>
-    _ServerInfoModel(name: json['name'] as String, url: json['url'] as String);
+    _ServerInfoModel(
+      name: json['name'] as String,
+      url: json['url'] as String,
+    );
 
 Map<String, dynamic> _$ServerInfoModelToJson(_ServerInfoModel instance) =>
-    <String, dynamic>{'name': instance.name, 'url': instance.url};
+    <String, dynamic>{
+      'name': instance.name,
+      'url': instance.url,
+    };
