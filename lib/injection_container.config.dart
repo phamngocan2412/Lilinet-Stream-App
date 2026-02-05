@@ -11,9 +11,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
-import 'package:hive_ce/hive.dart' as _i738;
 import 'package:hive_ce/hive_ce.dart' as _i1055;
-import 'package:hive_ce_flutter/hive_ce_flutter.dart' as _i965;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 import 'package:supabase_flutter/supabase_flutter.dart' as _i454;
@@ -111,261 +109,195 @@ import 'features/video_player/presentation/bloc/video_player_bloc.dart'
 import 'injection_container.dart' as _i809;
 
 extension GetItInjectableX on _i174.GetIt {
-  // initializes the registration of main-scope dependencies inside of GetIt
+// initializes the registration of main-scope dependencies inside of GetIt
   Future<_i174.GetIt> init({
     String? environment,
     _i526.EnvironmentFilter? environmentFilter,
   }) async {
-    final gh = _i526.GetItHelper(this, environment, environmentFilter);
+    final gh = _i526.GetItHelper(
+      this,
+      environment,
+      environmentFilter,
+    );
     final registerModule = _$RegisterModule();
     gh.factory<_i616.AnimeDetectionService>(
-      () => _i616.AnimeDetectionService(),
-    );
+        () => _i616.AnimeDetectionService());
     gh.factory<_i821.NavigationCubit>(() => _i821.NavigationCubit());
     await gh.factoryAsync<_i460.SharedPreferences>(
       () => registerModule.prefs,
       preResolve: true,
     );
-    await gh.factoryAsync<_i965.Box<_i422.WatchProgressModel>>(
+    await gh.factoryAsync<_i1055.Box<_i422.WatchProgressModel>>(
       () => registerModule.watchHistoryBox,
       preResolve: true,
     );
-    await gh.factoryAsync<_i965.Box<_i892.MovieListResponse>>(
+    await gh.factoryAsync<_i1055.Box<_i892.MovieListResponse>>(
       () => registerModule.movieCacheBox,
       preResolve: true,
     );
-    await gh.factoryAsync<_i965.Box<_i892.MovieModel>>(
+    await gh.factoryAsync<_i1055.Box<_i892.MovieModel>>(
       () => registerModule.movieDetailsBox,
       preResolve: true,
     );
-    await gh.factoryAsync<_i965.Box<DateTime>>(
+    await gh.factoryAsync<_i1055.Box<DateTime>>(
       () => registerModule.cacheTimestampBox,
       preResolve: true,
     );
     gh.singleton<_i148.CommentsCubit>(() => _i148.CommentsCubit());
     gh.lazySingleton<_i488.ErrorHandlerService>(
-      () => _i488.ErrorHandlerService(),
-    );
+        () => _i488.ErrorHandlerService());
     gh.lazySingleton<_i692.VideoPlayerBloc>(() => _i692.VideoPlayerBloc());
     gh.lazySingleton<_i361.Dio>(() => registerModule.dio);
     gh.lazySingleton<_i454.SupabaseClient>(() => registerModule.supabaseClient);
-    gh.lazySingleton<_i123.MovieLocalDataSource>(
-      () => _i123.MovieLocalDataSource(
-        gh<_i738.Box<_i892.MovieListResponse>>(),
-        gh<_i738.Box<_i892.MovieModel>>(),
-        gh<_i738.Box<DateTime>>(),
-      ),
-    );
     gh.lazySingleton<_i665.LocalCommentDataSource>(
-      () => _i665.LocalCommentDataSourceImpl(),
-    );
+        () => _i665.LocalCommentDataSourceImpl());
     gh.lazySingleton<_i647.AuthSupabaseDataSource>(
-      () => _i647.AuthSupabaseDataSource(gh<_i454.SupabaseClient>()),
-    );
+        () => _i647.AuthSupabaseDataSource(gh<_i454.SupabaseClient>()));
     gh.lazySingleton<_i230.FavoritesSupabaseDataSource>(
-      () => _i230.FavoritesSupabaseDataSource(gh<_i454.SupabaseClient>()),
-    );
+        () => _i230.FavoritesSupabaseDataSource(gh<_i454.SupabaseClient>()));
     gh.lazySingleton<_i47.MovieRemoteDataSource>(
-      () => _i47.MovieRemoteDataSource(gh<_i361.Dio>()),
-    );
+        () => _i47.MovieRemoteDataSource(gh<_i361.Dio>()));
     gh.lazySingleton<_i799.CommentRemoteDataSource>(
-      () => _i799.SupabaseCommentDataSource(gh<_i454.SupabaseClient>()),
-    );
-    gh.lazySingleton<_i612.HistoryLocalDataSource>(
-      () => _i714.HistoryLocalDataSourceImpl(
-        gh<_i1055.Box<_i422.WatchProgressModel>>(),
-      ),
-    );
-    gh.lazySingleton<_i961.MovieRepository>(
-      () => _i981.MovieRepositoryImpl(
-        gh<_i47.MovieRemoteDataSource>(),
-        gh<_i123.MovieLocalDataSource>(),
-      ),
-    );
+        () => _i799.SupabaseCommentDataSource(gh<_i454.SupabaseClient>()));
+    gh.lazySingleton<_i612.HistoryLocalDataSource>(() =>
+        _i714.HistoryLocalDataSourceImpl(
+            gh<_i1055.Box<_i422.WatchProgressModel>>()));
     gh.lazySingleton<_i387.SettingsLocalDataSource>(
-      () => _i387.SettingsLocalDataSource(gh<_i460.SharedPreferences>()),
-    );
-    gh.lazySingleton<_i320.FavoritesRepository>(
-      () => _i764.FavoritesRepositoryImpl(
-        gh<_i230.FavoritesSupabaseDataSource>(),
-      ),
-    );
-    gh.lazySingleton<_i876.CommentRepository>(
-      () => _i674.CommentRepositoryImpl(
-        gh<_i799.CommentRemoteDataSource>(),
-        gh<_i665.LocalCommentDataSource>(),
-      ),
-    );
+        () => _i387.SettingsLocalDataSource(gh<_i460.SharedPreferences>()));
+    gh.lazySingleton<_i320.FavoritesRepository>(() =>
+        _i764.FavoritesRepositoryImpl(gh<_i230.FavoritesSupabaseDataSource>()));
+    gh.lazySingleton<_i123.MovieLocalDataSource>(
+        () => _i123.MovieLocalDataSource(
+              gh<_i1055.Box<_i892.MovieListResponse>>(),
+              gh<_i1055.Box<_i892.MovieModel>>(),
+              gh<_i1055.Box<DateTime>>(),
+            ));
+    gh.lazySingleton<_i876.CommentRepository>(() => _i674.CommentRepositoryImpl(
+          gh<_i799.CommentRemoteDataSource>(),
+          gh<_i665.LocalCommentDataSource>(),
+        ));
     gh.lazySingleton<_i726.ExploreRemoteDataSource>(
-      () => _i726.ExploreRemoteDataSource(gh<_i47.MovieRemoteDataSource>()),
-    );
+        () => _i726.ExploreRemoteDataSource(gh<_i47.MovieRemoteDataSource>()));
     gh.lazySingleton<_i1015.AuthRepository>(
-      () => _i111.AuthRepositoryImpl(gh<_i647.AuthSupabaseDataSource>()),
-    );
+        () => _i111.AuthRepositoryImpl(gh<_i647.AuthSupabaseDataSource>()));
     gh.lazySingleton<_i190.HistoryRepository>(
-      () => _i1064.HistoryRepositoryImpl(gh<_i612.HistoryLocalDataSource>()),
-    );
+        () => _i1064.HistoryRepositoryImpl(gh<_i612.HistoryLocalDataSource>()));
     gh.factory<_i802.AddComment>(
-      () => _i802.AddComment(gh<_i876.CommentRepository>()),
-    );
+        () => _i802.AddComment(gh<_i876.CommentRepository>()));
     gh.factory<_i90.GetComments>(
-      () => _i90.GetComments(gh<_i876.CommentRepository>()),
-    );
+        () => _i90.GetComments(gh<_i876.CommentRepository>()));
     gh.factory<_i412.GetReplies>(
-      () => _i412.GetReplies(gh<_i876.CommentRepository>()),
-    );
+        () => _i412.GetReplies(gh<_i876.CommentRepository>()));
     gh.factory<_i137.LikeComment>(
-      () => _i137.LikeComment(gh<_i876.CommentRepository>()),
-    );
+        () => _i137.LikeComment(gh<_i876.CommentRepository>()));
     gh.factory<_i226.HomeTrendingCubit>(
-      () => _i226.HomeTrendingCubit(gh<_i876.CommentRepository>()),
-    );
-    gh.lazySingleton<_i309.SettingsRepository>(
-      () => _i113.SettingsRepositoryImpl(gh<_i387.SettingsLocalDataSource>()),
-    );
-    gh.lazySingleton<_i442.GetCachedTrendingMovies>(
-      () => _i442.GetCachedTrendingMovies(gh<_i961.MovieRepository>()),
-    );
-    gh.factory<_i229.GetAvailableServers>(
-      () => _i229.GetAvailableServers(gh<_i961.MovieRepository>()),
-    );
-    gh.factory<_i1004.GetMovieDetails>(
-      () => _i1004.GetMovieDetails(gh<_i961.MovieRepository>()),
-    );
-    gh.factory<_i9.GetStreamingLinks>(
-      () => _i9.GetStreamingLinks(gh<_i961.MovieRepository>()),
-    );
-    gh.factory<_i716.GetTrendingMovies>(
-      () => _i716.GetTrendingMovies(gh<_i961.MovieRepository>()),
-    );
-    gh.factory<_i82.SearchMovies>(
-      () => _i82.SearchMovies(gh<_i961.MovieRepository>()),
-    );
+        () => _i226.HomeTrendingCubit(gh<_i876.CommentRepository>()));
+    gh.lazySingleton<_i309.SettingsRepository>(() =>
+        _i113.SettingsRepositoryImpl(gh<_i387.SettingsLocalDataSource>()));
     gh.lazySingleton<_i709.GetSettings>(
-      () => _i709.GetSettings(gh<_i309.SettingsRepository>()),
-    );
+        () => _i709.GetSettings(gh<_i309.SettingsRepository>()));
     gh.lazySingleton<_i156.SaveSettings>(
-      () => _i156.SaveSettings(gh<_i309.SettingsRepository>()),
-    );
-    gh.factory<_i421.SettingsBloc>(
-      () => _i421.SettingsBloc(
-        getSettings: gh<_i709.GetSettings>(),
-        saveSettings: gh<_i156.SaveSettings>(),
-        repository: gh<_i309.SettingsRepository>(),
-      ),
-    );
-    gh.factory<_i1072.StreamingCubit>(
-      () => _i1072.StreamingCubit(
-        gh<_i9.GetStreamingLinks>(),
-        gh<_i229.GetAvailableServers>(),
-      ),
-    );
+        () => _i156.SaveSettings(gh<_i309.SettingsRepository>()));
+    gh.factory<_i421.SettingsBloc>(() => _i421.SettingsBloc(
+          getSettings: gh<_i709.GetSettings>(),
+          saveSettings: gh<_i156.SaveSettings>(),
+          repository: gh<_i309.SettingsRepository>(),
+        ));
+    gh.lazySingleton<_i961.MovieRepository>(() => _i981.MovieRepositoryImpl(
+          gh<_i47.MovieRemoteDataSource>(),
+          gh<_i123.MovieLocalDataSource>(),
+        ));
     gh.lazySingleton<_i191.GetCurrentUser>(
-      () => _i191.GetCurrentUser(gh<_i1015.AuthRepository>()),
-    );
+        () => _i191.GetCurrentUser(gh<_i1015.AuthRepository>()));
     gh.lazySingleton<_i565.SendPasswordResetEmail>(
-      () => _i565.SendPasswordResetEmail(gh<_i1015.AuthRepository>()),
-    );
+        () => _i565.SendPasswordResetEmail(gh<_i1015.AuthRepository>()));
     gh.lazySingleton<_i509.SignInWithEmail>(
-      () => _i509.SignInWithEmail(gh<_i1015.AuthRepository>()),
-    );
+        () => _i509.SignInWithEmail(gh<_i1015.AuthRepository>()));
     gh.lazySingleton<_i872.SignOut>(
-      () => _i872.SignOut(gh<_i1015.AuthRepository>()),
-    );
+        () => _i872.SignOut(gh<_i1015.AuthRepository>()));
     gh.lazySingleton<_i784.SignUpWithEmail>(
-      () => _i784.SignUpWithEmail(gh<_i1015.AuthRepository>()),
-    );
+        () => _i784.SignUpWithEmail(gh<_i1015.AuthRepository>()));
     gh.factory<_i806.DeleteWatchProgress>(
-      () => _i806.DeleteWatchProgress(gh<_i190.HistoryRepository>()),
-    );
+        () => _i806.DeleteWatchProgress(gh<_i190.HistoryRepository>()));
     gh.factory<_i890.GetWatchHistory>(
-      () => _i890.GetWatchHistory(gh<_i190.HistoryRepository>()),
-    );
+        () => _i890.GetWatchHistory(gh<_i190.HistoryRepository>()));
     gh.factory<_i603.SaveWatchProgress>(
-      () => _i603.SaveWatchProgress(gh<_i190.HistoryRepository>()),
-    );
-    gh.factory<_i730.SearchBloc>(
-      () => _i730.SearchBloc(gh<_i82.SearchMovies>()),
-    );
+        () => _i603.SaveWatchProgress(gh<_i190.HistoryRepository>()));
     gh.lazySingleton<_i332.AddFavorite>(
-      () => _i332.AddFavorite(gh<_i320.FavoritesRepository>()),
-    );
+        () => _i332.AddFavorite(gh<_i320.FavoritesRepository>()));
     gh.lazySingleton<_i879.GetFavorites>(
-      () => _i879.GetFavorites(gh<_i320.FavoritesRepository>()),
-    );
+        () => _i879.GetFavorites(gh<_i320.FavoritesRepository>()));
     gh.lazySingleton<_i8.IsFavorite>(
-      () => _i8.IsFavorite(gh<_i320.FavoritesRepository>()),
-    );
+        () => _i8.IsFavorite(gh<_i320.FavoritesRepository>()));
     gh.lazySingleton<_i907.RemoveFavorite>(
-      () => _i907.RemoveFavorite(gh<_i320.FavoritesRepository>()),
-    );
-    gh.factory<_i886.CommentCubit>(
-      () => _i886.CommentCubit(
-        gh<_i90.GetComments>(),
-        gh<_i802.AddComment>(),
-        gh<_i137.LikeComment>(),
-        gh<_i412.GetReplies>(),
-        gh<_i876.CommentRepository>(),
-      ),
-    );
+        () => _i907.RemoveFavorite(gh<_i320.FavoritesRepository>()));
+    gh.factory<_i886.CommentCubit>(() => _i886.CommentCubit(
+          gh<_i90.GetComments>(),
+          gh<_i802.AddComment>(),
+          gh<_i137.LikeComment>(),
+          gh<_i412.GetReplies>(),
+          gh<_i876.CommentRepository>(),
+        ));
     gh.lazySingleton<_i30.ExploreRepository>(
-      () => _i942.ExploreRepositoryImpl(gh<_i726.ExploreRemoteDataSource>()),
-    );
-    gh.factory<_i363.AuthBloc>(
-      () => _i363.AuthBloc(
-        signInWithEmail: gh<_i509.SignInWithEmail>(),
-        signUpWithEmail: gh<_i784.SignUpWithEmail>(),
-        signOut: gh<_i872.SignOut>(),
-        getCurrentUser: gh<_i191.GetCurrentUser>(),
-        sendPasswordResetEmail: gh<_i565.SendPasswordResetEmail>(),
-        authRepository: gh<_i1015.AuthRepository>(),
-      ),
-    );
-    gh.factory<_i974.MovieDetailsBloc>(
-      () => _i974.MovieDetailsBloc(
-        gh<_i1004.GetMovieDetails>(),
-        gh<_i961.MovieRepository>(),
-        gh<_i309.SettingsRepository>(),
-        gh<_i616.AnimeDetectionService>(),
-      ),
-    );
-    gh.lazySingleton<_i618.HistoryCubit>(
-      () => _i618.HistoryCubit(
-        getWatchHistory: gh<_i890.GetWatchHistory>(),
-        saveWatchProgress: gh<_i603.SaveWatchProgress>(),
-        deleteWatchProgress: gh<_i806.DeleteWatchProgress>(),
-      ),
-    );
-    gh.factory<_i906.FavoritesBloc>(
-      () => _i906.FavoritesBloc(
-        addFavoriteUseCase: gh<_i332.AddFavorite>(),
-        removeFavoriteUseCase: gh<_i907.RemoveFavorite>(),
-        getFavoritesUseCase: gh<_i879.GetFavorites>(),
-      ),
-    );
+        () => _i942.ExploreRepositoryImpl(gh<_i726.ExploreRemoteDataSource>()));
+    gh.factory<_i363.AuthBloc>(() => _i363.AuthBloc(
+          signInWithEmail: gh<_i509.SignInWithEmail>(),
+          signUpWithEmail: gh<_i784.SignUpWithEmail>(),
+          signOut: gh<_i872.SignOut>(),
+          getCurrentUser: gh<_i191.GetCurrentUser>(),
+          sendPasswordResetEmail: gh<_i565.SendPasswordResetEmail>(),
+          authRepository: gh<_i1015.AuthRepository>(),
+        ));
+    gh.lazySingleton<_i618.HistoryCubit>(() => _i618.HistoryCubit(
+          getWatchHistory: gh<_i890.GetWatchHistory>(),
+          saveWatchProgress: gh<_i603.SaveWatchProgress>(),
+          deleteWatchProgress: gh<_i806.DeleteWatchProgress>(),
+        ));
+    gh.lazySingleton<_i442.GetCachedTrendingMovies>(
+        () => _i442.GetCachedTrendingMovies(gh<_i961.MovieRepository>()));
+    gh.factory<_i229.GetAvailableServers>(
+        () => _i229.GetAvailableServers(gh<_i961.MovieRepository>()));
+    gh.factory<_i1004.GetMovieDetails>(
+        () => _i1004.GetMovieDetails(gh<_i961.MovieRepository>()));
+    gh.factory<_i9.GetStreamingLinks>(
+        () => _i9.GetStreamingLinks(gh<_i961.MovieRepository>()));
+    gh.factory<_i716.GetTrendingMovies>(
+        () => _i716.GetTrendingMovies(gh<_i961.MovieRepository>()));
+    gh.factory<_i82.SearchMovies>(
+        () => _i82.SearchMovies(gh<_i961.MovieRepository>()));
+    gh.factory<_i1072.StreamingCubit>(() => _i1072.StreamingCubit(
+          gh<_i9.GetStreamingLinks>(),
+          gh<_i229.GetAvailableServers>(),
+        ));
+    gh.factory<_i906.FavoritesBloc>(() => _i906.FavoritesBloc(
+          addFavoriteUseCase: gh<_i332.AddFavorite>(),
+          removeFavoriteUseCase: gh<_i907.RemoveFavorite>(),
+          getFavoritesUseCase: gh<_i879.GetFavorites>(),
+        ));
     gh.lazySingleton<_i233.GetGenres>(
-      () => _i233.GetGenres(gh<_i30.ExploreRepository>()),
-    );
+        () => _i233.GetGenres(gh<_i30.ExploreRepository>()));
     gh.lazySingleton<_i877.GetMoviesByFilter>(
-      () => _i877.GetMoviesByFilter(gh<_i30.ExploreRepository>()),
-    );
+        () => _i877.GetMoviesByFilter(gh<_i30.ExploreRepository>()));
     gh.lazySingleton<_i109.GetMoviesByGenre>(
-      () => _i109.GetMoviesByGenre(gh<_i30.ExploreRepository>()),
-    );
-    gh.lazySingleton<_i547.TrendingMoviesBloc>(
-      () => _i547.TrendingMoviesBloc(
-        gh<_i716.GetTrendingMovies>(),
-        gh<_i442.GetCachedTrendingMovies>(),
-        gh<_i109.GetMoviesByGenre>(),
-      ),
-    );
-    gh.lazySingleton<_i10.ExploreBloc>(
-      () => _i10.ExploreBloc(
-        getGenres: gh<_i233.GetGenres>(),
-        getMoviesByGenre: gh<_i109.GetMoviesByGenre>(),
-        repository: gh<_i30.ExploreRepository>(),
-      ),
-    );
+        () => _i109.GetMoviesByGenre(gh<_i30.ExploreRepository>()));
+    gh.factory<_i730.SearchBloc>(
+        () => _i730.SearchBloc(gh<_i82.SearchMovies>()));
+    gh.factory<_i974.MovieDetailsBloc>(() => _i974.MovieDetailsBloc(
+          gh<_i1004.GetMovieDetails>(),
+          gh<_i961.MovieRepository>(),
+          gh<_i309.SettingsRepository>(),
+          gh<_i616.AnimeDetectionService>(),
+        ));
+    gh.lazySingleton<_i547.TrendingMoviesBloc>(() => _i547.TrendingMoviesBloc(
+          gh<_i716.GetTrendingMovies>(),
+          gh<_i442.GetCachedTrendingMovies>(),
+          gh<_i109.GetMoviesByGenre>(),
+        ));
+    gh.lazySingleton<_i10.ExploreBloc>(() => _i10.ExploreBloc(
+          getGenres: gh<_i233.GetGenres>(),
+          getMoviesByGenre: gh<_i109.GetMoviesByGenre>(),
+          repository: gh<_i30.ExploreRepository>(),
+        ));
     return this;
   }
 }

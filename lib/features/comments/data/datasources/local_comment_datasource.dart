@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:hive_ce/hive.dart';
+import 'package:hive_ce/hive_ce.dart';
 import 'package:injectable/injectable.dart';
 import '../models/local_comment_model.dart';
 

@@ -51,10 +51,10 @@ class GenreModelAdapter extends TypeAdapter<GenreModel> {
 // **************************************************************************
 
 _GenreModel _$GenreModelFromJson(Map<String, dynamic> json) => _GenreModel(
-  id: json['id'] as String,
-  name: json['name'] as String,
-  icon: json['icon'] as String?,
-);
+      id: json['id'] as String,
+      name: json['name'] as String,
+      icon: json['icon'] as String?,
+    );
 
 Map<String, dynamic> _$GenreModelToJson(_GenreModel instance) =>
     <String, dynamic>{

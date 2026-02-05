@@ -11,271 +11,346 @@ part of 'favorites_event.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
+
 /// @nodoc
 mixin _$FavoritesEvent {
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is FavoritesEvent);
+  }
 
+  @override
+  int get hashCode => runtimeType.hashCode;
 
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FavoritesEvent);
-}
-
-
-@override
-int get hashCode => runtimeType.hashCode;
-
-@override
-String toString() {
-  return 'FavoritesEvent()';
-}
-
-
+  @override
+  String toString() {
+    return 'FavoritesEvent()';
+  }
 }
 
 /// @nodoc
-class $FavoritesEventCopyWith<$Res>  {
-$FavoritesEventCopyWith(FavoritesEvent _, $Res Function(FavoritesEvent) __);
+class $FavoritesEventCopyWith<$Res> {
+  $FavoritesEventCopyWith(FavoritesEvent _, $Res Function(FavoritesEvent) __);
 }
-
 
 /// Adds pattern-matching-related methods to [FavoritesEvent].
 extension FavoritesEventPatterns on FavoritesEvent {
-/// A variant of `map` that fallback to returning `orElse`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( LoadFavorites value)?  loadFavorites,TResult Function( AddFavoriteEvent value)?  addFavorite,TResult Function( RemoveFavoriteEvent value)?  removeFavorite,TResult Function( ClearFavorites value)?  clearFavorites,TResult Function( CheckFavoriteStatus value)?  checkFavoriteStatus,required TResult orElse(),}){
-final _that = this;
-switch (_that) {
-case LoadFavorites() when loadFavorites != null:
-return loadFavorites(_that);case AddFavoriteEvent() when addFavorite != null:
-return addFavorite(_that);case RemoveFavoriteEvent() when removeFavorite != null:
-return removeFavorite(_that);case ClearFavorites() when clearFavorites != null:
-return clearFavorites(_that);case CheckFavoriteStatus() when checkFavoriteStatus != null:
-return checkFavoriteStatus(_that);case _:
-  return orElse();
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(LoadFavorites value)? loadFavorites,
+    TResult Function(AddFavoriteEvent value)? addFavorite,
+    TResult Function(RemoveFavoriteEvent value)? removeFavorite,
+    TResult Function(ClearFavorites value)? clearFavorites,
+    TResult Function(CheckFavoriteStatus value)? checkFavoriteStatus,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case LoadFavorites() when loadFavorites != null:
+        return loadFavorites(_that);
+      case AddFavoriteEvent() when addFavorite != null:
+        return addFavorite(_that);
+      case RemoveFavoriteEvent() when removeFavorite != null:
+        return removeFavorite(_that);
+      case ClearFavorites() when clearFavorites != null:
+        return clearFavorites(_that);
+      case CheckFavoriteStatus() when checkFavoriteStatus != null:
+        return checkFavoriteStatus(_that);
+      case _:
+        return orElse();
+    }
+  }
 
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// Callbacks receives the raw object, upcasted.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case final Subclass2 value:
-///     return ...;
-/// }
-/// ```
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( LoadFavorites value)  loadFavorites,required TResult Function( AddFavoriteEvent value)  addFavorite,required TResult Function( RemoveFavoriteEvent value)  removeFavorite,required TResult Function( ClearFavorites value)  clearFavorites,required TResult Function( CheckFavoriteStatus value)  checkFavoriteStatus,}){
-final _that = this;
-switch (_that) {
-case LoadFavorites():
-return loadFavorites(_that);case AddFavoriteEvent():
-return addFavorite(_that);case RemoveFavoriteEvent():
-return removeFavorite(_that);case ClearFavorites():
-return clearFavorites(_that);case CheckFavoriteStatus():
-return checkFavoriteStatus(_that);case _:
-  throw StateError('Unexpected subclass');
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(LoadFavorites value) loadFavorites,
+    required TResult Function(AddFavoriteEvent value) addFavorite,
+    required TResult Function(RemoveFavoriteEvent value) removeFavorite,
+    required TResult Function(ClearFavorites value) clearFavorites,
+    required TResult Function(CheckFavoriteStatus value) checkFavoriteStatus,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case LoadFavorites():
+        return loadFavorites(_that);
+      case AddFavoriteEvent():
+        return addFavorite(_that);
+      case RemoveFavoriteEvent():
+        return removeFavorite(_that);
+      case ClearFavorites():
+        return clearFavorites(_that);
+      case CheckFavoriteStatus():
+        return checkFavoriteStatus(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
 
-}
-}
-/// A variant of `map` that fallback to returning `null`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( LoadFavorites value)?  loadFavorites,TResult? Function( AddFavoriteEvent value)?  addFavorite,TResult? Function( RemoveFavoriteEvent value)?  removeFavorite,TResult? Function( ClearFavorites value)?  clearFavorites,TResult? Function( CheckFavoriteStatus value)?  checkFavoriteStatus,}){
-final _that = this;
-switch (_that) {
-case LoadFavorites() when loadFavorites != null:
-return loadFavorites(_that);case AddFavoriteEvent() when addFavorite != null:
-return addFavorite(_that);case RemoveFavoriteEvent() when removeFavorite != null:
-return removeFavorite(_that);case ClearFavorites() when clearFavorites != null:
-return clearFavorites(_that);case CheckFavoriteStatus() when checkFavoriteStatus != null:
-return checkFavoriteStatus(_that);case _:
-  return null;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(LoadFavorites value)? loadFavorites,
+    TResult? Function(AddFavoriteEvent value)? addFavorite,
+    TResult? Function(RemoveFavoriteEvent value)? removeFavorite,
+    TResult? Function(ClearFavorites value)? clearFavorites,
+    TResult? Function(CheckFavoriteStatus value)? checkFavoriteStatus,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case LoadFavorites() when loadFavorites != null:
+        return loadFavorites(_that);
+      case AddFavoriteEvent() when addFavorite != null:
+        return addFavorite(_that);
+      case RemoveFavoriteEvent() when removeFavorite != null:
+        return removeFavorite(_that);
+      case ClearFavorites() when clearFavorites != null:
+        return clearFavorites(_that);
+      case CheckFavoriteStatus() when checkFavoriteStatus != null:
+        return checkFavoriteStatus(_that);
+      case _:
+        return null;
+    }
+  }
 
-}
-}
-/// A variant of `when` that fallback to an `orElse` callback.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loadFavorites,TResult Function( String movieId,  String? movieTitle,  String? moviePoster,  String? movieType)?  addFavorite,TResult Function( String movieId)?  removeFavorite,TResult Function()?  clearFavorites,TResult Function( String movieId)?  checkFavoriteStatus,required TResult orElse(),}) {final _that = this;
-switch (_that) {
-case LoadFavorites() when loadFavorites != null:
-return loadFavorites();case AddFavoriteEvent() when addFavorite != null:
-return addFavorite(_that.movieId,_that.movieTitle,_that.moviePoster,_that.movieType);case RemoveFavoriteEvent() when removeFavorite != null:
-return removeFavorite(_that.movieId);case ClearFavorites() when clearFavorites != null:
-return clearFavorites();case CheckFavoriteStatus() when checkFavoriteStatus != null:
-return checkFavoriteStatus(_that.movieId);case _:
-  return orElse();
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loadFavorites,
+    TResult Function(String movieId, String? movieTitle, String? moviePoster,
+            String? movieType)?
+        addFavorite,
+    TResult Function(String movieId)? removeFavorite,
+    TResult Function()? clearFavorites,
+    TResult Function(String movieId)? checkFavoriteStatus,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case LoadFavorites() when loadFavorites != null:
+        return loadFavorites();
+      case AddFavoriteEvent() when addFavorite != null:
+        return addFavorite(_that.movieId, _that.movieTitle, _that.moviePoster,
+            _that.movieType);
+      case RemoveFavoriteEvent() when removeFavorite != null:
+        return removeFavorite(_that.movieId);
+      case ClearFavorites() when clearFavorites != null:
+        return clearFavorites();
+      case CheckFavoriteStatus() when checkFavoriteStatus != null:
+        return checkFavoriteStatus(_that.movieId);
+      case _:
+        return orElse();
+    }
+  }
 
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// As opposed to `map`, this offers destructuring.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case Subclass2(:final field2):
-///     return ...;
-/// }
-/// ```
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loadFavorites,required TResult Function( String movieId,  String? movieTitle,  String? moviePoster,  String? movieType)  addFavorite,required TResult Function( String movieId)  removeFavorite,required TResult Function()  clearFavorites,required TResult Function( String movieId)  checkFavoriteStatus,}) {final _that = this;
-switch (_that) {
-case LoadFavorites():
-return loadFavorites();case AddFavoriteEvent():
-return addFavorite(_that.movieId,_that.movieTitle,_that.moviePoster,_that.movieType);case RemoveFavoriteEvent():
-return removeFavorite(_that.movieId);case ClearFavorites():
-return clearFavorites();case CheckFavoriteStatus():
-return checkFavoriteStatus(_that.movieId);case _:
-  throw StateError('Unexpected subclass');
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loadFavorites,
+    required TResult Function(String movieId, String? movieTitle,
+            String? moviePoster, String? movieType)
+        addFavorite,
+    required TResult Function(String movieId) removeFavorite,
+    required TResult Function() clearFavorites,
+    required TResult Function(String movieId) checkFavoriteStatus,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case LoadFavorites():
+        return loadFavorites();
+      case AddFavoriteEvent():
+        return addFavorite(_that.movieId, _that.movieTitle, _that.moviePoster,
+            _that.movieType);
+      case RemoveFavoriteEvent():
+        return removeFavorite(_that.movieId);
+      case ClearFavorites():
+        return clearFavorites();
+      case CheckFavoriteStatus():
+        return checkFavoriteStatus(_that.movieId);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
 
-}
-}
-/// A variant of `when` that fallback to returning `null`
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loadFavorites,TResult? Function( String movieId,  String? movieTitle,  String? moviePoster,  String? movieType)?  addFavorite,TResult? Function( String movieId)?  removeFavorite,TResult? Function()?  clearFavorites,TResult? Function( String movieId)?  checkFavoriteStatus,}) {final _that = this;
-switch (_that) {
-case LoadFavorites() when loadFavorites != null:
-return loadFavorites();case AddFavoriteEvent() when addFavorite != null:
-return addFavorite(_that.movieId,_that.movieTitle,_that.moviePoster,_that.movieType);case RemoveFavoriteEvent() when removeFavorite != null:
-return removeFavorite(_that.movieId);case ClearFavorites() when clearFavorites != null:
-return clearFavorites();case CheckFavoriteStatus() when checkFavoriteStatus != null:
-return checkFavoriteStatus(_that.movieId);case _:
-  return null;
-
-}
-}
-
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? loadFavorites,
+    TResult? Function(String movieId, String? movieTitle, String? moviePoster,
+            String? movieType)?
+        addFavorite,
+    TResult? Function(String movieId)? removeFavorite,
+    TResult? Function()? clearFavorites,
+    TResult? Function(String movieId)? checkFavoriteStatus,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case LoadFavorites() when loadFavorites != null:
+        return loadFavorites();
+      case AddFavoriteEvent() when addFavorite != null:
+        return addFavorite(_that.movieId, _that.movieTitle, _that.moviePoster,
+            _that.movieType);
+      case RemoveFavoriteEvent() when removeFavorite != null:
+        return removeFavorite(_that.movieId);
+      case ClearFavorites() when clearFavorites != null:
+        return clearFavorites();
+      case CheckFavoriteStatus() when checkFavoriteStatus != null:
+        return checkFavoriteStatus(_that.movieId);
+      case _:
+        return null;
+    }
+  }
 }
 
 /// @nodoc
-
 
 class LoadFavorites implements FavoritesEvent {
   const LoadFavorites();
-  
 
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is LoadFavorites);
+  }
 
+  @override
+  int get hashCode => runtimeType.hashCode;
 
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadFavorites);
+  @override
+  String toString() {
+    return 'FavoritesEvent.loadFavorites()';
+  }
 }
-
-
-@override
-int get hashCode => runtimeType.hashCode;
-
-@override
-String toString() {
-  return 'FavoritesEvent.loadFavorites()';
-}
-
-
-}
-
-
-
 
 /// @nodoc
-
 
 class AddFavoriteEvent implements FavoritesEvent {
-  const AddFavoriteEvent({required this.movieId, this.movieTitle, this.moviePoster, this.movieType});
-  
+  const AddFavoriteEvent(
+      {required this.movieId,
+      this.movieTitle,
+      this.moviePoster,
+      this.movieType});
 
- final  String movieId;
- final  String? movieTitle;
- final  String? moviePoster;
- final  String? movieType;
+  final String movieId;
+  final String? movieTitle;
+  final String? moviePoster;
+  final String? movieType;
 
-/// Create a copy of FavoritesEvent
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$AddFavoriteEventCopyWith<AddFavoriteEvent> get copyWith => _$AddFavoriteEventCopyWithImpl<AddFavoriteEvent>(this, _$identity);
+  /// Create a copy of FavoritesEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $AddFavoriteEventCopyWith<AddFavoriteEvent> get copyWith =>
+      _$AddFavoriteEventCopyWithImpl<AddFavoriteEvent>(this, _$identity);
 
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is AddFavoriteEvent &&
+            (identical(other.movieId, movieId) || other.movieId == movieId) &&
+            (identical(other.movieTitle, movieTitle) ||
+                other.movieTitle == movieTitle) &&
+            (identical(other.moviePoster, moviePoster) ||
+                other.moviePoster == moviePoster) &&
+            (identical(other.movieType, movieType) ||
+                other.movieType == movieType));
+  }
 
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, movieId, movieTitle, moviePoster, movieType);
 
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AddFavoriteEvent&&(identical(other.movieId, movieId) || other.movieId == movieId)&&(identical(other.movieTitle, movieTitle) || other.movieTitle == movieTitle)&&(identical(other.moviePoster, moviePoster) || other.moviePoster == moviePoster)&&(identical(other.movieType, movieType) || other.movieType == movieType));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,movieId,movieTitle,moviePoster,movieType);
-
-@override
-String toString() {
-  return 'FavoritesEvent.addFavorite(movieId: $movieId, movieTitle: $movieTitle, moviePoster: $moviePoster, movieType: $movieType)';
-}
-
-
+  @override
+  String toString() {
+    return 'FavoritesEvent.addFavorite(movieId: $movieId, movieTitle: $movieTitle, moviePoster: $moviePoster, movieType: $movieType)';
+  }
 }
 
 /// @nodoc
-abstract mixin class $AddFavoriteEventCopyWith<$Res> implements $FavoritesEventCopyWith<$Res> {
-  factory $AddFavoriteEventCopyWith(AddFavoriteEvent value, $Res Function(AddFavoriteEvent) _then) = _$AddFavoriteEventCopyWithImpl;
-@useResult
-$Res call({
- String movieId, String? movieTitle, String? moviePoster, String? movieType
-});
-
-
-
-
+abstract mixin class $AddFavoriteEventCopyWith<$Res>
+    implements $FavoritesEventCopyWith<$Res> {
+  factory $AddFavoriteEventCopyWith(
+          AddFavoriteEvent value, $Res Function(AddFavoriteEvent) _then) =
+      _$AddFavoriteEventCopyWithImpl;
+  @useResult
+  $Res call(
+      {String movieId,
+      String? movieTitle,
+      String? moviePoster,
+      String? movieType});
 }
+
 /// @nodoc
 class _$AddFavoriteEventCopyWithImpl<$Res>
     implements $AddFavoriteEventCopyWith<$Res> {
@@ -284,67 +359,77 @@ class _$AddFavoriteEventCopyWithImpl<$Res>
   final AddFavoriteEvent _self;
   final $Res Function(AddFavoriteEvent) _then;
 
-/// Create a copy of FavoritesEvent
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? movieId = null,Object? movieTitle = freezed,Object? moviePoster = freezed,Object? movieType = freezed,}) {
-  return _then(AddFavoriteEvent(
-movieId: null == movieId ? _self.movieId : movieId // ignore: cast_nullable_to_non_nullable
-as String,movieTitle: freezed == movieTitle ? _self.movieTitle : movieTitle // ignore: cast_nullable_to_non_nullable
-as String?,moviePoster: freezed == moviePoster ? _self.moviePoster : moviePoster // ignore: cast_nullable_to_non_nullable
-as String?,movieType: freezed == movieType ? _self.movieType : movieType // ignore: cast_nullable_to_non_nullable
-as String?,
-  ));
-}
-
-
+  /// Create a copy of FavoritesEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? movieId = null,
+    Object? movieTitle = freezed,
+    Object? moviePoster = freezed,
+    Object? movieType = freezed,
+  }) {
+    return _then(AddFavoriteEvent(
+      movieId: null == movieId
+          ? _self.movieId
+          : movieId // ignore: cast_nullable_to_non_nullable
+              as String,
+      movieTitle: freezed == movieTitle
+          ? _self.movieTitle
+          : movieTitle // ignore: cast_nullable_to_non_nullable
+              as String?,
+      moviePoster: freezed == moviePoster
+          ? _self.moviePoster
+          : moviePoster // ignore: cast_nullable_to_non_nullable
+              as String?,
+      movieType: freezed == movieType
+          ? _self.movieType
+          : movieType // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
 }
 
 /// @nodoc
-
 
 class RemoveFavoriteEvent implements FavoritesEvent {
   const RemoveFavoriteEvent({required this.movieId});
-  
 
- final  String movieId;
+  final String movieId;
 
-/// Create a copy of FavoritesEvent
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$RemoveFavoriteEventCopyWith<RemoveFavoriteEvent> get copyWith => _$RemoveFavoriteEventCopyWithImpl<RemoveFavoriteEvent>(this, _$identity);
+  /// Create a copy of FavoritesEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $RemoveFavoriteEventCopyWith<RemoveFavoriteEvent> get copyWith =>
+      _$RemoveFavoriteEventCopyWithImpl<RemoveFavoriteEvent>(this, _$identity);
 
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is RemoveFavoriteEvent &&
+            (identical(other.movieId, movieId) || other.movieId == movieId));
+  }
 
+  @override
+  int get hashCode => Object.hash(runtimeType, movieId);
 
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RemoveFavoriteEvent&&(identical(other.movieId, movieId) || other.movieId == movieId));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,movieId);
-
-@override
-String toString() {
-  return 'FavoritesEvent.removeFavorite(movieId: $movieId)';
-}
-
-
+  @override
+  String toString() {
+    return 'FavoritesEvent.removeFavorite(movieId: $movieId)';
+  }
 }
 
 /// @nodoc
-abstract mixin class $RemoveFavoriteEventCopyWith<$Res> implements $FavoritesEventCopyWith<$Res> {
-  factory $RemoveFavoriteEventCopyWith(RemoveFavoriteEvent value, $Res Function(RemoveFavoriteEvent) _then) = _$RemoveFavoriteEventCopyWithImpl;
-@useResult
-$Res call({
- String movieId
-});
-
-
-
-
+abstract mixin class $RemoveFavoriteEventCopyWith<$Res>
+    implements $FavoritesEventCopyWith<$Res> {
+  factory $RemoveFavoriteEventCopyWith(
+          RemoveFavoriteEvent value, $Res Function(RemoveFavoriteEvent) _then) =
+      _$RemoveFavoriteEventCopyWithImpl;
+  @useResult
+  $Res call({String movieId});
 }
+
 /// @nodoc
 class _$RemoveFavoriteEventCopyWithImpl<$Res>
     implements $RemoveFavoriteEventCopyWith<$Res> {
@@ -353,96 +438,82 @@ class _$RemoveFavoriteEventCopyWithImpl<$Res>
   final RemoveFavoriteEvent _self;
   final $Res Function(RemoveFavoriteEvent) _then;
 
-/// Create a copy of FavoritesEvent
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? movieId = null,}) {
-  return _then(RemoveFavoriteEvent(
-movieId: null == movieId ? _self.movieId : movieId // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
-
+  /// Create a copy of FavoritesEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? movieId = null,
+  }) {
+    return _then(RemoveFavoriteEvent(
+      movieId: null == movieId
+          ? _self.movieId
+          : movieId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
-
 
 class ClearFavorites implements FavoritesEvent {
   const ClearFavorites();
-  
 
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is ClearFavorites);
+  }
 
+  @override
+  int get hashCode => runtimeType.hashCode;
 
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ClearFavorites);
+  @override
+  String toString() {
+    return 'FavoritesEvent.clearFavorites()';
+  }
 }
-
-
-@override
-int get hashCode => runtimeType.hashCode;
-
-@override
-String toString() {
-  return 'FavoritesEvent.clearFavorites()';
-}
-
-
-}
-
-
-
 
 /// @nodoc
-
 
 class CheckFavoriteStatus implements FavoritesEvent {
   const CheckFavoriteStatus({required this.movieId});
-  
 
- final  String movieId;
+  final String movieId;
 
-/// Create a copy of FavoritesEvent
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$CheckFavoriteStatusCopyWith<CheckFavoriteStatus> get copyWith => _$CheckFavoriteStatusCopyWithImpl<CheckFavoriteStatus>(this, _$identity);
+  /// Create a copy of FavoritesEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $CheckFavoriteStatusCopyWith<CheckFavoriteStatus> get copyWith =>
+      _$CheckFavoriteStatusCopyWithImpl<CheckFavoriteStatus>(this, _$identity);
 
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is CheckFavoriteStatus &&
+            (identical(other.movieId, movieId) || other.movieId == movieId));
+  }
 
+  @override
+  int get hashCode => Object.hash(runtimeType, movieId);
 
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CheckFavoriteStatus&&(identical(other.movieId, movieId) || other.movieId == movieId));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,movieId);
-
-@override
-String toString() {
-  return 'FavoritesEvent.checkFavoriteStatus(movieId: $movieId)';
-}
-
-
+  @override
+  String toString() {
+    return 'FavoritesEvent.checkFavoriteStatus(movieId: $movieId)';
+  }
 }
 
 /// @nodoc
-abstract mixin class $CheckFavoriteStatusCopyWith<$Res> implements $FavoritesEventCopyWith<$Res> {
-  factory $CheckFavoriteStatusCopyWith(CheckFavoriteStatus value, $Res Function(CheckFavoriteStatus) _then) = _$CheckFavoriteStatusCopyWithImpl;
-@useResult
-$Res call({
- String movieId
-});
-
-
-
-
+abstract mixin class $CheckFavoriteStatusCopyWith<$Res>
+    implements $FavoritesEventCopyWith<$Res> {
+  factory $CheckFavoriteStatusCopyWith(
+          CheckFavoriteStatus value, $Res Function(CheckFavoriteStatus) _then) =
+      _$CheckFavoriteStatusCopyWithImpl;
+  @useResult
+  $Res call({String movieId});
 }
+
 /// @nodoc
 class _$CheckFavoriteStatusCopyWithImpl<$Res>
     implements $CheckFavoriteStatusCopyWith<$Res> {
@@ -451,16 +522,19 @@ class _$CheckFavoriteStatusCopyWithImpl<$Res>
   final CheckFavoriteStatus _self;
   final $Res Function(CheckFavoriteStatus) _then;
 
-/// Create a copy of FavoritesEvent
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? movieId = null,}) {
-  return _then(CheckFavoriteStatus(
-movieId: null == movieId ? _self.movieId : movieId // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
-
+  /// Create a copy of FavoritesEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? movieId = null,
+  }) {
+    return _then(CheckFavoriteStatus(
+      movieId: null == movieId
+          ? _self.movieId
+          : movieId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 // dart format on

@@ -18,9 +18,8 @@ class SeasonModelAdapter extends TypeAdapter<SeasonModel> {
     };
     return SeasonModel(
       season: (fields[0] as num).toInt(),
-      episodes: fields[1] == null
-          ? []
-          : (fields[1] as List).cast<EpisodeModel>(),
+      episodes:
+          fields[1] == null ? [] : (fields[1] as List).cast<EpisodeModel>(),
     );
   }
 
@@ -50,13 +49,12 @@ class SeasonModelAdapter extends TypeAdapter<SeasonModel> {
 // **************************************************************************
 
 _SeasonModel _$SeasonModelFromJson(Map<String, dynamic> json) => _SeasonModel(
-  season: const StringToIntConverterRequired().fromJson(json['season']),
-  episodes:
-      (json['episodes'] as List<dynamic>?)
-          ?.map((e) => EpisodeModel.fromJson(e as Map<String, dynamic>))
-          .toList() ??
-      const [],
-);
+      season: const StringToIntConverterRequired().fromJson(json['season']),
+      episodes: (json['episodes'] as List<dynamic>?)
+              ?.map((e) => EpisodeModel.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
+    );
 
 Map<String, dynamic> _$SeasonModelToJson(_SeasonModel instance) =>
     <String, dynamic>{

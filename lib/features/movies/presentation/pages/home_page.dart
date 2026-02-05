@@ -119,7 +119,7 @@ class HomePageView extends StatelessWidget {
                           scrollDirection: Axis.horizontal,
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           itemCount: genres.length,
-                          separatorBuilder: (_, _) => const SizedBox(width: 8),
+                          separatorBuilder: (context, index) => const SizedBox(width: 8),
                           itemBuilder: (context, index) {
                             final entry = genres.entries.elementAt(index);
                             return Center(
@@ -137,7 +137,6 @@ class HomePageView extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ),
                   SliverPadding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     sliver: SliverToBoxAdapter(
@@ -167,12 +166,13 @@ class HomePageView extends StatelessWidget {
                                 '/movie/${movie.id}?type=${movie.type}',
                                 extra: movie,
                               ),
-                              const SizedBox(height: 32),
-                            ],
+                            ),
+                            const SizedBox(height: 32),
                           ],
-                        ),
+                        ],
                       ),
                     ),
+                  ),
 
                     // Trending Comments Section
                     const SliverToBoxAdapter(child: HomeTrendingSection()),

@@ -11,306 +11,360 @@ part of 'auth_state.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
+
 /// @nodoc
 mixin _$AuthState {
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is AuthState);
+  }
 
+  @override
+  int get hashCode => runtimeType.hashCode;
 
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthState);
-}
-
-
-@override
-int get hashCode => runtimeType.hashCode;
-
-@override
-String toString() {
-  return 'AuthState()';
-}
-
-
+  @override
+  String toString() {
+    return 'AuthState()';
+  }
 }
 
 /// @nodoc
-class $AuthStateCopyWith<$Res>  {
-$AuthStateCopyWith(AuthState _, $Res Function(AuthState) __);
+class $AuthStateCopyWith<$Res> {
+  $AuthStateCopyWith(AuthState _, $Res Function(AuthState) __);
 }
-
 
 /// Adds pattern-matching-related methods to [AuthState].
 extension AuthStatePatterns on AuthState {
-/// A variant of `map` that fallback to returning `orElse`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( AuthInitial value)?  initial,TResult Function( AuthLoading value)?  loading,TResult Function( Authenticated value)?  authenticated,TResult Function( Unauthenticated value)?  unauthenticated,TResult Function( AuthError value)?  error,TResult Function( PasswordResetEmailSent value)?  passwordResetEmailSent,required TResult orElse(),}){
-final _that = this;
-switch (_that) {
-case AuthInitial() when initial != null:
-return initial(_that);case AuthLoading() when loading != null:
-return loading(_that);case Authenticated() when authenticated != null:
-return authenticated(_that);case Unauthenticated() when unauthenticated != null:
-return unauthenticated(_that);case AuthError() when error != null:
-return error(_that);case PasswordResetEmailSent() when passwordResetEmailSent != null:
-return passwordResetEmailSent(_that);case _:
-  return orElse();
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(AuthInitial value)? initial,
+    TResult Function(AuthLoading value)? loading,
+    TResult Function(Authenticated value)? authenticated,
+    TResult Function(Unauthenticated value)? unauthenticated,
+    TResult Function(AuthError value)? error,
+    TResult Function(PasswordResetEmailSent value)? passwordResetEmailSent,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case AuthInitial() when initial != null:
+        return initial(_that);
+      case AuthLoading() when loading != null:
+        return loading(_that);
+      case Authenticated() when authenticated != null:
+        return authenticated(_that);
+      case Unauthenticated() when unauthenticated != null:
+        return unauthenticated(_that);
+      case AuthError() when error != null:
+        return error(_that);
+      case PasswordResetEmailSent() when passwordResetEmailSent != null:
+        return passwordResetEmailSent(_that);
+      case _:
+        return orElse();
+    }
+  }
 
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// Callbacks receives the raw object, upcasted.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case final Subclass2 value:
-///     return ...;
-/// }
-/// ```
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( AuthInitial value)  initial,required TResult Function( AuthLoading value)  loading,required TResult Function( Authenticated value)  authenticated,required TResult Function( Unauthenticated value)  unauthenticated,required TResult Function( AuthError value)  error,required TResult Function( PasswordResetEmailSent value)  passwordResetEmailSent,}){
-final _that = this;
-switch (_that) {
-case AuthInitial():
-return initial(_that);case AuthLoading():
-return loading(_that);case Authenticated():
-return authenticated(_that);case Unauthenticated():
-return unauthenticated(_that);case AuthError():
-return error(_that);case PasswordResetEmailSent():
-return passwordResetEmailSent(_that);case _:
-  throw StateError('Unexpected subclass');
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(AuthInitial value) initial,
+    required TResult Function(AuthLoading value) loading,
+    required TResult Function(Authenticated value) authenticated,
+    required TResult Function(Unauthenticated value) unauthenticated,
+    required TResult Function(AuthError value) error,
+    required TResult Function(PasswordResetEmailSent value)
+        passwordResetEmailSent,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case AuthInitial():
+        return initial(_that);
+      case AuthLoading():
+        return loading(_that);
+      case Authenticated():
+        return authenticated(_that);
+      case Unauthenticated():
+        return unauthenticated(_that);
+      case AuthError():
+        return error(_that);
+      case PasswordResetEmailSent():
+        return passwordResetEmailSent(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
 
-}
-}
-/// A variant of `map` that fallback to returning `null`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( AuthInitial value)?  initial,TResult? Function( AuthLoading value)?  loading,TResult? Function( Authenticated value)?  authenticated,TResult? Function( Unauthenticated value)?  unauthenticated,TResult? Function( AuthError value)?  error,TResult? Function( PasswordResetEmailSent value)?  passwordResetEmailSent,}){
-final _that = this;
-switch (_that) {
-case AuthInitial() when initial != null:
-return initial(_that);case AuthLoading() when loading != null:
-return loading(_that);case Authenticated() when authenticated != null:
-return authenticated(_that);case Unauthenticated() when unauthenticated != null:
-return unauthenticated(_that);case AuthError() when error != null:
-return error(_that);case PasswordResetEmailSent() when passwordResetEmailSent != null:
-return passwordResetEmailSent(_that);case _:
-  return null;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(AuthInitial value)? initial,
+    TResult? Function(AuthLoading value)? loading,
+    TResult? Function(Authenticated value)? authenticated,
+    TResult? Function(Unauthenticated value)? unauthenticated,
+    TResult? Function(AuthError value)? error,
+    TResult? Function(PasswordResetEmailSent value)? passwordResetEmailSent,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case AuthInitial() when initial != null:
+        return initial(_that);
+      case AuthLoading() when loading != null:
+        return loading(_that);
+      case Authenticated() when authenticated != null:
+        return authenticated(_that);
+      case Unauthenticated() when unauthenticated != null:
+        return unauthenticated(_that);
+      case AuthError() when error != null:
+        return error(_that);
+      case PasswordResetEmailSent() when passwordResetEmailSent != null:
+        return passwordResetEmailSent(_that);
+      case _:
+        return null;
+    }
+  }
 
-}
-}
-/// A variant of `when` that fallback to an `orElse` callback.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( AppUser user)?  authenticated,TResult Function()?  unauthenticated,TResult Function( String message)?  error,TResult Function( String email)?  passwordResetEmailSent,required TResult orElse(),}) {final _that = this;
-switch (_that) {
-case AuthInitial() when initial != null:
-return initial();case AuthLoading() when loading != null:
-return loading();case Authenticated() when authenticated != null:
-return authenticated(_that.user);case Unauthenticated() when unauthenticated != null:
-return unauthenticated();case AuthError() when error != null:
-return error(_that.message);case PasswordResetEmailSent() when passwordResetEmailSent != null:
-return passwordResetEmailSent(_that.email);case _:
-  return orElse();
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(AppUser user)? authenticated,
+    TResult Function()? unauthenticated,
+    TResult Function(String message)? error,
+    TResult Function(String email)? passwordResetEmailSent,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case AuthInitial() when initial != null:
+        return initial();
+      case AuthLoading() when loading != null:
+        return loading();
+      case Authenticated() when authenticated != null:
+        return authenticated(_that.user);
+      case Unauthenticated() when unauthenticated != null:
+        return unauthenticated();
+      case AuthError() when error != null:
+        return error(_that.message);
+      case PasswordResetEmailSent() when passwordResetEmailSent != null:
+        return passwordResetEmailSent(_that.email);
+      case _:
+        return orElse();
+    }
+  }
 
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// As opposed to `map`, this offers destructuring.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case Subclass2(:final field2):
-///     return ...;
-/// }
-/// ```
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( AppUser user)  authenticated,required TResult Function()  unauthenticated,required TResult Function( String message)  error,required TResult Function( String email)  passwordResetEmailSent,}) {final _that = this;
-switch (_that) {
-case AuthInitial():
-return initial();case AuthLoading():
-return loading();case Authenticated():
-return authenticated(_that.user);case Unauthenticated():
-return unauthenticated();case AuthError():
-return error(_that.message);case PasswordResetEmailSent():
-return passwordResetEmailSent(_that.email);case _:
-  throw StateError('Unexpected subclass');
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(AppUser user) authenticated,
+    required TResult Function() unauthenticated,
+    required TResult Function(String message) error,
+    required TResult Function(String email) passwordResetEmailSent,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case AuthInitial():
+        return initial();
+      case AuthLoading():
+        return loading();
+      case Authenticated():
+        return authenticated(_that.user);
+      case Unauthenticated():
+        return unauthenticated();
+      case AuthError():
+        return error(_that.message);
+      case PasswordResetEmailSent():
+        return passwordResetEmailSent(_that.email);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
 
-}
-}
-/// A variant of `when` that fallback to returning `null`
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( AppUser user)?  authenticated,TResult? Function()?  unauthenticated,TResult? Function( String message)?  error,TResult? Function( String email)?  passwordResetEmailSent,}) {final _that = this;
-switch (_that) {
-case AuthInitial() when initial != null:
-return initial();case AuthLoading() when loading != null:
-return loading();case Authenticated() when authenticated != null:
-return authenticated(_that.user);case Unauthenticated() when unauthenticated != null:
-return unauthenticated();case AuthError() when error != null:
-return error(_that.message);case PasswordResetEmailSent() when passwordResetEmailSent != null:
-return passwordResetEmailSent(_that.email);case _:
-  return null;
-
-}
-}
-
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(AppUser user)? authenticated,
+    TResult? Function()? unauthenticated,
+    TResult? Function(String message)? error,
+    TResult? Function(String email)? passwordResetEmailSent,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case AuthInitial() when initial != null:
+        return initial();
+      case AuthLoading() when loading != null:
+        return loading();
+      case Authenticated() when authenticated != null:
+        return authenticated(_that.user);
+      case Unauthenticated() when unauthenticated != null:
+        return unauthenticated();
+      case AuthError() when error != null:
+        return error(_that.message);
+      case PasswordResetEmailSent() when passwordResetEmailSent != null:
+        return passwordResetEmailSent(_that.email);
+      case _:
+        return null;
+    }
+  }
 }
 
 /// @nodoc
-
 
 class AuthInitial implements AuthState {
   const AuthInitial();
-  
 
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is AuthInitial);
+  }
 
+  @override
+  int get hashCode => runtimeType.hashCode;
 
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthInitial);
+  @override
+  String toString() {
+    return 'AuthState.initial()';
+  }
 }
-
-
-@override
-int get hashCode => runtimeType.hashCode;
-
-@override
-String toString() {
-  return 'AuthState.initial()';
-}
-
-
-}
-
-
-
 
 /// @nodoc
-
 
 class AuthLoading implements AuthState {
   const AuthLoading();
-  
 
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is AuthLoading);
+  }
 
+  @override
+  int get hashCode => runtimeType.hashCode;
 
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthLoading);
+  @override
+  String toString() {
+    return 'AuthState.loading()';
+  }
 }
-
-
-@override
-int get hashCode => runtimeType.hashCode;
-
-@override
-String toString() {
-  return 'AuthState.loading()';
-}
-
-
-}
-
-
-
 
 /// @nodoc
-
 
 class Authenticated implements AuthState {
   const Authenticated({required this.user});
-  
 
- final  AppUser user;
+  final AppUser user;
 
-/// Create a copy of AuthState
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$AuthenticatedCopyWith<Authenticated> get copyWith => _$AuthenticatedCopyWithImpl<Authenticated>(this, _$identity);
+  /// Create a copy of AuthState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $AuthenticatedCopyWith<Authenticated> get copyWith =>
+      _$AuthenticatedCopyWithImpl<Authenticated>(this, _$identity);
 
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is Authenticated &&
+            (identical(other.user, user) || other.user == user));
+  }
 
+  @override
+  int get hashCode => Object.hash(runtimeType, user);
 
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Authenticated&&(identical(other.user, user) || other.user == user));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,user);
-
-@override
-String toString() {
-  return 'AuthState.authenticated(user: $user)';
-}
-
-
+  @override
+  String toString() {
+    return 'AuthState.authenticated(user: $user)';
+  }
 }
 
 /// @nodoc
-abstract mixin class $AuthenticatedCopyWith<$Res> implements $AuthStateCopyWith<$Res> {
-  factory $AuthenticatedCopyWith(Authenticated value, $Res Function(Authenticated) _then) = _$AuthenticatedCopyWithImpl;
-@useResult
-$Res call({
- AppUser user
-});
+abstract mixin class $AuthenticatedCopyWith<$Res>
+    implements $AuthStateCopyWith<$Res> {
+  factory $AuthenticatedCopyWith(
+          Authenticated value, $Res Function(Authenticated) _then) =
+      _$AuthenticatedCopyWithImpl;
+  @useResult
+  $Res call({AppUser user});
 
-
-$AppUserCopyWith<$Res> get user;
-
+  $AppUserCopyWith<$Res> get user;
 }
+
 /// @nodoc
 class _$AuthenticatedCopyWithImpl<$Res>
     implements $AuthenticatedCopyWith<$Res> {
@@ -319,171 +373,155 @@ class _$AuthenticatedCopyWithImpl<$Res>
   final Authenticated _self;
   final $Res Function(Authenticated) _then;
 
-/// Create a copy of AuthState
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? user = null,}) {
-  return _then(Authenticated(
-user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
-as AppUser,
-  ));
-}
+  /// Create a copy of AuthState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? user = null,
+  }) {
+    return _then(Authenticated(
+      user: null == user
+          ? _self.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as AppUser,
+    ));
+  }
 
-/// Create a copy of AuthState
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$AppUserCopyWith<$Res> get user {
-  
-  return $AppUserCopyWith<$Res>(_self.user, (value) {
-    return _then(_self.copyWith(user: value));
-  });
-}
+  /// Create a copy of AuthState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AppUserCopyWith<$Res> get user {
+    return $AppUserCopyWith<$Res>(_self.user, (value) {
+      return _then(_self.copyWith(user: value));
+    });
+  }
 }
 
 /// @nodoc
-
 
 class Unauthenticated implements AuthState {
   const Unauthenticated();
-  
 
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is Unauthenticated);
+  }
 
+  @override
+  int get hashCode => runtimeType.hashCode;
 
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Unauthenticated);
+  @override
+  String toString() {
+    return 'AuthState.unauthenticated()';
+  }
 }
-
-
-@override
-int get hashCode => runtimeType.hashCode;
-
-@override
-String toString() {
-  return 'AuthState.unauthenticated()';
-}
-
-
-}
-
-
-
 
 /// @nodoc
-
 
 class AuthError implements AuthState {
   const AuthError({required this.message});
-  
 
- final  String message;
+  final String message;
 
-/// Create a copy of AuthState
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$AuthErrorCopyWith<AuthError> get copyWith => _$AuthErrorCopyWithImpl<AuthError>(this, _$identity);
+  /// Create a copy of AuthState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $AuthErrorCopyWith<AuthError> get copyWith =>
+      _$AuthErrorCopyWithImpl<AuthError>(this, _$identity);
 
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is AuthError &&
+            (identical(other.message, message) || other.message == message));
+  }
 
+  @override
+  int get hashCode => Object.hash(runtimeType, message);
 
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthError&&(identical(other.message, message) || other.message == message));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,message);
-
-@override
-String toString() {
-  return 'AuthState.error(message: $message)';
-}
-
-
+  @override
+  String toString() {
+    return 'AuthState.error(message: $message)';
+  }
 }
 
 /// @nodoc
-abstract mixin class $AuthErrorCopyWith<$Res> implements $AuthStateCopyWith<$Res> {
-  factory $AuthErrorCopyWith(AuthError value, $Res Function(AuthError) _then) = _$AuthErrorCopyWithImpl;
-@useResult
-$Res call({
- String message
-});
-
-
-
-
+abstract mixin class $AuthErrorCopyWith<$Res>
+    implements $AuthStateCopyWith<$Res> {
+  factory $AuthErrorCopyWith(AuthError value, $Res Function(AuthError) _then) =
+      _$AuthErrorCopyWithImpl;
+  @useResult
+  $Res call({String message});
 }
+
 /// @nodoc
-class _$AuthErrorCopyWithImpl<$Res>
-    implements $AuthErrorCopyWith<$Res> {
+class _$AuthErrorCopyWithImpl<$Res> implements $AuthErrorCopyWith<$Res> {
   _$AuthErrorCopyWithImpl(this._self, this._then);
 
   final AuthError _self;
   final $Res Function(AuthError) _then;
 
-/// Create a copy of AuthState
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
-  return _then(AuthError(
-message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
-
+  /// Create a copy of AuthState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(AuthError(
+      message: null == message
+          ? _self.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
-
 
 class PasswordResetEmailSent implements AuthState {
   const PasswordResetEmailSent({required this.email});
-  
 
- final  String email;
+  final String email;
 
-/// Create a copy of AuthState
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$PasswordResetEmailSentCopyWith<PasswordResetEmailSent> get copyWith => _$PasswordResetEmailSentCopyWithImpl<PasswordResetEmailSent>(this, _$identity);
+  /// Create a copy of AuthState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $PasswordResetEmailSentCopyWith<PasswordResetEmailSent> get copyWith =>
+      _$PasswordResetEmailSentCopyWithImpl<PasswordResetEmailSent>(
+          this, _$identity);
 
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is PasswordResetEmailSent &&
+            (identical(other.email, email) || other.email == email));
+  }
 
+  @override
+  int get hashCode => Object.hash(runtimeType, email);
 
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PasswordResetEmailSent&&(identical(other.email, email) || other.email == email));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,email);
-
-@override
-String toString() {
-  return 'AuthState.passwordResetEmailSent(email: $email)';
-}
-
-
+  @override
+  String toString() {
+    return 'AuthState.passwordResetEmailSent(email: $email)';
+  }
 }
 
 /// @nodoc
-abstract mixin class $PasswordResetEmailSentCopyWith<$Res> implements $AuthStateCopyWith<$Res> {
-  factory $PasswordResetEmailSentCopyWith(PasswordResetEmailSent value, $Res Function(PasswordResetEmailSent) _then) = _$PasswordResetEmailSentCopyWithImpl;
-@useResult
-$Res call({
- String email
-});
-
-
-
-
+abstract mixin class $PasswordResetEmailSentCopyWith<$Res>
+    implements $AuthStateCopyWith<$Res> {
+  factory $PasswordResetEmailSentCopyWith(PasswordResetEmailSent value,
+          $Res Function(PasswordResetEmailSent) _then) =
+      _$PasswordResetEmailSentCopyWithImpl;
+  @useResult
+  $Res call({String email});
 }
+
 /// @nodoc
 class _$PasswordResetEmailSentCopyWithImpl<$Res>
     implements $PasswordResetEmailSentCopyWith<$Res> {
@@ -492,16 +530,19 @@ class _$PasswordResetEmailSentCopyWithImpl<$Res>
   final PasswordResetEmailSent _self;
   final $Res Function(PasswordResetEmailSent) _then;
 
-/// Create a copy of AuthState
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? email = null,}) {
-  return _then(PasswordResetEmailSent(
-email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
-
+  /// Create a copy of AuthState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? email = null,
+  }) {
+    return _then(PasswordResetEmailSent(
+      email: null == email
+          ? _self.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 // dart format on

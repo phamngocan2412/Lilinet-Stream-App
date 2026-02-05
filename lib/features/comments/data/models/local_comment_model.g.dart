@@ -31,9 +31,8 @@ class LocalCommentModelAdapter extends TypeAdapter<LocalCommentModel> {
       dislikes: fields[11] == null ? 0 : (fields[11] as num).toInt(),
       repliesCount: fields[12] == null ? 0 : (fields[12] as num).toInt(),
       parentId: fields[13] as String?,
-      likeTimestamps: fields[14] == null
-          ? []
-          : (fields[14] as List).cast<DateTime>(),
+      likeTimestamps:
+          fields[14] == null ? [] : (fields[14] as List).cast<DateTime>(),
       mediaType: fields[15] as String?,
     );
   }
@@ -107,8 +106,7 @@ _LocalCommentModel _$LocalCommentModelFromJson(Map<String, dynamic> json) =>
       dislikes: (json['dislikes'] as num?)?.toInt() ?? 0,
       repliesCount: (json['repliesCount'] as num?)?.toInt() ?? 0,
       parentId: json['parentId'] as String?,
-      likeTimestamps:
-          (json['likeTimestamps'] as List<dynamic>?)
+      likeTimestamps: (json['likeTimestamps'] as List<dynamic>?)
               ?.map((e) => DateTime.parse(e as String))
               .toList() ??
           const [],
@@ -131,8 +129,7 @@ Map<String, dynamic> _$LocalCommentModelToJson(_LocalCommentModel instance) =>
       'dislikes': instance.dislikes,
       'repliesCount': instance.repliesCount,
       'parentId': instance.parentId,
-      'likeTimestamps': instance.likeTimestamps
-          .map((e) => e.toIso8601String())
-          .toList(),
+      'likeTimestamps':
+          instance.likeTimestamps.map((e) => e.toIso8601String()).toList(),
       'mediaType': instance.mediaType,
     };
