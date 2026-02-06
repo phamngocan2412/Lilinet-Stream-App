@@ -90,8 +90,9 @@ class LocalCommentModelAdapter extends TypeAdapter<LocalCommentModel> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-_LocalCommentModel _$LocalCommentModelFromJson(Map<String, dynamic> json) =>
-    _LocalCommentModel(
+_$LocalCommentModelImpl _$$LocalCommentModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$LocalCommentModelImpl(
       localId: json['localId'] as String,
       serverId: json['serverId'] as String?,
       videoId: json['videoId'] as String,
@@ -113,7 +114,8 @@ _LocalCommentModel _$LocalCommentModelFromJson(Map<String, dynamic> json) =>
       mediaType: json['mediaType'] as String?,
     );
 
-Map<String, dynamic> _$LocalCommentModelToJson(_LocalCommentModel instance) =>
+Map<String, dynamic> _$$LocalCommentModelImplToJson(
+        _$LocalCommentModelImpl instance) =>
     <String, dynamic>{
       'localId': instance.localId,
       'serverId': instance.serverId,

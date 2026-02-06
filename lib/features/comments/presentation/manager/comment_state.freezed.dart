@@ -1,5 +1,5 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,45 +9,78 @@ part of 'comment_state.dart';
 // FreezedGenerator
 // **************************************************************************
 
-// dart format off
 T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$CommentState {
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is CommentState);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  String toString() {
-    return 'CommentState()';
-  }
-}
-
-/// @nodoc
-class $CommentStateCopyWith<$Res> {
-  $CommentStateCopyWith(CommentState _, $Res Function(CommentState) __);
-}
-
-/// Adds pattern-matching-related methods to [CommentState].
-extension CommentStatePatterns on CommentState {
-  /// A variant of `map` that fallback to returning `orElse`.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case _:
-  ///     return orElse();
-  /// }
-  /// ```
-
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(
+            List<Comment> comments,
+            CommentSortType sortType,
+            Map<String, List<Comment>> expandedReplies,
+            bool isAddingComment,
+            String? errorMessage,
+            Set<String> likedCommentIds,
+            Set<String> likingInProgress)
+        loaded,
+    required TResult Function(String message) error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(
+            List<Comment> comments,
+            CommentSortType sortType,
+            Map<String, List<Comment>> expandedReplies,
+            bool isAddingComment,
+            String? errorMessage,
+            Set<String> likedCommentIds,
+            Set<String> likingInProgress)?
+        loaded,
+    TResult? Function(String message)? error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(
+            List<Comment> comments,
+            CommentSortType sortType,
+            Map<String, List<Comment>> expandedReplies,
+            bool isAddingComment,
+            String? errorMessage,
+            Set<String> likedCommentIds,
+            Set<String> likingInProgress)?
+        loaded,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Error value) error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Error value)? error,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
@@ -55,103 +88,108 @@ extension CommentStatePatterns on CommentState {
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
     required TResult orElse(),
-  }) {
-    final _that = this;
-    switch (_that) {
-      case _Initial() when initial != null:
-        return initial(_that);
-      case _Loading() when loading != null:
-        return loading(_that);
-      case _Loaded() when loaded != null:
-        return loaded(_that);
-      case _Error() when error != null:
-        return error(_that);
-      case _:
-        return orElse();
-    }
+  }) =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CommentStateCopyWith<$Res> {
+  factory $CommentStateCopyWith(
+          CommentState value, $Res Function(CommentState) then) =
+      _$CommentStateCopyWithImpl<$Res, CommentState>;
+}
+
+/// @nodoc
+class _$CommentStateCopyWithImpl<$Res, $Val extends CommentState>
+    implements $CommentStateCopyWith<$Res> {
+  _$CommentStateCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of CommentState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+abstract class _$$InitialImplCopyWith<$Res> {
+  factory _$$InitialImplCopyWith(
+          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
+      __$$InitialImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$InitialImplCopyWithImpl<$Res>
+    extends _$CommentStateCopyWithImpl<$Res, _$InitialImpl>
+    implements _$$InitialImplCopyWith<$Res> {
+  __$$InitialImplCopyWithImpl(
+      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of CommentState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$InitialImpl implements _Initial {
+  const _$InitialImpl();
+
+  @override
+  String toString() {
+    return 'CommentState.initial()';
   }
 
-  /// A `switch`-like method, using callbacks.
-  ///
-  /// Callbacks receives the raw object, upcasted.
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case final Subclass2 value:
-  ///     return ...;
-  /// }
-  /// ```
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$InitialImpl);
+  }
 
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
   @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Error value) error,
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(
+            List<Comment> comments,
+            CommentSortType sortType,
+            Map<String, List<Comment>> expandedReplies,
+            bool isAddingComment,
+            String? errorMessage,
+            Set<String> likedCommentIds,
+            Set<String> likingInProgress)
+        loaded,
+    required TResult Function(String message) error,
   }) {
-    final _that = this;
-    switch (_that) {
-      case _Initial():
-        return initial(_that);
-      case _Loading():
-        return loading(_that);
-      case _Loaded():
-        return loaded(_that);
-      case _Error():
-        return error(_that);
-      case _:
-        throw StateError('Unexpected subclass');
-    }
+    return initial();
   }
 
-  /// A variant of `map` that fallback to returning `null`.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case _:
-  ///     return null;
-  /// }
-  /// ```
-
+  @override
   @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Error value)? error,
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(
+            List<Comment> comments,
+            CommentSortType sortType,
+            Map<String, List<Comment>> expandedReplies,
+            bool isAddingComment,
+            String? errorMessage,
+            Set<String> likedCommentIds,
+            Set<String> likingInProgress)?
+        loaded,
+    TResult? Function(String message)? error,
   }) {
-    final _that = this;
-    switch (_that) {
-      case _Initial() when initial != null:
-        return initial(_that);
-      case _Loading() when loading != null:
-        return loading(_that);
-      case _Loaded() when loaded != null:
-        return loaded(_that);
-      case _Error() when error != null:
-        return error(_that);
-      case _:
-        return null;
-    }
+    return initial?.call();
   }
 
-  /// A variant of `when` that fallback to an `orElse` callback.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case _:
-  ///     return orElse();
-  /// }
-  /// ```
-
+  @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
@@ -168,41 +206,93 @@ extension CommentStatePatterns on CommentState {
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
-    final _that = this;
-    switch (_that) {
-      case _Initial() when initial != null:
-        return initial();
-      case _Loading() when loading != null:
-        return loading();
-      case _Loaded() when loaded != null:
-        return loaded(
-            _that.comments,
-            _that.sortType,
-            _that.expandedReplies,
-            _that.isAddingComment,
-            _that.errorMessage,
-            _that.likedCommentIds,
-            _that.likingInProgress);
-      case _Error() when error != null:
-        return error(_that.message);
-      case _:
-        return orElse();
+    if (initial != null) {
+      return initial();
     }
+    return orElse();
   }
 
-  /// A `switch`-like method, using callbacks.
-  ///
-  /// As opposed to `map`, this offers destructuring.
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case Subclass2(:final field2):
-  ///     return ...;
-  /// }
-  /// ```
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Error value) error,
+  }) {
+    return initial(this);
+  }
 
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Error value)? error,
+  }) {
+    return initial?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Loaded value)? loaded,
+    TResult Function(_Error value)? error,
+    required TResult orElse(),
+  }) {
+    if (initial != null) {
+      return initial(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Initial implements CommentState {
+  const factory _Initial() = _$InitialImpl;
+}
+
+/// @nodoc
+abstract class _$$LoadingImplCopyWith<$Res> {
+  factory _$$LoadingImplCopyWith(
+          _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
+      __$$LoadingImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$LoadingImplCopyWithImpl<$Res>
+    extends _$CommentStateCopyWithImpl<$Res, _$LoadingImpl>
+    implements _$$LoadingImplCopyWith<$Res> {
+  __$$LoadingImplCopyWithImpl(
+      _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of CommentState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$LoadingImpl implements _Loading {
+  const _$LoadingImpl();
+
+  @override
+  String toString() {
+    return 'CommentState.loading()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$LoadingImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
@@ -218,40 +308,10 @@ extension CommentStatePatterns on CommentState {
         loaded,
     required TResult Function(String message) error,
   }) {
-    final _that = this;
-    switch (_that) {
-      case _Initial():
-        return initial();
-      case _Loading():
-        return loading();
-      case _Loaded():
-        return loaded(
-            _that.comments,
-            _that.sortType,
-            _that.expandedReplies,
-            _that.isAddingComment,
-            _that.errorMessage,
-            _that.likedCommentIds,
-            _that.likingInProgress);
-      case _Error():
-        return error(_that.message);
-      case _:
-        throw StateError('Unexpected subclass');
-    }
+    return loading();
   }
 
-  /// A variant of `when` that fallback to returning `null`
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case _:
-  ///     return null;
-  /// }
-  /// ```
-
+  @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
@@ -267,73 +327,148 @@ extension CommentStatePatterns on CommentState {
         loaded,
     TResult? Function(String message)? error,
   }) {
-    final _that = this;
-    switch (_that) {
-      case _Initial() when initial != null:
-        return initial();
-      case _Loading() when loading != null:
-        return loading();
-      case _Loaded() when loaded != null:
-        return loaded(
-            _that.comments,
-            _that.sortType,
-            _that.expandedReplies,
-            _that.isAddingComment,
-            _that.errorMessage,
-            _that.likedCommentIds,
-            _that.likingInProgress);
-      case _Error() when error != null:
-        return error(_that.message);
-      case _:
-        return null;
+    return loading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(
+            List<Comment> comments,
+            CommentSortType sortType,
+            Map<String, List<Comment>> expandedReplies,
+            bool isAddingComment,
+            String? errorMessage,
+            Set<String> likedCommentIds,
+            Set<String> likingInProgress)?
+        loaded,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading();
     }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Error value) error,
+  }) {
+    return loading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Error value)? error,
+  }) {
+    return loading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Loaded value)? loaded,
+    TResult Function(_Error value)? error,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Loading implements CommentState {
+  const factory _Loading() = _$LoadingImpl;
+}
+
+/// @nodoc
+abstract class _$$LoadedImplCopyWith<$Res> {
+  factory _$$LoadedImplCopyWith(
+          _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
+      __$$LoadedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call(
+      {List<Comment> comments,
+      CommentSortType sortType,
+      Map<String, List<Comment>> expandedReplies,
+      bool isAddingComment,
+      String? errorMessage,
+      Set<String> likedCommentIds,
+      Set<String> likingInProgress});
+}
+
+/// @nodoc
+class __$$LoadedImplCopyWithImpl<$Res>
+    extends _$CommentStateCopyWithImpl<$Res, _$LoadedImpl>
+    implements _$$LoadedImplCopyWith<$Res> {
+  __$$LoadedImplCopyWithImpl(
+      _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of CommentState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? comments = null,
+    Object? sortType = null,
+    Object? expandedReplies = null,
+    Object? isAddingComment = null,
+    Object? errorMessage = freezed,
+    Object? likedCommentIds = null,
+    Object? likingInProgress = null,
+  }) {
+    return _then(_$LoadedImpl(
+      comments: null == comments
+          ? _value._comments
+          : comments // ignore: cast_nullable_to_non_nullable
+              as List<Comment>,
+      sortType: null == sortType
+          ? _value.sortType
+          : sortType // ignore: cast_nullable_to_non_nullable
+              as CommentSortType,
+      expandedReplies: null == expandedReplies
+          ? _value._expandedReplies
+          : expandedReplies // ignore: cast_nullable_to_non_nullable
+              as Map<String, List<Comment>>,
+      isAddingComment: null == isAddingComment
+          ? _value.isAddingComment
+          : isAddingComment // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorMessage: freezed == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      likedCommentIds: null == likedCommentIds
+          ? _value._likedCommentIds
+          : likedCommentIds // ignore: cast_nullable_to_non_nullable
+              as Set<String>,
+      likingInProgress: null == likingInProgress
+          ? _value._likingInProgress
+          : likingInProgress // ignore: cast_nullable_to_non_nullable
+              as Set<String>,
+    ));
   }
 }
 
 /// @nodoc
 
-class _Initial implements CommentState {
-  const _Initial();
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Initial);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  String toString() {
-    return 'CommentState.initial()';
-  }
-}
-
-/// @nodoc
-
-class _Loading implements CommentState {
-  const _Loading();
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Loading);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  String toString() {
-    return 'CommentState.loading()';
-  }
-}
-
-/// @nodoc
-
-class _Loaded implements CommentState {
-  const _Loaded(
+class _$LoadedImpl implements _Loaded {
+  const _$LoadedImpl(
       {required final List<Comment> comments,
       required this.sortType,
       final Map<String, List<Comment>> expandedReplies = const {},
@@ -347,14 +482,17 @@ class _Loaded implements CommentState {
         _likingInProgress = likingInProgress;
 
   final List<Comment> _comments;
+  @override
   List<Comment> get comments {
     if (_comments is EqualUnmodifiableListView) return _comments;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_comments);
   }
 
+  @override
   final CommentSortType sortType;
   final Map<String, List<Comment>> _expandedReplies;
+  @override
   @JsonKey()
   Map<String, List<Comment>> get expandedReplies {
     if (_expandedReplies is EqualUnmodifiableMapView) return _expandedReplies;
@@ -362,10 +500,13 @@ class _Loaded implements CommentState {
     return EqualUnmodifiableMapView(_expandedReplies);
   }
 
+  @override
   @JsonKey()
   final bool isAddingComment;
+  @override
   final String? errorMessage;
   final Set<String> _likedCommentIds;
+  @override
   @JsonKey()
   Set<String> get likedCommentIds {
     if (_likedCommentIds is EqualUnmodifiableSetView) return _likedCommentIds;
@@ -374,6 +515,7 @@ class _Loaded implements CommentState {
   }
 
   final Set<String> _likingInProgress;
+  @override
   @JsonKey()
   Set<String> get likingInProgress {
     if (_likingInProgress is EqualUnmodifiableSetView) return _likingInProgress;
@@ -381,18 +523,16 @@ class _Loaded implements CommentState {
     return EqualUnmodifiableSetView(_likingInProgress);
   }
 
-  /// Create a copy of CommentState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  _$LoadedCopyWith<_Loaded> get copyWith =>
-      __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
+  @override
+  String toString() {
+    return 'CommentState.loaded(comments: $comments, sortType: $sortType, expandedReplies: $expandedReplies, isAddingComment: $isAddingComment, errorMessage: $errorMessage, likedCommentIds: $likedCommentIds, likingInProgress: $likingInProgress)';
+  }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Loaded &&
+            other is _$LoadedImpl &&
             const DeepCollectionEquality().equals(other._comments, _comments) &&
             (identical(other.sortType, sortType) ||
                 other.sortType == sortType) &&
@@ -419,140 +559,313 @@ class _Loaded implements CommentState {
       const DeepCollectionEquality().hash(_likedCommentIds),
       const DeepCollectionEquality().hash(_likingInProgress));
 
-  @override
-  String toString() {
-    return 'CommentState.loaded(comments: $comments, sortType: $sortType, expandedReplies: $expandedReplies, isAddingComment: $isAddingComment, errorMessage: $errorMessage, likedCommentIds: $likedCommentIds, likingInProgress: $likingInProgress)';
-  }
-}
-
-/// @nodoc
-abstract mixin class _$LoadedCopyWith<$Res>
-    implements $CommentStateCopyWith<$Res> {
-  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) =
-      __$LoadedCopyWithImpl;
-  @useResult
-  $Res call(
-      {List<Comment> comments,
-      CommentSortType sortType,
-      Map<String, List<Comment>> expandedReplies,
-      bool isAddingComment,
-      String? errorMessage,
-      Set<String> likedCommentIds,
-      Set<String> likingInProgress});
-}
-
-/// @nodoc
-class __$LoadedCopyWithImpl<$Res> implements _$LoadedCopyWith<$Res> {
-  __$LoadedCopyWithImpl(this._self, this._then);
-
-  final _Loaded _self;
-  final $Res Function(_Loaded) _then;
-
   /// Create a copy of CommentState
   /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
   @pragma('vm:prefer-inline')
-  $Res call({
-    Object? comments = null,
-    Object? sortType = null,
-    Object? expandedReplies = null,
-    Object? isAddingComment = null,
-    Object? errorMessage = freezed,
-    Object? likedCommentIds = null,
-    Object? likingInProgress = null,
+  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
+      __$$LoadedImplCopyWithImpl<_$LoadedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(
+            List<Comment> comments,
+            CommentSortType sortType,
+            Map<String, List<Comment>> expandedReplies,
+            bool isAddingComment,
+            String? errorMessage,
+            Set<String> likedCommentIds,
+            Set<String> likingInProgress)
+        loaded,
+    required TResult Function(String message) error,
   }) {
-    return _then(_Loaded(
-      comments: null == comments
-          ? _self._comments
-          : comments // ignore: cast_nullable_to_non_nullable
-              as List<Comment>,
-      sortType: null == sortType
-          ? _self.sortType
-          : sortType // ignore: cast_nullable_to_non_nullable
-              as CommentSortType,
-      expandedReplies: null == expandedReplies
-          ? _self._expandedReplies
-          : expandedReplies // ignore: cast_nullable_to_non_nullable
-              as Map<String, List<Comment>>,
-      isAddingComment: null == isAddingComment
-          ? _self.isAddingComment
-          : isAddingComment // ignore: cast_nullable_to_non_nullable
-              as bool,
-      errorMessage: freezed == errorMessage
-          ? _self.errorMessage
-          : errorMessage // ignore: cast_nullable_to_non_nullable
-              as String?,
-      likedCommentIds: null == likedCommentIds
-          ? _self._likedCommentIds
-          : likedCommentIds // ignore: cast_nullable_to_non_nullable
-              as Set<String>,
-      likingInProgress: null == likingInProgress
-          ? _self._likingInProgress
-          : likingInProgress // ignore: cast_nullable_to_non_nullable
-              as Set<String>,
-    ));
+    return loaded(comments, sortType, expandedReplies, isAddingComment,
+        errorMessage, likedCommentIds, likingInProgress);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(
+            List<Comment> comments,
+            CommentSortType sortType,
+            Map<String, List<Comment>> expandedReplies,
+            bool isAddingComment,
+            String? errorMessage,
+            Set<String> likedCommentIds,
+            Set<String> likingInProgress)?
+        loaded,
+    TResult? Function(String message)? error,
+  }) {
+    return loaded?.call(comments, sortType, expandedReplies, isAddingComment,
+        errorMessage, likedCommentIds, likingInProgress);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(
+            List<Comment> comments,
+            CommentSortType sortType,
+            Map<String, List<Comment>> expandedReplies,
+            bool isAddingComment,
+            String? errorMessage,
+            Set<String> likedCommentIds,
+            Set<String> likingInProgress)?
+        loaded,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    if (loaded != null) {
+      return loaded(comments, sortType, expandedReplies, isAddingComment,
+          errorMessage, likedCommentIds, likingInProgress);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Error value) error,
+  }) {
+    return loaded(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Error value)? error,
+  }) {
+    return loaded?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Loaded value)? loaded,
+    TResult Function(_Error value)? error,
+    required TResult orElse(),
+  }) {
+    if (loaded != null) {
+      return loaded(this);
+    }
+    return orElse();
   }
 }
 
-/// @nodoc
+abstract class _Loaded implements CommentState {
+  const factory _Loaded(
+      {required final List<Comment> comments,
+      required final CommentSortType sortType,
+      final Map<String, List<Comment>> expandedReplies,
+      final bool isAddingComment,
+      final String? errorMessage,
+      final Set<String> likedCommentIds,
+      final Set<String> likingInProgress}) = _$LoadedImpl;
 
-class _Error implements CommentState {
-  const _Error(this.message);
-
-  final String message;
+  List<Comment> get comments;
+  CommentSortType get sortType;
+  Map<String, List<Comment>> get expandedReplies;
+  bool get isAddingComment;
+  String? get errorMessage;
+  Set<String> get likedCommentIds;
+  Set<String> get likingInProgress;
 
   /// Create a copy of CommentState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  _$ErrorCopyWith<_Error> get copyWith =>
-      __$ErrorCopyWithImpl<_Error>(this, _$identity);
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Error &&
-            (identical(other.message, message) || other.message == message));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, message);
-
-  @override
-  String toString() {
-    return 'CommentState.error(message: $message)';
-  }
+  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract mixin class _$ErrorCopyWith<$Res>
-    implements $CommentStateCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) =
-      __$ErrorCopyWithImpl;
+abstract class _$$ErrorImplCopyWith<$Res> {
+  factory _$$ErrorImplCopyWith(
+          _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
+      __$$ErrorImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String message});
 }
 
 /// @nodoc
-class __$ErrorCopyWithImpl<$Res> implements _$ErrorCopyWith<$Res> {
-  __$ErrorCopyWithImpl(this._self, this._then);
-
-  final _Error _self;
-  final $Res Function(_Error) _then;
+class __$$ErrorImplCopyWithImpl<$Res>
+    extends _$CommentStateCopyWithImpl<$Res, _$ErrorImpl>
+    implements _$$ErrorImplCopyWith<$Res> {
+  __$$ErrorImplCopyWithImpl(
+      _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of CommentState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  @override
   $Res call({
     Object? message = null,
   }) {
-    return _then(_Error(
+    return _then(_$ErrorImpl(
       null == message
-          ? _self.message
+          ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
 }
 
-// dart format on
+/// @nodoc
+
+class _$ErrorImpl implements _Error {
+  const _$ErrorImpl(this.message);
+
+  @override
+  final String message;
+
+  @override
+  String toString() {
+    return 'CommentState.error(message: $message)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ErrorImpl &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, message);
+
+  /// Create a copy of CommentState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
+      __$$ErrorImplCopyWithImpl<_$ErrorImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(
+            List<Comment> comments,
+            CommentSortType sortType,
+            Map<String, List<Comment>> expandedReplies,
+            bool isAddingComment,
+            String? errorMessage,
+            Set<String> likedCommentIds,
+            Set<String> likingInProgress)
+        loaded,
+    required TResult Function(String message) error,
+  }) {
+    return error(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(
+            List<Comment> comments,
+            CommentSortType sortType,
+            Map<String, List<Comment>> expandedReplies,
+            bool isAddingComment,
+            String? errorMessage,
+            Set<String> likedCommentIds,
+            Set<String> likingInProgress)?
+        loaded,
+    TResult? Function(String message)? error,
+  }) {
+    return error?.call(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(
+            List<Comment> comments,
+            CommentSortType sortType,
+            Map<String, List<Comment>> expandedReplies,
+            bool isAddingComment,
+            String? errorMessage,
+            Set<String> likedCommentIds,
+            Set<String> likingInProgress)?
+        loaded,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    if (error != null) {
+      return error(message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Error value) error,
+  }) {
+    return error(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Error value)? error,
+  }) {
+    return error?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Loaded value)? loaded,
+    TResult Function(_Error value)? error,
+    required TResult orElse(),
+  }) {
+    if (error != null) {
+      return error(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Error implements CommentState {
+  const factory _Error(final String message) = _$ErrorImpl;
+
+  String get message;
+
+  /// Create a copy of CommentState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

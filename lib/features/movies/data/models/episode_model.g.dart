@@ -65,8 +65,8 @@ class EpisodeModelAdapter extends TypeAdapter<EpisodeModel> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-_EpisodeModel _$EpisodeModelFromJson(Map<String, dynamic> json) =>
-    _EpisodeModel(
+_$EpisodeModelImpl _$$EpisodeModelImplFromJson(Map<String, dynamic> json) =>
+    _$EpisodeModelImpl(
       id: const AnyToStringConverter().fromJson(json['id']),
       title: json['title'] as String,
       description:
@@ -80,7 +80,7 @@ _EpisodeModel _$EpisodeModelFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['releaseDate'] as String),
     );
 
-Map<String, dynamic> _$EpisodeModelToJson(_EpisodeModel instance) =>
+Map<String, dynamic> _$$EpisodeModelImplToJson(_$EpisodeModelImpl instance) =>
     <String, dynamic>{
       'id': const AnyToStringConverter().toJson(instance.id),
       'title': instance.title,

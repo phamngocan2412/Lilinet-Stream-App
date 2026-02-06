@@ -48,7 +48,8 @@ class SeasonModelAdapter extends TypeAdapter<SeasonModel> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-_SeasonModel _$SeasonModelFromJson(Map<String, dynamic> json) => _SeasonModel(
+_$SeasonModelImpl _$$SeasonModelImplFromJson(Map<String, dynamic> json) =>
+    _$SeasonModelImpl(
       season: const StringToIntConverterRequired().fromJson(json['season']),
       episodes: (json['episodes'] as List<dynamic>?)
               ?.map((e) => EpisodeModel.fromJson(e as Map<String, dynamic>))
@@ -56,7 +57,7 @@ _SeasonModel _$SeasonModelFromJson(Map<String, dynamic> json) => _SeasonModel(
           const [],
     );
 
-Map<String, dynamic> _$SeasonModelToJson(_SeasonModel instance) =>
+Map<String, dynamic> _$$SeasonModelImplToJson(_$SeasonModelImpl instance) =>
     <String, dynamic>{
       'season': const StringToIntConverterRequired().toJson(instance.season),
       'episodes': instance.episodes,

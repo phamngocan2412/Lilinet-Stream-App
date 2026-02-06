@@ -144,7 +144,8 @@ class MovieListResponseAdapter extends TypeAdapter<MovieListResponse> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-_MovieModel _$MovieModelFromJson(Map<String, dynamic> json) => _MovieModel(
+_$MovieModelImpl _$$MovieModelImplFromJson(Map<String, dynamic> json) =>
+    _$MovieModelImpl(
       id: const AnyToStringConverter().fromJson(json['id']),
       title: json['title'] as String,
       poster: const AnyToStringNullableConverter().fromJson(json['poster']),
@@ -183,7 +184,7 @@ _MovieModel _$MovieModelFromJson(Map<String, dynamic> json) => _MovieModel(
       provider: const AnyToStringNullableConverter().fromJson(json['provider']),
     );
 
-Map<String, dynamic> _$MovieModelToJson(_MovieModel instance) =>
+Map<String, dynamic> _$$MovieModelImplToJson(_$MovieModelImpl instance) =>
     <String, dynamic>{
       'id': const AnyToStringConverter().toJson(instance.id),
       'title': instance.title,
@@ -215,8 +216,9 @@ Map<String, dynamic> _$MovieModelToJson(_MovieModel instance) =>
           const AnyToStringNullableConverter().toJson(instance.provider),
     };
 
-_MovieListResponse _$MovieListResponseFromJson(Map<String, dynamic> json) =>
-    _MovieListResponse(
+_$MovieListResponseImpl _$$MovieListResponseImplFromJson(
+        Map<String, dynamic> json) =>
+    _$MovieListResponseImpl(
       currentPage: json['currentPage'] == null
           ? 1
           : const StringToIntConverterRequired().fromJson(json['currentPage']),
@@ -226,7 +228,8 @@ _MovieListResponse _$MovieListResponseFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$MovieListResponseToJson(_MovieListResponse instance) =>
+Map<String, dynamic> _$$MovieListResponseImplToJson(
+        _$MovieListResponseImpl instance) =>
     <String, dynamic>{
       'currentPage':
           const StringToIntConverterRequired().toJson(instance.currentPage),
