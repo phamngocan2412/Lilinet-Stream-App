@@ -491,6 +491,7 @@ class _CommentBottomSheetViewState extends State<_CommentBottomSheetView> {
                 controller: _replyController,
                 focusNode: _replyFocusNode,
                 maxLines: null,
+                maxLength: 1000,
                 textInputAction: TextInputAction.send,
                 onSubmitted: (_) => _sendReply(),
                 decoration: const InputDecoration(
@@ -498,6 +499,7 @@ class _CommentBottomSheetViewState extends State<_CommentBottomSheetView> {
                   border: InputBorder.none,
                   isDense: true,
                   contentPadding: EdgeInsets.zero,
+                  counterText: "",
                 ),
               ),
             ),
