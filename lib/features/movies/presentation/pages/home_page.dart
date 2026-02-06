@@ -123,8 +123,7 @@ class HomePageView extends StatelessWidget {
                           scrollDirection: Axis.horizontal,
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           itemCount: genres.length,
-                          separatorBuilder: (context, index) =>
-                              const SizedBox(width: 8),
+                          separatorBuilder: (_, __) => const SizedBox(width: 8),
                           itemBuilder: (context, index) {
                             final entry = genres.entries.elementAt(index);
                             return Center(
@@ -142,45 +141,42 @@ class HomePageView extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SliverPadding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      sliver: SliverToBoxAdapter(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if (trendingMovies.isNotEmpty) ...[
-                              Text(
-                                'TRENDING NOW',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineSmall
-                                    ?.copyWith(
-                                      fontWeight: FontWeight.w900,
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                      letterSpacing: 1.2,
-                                    ),
+                  SliverPadding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    sliver: SliverToBoxAdapter(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (trendingMovies.isNotEmpty) ...[
+                            Text(
+                              'TRENDING NOW',
+                              style: Theme.of(context).textTheme.headlineSmall
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.w900,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.primary,
+                                    letterSpacing: 1.2,
+                                  ),
+                            ),
+                            const SizedBox(height: 16),
+                            TrendingCarousel(
+                              movies: trendingMovies.take(5).toList(),
+                              // Optimization: Calculate explicit cache width to avoid LayoutBuilder overhead
+                              memCacheWidth: ((MediaQuery.of(context).size.width - 32) *
+                                      MediaQuery.of(context).devicePixelRatio)
+                                  .toInt(),
+                              onMovieTap: (movie) => context.push(
+                                '/movie/${movie.id}?type=${movie.type}',
+                                extra: movie,
                               ),
-                              const SizedBox(height: 16),
-                              TrendingCarousel(
-                                movies: trendingMovies.take(5).toList(),
-                                // Optimization: Calculate explicit cache width to avoid LayoutBuilder overhead
-                                memCacheWidth:
-                                    ((MediaQuery.of(context).size.width - 32) *
-                                            MediaQuery.of(context)
-                                                .devicePixelRatio)
-                                        .toInt(),
-                                onMovieTap: (movie) => context.push(
-                                  '/movie/${movie.id}?type=${movie.type}',
-                                  extra: movie,
-                                ),
-                              ),
-                              const SizedBox(height: 32),
-                            ],
+                            ),
+                            const SizedBox(height: 32),
                           ],
-                        ),
+                        ],
                       ),
                     ),
+                  ),
 
                     // Trending Comments Section
                     const SliverToBoxAdapter(child: HomeTrendingSection()),
@@ -191,6 +187,12 @@ class HomePageView extends StatelessWidget {
                         delegate: SliverChildBuilderDelegate((context, index) {
                           final categoryName = categories.keys.elementAt(index);
                           final categoryMovies = categories[categoryName]!;
+
+                          // Optimization: Calculate explicit cache width (130px * pixelRatio)
+                          // to avoid LayoutBuilder overhead in MovieCard -> AppCachedImage
+                          final memCacheWidth =
+                              (130 * MediaQuery.of(context).devicePixelRatio)
+                                  .toInt();
 
                           if (categoryMovies.isEmpty) {
                             return const SizedBox.shrink();
@@ -263,9 +265,7 @@ class HomePageView extends StatelessWidget {
                                       width: 130,
                                       child: MovieCard(
                                         movie: movie,
-                                        width: 130,
-                                        memCacheWidth:
-                                            horizontalListMemCacheWidth,
+                                        memCacheWidth: memCacheWidth,
                                         onTap: () => context.push(
                                           '/movie/${movie.id}?type=${movie.type}',
                                           extra: movie,
