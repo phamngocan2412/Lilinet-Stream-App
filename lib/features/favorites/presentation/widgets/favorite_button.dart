@@ -47,9 +47,7 @@ class FavoriteButton extends StatelessWidget {
             icon: Icon(
               isFavorite ? Icons.favorite : Icons.favorite_border,
               color: isFavorite
-                  ? Theme.of(context)
-                      .colorScheme
-                      .error // Red
+                  ? Theme.of(context).colorScheme.error // Red
                   : Theme.of(context).colorScheme.onSurface,
               size: size,
             ),

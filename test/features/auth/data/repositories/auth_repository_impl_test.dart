@@ -5,7 +5,8 @@ import 'package:lilinet_app/core/errors/failures.dart';
 import 'package:lilinet_app/features/auth/data/datasources/auth_supabase_datasource.dart';
 import 'package:lilinet_app/features/auth/data/repositories/auth_repository_impl.dart';
 
-class MockAuthSupabaseDataSource extends Mock implements AuthSupabaseDataSource {}
+class MockAuthSupabaseDataSource extends Mock
+    implements AuthSupabaseDataSource {}
 
 void main() {
   late AuthRepositoryImpl repository;
@@ -39,7 +40,8 @@ void main() {
         // Assert
         expect(
           result,
-          equals(const Left(Failure.server('An unexpected error occurred during sign in.'))),
+          equals(const Left(
+              Failure.server('An unexpected error occurred during sign in.'))),
         );
       },
     );
@@ -65,7 +67,8 @@ void main() {
         // Assert
         expect(
           result,
-          equals(const Left(Failure.server('An unexpected error occurred during sign up.'))),
+          equals(const Left(
+              Failure.server('An unexpected error occurred during sign up.'))),
         );
       },
     );
@@ -76,7 +79,8 @@ void main() {
       'should return sanitized Failure when a generic Exception occurs',
       () async {
         // Arrange
-        when(() => mockDataSource.signOut()).thenThrow(Exception(tSensitiveError));
+        when(() => mockDataSource.signOut())
+            .thenThrow(Exception(tSensitiveError));
 
         // Act
         final result = await repository.signOut();
@@ -84,7 +88,8 @@ void main() {
         // Assert
         expect(
           result,
-          equals(const Left(Failure.server('An unexpected error occurred during sign out.'))),
+          equals(const Left(
+              Failure.server('An unexpected error occurred during sign out.'))),
         );
       },
     );
@@ -104,7 +109,8 @@ void main() {
         // Assert
         expect(
           result,
-          equals(const Left(Failure.server('Đã xảy ra lỗi không mong muốn khi gửi email đặt lại mật khẩu.'))),
+          equals(const Left(Failure.server(
+              'Đã xảy ra lỗi không mong muốn khi gửi email đặt lại mật khẩu.'))),
         );
       },
     );

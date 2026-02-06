@@ -30,10 +30,10 @@ class HomePageView extends StatelessWidget {
         title: Text(
           'LILINET',
           style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-            fontWeight: FontWeight.w900,
-            letterSpacing: 1.5,
-            color: Theme.of(context).colorScheme.primary,
-          ),
+                fontWeight: FontWeight.w900,
+                letterSpacing: 1.5,
+                color: Theme.of(context).colorScheme.primary,
+              ),
         ),
         actions: [
           IconButton(
@@ -83,15 +83,16 @@ class HomePageView extends StatelessWidget {
                   message: message,
                   onRetry: () {
                     context.read<TrendingMoviesBloc>().add(
-                      const TrendingMoviesEvent.load(),
-                    );
+                          const TrendingMoviesEvent.load(),
+                        );
                   },
                 ),
               ),
               loaded: (trending, categories) {
                 final trendingMovies = trending.toSet().toList();
                 // Optimization: Pre-calculate cache width for horizontal lists
-                final devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
+                final devicePixelRatio =
+                    MediaQuery.of(context).devicePixelRatio;
                 final horizontalListMemCacheWidth =
                     (130 * devicePixelRatio).toInt();
 
@@ -141,42 +142,46 @@ class HomePageView extends StatelessWidget {
                         ),
                       ),
                     ),
-                  SliverPadding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    sliver: SliverToBoxAdapter(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          if (trendingMovies.isNotEmpty) ...[
-                            Text(
-                              'TRENDING NOW',
-                              style: Theme.of(context).textTheme.headlineSmall
-                                  ?.copyWith(
-                                    fontWeight: FontWeight.w900,
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.primary,
-                                    letterSpacing: 1.2,
-                                  ),
-                            ),
-                            const SizedBox(height: 16),
-                            TrendingCarousel(
-                              movies: trendingMovies.take(5).toList(),
-                              // Optimization: Calculate explicit cache width to avoid LayoutBuilder overhead
-                              memCacheWidth: ((MediaQuery.of(context).size.width - 32) *
-                                      MediaQuery.of(context).devicePixelRatio)
-                                  .toInt(),
-                              onMovieTap: (movie) => context.push(
-                                '/movie/${movie.id}?type=${movie.type}',
-                                extra: movie,
+                    SliverPadding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      sliver: SliverToBoxAdapter(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (trendingMovies.isNotEmpty) ...[
+                              Text(
+                                'TRENDING NOW',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineSmall
+                                    ?.copyWith(
+                                      fontWeight: FontWeight.w900,
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.primary,
+                                      letterSpacing: 1.2,
+                                    ),
                               ),
-                            ),
-                            const SizedBox(height: 32),
+                              const SizedBox(height: 16),
+                              TrendingCarousel(
+                                movies: trendingMovies.take(5).toList(),
+                                // Optimization: Calculate explicit cache width to avoid LayoutBuilder overhead
+                                memCacheWidth:
+                                    ((MediaQuery.of(context).size.width - 32) *
+                                            MediaQuery.of(context)
+                                                .devicePixelRatio)
+                                        .toInt(),
+                                onMovieTap: (movie) => context.push(
+                                  '/movie/${movie.id}?type=${movie.type}',
+                                  extra: movie,
+                                ),
+                              ),
+                              const SizedBox(height: 32),
+                            ],
                           ],
-                        ],
+                        ),
                       ),
                     ),
-                  ),
 
                     // Trending Comments Section
                     const SliverToBoxAdapter(child: HomeTrendingSection()),

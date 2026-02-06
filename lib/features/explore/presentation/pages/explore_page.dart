@@ -97,8 +97,8 @@ class _ExploreViewState extends State<ExploreView>
                           onTap: () {
                             setState(() => _selectedCategory = 'popular');
                             context.read<ExploreBloc>().add(
-                              const LoadPopularMovies(),
-                            );
+                                  const LoadPopularMovies(),
+                                );
                           },
                         ),
                         const SizedBox(width: 12),
@@ -109,8 +109,8 @@ class _ExploreViewState extends State<ExploreView>
                           onTap: () {
                             setState(() => _selectedCategory = 'top_rated');
                             context.read<ExploreBloc>().add(
-                              const LoadTopRatedMovies(),
-                            );
+                                  const LoadTopRatedMovies(),
+                                );
                           },
                         ),
                         const SizedBox(width: 12),
@@ -121,8 +121,8 @@ class _ExploreViewState extends State<ExploreView>
                           onTap: () {
                             setState(() => _selectedCategory = 'recent');
                             context.read<ExploreBloc>().add(
-                              const LoadRecentlyAdded(),
-                            );
+                                  const LoadRecentlyAdded(),
+                                );
                           },
                         ),
                       ],
@@ -148,16 +148,16 @@ class _ExploreViewState extends State<ExploreView>
                       context.read<ExploreBloc>().add(LoadGenres());
                     } else if (_selectedCategory == 'popular') {
                       context.read<ExploreBloc>().add(
-                        const LoadPopularMovies(),
-                      );
+                            const LoadPopularMovies(),
+                          );
                     } else if (_selectedCategory == 'top_rated') {
                       context.read<ExploreBloc>().add(
-                        const LoadTopRatedMovies(),
-                      );
+                            const LoadTopRatedMovies(),
+                          );
                     } else if (_selectedCategory == 'recent') {
                       context.read<ExploreBloc>().add(
-                        const LoadRecentlyAdded(),
-                      );
+                            const LoadRecentlyAdded(),
+                          );
                     }
                   },
                 ),
@@ -180,11 +180,11 @@ class _ExploreViewState extends State<ExploreView>
                     genre: genre,
                     onTap: () {
                       context.read<ExploreBloc>().add(
-                        LoadMoviesByGenre(
-                          genreId: genre.id,
-                          genreName: genre.name,
-                        ),
-                      );
+                            LoadMoviesByGenre(
+                              genreId: genre.id,
+                              genreName: genre.name,
+                            ),
+                          );
                       setState(() => _selectedCategory = 'genre_${genre.id}');
                     },
                   );

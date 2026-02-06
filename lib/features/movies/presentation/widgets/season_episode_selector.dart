@@ -64,9 +64,8 @@ class SeasonEpisodeSelector extends StatelessWidget {
                     selectedColor: Theme.of(context).colorScheme.primary,
                     labelStyle: TextStyle(
                       color: isSelected ? Colors.white : Colors.white70,
-                      fontWeight: isSelected
-                          ? FontWeight.bold
-                          : FontWeight.normal,
+                      fontWeight:
+                          isSelected ? FontWeight.bold : FontWeight.normal,
                     ),
                     backgroundColor: Colors.white10,
                     side: BorderSide.none,

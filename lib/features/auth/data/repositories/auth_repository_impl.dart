@@ -76,7 +76,8 @@ class AuthRepositoryImpl implements AuthRepository {
       final user = await dataSource.getCurrentUser();
       return Right(user?.toEntity());
     } catch (e) {
-      developer.log('Get current user failed', error: e, name: 'AuthRepository');
+      developer.log('Get current user failed',
+          error: e, name: 'AuthRepository');
       return const Left(
         Failure.server('An unexpected error occurred while fetching user.'),
       );
@@ -96,9 +97,11 @@ class AuthRepositoryImpl implements AuthRepository {
     } on supabase.AuthException catch (e) {
       return Left(Failure.server(e.message));
     } catch (e) {
-      developer.log('Send password reset email failed', error: e, name: 'AuthRepository');
+      developer.log('Send password reset email failed',
+          error: e, name: 'AuthRepository');
       return const Left(
-        Failure.server('Đã xảy ra lỗi không mong muốn khi gửi email đặt lại mật khẩu.'),
+        Failure.server(
+            'Đã xảy ra lỗi không mong muốn khi gửi email đặt lại mật khẩu.'),
       );
     }
   }

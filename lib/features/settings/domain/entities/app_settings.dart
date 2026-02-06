@@ -110,17 +110,17 @@ class AppSettings extends Equatable {
 
   @override
   List<Object?> get props => [
-    themeMode,
-    language,
-    autoPlay,
-    skipIntro,
-    defaultQuality,
-    downloadOverWifiOnly,
-    showNotifications,
-    adultContent,
-    subtitleLanguage,
-    movieProvider,
-    animeProvider,
-    preferredServer,
-  ];
+        themeMode,
+        language,
+        autoPlay,
+        skipIntro,
+        defaultQuality,
+        downloadOverWifiOnly,
+        showNotifications,
+        adultContent,
+        subtitleLanguage,
+        movieProvider,
+        animeProvider,
+        preferredServer,
+      ];
 }

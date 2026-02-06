@@ -25,7 +25,8 @@ class MovieList extends StatelessWidget {
     final devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
     // Assuming 32px horizontal padding (16*2) and 12px spacing.
     // Being slightly generous to be safe.
-    final cacheWidth = ((screenWidth - 32) / crossAxisCount * devicePixelRatio).ceil();
+    final cacheWidth =
+        ((screenWidth - 32) / crossAxisCount * devicePixelRatio).ceil();
 
     return SliverGrid(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

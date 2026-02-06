@@ -162,7 +162,8 @@ class _PasswordResetDialogState extends State<PasswordResetDialog> {
 
                     // Cancel button
                     TextButton(
-                      onPressed: isLoading ? null : () => Navigator.pop(context),
+                      onPressed:
+                          isLoading ? null : () => Navigator.pop(context),
                       child: const Text('Hủy'),
                     ),
                   ],

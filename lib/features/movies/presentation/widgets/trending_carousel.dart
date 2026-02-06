@@ -83,19 +83,21 @@ class _TrendingCarouselState extends State<TrendingCarousel> {
                         children: [
                           Text(
                             movie.title,
-                            style: Theme.of(context).textTheme.displayLarge
+                            style: Theme.of(context)
+                                .textTheme
+                                .displayLarge
                                 ?.copyWith(
-                                  fontSize: 32,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                  shadows: [
-                                    const Shadow(
-                                      blurRadius: 10.0,
-                                      color: Colors.black54,
-                                      offset: Offset(2.0, 2.0),
-                                    ),
-                                  ],
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              shadows: [
+                                const Shadow(
+                                  blurRadius: 10.0,
+                                  color: Colors.black54,
+                                  offset: Offset(2.0, 2.0),
                                 ),
+                              ],
+                            ),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),

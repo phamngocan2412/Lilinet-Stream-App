@@ -66,17 +66,17 @@ class RecentlyWatchedPage extends StatelessWidget {
                   child: InkWell(
                     onTap: () {
                       context.read<VideoPlayerBloc>().add(
-                        PlayVideo(
-                          episodeId: item.episodeId ?? item.mediaId,
-                          mediaId: item.mediaId,
-                          title: item.title,
-                          posterUrl: item.posterUrl,
-                          episodeTitle: item.episodeTitle,
-                          startPosition: Duration(
-                            seconds: item.positionSeconds,
-                          ),
-                        ),
-                      );
+                            PlayVideo(
+                              episodeId: item.episodeId ?? item.mediaId,
+                              mediaId: item.mediaId,
+                              title: item.title,
+                              posterUrl: item.posterUrl,
+                              episodeTitle: item.episodeTitle,
+                              startPosition: Duration(
+                                seconds: item.positionSeconds,
+                              ),
+                            ),
+                          );
                     },
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,7 +157,10 @@ class RecentlyWatchedPage extends StatelessWidget {
                                   style: TextStyle(
                                     color: Theme.of(
                                       context,
-                                    ).colorScheme.onSurface.withValues(alpha: 0.6),
+                                    )
+                                        .colorScheme
+                                        .onSurface
+                                        .withValues(alpha: 0.6),
                                     fontSize: 12,
                                   ),
                                 ),
@@ -176,9 +179,9 @@ class RecentlyWatchedPage extends StatelessWidget {
                           ),
                           onPressed: () {
                             context.read<HistoryBloc>().deleteProgress(
-                              item.mediaId,
-                              episodeId: item.episodeId,
-                            );
+                                  item.mediaId,
+                                  episodeId: item.episodeId,
+                                );
                           },
                         ),
                       ],

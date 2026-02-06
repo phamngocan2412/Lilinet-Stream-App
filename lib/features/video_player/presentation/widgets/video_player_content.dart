@@ -137,7 +137,8 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
   String _determineProviderByGenres() {
     final genres = widget.state.movie?.genres ?? [];
     if (kDebugMode) {
-      debugPrint('🧐 Determining provider for movie: ${widget.state.movie?.title}');
+      debugPrint(
+          '🧐 Determining provider for movie: ${widget.state.movie?.title}');
       debugPrint('  Genres: $genres');
     }
 
@@ -258,16 +259,16 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
       if (currentIndex > 0) {
         final prevEpisode = episodes[currentIndex - 1];
         context.read<VideoPlayerBloc>().add(
-          PlayVideo(
-            episodeId: prevEpisode.id,
-            mediaId: widget.state.mediaId!,
-            title: widget.state.title!,
-            posterUrl: widget.state.posterUrl,
-            episodeTitle: prevEpisode.title,
-            mediaType: widget.state.mediaType,
-            movie: movie,
-          ),
-        );
+              PlayVideo(
+                episodeId: prevEpisode.id,
+                mediaId: widget.state.mediaId!,
+                title: widget.state.title!,
+                posterUrl: widget.state.posterUrl,
+                episodeTitle: prevEpisode.title,
+                mediaType: widget.state.mediaType,
+                movie: movie,
+              ),
+            );
       }
     }
   }
@@ -285,16 +286,16 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
       if (currentIndex != -1 && currentIndex < episodes.length - 1) {
         final nextEpisode = episodes[currentIndex + 1];
         context.read<VideoPlayerBloc>().add(
-          PlayVideo(
-            episodeId: nextEpisode.id,
-            mediaId: widget.state.mediaId!,
-            title: widget.state.title!,
-            posterUrl: widget.state.posterUrl,
-            episodeTitle: nextEpisode.title,
-            mediaType: widget.state.mediaType,
-            movie: movie,
-          ),
-        );
+              PlayVideo(
+                episodeId: nextEpisode.id,
+                mediaId: widget.state.mediaId!,
+                title: widget.state.title!,
+                posterUrl: widget.state.posterUrl,
+                episodeTitle: nextEpisode.title,
+                mediaType: widget.state.mediaType,
+                movie: movie,
+              ),
+            );
       }
     }
   }

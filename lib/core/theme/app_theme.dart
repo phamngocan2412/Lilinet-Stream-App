@@ -70,7 +70,6 @@ class AppTheme {
           borderSide: const BorderSide(color: AppColors.netflixRed, width: 1.5),
         ),
       ),
-
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
           backgroundColor: AppColors.brandPrimary,

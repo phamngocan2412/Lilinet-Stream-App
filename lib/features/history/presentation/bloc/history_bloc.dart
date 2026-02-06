@@ -22,10 +22,10 @@ class HistoryCubit extends Cubit<HistoryState> {
     required GetWatchHistory getWatchHistory,
     required SaveWatchProgress saveWatchProgress,
     required DeleteWatchProgress deleteWatchProgress,
-  }) : _getWatchHistory = getWatchHistory,
-       _saveWatchProgress = saveWatchProgress,
-       _deleteWatchProgress = deleteWatchProgress,
-       super(const HistoryInitial());
+  })  : _getWatchHistory = getWatchHistory,
+        _saveWatchProgress = saveWatchProgress,
+        _deleteWatchProgress = deleteWatchProgress,
+        super(const HistoryInitial());
 
   Future<void> loadHistory() async {
     emit(const HistoryLoading());

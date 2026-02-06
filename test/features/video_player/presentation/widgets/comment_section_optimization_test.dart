@@ -8,7 +8,8 @@ import 'package:lilinet_app/features/video_player/presentation/bloc/comments/com
 import 'package:lilinet_app/features/video_player/presentation/widgets/comment_section.dart';
 import 'package:lilinet_app/core/widgets/cached_image.dart';
 
-class MockCommentsCubit extends MockCubit<CommentsState> implements CommentsCubit {}
+class MockCommentsCubit extends MockCubit<CommentsState>
+    implements CommentsCubit {}
 
 void main() {
   late MockCommentsCubit mockCommentsCubit;
@@ -35,7 +36,8 @@ void main() {
       ),
     ];
 
-    when(() => mockCommentsCubit.state).thenReturn(CommentsLoaded('123', comments));
+    when(() => mockCommentsCubit.state)
+        .thenReturn(CommentsLoaded('123', comments));
     when(() => mockCommentsCubit.loadComments(any())).thenAnswer((_) async {});
     when(() => mockCommentsCubit.close()).thenAnswer((_) async {});
 

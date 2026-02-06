@@ -337,9 +337,8 @@ class _ActionButtons extends StatelessWidget {
                   likes.toString(),
                   style: TextStyle(
                     fontSize: isReply ? 11 : 12,
-                    color: isLiked
-                        ? theme.colorScheme.primary
-                        : theme.hintColor,
+                    color:
+                        isLiked ? theme.colorScheme.primary : theme.hintColor,
                     fontWeight: isLiked ? FontWeight.w600 : FontWeight.normal,
                   ),
                 ),

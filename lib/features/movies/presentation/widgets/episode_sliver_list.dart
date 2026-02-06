@@ -126,23 +126,23 @@ class EpisodeSliverList extends StatelessWidget {
                 episodes.length == 1
                     ? 'Full'
                     : (episode.title.isNotEmpty
-                          ? episode.title
-                          : 'Episode ${episode.number}'),
+                        ? episode.title
+                        : 'Episode ${episode.number}'),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: isSelected
                       ? Theme.of(context).colorScheme.primary
                       : (hasProgress
-                            ? Theme.of(context).colorScheme.error
-                            : null), // Use theme error color
+                          ? Theme.of(context).colorScheme.error
+                          : null), // Use theme error color
                 ),
               ),
               subtitle: episodes.length == 1
                   ? null
                   : (episode.title.isNotEmpty &&
-                            episode.title != 'Episode ${episode.number}'
-                        ? Text('Episode ${episode.number}')
-                        : null),
+                          episode.title != 'Episode ${episode.number}'
+                      ? Text('Episode ${episode.number}')
+                      : null),
             ),
           );
         },

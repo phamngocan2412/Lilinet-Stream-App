@@ -72,8 +72,9 @@ class SettingsView extends StatelessWidget {
                       value: settings.autoPlay,
                       onChanged: (value) {
                         context.read<SettingsBloc>().add(
-                          UpdateSettings(settings.copyWith(autoPlay: value)),
-                        );
+                              UpdateSettings(
+                                  settings.copyWith(autoPlay: value)),
+                            );
                       },
                     ),
                     _buildSwitchTile(
@@ -83,8 +84,9 @@ class SettingsView extends StatelessWidget {
                       value: settings.skipIntro,
                       onChanged: (value) {
                         context.read<SettingsBloc>().add(
-                          UpdateSettings(settings.copyWith(skipIntro: value)),
-                        );
+                              UpdateSettings(
+                                  settings.copyWith(skipIntro: value)),
+                            );
                       },
                     ),
                     _buildQualitySelector(context, settings),
@@ -105,10 +107,10 @@ class SettingsView extends StatelessWidget {
                       value: settings.downloadOverWifiOnly,
                       onChanged: (value) {
                         context.read<SettingsBloc>().add(
-                          UpdateSettings(
-                            settings.copyWith(downloadOverWifiOnly: value),
-                          ),
-                        );
+                              UpdateSettings(
+                                settings.copyWith(downloadOverWifiOnly: value),
+                              ),
+                            );
                       },
                     ),
                   ],
@@ -126,10 +128,10 @@ class SettingsView extends StatelessWidget {
                       value: settings.showNotifications,
                       onChanged: (value) {
                         context.read<SettingsBloc>().add(
-                          UpdateSettings(
-                            settings.copyWith(showNotifications: value),
-                          ),
-                        );
+                              UpdateSettings(
+                                settings.copyWith(showNotifications: value),
+                              ),
+                            );
                       },
                     ),
                   ],
@@ -147,10 +149,10 @@ class SettingsView extends StatelessWidget {
                       value: settings.adultContent,
                       onChanged: (value) {
                         context.read<SettingsBloc>().add(
-                          UpdateSettings(
-                            settings.copyWith(adultContent: value),
-                          ),
-                        );
+                              UpdateSettings(
+                                settings.copyWith(adultContent: value),
+                              ),
+                            );
                       },
                     ),
                   ],
@@ -467,14 +469,17 @@ class SettingsView extends StatelessWidget {
               children: [
                 ListTile(
                   title: const Text('Auto (Recommended)'),
-                  subtitle: const Text('Automatically select the best available server'),
-                  trailing: settings.preferredServer == domain.PreferredServer.auto
-                      ? const Icon(Icons.check, color: Colors.green)
-                      : null,
+                  subtitle: const Text(
+                      'Automatically select the best available server'),
+                  trailing:
+                      settings.preferredServer == domain.PreferredServer.auto
+                          ? const Icon(Icons.check, color: Colors.green)
+                          : null,
                   onTap: () {
                     settingsBloc.add(
                       UpdateSettings(
-                        settings.copyWith(preferredServer: domain.PreferredServer.auto),
+                        settings.copyWith(
+                            preferredServer: domain.PreferredServer.auto),
                       ),
                     );
                     Navigator.pop(bottomSheetContext);
@@ -483,13 +488,15 @@ class SettingsView extends StatelessWidget {
                 ListTile(
                   title: const Text('VidCloud'),
                   subtitle: const Text('Fast and reliable'),
-                  trailing: settings.preferredServer == domain.PreferredServer.vidcloud
+                  trailing: settings.preferredServer ==
+                          domain.PreferredServer.vidcloud
                       ? const Icon(Icons.check, color: Colors.green)
                       : null,
                   onTap: () {
                     settingsBloc.add(
                       UpdateSettings(
-                        settings.copyWith(preferredServer: domain.PreferredServer.vidcloud),
+                        settings.copyWith(
+                            preferredServer: domain.PreferredServer.vidcloud),
                       ),
                     );
                     Navigator.pop(bottomSheetContext);
@@ -498,13 +505,15 @@ class SettingsView extends StatelessWidget {
                 ListTile(
                   title: const Text('UpCloud'),
                   subtitle: const Text('Good for movies'),
-                  trailing: settings.preferredServer == domain.PreferredServer.upcloud
-                      ? const Icon(Icons.check, color: Colors.green)
-                      : null,
+                  trailing:
+                      settings.preferredServer == domain.PreferredServer.upcloud
+                          ? const Icon(Icons.check, color: Colors.green)
+                          : null,
                   onTap: () {
                     settingsBloc.add(
                       UpdateSettings(
-                        settings.copyWith(preferredServer: domain.PreferredServer.upcloud),
+                        settings.copyWith(
+                            preferredServer: domain.PreferredServer.upcloud),
                       ),
                     );
                     Navigator.pop(bottomSheetContext);
@@ -513,13 +522,15 @@ class SettingsView extends StatelessWidget {
                 ListTile(
                   title: const Text('MegaUp'),
                   subtitle: const Text('Alternative server'),
-                  trailing: settings.preferredServer == domain.PreferredServer.megaup
-                      ? const Icon(Icons.check, color: Colors.green)
-                      : null,
+                  trailing:
+                      settings.preferredServer == domain.PreferredServer.megaup
+                          ? const Icon(Icons.check, color: Colors.green)
+                          : null,
                   onTap: () {
                     settingsBloc.add(
                       UpdateSettings(
-                        settings.copyWith(preferredServer: domain.PreferredServer.megaup),
+                        settings.copyWith(
+                            preferredServer: domain.PreferredServer.megaup),
                       ),
                     );
                     Navigator.pop(bottomSheetContext);
@@ -652,15 +663,13 @@ class SettingsView extends StatelessWidget {
     String label, {
     required bool isMovie,
   }) {
-    final isSelected = isMovie
-        ? settings.movieProvider == id
-        : settings.animeProvider == id;
+    final isSelected =
+        isMovie ? settings.movieProvider == id : settings.animeProvider == id;
 
     return ListTile(
       title: Text(label),
-      trailing: isSelected
-          ? const Icon(Icons.check, color: Colors.green)
-          : null,
+      trailing:
+          isSelected ? const Icon(Icons.check, color: Colors.green) : null,
       onTap: () {
         bloc.add(
           UpdateSettings(

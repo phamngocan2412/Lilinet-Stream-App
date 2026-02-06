@@ -116,8 +116,8 @@ class _SearchPageViewState extends State<SearchPageView> {
           final filteredMovies = state.activeFilter == 'All'
               ? state.movies
               : state.movies
-                    .where((m) => m.type == state.activeFilter)
-                    .toList();
+                  .where((m) => m.type == state.activeFilter)
+                  .toList();
 
           if (state.isLoading && state.movies.isEmpty) {
             return const Center(child: LoadingIndicator());
@@ -129,8 +129,8 @@ class _SearchPageViewState extends State<SearchPageView> {
                 message: state.errorMessage,
                 onRetry: () {
                   context.read<SearchBloc>().add(
-                    SearchQueryChanged(state.query),
-                  );
+                        SearchQueryChanged(state.query),
+                      );
                 },
               ),
             );

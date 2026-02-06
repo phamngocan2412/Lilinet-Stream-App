@@ -31,8 +31,7 @@ class MovieCard extends StatelessWidget {
   Widget build(BuildContext context) {
     // Determine badge text
     String badgeText = '';
-    bool isSeries =
-        movie.type.toLowerCase().contains('tv') ||
+    bool isSeries = movie.type.toLowerCase().contains('tv') ||
         movie.type.toLowerCase().contains('series');
 
     if (isSeries) {
@@ -109,7 +108,9 @@ class MovieCard extends StatelessWidget {
                   fontSize: 10,
                   fontWeight: FontWeight.bold,
                   shadows: [
-                    Shadow(blurRadius: 2, color: Colors.black.withValues(alpha: 0.3)),
+                    Shadow(
+                        blurRadius: 2,
+                        color: Colors.black.withValues(alpha: 0.3)),
                   ],
                 ),
               ),

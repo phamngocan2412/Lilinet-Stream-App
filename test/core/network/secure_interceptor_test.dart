@@ -20,7 +20,8 @@ void main() {
       final handler = RequestInterceptorHandler();
       interceptor.onRequest(options, handler);
 
-      expect(logs.any((log) => log.contains('Request: GET /test-endpoint')), isTrue);
+      expect(logs.any((log) => log.contains('Request: GET /test-endpoint')),
+          isTrue);
     });
 
     test('redacts Authorization header', () {
@@ -42,7 +43,8 @@ void main() {
       final handler = RequestInterceptorHandler();
       interceptor.onRequest(options, handler);
 
-      final headerLog = logs.firstWhere((log) => log.contains('Request Headers:'));
+      final headerLog =
+          logs.firstWhere((log) => log.contains('Request Headers:'));
       expect(headerLog, contains('Authorization: ***REDACTED***'));
       expect(headerLog, contains('Content-Type: application/json'));
       expect(headerLog, isNot(contains('secret_token')));

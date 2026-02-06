@@ -124,8 +124,8 @@ class EpisodeList extends StatelessWidget {
               episodes.length == 1
                   ? 'Full'
                   : (episode.title.isNotEmpty
-                        ? episode.title
-                        : 'Episode ${episode.number}'),
+                      ? episode.title
+                      : 'Episode ${episode.number}'),
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: isSelected
@@ -136,9 +136,9 @@ class EpisodeList extends StatelessWidget {
             subtitle: episodes.length == 1
                 ? null
                 : (episode.title.isNotEmpty &&
-                          episode.title != 'Episode ${episode.number}'
-                      ? Text('Episode ${episode.number}')
-                      : null),
+                        episode.title != 'Episode ${episode.number}'
+                    ? Text('Episode ${episode.number}')
+                    : null),
           ),
         );
       },

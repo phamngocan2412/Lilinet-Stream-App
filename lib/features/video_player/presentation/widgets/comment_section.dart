@@ -187,8 +187,8 @@ class _CommentSectionViewState extends State<_CommentSectionView> {
                   Text(
                     _CommentSectionStrings.commentsTitle,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                   const SizedBox(width: 8),
                   if (!isLoading)
@@ -206,16 +206,16 @@ class _CommentSectionViewState extends State<_CommentSectionView> {
               child: isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : comments.isEmpty
-                  ? _buildEmptyState()
-                  : ListView.builder(
-                      cacheExtent: 300,
-                      controller: _scrollController,
-                      itemCount: comments.length,
-                      padding: const EdgeInsets.only(bottom: 16),
-                      itemBuilder: (context, index) {
-                        return _buildCommentItem(comments[index]);
-                      },
-                    ),
+                      ? _buildEmptyState()
+                      : ListView.builder(
+                          cacheExtent: 300,
+                          controller: _scrollController,
+                          itemCount: comments.length,
+                          padding: const EdgeInsets.only(bottom: 16),
+                          itemBuilder: (context, index) {
+                            return _buildCommentItem(comments[index]);
+                          },
+                        ),
             ),
 
             // --- Input Field ---
@@ -366,9 +366,8 @@ class _CommentSectionViewState extends State<_CommentSectionView> {
                       )
                     : Icon(
                         Icons.send_rounded,
-                        color: isEnabled
-                            ? colorScheme.primary
-                            : Colors.grey[700],
+                        color:
+                            isEnabled ? colorScheme.primary : Colors.grey[700],
                       ),
                 onPressed: isEnabled ? _postComment : null,
               );

@@ -15,14 +15,17 @@ import 'package:lilinet_app/features/favorites/presentation/bloc/favorites_state
 import 'package:lilinet_app/features/favorites/presentation/bloc/favorites_event.dart';
 import 'package:mocktail/mocktail.dart';
 
-class MockTrendingMoviesBloc extends MockBloc<TrendingMoviesEvent, TrendingMoviesState>
+class MockTrendingMoviesBloc
+    extends MockBloc<TrendingMoviesEvent, TrendingMoviesState>
     implements TrendingMoviesBloc {}
 
-class MockFavoritesBloc extends MockBloc<FavoritesEvent, FavoritesState> implements FavoritesBloc {}
+class MockFavoritesBloc extends MockBloc<FavoritesEvent, FavoritesState>
+    implements FavoritesBloc {}
 
 // HomeTrendingCubit is a Cubit, so generic is <HomeTrendingState>
 // And it doesn't take events.
-class MockHomeTrendingCubit extends MockCubit<HomeTrendingState> implements HomeTrendingCubit {}
+class MockHomeTrendingCubit extends MockCubit<HomeTrendingState>
+    implements HomeTrendingCubit {}
 
 void main() {
   late MockTrendingMoviesBloc mockBloc;
@@ -35,23 +38,29 @@ void main() {
     mockHomeTrendingCubit = MockHomeTrendingCubit();
 
     // Setup GetIt
-    GetIt.instance.registerFactory<HomeTrendingCubit>(() => mockHomeTrendingCubit);
+    GetIt.instance
+        .registerFactory<HomeTrendingCubit>(() => mockHomeTrendingCubit);
 
     // Stub HomeTrendingCubit
     when(() => mockHomeTrendingCubit.state).thenReturn(HomeTrendingInitial());
-    when(() => mockHomeTrendingCubit.stream).thenAnswer((_) => Stream.value(HomeTrendingInitial()));
-    when(() => mockHomeTrendingCubit.loadTrendingComments()).thenAnswer((_) async {});
+    when(() => mockHomeTrendingCubit.stream)
+        .thenAnswer((_) => Stream.value(HomeTrendingInitial()));
+    when(() => mockHomeTrendingCubit.loadTrendingComments())
+        .thenAnswer((_) async {});
 
     // Stub FavoritesBloc
-    when(() => mockFavoritesBloc.state).thenReturn(const FavoritesState.initial());
-    when(() => mockFavoritesBloc.stream).thenAnswer((_) => Stream.value(const FavoritesState.initial()));
+    when(() => mockFavoritesBloc.state)
+        .thenReturn(const FavoritesState.initial());
+    when(() => mockFavoritesBloc.stream)
+        .thenAnswer((_) => Stream.value(const FavoritesState.initial()));
   });
 
   tearDown(() {
     GetIt.instance.reset();
   });
 
-  testWidgets('HomePage category MovieCards have optimized memCacheWidth', (tester) async {
+  testWidgets('HomePage category MovieCards have optimized memCacheWidth',
+      (tester) async {
     // Arrange
     final movie = const Movie(
       id: '1',
@@ -62,7 +71,9 @@ void main() {
 
     final loadedState = TrendingMoviesState.loaded(
       trending: [],
-      categories: {'Top Anime': [movie]},
+      categories: {
+        'Top Anime': [movie]
+      },
     );
 
     when(() => mockBloc.state).thenReturn(loadedState);
@@ -100,7 +111,8 @@ void main() {
     final expectedWidth = (130 * dpr).toInt();
 
     // This expectation should fail before the fix (it will be null)
-    expect(movieCard.memCacheWidth, expectedWidth, reason: 'memCacheWidth should be optimized for 130 logical width');
+    expect(movieCard.memCacheWidth, expectedWidth,
+        reason: 'memCacheWidth should be optimized for 130 logical width');
 
     addTearDown(() {
       tester.view.resetPhysicalSize();

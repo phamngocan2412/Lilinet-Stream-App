@@ -111,9 +111,9 @@ class AppErrorWidget extends StatelessWidget {
               Text(
                 title,
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: -0.5,
-                ),
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: -0.5,
+                    ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 12),
@@ -121,9 +121,9 @@ class AppErrorWidget extends StatelessWidget {
                 helpText,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  height: 1.5,
-                ),
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      height: 1.5,
+                    ),
               ),
               // Show raw error for debugging if needed, but smaller
               if (kDebugMode && message != helpText) ...[
@@ -132,11 +132,11 @@ class AppErrorWidget extends StatelessWidget {
                   message,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
-                    fontFamily: 'monospace',
-                  ),
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
+                        fontFamily: 'monospace',
+                      ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),

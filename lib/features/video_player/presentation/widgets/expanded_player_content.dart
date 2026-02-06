@@ -20,8 +20,7 @@ class ExpandedPlayerContent extends StatelessWidget {
     String? subUrl,
     String? subLang,
     Map<String, String>? headers,
-  )
-  onQualitySelected;
+  ) onQualitySelected;
   final VoidCallback onMinimize;
 
   const ExpandedPlayerContent({
@@ -166,12 +165,12 @@ class ExpandedPlayerContent extends StatelessWidget {
                           if (streamingState.subtitles != null &&
                               streamingState.subtitles!.isNotEmpty) {
                             try {
-                              final englishSub = streamingState.subtitles!
-                                  .firstWhere(
-                                    (s) => s.lang.toLowerCase().contains(
+                              final englishSub =
+                                  streamingState.subtitles!.firstWhere(
+                                (s) => s.lang.toLowerCase().contains(
                                       'english',
                                     ),
-                                  );
+                              );
                               subUrl = englishSub.url;
                               subLang = englishSub.lang;
                             } catch (_) {}

@@ -87,14 +87,16 @@ class StreamingCubit extends Cubit<StreamingState> {
 
     // 3. Race fallback providers in parallel for faster response
     if (kDebugMode) {
-      debugPrint('⚠️ Primary provider $provider failed. Racing fallback providers...');
+      debugPrint(
+          '⚠️ Primary provider $provider failed. Racing fallback providers...');
     }
 
     final isAnime = _animeProviders.contains(provider);
     final fallbackProviders = _getFallbackProviders(provider, isAnime);
 
     if (fallbackProviders.isNotEmpty) {
-      success = await _raceProviders(fallbackProviders, episodeId, mediaId, servers);
+      success =
+          await _raceProviders(fallbackProviders, episodeId, mediaId, servers);
       if (success) return;
     }
 
@@ -250,7 +252,8 @@ class StreamingCubit extends Cubit<StreamingState> {
           _cachedAvailableServers = _defaultServers;
         },
         (servers) {
-          _cachedAvailableServers = servers.isNotEmpty ? servers : _defaultServers;
+          _cachedAvailableServers =
+              servers.isNotEmpty ? servers : _defaultServers;
           if (kDebugMode) {
             debugPrint('📡 Available servers: $_cachedAvailableServers');
           }

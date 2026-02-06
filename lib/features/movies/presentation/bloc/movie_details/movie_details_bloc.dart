@@ -217,15 +217,13 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
     }
 
     // For TV Series, filter by season
-    final filtered = movie.episodes!
-        .where((e) => (e.season ?? 1) == season)
-        .where((e) {
-          if (e.releaseDate != null && e.releaseDate!.isAfter(DateTime.now())) {
-            return false;
-          }
-          return true;
-        })
-        .toList();
+    final filtered =
+        movie.episodes!.where((e) => (e.season ?? 1) == season).where((e) {
+      if (e.releaseDate != null && e.releaseDate!.isAfter(DateTime.now())) {
+        return false;
+      }
+      return true;
+    }).toList();
 
     // Sort episodes by number
     filtered.sort((a, b) => a.number.compareTo(b.number));

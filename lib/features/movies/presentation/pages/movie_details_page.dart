@@ -41,9 +41,8 @@ class MovieDetailsPage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) =>
-              getIt<MovieDetailsBloc>()
-                ..add(LoadMovieDetails(id: movieId, type: mediaType)),
+          create: (context) => getIt<MovieDetailsBloc>()
+            ..add(LoadMovieDetails(id: movieId, type: mediaType)),
         ),
       ],
       child: MovieDetailsView(
@@ -147,11 +146,11 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
                 message: state.message,
                 onRetry: () {
                   context.read<MovieDetailsBloc>().add(
-                    LoadMovieDetails(
-                      id: widget.movieId,
-                      type: widget.mediaType,
-                    ),
-                  );
+                        LoadMovieDetails(
+                          id: widget.movieId,
+                          type: widget.mediaType,
+                        ),
+                      );
                 },
               ),
             );
@@ -184,38 +183,37 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
                       );
 
                       context.read<VideoPlayerBloc>().add(
-                        PlayVideo(
-                          episodeId: firstEpisode.id,
-                          mediaId: movie.id,
-                          title: movie.title,
-                          posterUrl:
-                              (firstEpisode.image != null &&
-                                  firstEpisode.image!.isNotEmpty)
-                              ? firstEpisode.image
-                              : (movie.poster ?? movie.cover),
-                          episodeTitle: firstEpisode.title.isNotEmpty
-                              ? firstEpisode.title
-                              : 'Episode ${firstEpisode.number}',
-                          startPosition: startPos,
-                          mediaType: movie.type,
-                          movie: movie,
-                        ),
-                      );
+                            PlayVideo(
+                              episodeId: firstEpisode.id,
+                              mediaId: movie.id,
+                              title: movie.title,
+                              posterUrl: (firstEpisode.image != null &&
+                                      firstEpisode.image!.isNotEmpty)
+                                  ? firstEpisode.image
+                                  : (movie.poster ?? movie.cover),
+                              episodeTitle: firstEpisode.title.isNotEmpty
+                                  ? firstEpisode.title
+                                  : 'Episode ${firstEpisode.number}',
+                              startPosition: startPos,
+                              mediaType: movie.type,
+                              movie: movie,
+                            ),
+                          );
                     } else if (movie.type.toLowerCase() == 'movie') {
                       final episodeId = movie.episodeId ?? movie.id;
                       final startPos = _getStartPosition(context, episodeId);
 
                       context.read<VideoPlayerBloc>().add(
-                        PlayVideo(
-                          episodeId: episodeId,
-                          mediaId: movie.id,
-                          title: movie.title,
-                          posterUrl: movie.poster ?? movie.cover,
-                          startPosition: startPos,
-                          mediaType: movie.type,
-                          movie: movie,
-                        ),
-                      );
+                            PlayVideo(
+                              episodeId: episodeId,
+                              mediaId: movie.id,
+                              title: movie.title,
+                              posterUrl: movie.poster ?? movie.cover,
+                              startPosition: startPos,
+                              mediaType: movie.type,
+                              movie: movie,
+                            ),
+                          );
                     }
                   };
 
@@ -268,8 +266,8 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
                         selectedSeason: selectedSeason,
                         onSeasonSelected: (season) {
                           context.read<MovieDetailsBloc>().add(
-                            SelectSeason(season),
-                          );
+                                SelectSeason(season),
+                              );
                         },
                       ),
                     ),
@@ -282,23 +280,22 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
                       onEpisodeTap: (episode) {
                         final startPos = _getStartPosition(context, episode.id);
                         context.read<VideoPlayerBloc>().add(
-                          PlayVideo(
-                            episodeId: episode.id,
-                            mediaId: movie.id,
-                            title: movie.title,
-                            posterUrl:
-                                (episode.image != null &&
-                                    episode.image!.isNotEmpty)
-                                ? episode.image
-                                : (movie.poster ?? movie.cover),
-                            episodeTitle: episode.title.isNotEmpty
-                                ? episode.title
-                                : 'Episode ${episode.number}',
-                            startPosition: startPos,
-                            mediaType: movie.type,
-                            movie: movie,
-                          ),
-                        );
+                              PlayVideo(
+                                episodeId: episode.id,
+                                mediaId: movie.id,
+                                title: movie.title,
+                                posterUrl: (episode.image != null &&
+                                        episode.image!.isNotEmpty)
+                                    ? episode.image
+                                    : (movie.poster ?? movie.cover),
+                                episodeTitle: episode.title.isNotEmpty
+                                    ? episode.title
+                                    : 'Episode ${episode.number}',
+                                startPosition: startPos,
+                                mediaType: movie.type,
+                                movie: movie,
+                              ),
+                            );
                       },
                     ),
                     const SliverToBoxAdapter(child: SizedBox(height: 32)),
@@ -378,11 +375,11 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
                       sliver: SliverGrid(
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              childAspectRatio: 0.7,
-                              crossAxisSpacing: 12,
-                              mainAxisSpacing: 12,
-                            ),
+                          crossAxisCount: 2,
+                          childAspectRatio: 0.7,
+                          crossAxisSpacing: 12,
+                          mainAxisSpacing: 12,
+                        ),
                         delegate: SliverChildBuilderDelegate((context, index) {
                           final item = movie.recommendations![index];
                           return GestureDetector(

@@ -27,7 +27,8 @@ class StreamingLoaded extends StreamingState {
   });
 
   @override
-  List<Object?> get props => [links, selectedServer, subtitles, availableServers];
+  List<Object?> get props =>
+      [links, selectedServer, subtitles, availableServers];
 }
 
 class StreamingError extends StreamingState {

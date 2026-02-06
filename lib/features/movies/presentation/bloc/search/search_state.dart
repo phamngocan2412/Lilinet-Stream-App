@@ -46,13 +46,13 @@ class SearchState extends Equatable {
 
   @override
   List<Object> get props => [
-    query,
-    movies,
-    isLoading,
-    hasError,
-    errorMessage,
-    currentPage,
-    hasMore,
-    activeFilter,
-  ];
+        query,
+        movies,
+        isLoading,
+        hasError,
+        errorMessage,
+        currentPage,
+        hasMore,
+        activeFilter,
+      ];
 }

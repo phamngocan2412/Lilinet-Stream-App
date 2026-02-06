@@ -54,18 +54,18 @@ class ContentUnavailableWidget extends StatelessWidget {
               Text(
                 'Content Unavailable',
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: -0.5,
-                ),
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: -0.5,
+                    ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 12),
               Text(
                 message,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  height: 1.5,
-                ),
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      height: 1.5,
+                    ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 32),

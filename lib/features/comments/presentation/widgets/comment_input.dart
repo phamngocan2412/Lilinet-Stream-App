@@ -96,8 +96,8 @@ class _CommentInputState extends State<CommentInput> {
                       child: Text(
                         'Vui lòng đăng nhập để bình luận',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Theme.of(context).disabledColor,
-                        ),
+                              color: Theme.of(context).disabledColor,
+                            ),
                       ),
                     ),
                   ),

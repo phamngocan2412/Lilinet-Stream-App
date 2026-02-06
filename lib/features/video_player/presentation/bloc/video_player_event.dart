@@ -31,15 +31,15 @@ class PlayVideo extends VideoPlayerEvent {
 
   @override
   List<Object?> get props => [
-    episodeId,
-    mediaId,
-    title,
-    posterUrl,
-    episodeTitle,
-    startPosition,
-    mediaType,
-    movie,
-  ];
+        episodeId,
+        mediaId,
+        title,
+        posterUrl,
+        episodeTitle,
+        startPosition,
+        mediaType,
+        movie,
+      ];
 }
 
 class MinimizeVideo extends VideoPlayerEvent {}
