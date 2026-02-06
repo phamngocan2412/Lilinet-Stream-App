@@ -496,6 +496,7 @@ class _CommentBottomSheetViewState extends State<_CommentBottomSheetView> {
                 onSubmitted: (_) => _sendReply(),
                 decoration: const InputDecoration(
                   hintText: 'Viết trả lời...',
+                  counterText: "",
                   border: InputBorder.none,
                   isDense: true,
                   contentPadding: EdgeInsets.zero,
