@@ -19,6 +19,7 @@ class AppSettings extends Equatable {
   final String movieProvider;
   final String animeProvider;
   final PreferredServer preferredServer;
+  final String? pinCode;
 
   const AppSettings({
     this.themeMode = ThemeMode.dark,
@@ -33,6 +34,7 @@ class AppSettings extends Equatable {
     this.movieProvider = 'flixhq', // Stable default
     this.animeProvider = 'animepahe', // Fixed and high quality
     this.preferredServer = PreferredServer.auto, // Auto-select best server
+    this.pinCode,
   });
 
   AppSettings copyWith({
@@ -48,6 +50,7 @@ class AppSettings extends Equatable {
     String? movieProvider,
     String? animeProvider,
     PreferredServer? preferredServer,
+    String? pinCode,
   }) {
     return AppSettings(
       themeMode: themeMode ?? this.themeMode,
@@ -62,6 +65,7 @@ class AppSettings extends Equatable {
       movieProvider: movieProvider ?? this.movieProvider,
       animeProvider: animeProvider ?? this.animeProvider,
       preferredServer: preferredServer ?? this.preferredServer,
+      pinCode: pinCode ?? this.pinCode,
     );
   }
 
@@ -79,6 +83,7 @@ class AppSettings extends Equatable {
       'movieProvider': movieProvider,
       'animeProvider': animeProvider,
       'preferredServer': preferredServer.name,
+      'pinCode': pinCode,
     };
   }
 
@@ -105,6 +110,7 @@ class AppSettings extends Equatable {
         (e) => e.name == (json['preferredServer'] ?? 'auto'),
         orElse: () => PreferredServer.auto,
       ),
+      pinCode: json['pinCode'],
     );
   }
 
@@ -122,5 +128,6 @@ class AppSettings extends Equatable {
     movieProvider,
     animeProvider,
     preferredServer,
+    pinCode,
   ];
 }

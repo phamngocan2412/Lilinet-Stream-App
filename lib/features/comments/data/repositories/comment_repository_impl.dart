@@ -209,6 +209,11 @@ class CommentRepositoryImpl implements CommentRepository {
     });
   }
 
+  @override
+  Stream<List<Map<String, dynamic>>> getCommentStream(String videoId) {
+    return _remoteDataSource.getCommentStream(videoId);
+  }
+
   // Helper to convert LocalCommentModel to Comment entity
   Comment _localCommentToEntity(LocalCommentModel local) {
     return Comment(

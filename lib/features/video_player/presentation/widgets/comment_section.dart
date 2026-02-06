@@ -1,37 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lilinet_app/l10n/app_localizations.dart';
+import '../../../../core/utils/time_formatter.dart';
 import '../../../../injection_container.dart';
+import '../../../../core/widgets/loading_indicator.dart';
 import '../bloc/comments/comments_cubit.dart';
 import '../bloc/comments/comments_state.dart';
 
-// ==========================================
-// 0. String Resources (i18n-ready structure)
-// ==========================================
-/// Localized strings for CommentSection
-/// Following SRP: All strings in one place, easy to maintain and extend for full i18n
-class _CommentSectionStrings {
-  // Section title
-  static const String commentsTitle = 'Comments';
-
-  // Empty states
-  static const String noCommentsYet = 'No comments yet';
-  static const String beTheFirst = 'Be the first to share your thoughts!';
-
-  // Input hints
-  static const String addComment = 'Add a comment...';
-
-  // Avatar fallback
-  static const String anonymous = 'Anonymous';
-  static const String unknownUserInitial = '?';
-
-  // Time formatting - Relative time units
-  static const String timeJustNow = 'Just now';
-  static String timeYearsAgo(int years) => '${years}y ago';
-  static String timeMonthsAgo(int months) => '${months}mo ago';
-  static String timeDaysAgo(int days) => '${days}d ago';
-  static String timeHoursAgo(int hours) => '${hours}h ago';
-  static String timeMinutesAgo(int minutes) => '${minutes}m ago';
-}
+// Removed _CommentSectionStrings as we now use AppLocalizations
 
 // ==========================================
 // 1. Data Model
@@ -54,7 +30,7 @@ class CommentModel {
   factory CommentModel.fromJson(Map<String, dynamic> json) {
     return CommentModel(
       id: json['id'] as String,
-      userName: json['user_name'] ?? _CommentSectionStrings.anonymous,
+      userName: json['user_name'] ?? '',
       userAvatarUrl: json['avatar_url'],
       content: json['content'] as String,
       createdAt: DateTime.parse(json['created_at']),
@@ -136,96 +112,78 @@ class _CommentSectionViewState extends State<_CommentSectionView> {
   }
 
   // Helper for "Time Ago" format
-  /// Formats DateTime to relative time string
-  /// Following OCP: Easy to extend for localization without modifying logic
-  String _timeAgo(DateTime date) {
-    final diff = DateTime.now().difference(date);
-    if (diff.inDays > 365) {
-      return _CommentSectionStrings.timeYearsAgo((diff.inDays / 365).floor());
-    }
-    if (diff.inDays > 30) {
-      return _CommentSectionStrings.timeMonthsAgo((diff.inDays / 30).floor());
-    }
-    if (diff.inDays > 0) {
-      return _CommentSectionStrings.timeDaysAgo(diff.inDays);
-    }
-    if (diff.inHours > 0) {
-      return _CommentSectionStrings.timeHoursAgo(diff.inHours);
-    }
-    if (diff.inMinutes > 0) {
-      return _CommentSectionStrings.timeMinutesAgo(diff.inMinutes);
-    }
-    return _CommentSectionStrings.timeJustNow;
+  String _timeAgo(BuildContext context, DateTime date) {
+    return TimeFormatter.formatTimeAgo(context, date);
   }
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    return BlocBuilder<CommentsCubit, CommentsState>(
-      builder: (context, state) {
-        List<CommentModel> comments = [];
-        bool isLoading = true;
+    final l10n = AppLocalizations.of(context)!;
 
-        if (state is CommentsLoaded && state.videoId == widget.videoId) {
-          comments = state.comments;
-          isLoading = false;
-        } else if (state is CommentsLoaded) {
-          // Different video loaded in singleton? Reload
-          // But initState should catch this.
-          // Just show loading if ID mismatch or wait for event.
-        }
+    return Container(
+      decoration: const BoxDecoration(
+        color: Color(0xFF1A1A1A), // Dark background to prevent transparency
+      ),
+      child: BlocBuilder<CommentsCubit, CommentsState>(
+        builder: (context, state) {
+          List<CommentModel> comments = [];
+          bool isLoading = true;
 
-        return Column(
-          children: [
-            // --- Header ---
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              child: Row(
-                children: [
-                  Text(
-                    _CommentSectionStrings.commentsTitle,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  if (!isLoading)
+          if (state is CommentsLoaded && state.videoId == widget.videoId) {
+            comments = state.comments;
+            isLoading = false;
+          }
+
+          return Column(
+            children: [
+              // --- Header ---
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
+                child: Row(
+                  children: [
                     Text(
-                      '${comments.length}',
-                      style: TextStyle(color: Colors.grey[400]),
+                      l10n.commentsCount(comments.length),
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            const Divider(height: 1, color: Colors.white10),
+              const Divider(height: 1, color: Colors.white10),
 
-            // --- Comment List ---
-            Expanded(
-              child: isLoading
-                  ? const Center(child: CircularProgressIndicator())
-                  : comments.isEmpty
-                  ? _buildEmptyState()
-                  : ListView.builder(
-                      cacheExtent: 300,
-                      controller: _scrollController,
-                      itemCount: comments.length,
-                      padding: const EdgeInsets.only(bottom: 16),
-                      itemBuilder: (context, index) {
-                        return _buildCommentItem(comments[index]);
-                      },
-                    ),
-            ),
+              // --- Comment List ---
+              Expanded(
+                child: isLoading
+                    ? const Center(child: LoadingIndicator())
+                    : comments.isEmpty
+                    ? _buildEmptyState(l10n)
+                    : ListView.builder(
+                        cacheExtent: 300,
+                        controller: _scrollController,
+                        itemCount: comments.length,
+                        padding: const EdgeInsets.only(bottom: 16),
+                        itemBuilder: (context, index) {
+                          return _buildCommentItem(context, comments[index]);
+                        },
+                      ),
+              ),
 
-            // --- Input Field ---
-            _buildInputArea(colorScheme),
-          ],
-        );
-      },
+              // --- Input Field ---
+              _buildInputArea(context, colorScheme, l10n),
+            ],
+          );
+        },
+      ),
     );
   }
 
-  Widget _buildEmptyState() {
+  Widget _buildEmptyState(AppLocalizations l10n) {
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -233,12 +191,12 @@ class _CommentSectionViewState extends State<_CommentSectionView> {
           Icon(Icons.chat_bubble_outline, size: 48, color: Colors.grey[700]),
           const SizedBox(height: 16),
           Text(
-            _CommentSectionStrings.noCommentsYet,
+            l10n.noComments,
             style: TextStyle(color: Colors.grey[500], fontSize: 16),
           ),
           const SizedBox(height: 4),
           Text(
-            _CommentSectionStrings.beTheFirst,
+            l10n.beFirstToComment,
             style: TextStyle(color: Colors.grey[600], fontSize: 14),
           ),
         ],
@@ -246,7 +204,10 @@ class _CommentSectionViewState extends State<_CommentSectionView> {
     );
   }
 
-  Widget _buildCommentItem(CommentModel comment) {
+  Widget _buildCommentItem(BuildContext context, CommentModel comment) {
+    final l10n = AppLocalizations.of(context)!;
+    final userName = comment.userName.isEmpty ? l10n.anonymous : comment.userName;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
@@ -261,9 +222,9 @@ class _CommentSectionViewState extends State<_CommentSectionView> {
                 : null,
             child: comment.userAvatarUrl == null
                 ? Text(
-                    comment.userName.isNotEmpty
-                        ? comment.userName[0].toUpperCase()
-                        : _CommentSectionStrings.unknownUserInitial,
+                    userName.isNotEmpty
+                        ? userName[0].toUpperCase()
+                        : '?',
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -281,7 +242,7 @@ class _CommentSectionViewState extends State<_CommentSectionView> {
                 Row(
                   children: [
                     Text(
-                      comment.userName,
+                      userName,
                       style: const TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -290,7 +251,7 @@ class _CommentSectionViewState extends State<_CommentSectionView> {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      _timeAgo(comment.createdAt),
+                      _timeAgo(context, comment.createdAt),
                       style: TextStyle(fontSize: 12, color: Colors.grey[500]),
                     ),
                   ],
@@ -313,7 +274,7 @@ class _CommentSectionViewState extends State<_CommentSectionView> {
     );
   }
 
-  Widget _buildInputArea(ColorScheme colorScheme) {
+  Widget _buildInputArea(BuildContext context, ColorScheme colorScheme, AppLocalizations l10n) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: const BoxDecoration(
@@ -335,7 +296,7 @@ class _CommentSectionViewState extends State<_CommentSectionView> {
               controller: _controller,
               style: const TextStyle(color: Colors.white),
               decoration: InputDecoration(
-                hintText: _CommentSectionStrings.addComment,
+                hintText: l10n.addCommentHint,
                 hintStyle: TextStyle(color: Colors.grey[600]),
                 border: InputBorder.none,
                 isDense: true,
@@ -351,11 +312,7 @@ class _CommentSectionViewState extends State<_CommentSectionView> {
               final isEnabled = value.text.trim().isNotEmpty && !_isPosting;
               return IconButton(
                 icon: _isPosting
-                    ? const SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      )
+                    ? const LoadingIndicator(size: 20)
                     : Icon(
                         Icons.send_rounded,
                         color: isEnabled
@@ -363,6 +320,7 @@ class _CommentSectionViewState extends State<_CommentSectionView> {
                             : Colors.grey[700],
                       ),
                 onPressed: isEnabled ? _postComment : null,
+                tooltip: l10n.send,
               );
             },
           ),

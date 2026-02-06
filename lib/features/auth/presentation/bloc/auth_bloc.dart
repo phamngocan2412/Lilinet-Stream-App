@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:lilinet_app/features/auth/domain/entities/app_user.dart';
 import '../../domain/usecases/get_current_user.dart';
 import '../../domain/usecases/send_password_reset_email.dart';
 import '../../domain/usecases/sign_in_with_email.dart';
@@ -36,6 +37,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<SignOutRequested>(_onSignOutRequested);
     on<AuthStateChanged>(_onAuthStateChanged);
     on<PasswordResetRequested>(_onPasswordResetRequested);
+    on<UpdateProfileRequested>(_onUpdateProfileRequested);
+    on<ChangePasswordRequested>(_onChangePasswordRequested);
+    on<DeleteAccountRequested>(_onDeleteAccountRequested);
 
     // Listen to auth state changes
     _authStateSubscription = authRepository.authStateChanges.listen((user) {
@@ -49,16 +53,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     emit(const AuthLoading());
     final result = await getCurrentUser();
-    result.fold(
-      (failure) => emit(const Unauthenticated()),
-      (user) {
-        if (user != null) {
-          emit(Authenticated(user: user));
-        } else {
-          emit(const Unauthenticated());
-        }
-      },
-    );
+    result.fold((failure) => emit(const Unauthenticated()), (user) {
+      if (user != null) {
+        emit(Authenticated(user: user));
+      } else {
+        emit(const Unauthenticated());
+      }
+    });
   }
 
   Future<void> _onAuthSubmitted(
@@ -140,16 +141,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     if (event.isAuthenticated) {
       final result = await getCurrentUser();
-      result.fold(
-        (failure) => emit(const Unauthenticated()),
-        (user) {
-          if (user != null) {
-            emit(Authenticated(user: user));
-          } else {
-            emit(const Unauthenticated());
-          }
-        },
-      );
+      result.fold((failure) => emit(const Unauthenticated()), (user) {
+        if (user != null) {
+          emit(Authenticated(user: user));
+        } else {
+          emit(const Unauthenticated());
+        }
+      });
     } else {
       emit(const Unauthenticated());
     }
@@ -164,6 +162,59 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     result.fold(
       (failure) => emit(AuthError(message: failure.message)),
       (_) => emit(PasswordResetEmailSent(email: event.email)),
+    );
+  }
+
+  Future<void> _onUpdateProfileRequested(
+    UpdateProfileRequested event,
+    Emitter<AuthState> emit,
+  ) async {
+    // Keep current user to prevent UI flickering if possible, but AuthLoading is standard
+    emit(const AuthLoading());
+    final result = await authRepository.updateProfile(
+      displayName: event.displayName,
+      avatarUrl: event.avatarUrl,
+    );
+    result.fold(
+      (failure) => emit(AuthError(message: failure.message)),
+      (user) => emit(Authenticated(user: user)),
+    );
+  }
+
+  Future<void> _onChangePasswordRequested(
+    ChangePasswordRequested event,
+    Emitter<AuthState> emit,
+  ) async {
+    final currentUserState = state;
+    AppUser? currentUser;
+    if (currentUserState is Authenticated) {
+      currentUser = currentUserState.user;
+    }
+
+    emit(const AuthLoading());
+    final result = await authRepository.changePassword(event.newPassword);
+    result.fold((failure) => emit(AuthError(message: failure.message)), (_) {
+      // On success, we are still authenticated.
+      // Ideally we show a success message.
+      // For now, re-emit authenticated state.
+      if (currentUser != null) {
+        emit(Authenticated(user: currentUser));
+      } else {
+        // Fallback if we lost user state (shouldn't happen if logic is correct)
+        add(const CheckAuthStatus());
+      }
+    });
+  }
+
+  Future<void> _onDeleteAccountRequested(
+    DeleteAccountRequested event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(const AuthLoading());
+    final result = await authRepository.deleteAccount();
+    result.fold(
+      (failure) => emit(AuthError(message: failure.message)),
+      (_) => emit(const Unauthenticated()),
     );
   }
 

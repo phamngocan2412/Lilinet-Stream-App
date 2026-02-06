@@ -1,8 +1,7 @@
-import 'dart:developer' as developer;
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' as supabase;
 import '../../../../core/errors/failures.dart';
+import '../../../../core/extensions/repository_extensions.dart';
 import '../../domain/entities/app_user.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../datasources/auth_supabase_datasource.dart';
@@ -18,20 +17,13 @@ class AuthRepositoryImpl implements AuthRepository {
     required String email,
     required String password,
   }) async {
-    try {
+    return safeCall(() async {
       final user = await dataSource.signInWithEmail(
         email: email,
         password: password,
       );
-      return Right(user.toEntity());
-    } on supabase.AuthException catch (e) {
-      return Left(Failure.server(e.message));
-    } catch (e) {
-      developer.log('Sign in failed', error: e, name: 'AuthRepository');
-      return const Left(
-        Failure.server('An unexpected error occurred during sign in.'),
-      );
-    }
+      return user.toEntity();
+    });
   }
 
   @override
@@ -40,47 +32,29 @@ class AuthRepositoryImpl implements AuthRepository {
     required String password,
     String? displayName,
   }) async {
-    try {
+    return safeCall(() async {
       final user = await dataSource.signUpWithEmail(
         email: email,
         password: password,
         displayName: displayName,
       );
-      return Right(user.toEntity());
-    } on supabase.AuthException catch (e) {
-      return Left(Failure.server(e.message));
-    } catch (e) {
-      developer.log('Sign up failed', error: e, name: 'AuthRepository');
-      return const Left(
-        Failure.server('An unexpected error occurred during sign up.'),
-      );
-    }
+      return user.toEntity();
+    });
   }
 
   @override
   Future<Either<Failure, void>> signOut() async {
-    try {
+    return safeCall(() async {
       await dataSource.signOut();
-      return const Right(null);
-    } catch (e) {
-      developer.log('Sign out failed', error: e, name: 'AuthRepository');
-      return const Left(
-        Failure.server('An unexpected error occurred during sign out.'),
-      );
-    }
+    });
   }
 
   @override
   Future<Either<Failure, AppUser?>> getCurrentUser() async {
-    try {
+    return safeCall(() async {
       final user = await dataSource.getCurrentUser();
-      return Right(user?.toEntity());
-    } catch (e) {
-      developer.log('Get current user failed', error: e, name: 'AuthRepository');
-      return const Left(
-        Failure.server('An unexpected error occurred while fetching user.'),
-      );
-    }
+      return user?.toEntity();
+    });
   }
 
   @override
@@ -90,16 +64,36 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<Either<Failure, void>> sendPasswordResetEmail(String email) async {
-    try {
+    return safeCall(() async {
       await dataSource.sendPasswordResetEmail(email);
-      return const Right(null);
-    } on supabase.AuthException catch (e) {
-      return Left(Failure.server(e.message));
-    } catch (e) {
-      developer.log('Send password reset email failed', error: e, name: 'AuthRepository');
-      return const Left(
-        Failure.server('Đã xảy ra lỗi không mong muốn khi gửi email đặt lại mật khẩu.'),
+    });
+  }
+
+  @override
+  Future<Either<Failure, AppUser>> updateProfile({
+    String? displayName,
+    String? avatarUrl,
+  }) async {
+    return safeCall(() async {
+      final user = await dataSource.updateProfile(
+        displayName: displayName,
+        avatarUrl: avatarUrl,
       );
-    }
+      return user.toEntity();
+    });
+  }
+
+  @override
+  Future<Either<Failure, void>> changePassword(String newPassword) async {
+    return safeCall(() async {
+      await dataSource.changePassword(newPassword);
+    });
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteAccount() async {
+    return safeCall(() async {
+      await dataSource.deleteAccount();
+    });
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lilinet_app/l10n/app_localizations.dart';
 import '../../../../core/widgets/cached_image.dart';
+import '../../../../core/widgets/loading_indicator.dart';
 import '../../domain/entities/movie.dart';
 
 class MovieDetailsHeader extends StatelessWidget {
@@ -28,6 +30,7 @@ class MovieDetailsHeader extends StatelessWidget {
           child: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () => context.pop(),
+            tooltip: AppLocalizations.of(context)!.back,
           ),
         ),
       ),
@@ -35,16 +38,13 @@ class MovieDetailsHeader extends StatelessWidget {
         background: Stack(
           fit: StackFit.expand,
           children: [
-            Hero(
-              tag: 'poster_${movie.id}',
-              child: AppCachedImage(
-                imageUrl: movie.poster ?? movie.cover ?? '',
-                fit: BoxFit.cover,
-                memCacheWidth:
-                    (MediaQuery.of(context).size.width *
-                            MediaQuery.of(context).devicePixelRatio)
-                        .toInt(),
-              ),
+            AppCachedImage(
+              imageUrl: movie.poster ?? movie.cover ?? '',
+              fit: BoxFit.cover,
+              memCacheWidth:
+                  (MediaQuery.of(context).size.width *
+                          MediaQuery.of(context).devicePixelRatio)
+                      .toInt(),
             ),
             // Gradient Overlay
             Container(
@@ -54,7 +54,9 @@ class MovieDetailsHeader extends StatelessWidget {
                   end: Alignment.bottomCenter,
                   colors: [
                     Colors.transparent,
-                    Theme.of(context).colorScheme.surface.withValues(alpha: 0.5),
+                    Theme.of(
+                      context,
+                    ).colorScheme.surface.withValues(alpha: 0.5),
                     Theme.of(context).colorScheme.surface,
                   ],
                   stops: const [0.0, 0.6, 1.0],
@@ -75,7 +77,6 @@ class MovieDetailsHeader extends StatelessWidget {
                     style: Theme.of(context).textTheme.displaySmall?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).colorScheme.onSurface,
-                      letterSpacing: 1.0,
                       shadows: [
                         Shadow(
                           blurRadius: 10.0,
@@ -89,14 +90,7 @@ class MovieDetailsHeader extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   if (isLoading)
-                    SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                    )
+                    const LoadingIndicator(size: 30)
                   else
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -104,7 +98,7 @@ class MovieDetailsHeader extends StatelessWidget {
                         if (movie.releaseDate != null) ...[
                           Text(
                             movie.releaseDate!.split('-').first,
-                            style: TextStyle(
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                               color: Theme.of(
                                 context,
                               ).colorScheme.onSurface.withValues(alpha: 0.7),
@@ -113,7 +107,7 @@ class MovieDetailsHeader extends StatelessWidget {
                           const SizedBox(width: 12),
                           Text(
                             '•',
-                            style: TextStyle(
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                               color: Theme.of(
                                 context,
                               ).colorScheme.onSurface.withValues(alpha: 0.3),
@@ -124,7 +118,7 @@ class MovieDetailsHeader extends StatelessWidget {
                         if (movie.duration != null) ...[
                           Text(
                             movie.duration!,
-                            style: TextStyle(
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                               color: Theme.of(
                                 context,
                               ).colorScheme.onSurface.withValues(alpha: 0.7),
@@ -133,7 +127,7 @@ class MovieDetailsHeader extends StatelessWidget {
                           const SizedBox(width: 12),
                           Text(
                             '•',
-                            style: TextStyle(
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                               color: Theme.of(
                                 context,
                               ).colorScheme.onSurface.withValues(alpha: 0.3),
@@ -155,10 +149,12 @@ class MovieDetailsHeader extends StatelessWidget {
                             borderRadius: BorderRadius.circular(4),
                           ),
                           child: Text(
-                            movie.type == 'TV Series' ? 'TV' : 'HD',
-                            style: TextStyle(
+                            (movie.type.toLowerCase().contains('tv') ||
+                                    movie.type.toLowerCase().contains('series'))
+                                ? 'TV'
+                                : 'HD',
+                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
                               color: Theme.of(context).colorScheme.onSurface,
-                              fontSize: 10,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -169,24 +165,28 @@ class MovieDetailsHeader extends StatelessWidget {
                   if (!isLoading)
                     SizedBox(
                       width: double.infinity,
-                      child: FilledButton.icon(
-                        onPressed: onPlayPressed,
-                        icon: const Icon(Icons.play_arrow_rounded, size: 28),
-                        label: const Text(
-                          'Play Now',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                      child: Semantics(
+                        label: 'Play ${movie.title} now',
+                        button: true,
+                        child: FilledButton.icon(
+                          onPressed: onPlayPressed,
+                          icon: const Icon(Icons.play_arrow_rounded, size: 28),
+                          label: Text(
+                            'Play Now',
+                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
                           ),
-                        ),
-                        style: FilledButton.styleFrom(
-                          backgroundColor: Theme.of(
-                            context,
-                          ).colorScheme.primary,
-                          foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                          style: FilledButton.styleFrom(
+                            backgroundColor: Theme.of(
+                              context,
+                            ).colorScheme.primary,
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
                           ),
                         ),
                       ),

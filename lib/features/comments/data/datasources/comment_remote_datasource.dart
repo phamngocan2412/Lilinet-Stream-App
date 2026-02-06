@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -15,6 +16,7 @@ abstract class CommentRemoteDataSource {
   Future<List<CommentModel>> getReplies(String commentId);
   Future<List<CommentModel>> getTrendingComments({int limit = 5});
   Future<List<String>> getLikedCommentIds(String videoId);
+  Stream<List<Map<String, dynamic>>> getCommentStream(String videoId);
 }
 
 @LazySingleton(as: CommentRemoteDataSource)
@@ -22,6 +24,33 @@ class SupabaseCommentDataSource implements CommentRemoteDataSource {
   final SupabaseClient _supabase;
 
   SupabaseCommentDataSource(this._supabase);
+
+  @override
+  Stream<List<Map<String, dynamic>>> getCommentStream(String videoId) {
+    final controller = StreamController<List<Map<String, dynamic>>>();
+
+    _supabase
+        .channel('public:comments:$videoId')
+        .onPostgresChanges(
+          event: PostgresChangeEvent.all,
+          schema: 'public',
+          table: 'comments',
+          filter: PostgresChangeFilter(
+            type: PostgresChangeFilterType.eq,
+            column: 'video_id',
+            value: videoId,
+          ),
+          callback: (payload) {
+            final record = payload.newRecord.isNotEmpty
+                ? payload.newRecord
+                : (payload.oldRecord.isNotEmpty ? payload.oldRecord : <String, dynamic>{});
+            controller.add([record]);
+          },
+        )
+        .subscribe();
+
+    return controller.stream;
+  }
 
   @override
   Future<List<CommentModel>> getComments(String videoId) async {

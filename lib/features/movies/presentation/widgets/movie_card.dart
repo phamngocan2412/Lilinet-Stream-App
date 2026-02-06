@@ -8,7 +8,6 @@ import '../../../favorites/presentation/widgets/favorite_button.dart';
 class MovieCard extends StatelessWidget {
   final Movie movie;
   final VoidCallback? onTap;
-  final String? heroTag;
   final bool showTitle;
   final double? width;
   final double? height;
@@ -19,7 +18,6 @@ class MovieCard extends StatelessWidget {
     super.key,
     required this.movie,
     this.onTap,
-    this.heroTag,
     this.showTitle = true,
     this.width,
     this.height,
@@ -29,16 +27,17 @@ class MovieCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     // Determine badge text
     String badgeText = '';
-    bool isSeries =
-        movie.type.toLowerCase().contains('tv') ||
-        movie.type.toLowerCase().contains('series');
+    final typeLower = movie.type.toLowerCase();
+    final bool isSeries =
+        typeLower.contains('tv') || typeLower.contains('series');
 
     if (isSeries) {
       if (movie.totalEpisodes != null) {
-        // User wants Current/Total, but we only have Total safely.
-        // We format it as "Total Episodes" to be safe.
         badgeText = '${movie.totalEpisodes} Eps';
       } else {
         badgeText = 'TV Series';
@@ -47,45 +46,43 @@ class MovieCard extends StatelessWidget {
       badgeText = 'Full HD';
     }
 
-    return GestureDetector(
-      onTap: onTap,
-      child: Stack(
-        children: [
-          // 1. Poster Image
-          Hero(
-            tag: heroTag ?? 'poster_${movie.id}',
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  AppCachedImage(
-                    imageUrl: movie.poster ?? '',
-                    fit: BoxFit.cover,
-                    width: width ?? double.infinity,
-                    height: height ?? double.infinity,
-                    memCacheWidth: memCacheWidth,
-                    memCacheHeight: memCacheHeight,
-                  ),
-                  // 2. Gradient Overlay (Bottom)
-                  // Use theme-aware gradient or keep black for text readability
-                  Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        stops: const [0.6, 1.0],
-                        colors: [
-                          Colors.transparent,
-                          Colors.black.withValues(
-                            alpha: 0.8,
-                          ), // Always black for white text readability
-                        ],
-                      ),
+    return Semantics(
+      label: '${movie.title}, ${movie.rating ?? 'N/A'} stars',
+      button: true,
+      hint: 'Double tap to view movie details',
+      child: GestureDetector(
+        onTap: onTap,
+        child: Stack(
+          children: [
+            // 1. Poster Image
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                AppCachedImage(
+                  imageUrl: movie.poster ?? '',
+                  fit: BoxFit.cover,
+                  width: width ?? double.infinity,
+                  height: height ?? double.infinity,
+                  memCacheWidth: memCacheWidth,
+                  memCacheHeight: memCacheHeight,
+                ),
+                // 2. Gradient Overlay (Bottom)
+                const DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      stops: [0.6, 1.0],
+                      colors: [
+                        Colors.transparent,
+                        Color(0xCC000000), // Black with ~0.8 opacity
+                      ],
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
 
@@ -96,7 +93,7 @@ class MovieCard extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primary,
+                color: colorScheme.primary,
                 borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(4),
                   bottomRight: Radius.circular(4),
@@ -105,11 +102,14 @@ class MovieCard extends StatelessWidget {
               child: Text(
                 badgeText,
                 style: TextStyle(
-                  color: Theme.of(context).colorScheme.onPrimary,
+                  color: colorScheme.onPrimary,
                   fontSize: 10,
                   fontWeight: FontWeight.bold,
-                  shadows: [
-                    Shadow(blurRadius: 2, color: Colors.black.withValues(alpha: 0.3)),
+                  shadows: const [
+                    Shadow(
+                      blurRadius: 2,
+                      color: Color(0x4D000000),
+                    ), // Black 0.3
                   ],
                 ),
               ),
@@ -139,15 +139,15 @@ class MovieCard extends StatelessWidget {
                 movie.title,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Colors.white, // Always white on dark gradient
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
                   height: 1.2,
-                  shadows: [
+                  shadows: const [
                     Shadow(
-                      offset: const Offset(0, 1),
+                      offset: Offset(0, 1),
                       blurRadius: 2,
-                      color: Colors.black.withValues(alpha: 0.8),
+                      color: Color(0xCC000000), // Black 0.8
                     ),
                   ],
                 ),
@@ -156,6 +156,7 @@ class MovieCard extends StatelessWidget {
             ),
         ],
       ),
-    );
+    ),
+  );
   }
 }

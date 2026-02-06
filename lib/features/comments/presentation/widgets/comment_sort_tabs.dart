@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lilinet_app/l10n/app_localizations.dart';
 import '../../presentation/manager/comment_state.dart';
 
 class CommentSortTabs extends StatelessWidget {
@@ -13,6 +14,8 @@ class CommentSortTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Container(
       height: 48,
       decoration: BoxDecoration(
@@ -24,8 +27,8 @@ class CommentSortTabs extends StatelessWidget {
       ),
       child: Row(
         children: [
-          _buildTab(context, 'Top', CommentSortType.trending),
-          _buildTab(context, 'Newest', CommentSortType.newest),
+          _buildTab(context, l10n.sortTop, CommentSortType.trending),
+          _buildTab(context, l10n.sortNewest, CommentSortType.newest),
         ],
       ),
     );

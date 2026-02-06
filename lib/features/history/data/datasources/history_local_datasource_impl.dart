@@ -62,7 +62,7 @@ class HistoryLocalDataSourceImpl implements HistoryLocalDataSource {
       }
     }
 
-    return uniqueHistory;
+    return uniqueHistory.take(100).toList();
   }
 
   @override

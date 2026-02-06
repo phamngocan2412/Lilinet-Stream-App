@@ -30,4 +30,15 @@ class AuthEvent with _$AuthEvent {
 
   const factory AuthEvent.passwordResetRequested({required String email}) =
       PasswordResetRequested;
+
+  const factory AuthEvent.updateProfileRequested({
+    String? displayName,
+    String? avatarUrl,
+  }) = UpdateProfileRequested;
+
+  const factory AuthEvent.changePasswordRequested({
+    required String newPassword,
+  }) = ChangePasswordRequested;
+
+  const factory AuthEvent.deleteAccountRequested() = DeleteAccountRequested;
 }

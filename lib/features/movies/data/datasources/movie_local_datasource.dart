@@ -87,7 +87,8 @@ class MovieLocalDataSource {
   }
 
   /// Clear all expired cache entries
-  Future<void> clearExpiredCache() async {
+  /// Returns the number of entries deleted
+  Future<int> clearExpiredCache() async {
     final keysToDelete = <String>[];
 
     // Check trending movies
@@ -110,6 +111,8 @@ class MovieLocalDataSource {
       _movieDetailsBox.delete(key);
       _cacheTimestampBox.delete(key);
     }
+
+    return keysToDelete.length;
   }
 
   /// Clear all cache (force refresh)

@@ -37,6 +37,7 @@ dependencies:
   
   screen_brightness: ^2.1.7
   wakelock_plus: ^1.2.5
+  simple_pip_mode: ^1.0.4
 
   # UI & Styling
   google_fonts: ">=6.2.1 <6.3.1"
@@ -71,6 +72,13 @@ dependencies:
   miniplayer: ^1.0.1
   flutter_secure_storage: ^10.0.0
   postgrest: ^2.6.0
+  permission_handler: ^11.3.0
+  flutter_local_notifications: ^18.0.1
+  timezone: ^0.10.0
+  path_provider_platform_interface: ^2.1.2
+  plugin_platform_interface: ^2.1.8
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:
@@ -101,6 +109,7 @@ dev_dependencies:
   # Bạn ép cứng version 7.0.0 dễ gây xung đột (như cái warning màu vàng lúc nãy).
 
 flutter:
+  generate: true
   uses-material-design: true
 
   assets:

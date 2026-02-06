@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lilinet_app/l10n/app_localizations.dart';
 import '../../../../injection_container.dart';
 
 class FeaturedCommentBanner extends StatelessWidget {
@@ -63,24 +64,32 @@ class FeaturedCommentBanner extends StatelessWidget {
         }
 
         final comment = snapshot.data!;
-        final userName = comment['user_name'] ?? 'Someone';
-        final movieName = comment['movie_name'] ?? 'Unknown Movie';
+        final l10n = AppLocalizations.of(context)!;
+
+        final userName = comment['user_name'] ?? l10n.someone;
+        final movieName = comment['movie_name'] ?? l10n.unknownMovie;
         final episode = comment['episode_number'] ?? '1';
         final content = comment['content'] ?? '';
         final movieId = comment['movie_id'];
         // final episodeId = comment['episode_id'];
-        final movieType =
-            comment['movie_type'] ?? 'TV Series'; // Default for nav
+        final movieType = comment['movie_type'] ?? 'tv'; // Default for nav
 
         return GestureDetector(
           onTap: () {
             if (movieId != null) {
+              // Normalize type for API
+              final typeParam =
+                  movieType.toString().toLowerCase().contains('tv') ||
+                      movieType.toString().toLowerCase().contains('series')
+                  ? 'tv'
+                  : 'movie';
+
               // Navigate to player/details
               // If you have a direct player route:
               // context.push('/player/$movieId/$episodeId');
 
               // Or navigate to Details page first
-              context.push('/movie/$movieId?type=$movieType');
+              context.push('/movie/$movieId?type=$typeParam');
             }
           },
           child: Container(
@@ -98,7 +107,9 @@ class FeaturedCommentBanner extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
-                  color: Theme.of(context).colorScheme.shadow.withValues(alpha: 0.1),
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.shadow.withValues(alpha: 0.1),
                   blurRadius: 8,
                   offset: const Offset(0, 4),
                 ),
@@ -140,7 +151,7 @@ class FeaturedCommentBanner extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            const TextSpan(text: ' vừa bình luận tại '),
+                            TextSpan(text: l10n.justCommentedOn),
                             TextSpan(
                               text: movieName,
                               style: const TextStyle(
@@ -150,7 +161,7 @@ class FeaturedCommentBanner extends StatelessWidget {
                             if (episode != null) ...[
                               const TextSpan(text: ' - '),
                               TextSpan(
-                                text: 'Tập $episode',
+                                text: l10n.episodeNumber(episode.toString()),
                                 style: TextStyle(
                                   color: Theme.of(context).colorScheme.primary,
                                   fontWeight: FontWeight.w900,
@@ -166,9 +177,10 @@ class FeaturedCommentBanner extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.onPrimaryContainer.withValues(alpha: 0.8),
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onPrimaryContainer
+                              .withValues(alpha: 0.8),
                           fontSize: 13,
                           fontStyle: FontStyle.italic,
                         ),

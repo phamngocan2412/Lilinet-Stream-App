@@ -28,15 +28,15 @@ void main() {
     return MaterialApp(
       home: BlocProvider<AuthBloc>(
         create: (_) => mockAuthBloc,
-        child: const Scaffold(
-          body: AuthDialog(),
-        ),
+        child: const Scaffold(body: AuthDialog()),
       ),
     );
   }
 
-  testWidgets('renders correctly and toggles password visibility', (tester) async {
-    when(() => mockAuthBloc.state).thenReturn(AuthInitial());
+  testWidgets('renders correctly and toggles password visibility', (
+    tester,
+  ) async {
+    when(() => mockAuthBloc.state).thenReturn(const AuthInitial());
 
     await tester.pumpWidget(createWidgetUnderTest());
     await tester.pumpAndSettle();
@@ -60,14 +60,20 @@ void main() {
   });
 
   testWidgets('validates password length only in Sign Up mode', (tester) async {
-    when(() => mockAuthBloc.state).thenReturn(AuthInitial());
+    when(() => mockAuthBloc.state).thenReturn(const AuthInitial());
 
     await tester.pumpWidget(createWidgetUnderTest());
     await tester.pumpAndSettle();
 
     // Default is Login mode. Enter short password.
-    await tester.enterText(find.widgetWithText(TextFormField, 'Password'), '123456');
-    await tester.enterText(find.widgetWithText(TextFormField, 'Username'), 'user123');
+    await tester.enterText(
+      find.widgetWithText(TextFormField, 'Password'),
+      '123456',
+    );
+    await tester.enterText(
+      find.widgetWithText(TextFormField, 'Username'),
+      'user123',
+    );
 
     // Tap Login
     await tester.tap(find.widgetWithText(FilledButton, 'Login'));
@@ -88,8 +94,10 @@ void main() {
     expect(find.text('Password must be at least 8 characters'), findsOneWidget);
   });
 
-  testWidgets('enforces username input formatters and max length', (tester) async {
-    when(() => mockAuthBloc.state).thenReturn(AuthInitial());
+  testWidgets('enforces username input formatters and max length', (
+    tester,
+  ) async {
+    when(() => mockAuthBloc.state).thenReturn(const AuthInitial());
 
     await tester.pumpWidget(createWidgetUnderTest());
     await tester.pumpAndSettle();
@@ -108,33 +116,48 @@ void main() {
 
     // Check input formatters
     expect(textField.inputFormatters, isNotEmpty);
-    expect(textField.inputFormatters!.first, isA<FilteringTextInputFormatter>());
+    expect(
+      textField.inputFormatters!.first,
+      isA<FilteringTextInputFormatter>(),
+    );
   });
 
-  testWidgets('dispatches AuthSubmitted with isLogin=true in Login mode', (tester) async {
-    when(() => mockAuthBloc.state).thenReturn(AuthInitial());
+  testWidgets('dispatches AuthSubmitted with isLogin=true in Login mode', (
+    tester,
+  ) async {
+    when(() => mockAuthBloc.state).thenReturn(const AuthInitial());
 
     await tester.pumpWidget(createWidgetUnderTest());
     await tester.pumpAndSettle();
 
-    await tester.enterText(find.widgetWithText(TextFormField, 'Username'), 'user123');
-    await tester.enterText(find.widgetWithText(TextFormField, 'Password'), 'password123');
+    await tester.enterText(
+      find.widgetWithText(TextFormField, 'Username'),
+      'user123',
+    );
+    await tester.enterText(
+      find.widgetWithText(TextFormField, 'Password'),
+      'password123',
+    );
 
     // Tap Login button
     await tester.tap(find.widgetWithText(FilledButton, 'Login'));
     await tester.pump();
 
-    verify(() => mockAuthBloc.add(
-      const AuthSubmitted(
-        username: 'user123',
-        password: 'password123',
-        isLogin: true,
+    verify(
+      () => mockAuthBloc.add(
+        const AuthSubmitted(
+          username: 'user123',
+          password: 'password123',
+          isLogin: true,
+        ),
       ),
-    )).called(1);
+    ).called(1);
   });
 
-  testWidgets('dispatches AuthSubmitted with isLogin=false in Sign Up mode', (tester) async {
-    when(() => mockAuthBloc.state).thenReturn(AuthInitial());
+  testWidgets('dispatches AuthSubmitted with isLogin=false in Sign Up mode', (
+    tester,
+  ) async {
+    when(() => mockAuthBloc.state).thenReturn(const AuthInitial());
 
     await tester.pumpWidget(createWidgetUnderTest());
     await tester.pumpAndSettle();
@@ -143,19 +166,27 @@ void main() {
     await tester.tap(find.text('Sign Up'));
     await tester.pumpAndSettle();
 
-    await tester.enterText(find.widgetWithText(TextFormField, 'Username'), 'newuser');
-    await tester.enterText(find.widgetWithText(TextFormField, 'Password'), 'password123'); // > 8 chars
+    await tester.enterText(
+      find.widgetWithText(TextFormField, 'Username'),
+      'newuser',
+    );
+    await tester.enterText(
+      find.widgetWithText(TextFormField, 'Password'),
+      'password123',
+    ); // > 8 chars
 
     // Tap Sign Up button
     await tester.tap(find.widgetWithText(FilledButton, 'Sign Up'));
     await tester.pump();
 
-    verify(() => mockAuthBloc.add(
-      const AuthSubmitted(
-        username: 'newuser',
-        password: 'password123',
-        isLogin: false,
+    verify(
+      () => mockAuthBloc.add(
+        const AuthSubmitted(
+          username: 'newuser',
+          password: 'password123',
+          isLogin: false,
+        ),
       ),
-    )).called(1);
+    ).called(1);
   });
 }

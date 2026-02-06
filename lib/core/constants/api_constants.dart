@@ -41,6 +41,8 @@ class ApiConstants {
   // Endpoints
   // Endpoints
   static const String trendingMovies = '/meta/tmdb/trending';
+  static const String popularMovies = '/meta/tmdb/popular';
+  static const String topRatedMovies = '/meta/tmdb/top-rated';
   static const String searchMovies = '/meta/tmdb';
   static const String movieInfo = '/meta/tmdb/info';
 

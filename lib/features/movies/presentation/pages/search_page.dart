@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/services/miniplayer_height_notifier.dart';
 import '../../../../injection_container.dart';
 import '../../../../core/widgets/loading_indicator.dart';
 import '../../../../core/widgets/error_widget.dart';
 import '../../../../core/widgets/empty_state_widget.dart';
+import '../../../explore/domain/entities/filter_options.dart';
 import '../bloc/search/search_bloc.dart';
 import '../bloc/search/search_event.dart';
 import '../bloc/search/search_state.dart';
+import 'package:lilinet_app/l10n/app_localizations.dart';
 import '../widgets/movie_card.dart';
+import '../widgets/filter_bottom_sheet.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({super.key});
@@ -49,7 +53,7 @@ class _SearchPageViewState extends State<SearchPageView> {
   void _onScroll() {
     if (_scrollController.position.pixels >=
         _scrollController.position.maxScrollExtent - 200) {
-      context.read<SearchBloc>().add(SearchLoadMore());
+      context.read<SearchBloc>().add(const SearchLoadMore());
     }
   }
 
@@ -68,12 +72,50 @@ class _SearchPageViewState extends State<SearchPageView> {
             border: InputBorder.none,
             enabledBorder: InputBorder.none,
             focusedBorder: InputBorder.none,
-            suffixIcon: IconButton(
-              icon: const Icon(Icons.clear),
-              onPressed: () {
-                _controller.clear();
-                context.read<SearchBloc>().add(SearchCleared());
-              },
+            suffixIcon: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (_controller.text.isNotEmpty)
+                  IconButton(
+                    icon: const Icon(Icons.clear),
+                    onPressed: () {
+                      _controller.clear();
+                      context.read<SearchBloc>().add(const SearchCleared());
+                    },
+                    tooltip: AppLocalizations.of(context)!.clear,
+                  ),
+                BlocBuilder<SearchBloc, SearchState>(
+                  builder: (context, state) {
+                    final hasFilters =
+                        state.filterOptions != const FilterOptions();
+                    return IconButton(
+                      icon: Icon(
+                        Icons.tune,
+                        color: hasFilters
+                            ? Theme.of(context).colorScheme.primary
+                            : null,
+                      ),
+                      onPressed: () {
+                        showModalBottomSheet(
+                          context: context,
+                          useRootNavigator: true, // Show above miniplayer
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          builder: (_) => FilterBottomSheet(
+                            currentOptions: state.filterOptions,
+                            onApply: (options) {
+                              context.read<SearchBloc>().add(
+                                SearchOptionsChanged(options),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                      tooltip: AppLocalizations.of(context)!.filter,
+                    );
+                  },
+                ),
+              ],
             ),
           ),
           onChanged: (query) {
@@ -113,11 +155,8 @@ class _SearchPageViewState extends State<SearchPageView> {
             );
           }
 
-          final filteredMovies = state.activeFilter == 'All'
-              ? state.movies
-              : state.movies
-                    .where((m) => m.type == state.activeFilter)
-                    .toList();
+          // Bloc already handles filtering based on activeFilter/filterOptions
+          final filteredMovies = state.movies;
 
           if (state.isLoading && state.movies.isEmpty) {
             return const Center(child: LoadingIndicator());
@@ -152,31 +191,43 @@ class _SearchPageViewState extends State<SearchPageView> {
           final devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
           final cacheWidth = ((screenWidth - 32) / 2 * devicePixelRatio).ceil();
 
-          return GridView.builder(
-            controller: _scrollController,
-            padding: const EdgeInsets.all(16),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 0.7,
-              crossAxisSpacing: 12,
-              mainAxisSpacing: 12,
-            ),
-            itemCount: filteredMovies.length + (state.isLoading ? 1 : 0),
-            addAutomaticKeepAlives: false, // Reduce memory overhead
-            addRepaintBoundaries: true, // Optimize repaints
-            itemBuilder: (context, index) {
-              if (index >= filteredMovies.length) {
-                return const Center(child: LoadingIndicator());
-              }
+          return ListenableBuilder(
+            listenable: getIt<MiniplayerHeightNotifier>(),
+            builder: (context, _) {
+              final miniplayerHeight = getIt<MiniplayerHeightNotifier>().height;
 
-              final movie = filteredMovies[index];
-              return MovieCard(
-                movie: movie,
-                onTap: () => context.push(
-                  '/movie/${movie.id}?type=${movie.type}',
-                  extra: movie,
+              return GridView.builder(
+                controller: _scrollController,
+                padding: EdgeInsets.only(
+                  left: 16,
+                  right: 16,
+                  top: 16,
+                  bottom: 16 + miniplayerHeight,
                 ),
-                memCacheWidth: cacheWidth,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.7,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                ),
+                itemCount: filteredMovies.length + (state.isLoading ? 1 : 0),
+                addAutomaticKeepAlives: false, // Reduce memory overhead
+                addRepaintBoundaries: true, // Optimize repaints
+                itemBuilder: (context, index) {
+                  if (index >= filteredMovies.length) {
+                    return const Center(child: LoadingIndicator());
+                  }
+
+                  final movie = filteredMovies[index];
+                  return MovieCard(
+                    movie: movie,
+                    onTap: () => context.push(
+                      '/movie/${movie.id}?type=${movie.type}',
+                      extra: movie,
+                    ),
+                    memCacheWidth: cacheWidth,
+                  );
+                },
               );
             },
           );

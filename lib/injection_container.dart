@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
@@ -7,6 +8,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'core/network/dio_client.dart';
 import 'core/supabase/supabase_config.dart';
+import 'core/services/miniplayer_height_notifier.dart';
 import 'features/movies/data/models/movie_model.dart';
 import 'features/history/data/models/watch_progress_model.dart';
 import 'hive_registrar.g.dart';
@@ -55,4 +57,11 @@ abstract class RegisterModule {
   @preResolve
   Future<Box<DateTime>> get cacheTimestampBox =>
       Hive.openBox<DateTime>('cache_timestamps');
+
+  @lazySingleton
+  Connectivity get connectivity => Connectivity();
+
+  @lazySingleton
+  MiniplayerHeightNotifier get miniplayerHeightNotifier =>
+      MiniplayerHeightNotifier();
 }

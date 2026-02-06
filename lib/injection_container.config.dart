@@ -9,6 +9,7 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:connectivity_plus/connectivity_plus.dart' as _i895;
 import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:hive_ce/hive.dart' as _i738;
@@ -18,8 +19,15 @@ import 'package:injectable/injectable.dart' as _i526;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 import 'package:supabase_flutter/supabase_flutter.dart' as _i454;
 
+import 'core/network/network_cubit.dart' as _i83;
 import 'core/services/anime_detection_service.dart' as _i616;
+import 'core/services/cast_service.dart' as _i526;
+import 'core/services/download_service.dart' as _i803;
 import 'core/services/error_handler_service.dart' as _i488;
+import 'core/services/local_notification_service.dart' as _i102;
+import 'core/services/miniplayer_height_notifier.dart' as _i111;
+import 'core/services/video_player_service.dart' as _i401;
+import 'core/services/video_session_repository.dart' as _i1035;
 import 'features/auth/data/datasources/auth_supabase_datasource.dart' as _i647;
 import 'features/auth/data/repositories/auth_repository_impl.dart' as _i111;
 import 'features/auth/domain/repositories/auth_repository.dart' as _i1015;
@@ -146,11 +154,25 @@ extension GetItInjectableX on _i174.GetIt {
       preResolve: true,
     );
     gh.singleton<_i148.CommentsCubit>(() => _i148.CommentsCubit());
+    gh.lazySingleton<_i526.CastService>(() => _i526.CastService());
     gh.lazySingleton<_i488.ErrorHandlerService>(
-        () => _i488.ErrorHandlerService());
-    gh.lazySingleton<_i692.VideoPlayerBloc>(() => _i692.VideoPlayerBloc());
+      () => _i488.ErrorHandlerService(),
+    );
+    gh.lazySingleton<_i102.LocalNotificationService>(
+      () => _i102.LocalNotificationService(),
+    );
+    gh.lazySingleton<_i401.VideoPlayerService>(
+      () => _i401.VideoPlayerService(),
+    );
+    gh.lazySingleton<_i1035.VideoSessionRepository>(
+      () => _i1035.VideoSessionRepository(),
+    );
     gh.lazySingleton<_i361.Dio>(() => registerModule.dio);
     gh.lazySingleton<_i454.SupabaseClient>(() => registerModule.supabaseClient);
+    gh.lazySingleton<_i895.Connectivity>(() => registerModule.connectivity);
+    gh.lazySingleton<_i111.MiniplayerHeightNotifier>(
+      () => registerModule.miniplayerHeightNotifier,
+    );
     gh.lazySingleton<_i123.MovieLocalDataSource>(
         () => _i123.MovieLocalDataSource(
               gh<_i738.Box<_i892.MovieListResponse>>(),
@@ -162,7 +184,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i647.AuthSupabaseDataSource>(
         () => _i647.AuthSupabaseDataSource(gh<_i454.SupabaseClient>()));
     gh.lazySingleton<_i230.FavoritesSupabaseDataSource>(
-        () => _i230.FavoritesSupabaseDataSource(gh<_i454.SupabaseClient>()));
+      () => _i230.FavoritesSupabaseDataSource(gh<_i454.SupabaseClient>()),
+    );
+    gh.lazySingleton<_i803.DownloadService>(
+      () => _i803.DownloadService(
+        gh<_i361.Dio>(),
+        gh<_i102.LocalNotificationService>(),
+      ),
+    );
     gh.lazySingleton<_i47.MovieRemoteDataSource>(
         () => _i47.MovieRemoteDataSource(gh<_i361.Dio>()));
     gh.lazySingleton<_i799.CommentRemoteDataSource>(
@@ -175,13 +204,29 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i123.MovieLocalDataSource>(),
         ));
     gh.lazySingleton<_i387.SettingsLocalDataSource>(
-        () => _i387.SettingsLocalDataSource(gh<_i460.SharedPreferences>()));
-    gh.lazySingleton<_i320.FavoritesRepository>(() =>
-        _i764.FavoritesRepositoryImpl(gh<_i230.FavoritesSupabaseDataSource>()));
-    gh.lazySingleton<_i876.CommentRepository>(() => _i674.CommentRepositoryImpl(
-          gh<_i799.CommentRemoteDataSource>(),
-          gh<_i665.LocalCommentDataSource>(),
-        ));
+      () => _i387.SettingsLocalDataSource(gh<_i460.SharedPreferences>()),
+    );
+    gh.factory<_i83.NetworkCubit>(
+      () => _i83.NetworkCubit(gh<_i895.Connectivity>()),
+    );
+    gh.lazySingleton<_i320.FavoritesRepository>(
+      () => _i764.FavoritesRepositoryImpl(
+        gh<_i230.FavoritesSupabaseDataSource>(),
+      ),
+    );
+    gh.lazySingleton<_i692.VideoPlayerBloc>(
+      () => _i692.VideoPlayerBloc(
+        gh<_i401.VideoPlayerService>(),
+        gh<_i526.CastService>(),
+        gh<_i803.DownloadService>(),
+      ),
+    );
+    gh.lazySingleton<_i876.CommentRepository>(
+      () => _i674.CommentRepositoryImpl(
+        gh<_i799.CommentRemoteDataSource>(),
+        gh<_i665.LocalCommentDataSource>(),
+      ),
+    );
     gh.lazySingleton<_i726.ExploreRemoteDataSource>(
         () => _i726.ExploreRemoteDataSource(gh<_i47.MovieRemoteDataSource>()));
     gh.lazySingleton<_i1015.AuthRepository>(

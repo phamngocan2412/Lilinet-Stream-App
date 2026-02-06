@@ -1,0 +1,229 @@
+{
+  "helloWorld": "Hello World",
+  "@helloWorld": {
+    "description": "The conventional newborn programmer greeting"
+  },
+  "welcomeBack": "Welcome Back",
+  "createAccount": "Create Account",
+  "login": "Login",
+  "signUp": "Sign Up",
+  "username": "Username",
+  "enterUsername": "Please enter your username",
+  "usernameMinLength": "Username must be at least 3 characters",
+  "password": "Password",
+  "enterPassword": "Please enter your password",
+  "passwordMinLength": "Password must be at least 8 characters",
+  "forgotPassword": "Forgot Password?",
+  "cancel": "Cancel",
+  "welcomeUser": "Welcome {name}!",
+  "@welcomeUser": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "loginRequiredAction": "Please login to perform this action",
+  "dislikeFeaturePending": "Dislike feature is under development",
+  "replyingTo": "Replying to",
+  "retry": "Retry",
+  "noComments": "No comments yet",
+  "beFirstToComment": "Be the first to comment!",
+  "writeReply": "Write a reply...",
+  "collapse": "Collapse",
+  "seeMore": "See more",
+  "reply": "Reply",
+  "hideReplies": "Hide {count} replies",
+  "@hideReplies": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "viewReplies": "{count} replies",
+  "@viewReplies": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "viewMoreReplies": "View {count} more replies",
+  "@viewMoreReplies": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsTitle": "Settings",
+  "downloadSection": "Download",
+  "wifiOnly": "WiFi Only",
+  "wifiOnlySubtitle": "Download only on WiFi connection",
+  "myDownloads": "My Downloads",
+  "myDownloadsSubtitle": "View and manage downloaded videos",
+  "notificationsSection": "Notifications",
+  "pushNotifications": "Push Notifications",
+  "pushNotificationsSubtitle": "Receive app notifications",
+  "clearCache": "Clear Cache",
+  "clearCacheMessage": "This will remove all cached images to free up space. Your settings and login will not be affected. Are you sure?",
+  "clearSuccess": "Cache cleared successfully",
+  "resetSettings": "Reset Settings",
+  "resetSettingsMessage": "This will reset your preferences (Theme, Quality, etc) to default. Your account will remain logged in. Are you sure?",
+  "resetSuccess": "Settings reset successfully",
+  "deleteAccount": "Delete Account",
+  "deleteAccountMessage": "Are you sure you want to delete your account? This action cannot be undone and you will lose all your favorites and history.",
+  "delete": "Delete",
+  "reset": "Reset",
+  "clear": "Clear",
+  "resetAllSettings": "Reset All Settings",
+  "play": "Play",
+  "pause": "Pause",
+  "rewind": "Rewind",
+  "forward": "Forward",
+  "settings": "Settings",
+  "fullscreen": "Fullscreen",
+  "exitFullscreen": "Exit Fullscreen",
+  "close": "Close",
+  "back": "Back",
+  "share": "Share",
+  "addToFavorites": "Add to Favorites",
+  "removeFromFavorites": "Remove from Favorites",
+  "filter": "Filter",
+  "minimize": "Minimize",
+  "cast": "Cast",
+  "pip": "Picture in Picture",
+  "speed": "Playback Speed",
+  "previous": "Previous",
+  "next": "Next",
+  "download": "Download",
+  "refresh": "Refresh",
+  "search": "Search",
+  "edit": "Edit",
+  "showPassword": "Show password",
+  "hidePassword": "Hide password",
+  "send": "Send",
+  "commentLoadError": "Unable to load comments: {message}",
+  "@commentLoadError": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "commentsCount": "Comments ({count})",
+  "@commentsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "noCommentsYet": "No comments yet. Be the first to comment!",
+  "featuredCommentsTitle": "FEATURED COMMENTS",
+  "cannotOpenMockVideo": "Cannot open this video (mock data)",
+  "syncing": "Syncing...",
+  "notSynced": "Not synced",
+  "passwordResetEmailSent": "Password reset email has been sent to {email}",
+  "@passwordResetEmailSent": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "forgotPasswordTitle": "Forgot Password?",
+  "passwordResetInstructions": "Enter your email to receive a password reset link",
+  "email": "Email",
+  "enterEmail": "Please enter your email",
+  "invalidEmail": "Invalid email",
+  "sendResetEmail": "Send reset email",
+  "tapToViewComments": "Tap to view comments...",
+  "loginToComment": "Please login to comment",
+  "justCommentedOn": " just commented on ",
+  "episodeNumber": "Episode {number}",
+  "@episodeNumber": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "noNetworkError": "No network connection. Please check and try again.",
+  "timeoutError": "Connection timeout. Please try again.",
+  "sessionExpiredError": "Session expired. Please login again.",
+  "forbiddenError": "You do not have permission to perform this action.",
+  "notFoundError": "Requested content not found.",
+  "serverError": "Server error. Please try again later.",
+  "unknownError": "An error occurred. Please try again.",
+  "addCommentError": "Unable to send comment: {message}",
+  "@addCommentError": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "addCommentHint": "Add a comment...",
+  "authRequired": "Authentication required. Please login.",
+  "invalidResponse": "Invalid response format",
+  "sourceUnavailable": "Source unavailable. Please try another server or movie.",
+  "rateLimited": "System busy (Rate Limit). Please try again in a few seconds.",
+  "providerError": "Provider error. Please try again later.",
+  "serviceUnavailable": "Service temporarily unavailable",
+  "qualitySwitchFailed": "Quality switch failed. Continuing with current quality.",
+  "justNow": "Just now",
+  "minutesAgo": "{count} minutes ago",
+  "@minutesAgo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "hoursAgo": "{count} hours ago",
+  "@hoursAgo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "daysAgo": "{count} days ago",
+  "@daysAgo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "weeksAgo": "{count} weeks ago",
+  "@weeksAgo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "edited": "edited",
+  "someone": "Someone",
+  "unknownMovie": "Unknown Movie",
+  "emailHint": "example@email.com",
+  "pinMustBe4Digits": "PIN must be 4 digits",
+  "incorrectPin": "Incorrect PIN",
+  "enterPin": "Enter PIN",
+  "confirmPin": "Confirm PIN",
+  "setupPin": "Setup PIN",
+  "changePin": "Change PIN",
+  "setPinTitle": "Set PIN",
+  "enterPinTitle": "Enter PIN",
+  "setPinInstruction": "Enter a 4-digit PIN to secure adult content.",
+  "enterPinInstruction": "Enter your PIN to access this feature.",
+  "anonymous": "Anonymous",
+  "sortTop": "Top",
+  "sortNewest": "Newest",
+  "more": "More",
+  "server": "Server",
+  "quality": "Quality"
+}

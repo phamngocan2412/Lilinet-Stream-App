@@ -11,9 +11,13 @@ class ShimmerLoading extends StatelessWidget {
   Widget build(BuildContext context) {
     if (!isLoading) return child;
 
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final baseColor = isDark ? Colors.grey[850]! : Colors.grey[300]!;
+    final highlightColor = isDark ? Colors.grey[700]! : Colors.grey[100]!;
+
     return Shimmer.fromColors(
-      baseColor: Colors.grey[850]!,
-      highlightColor: Colors.grey[700]!,
+      baseColor: baseColor,
+      highlightColor: highlightColor,
       child: child,
     );
   }
@@ -24,14 +28,18 @@ class MovieCardShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final baseColor = isDark ? Colors.grey[850]! : Colors.grey[300]!;
+    final highlightColor = isDark ? Colors.grey[700]! : Colors.grey[100]!;
+
     return Shimmer.fromColors(
-      baseColor: Colors.grey[850]!,
-      highlightColor: Colors.grey[700]!,
+      baseColor: baseColor,
+      highlightColor: highlightColor,
       child: Container(
         width: 130,
         height: 195,
         decoration: BoxDecoration(
-          color: Colors.grey[850],
+          color: isDark ? Colors.grey[850] : Colors.grey[300],
           borderRadius: BorderRadius.circular(8),
         ),
       ),
@@ -44,9 +52,13 @@ class CommentShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final baseColor = isDark ? Colors.grey[850]! : Colors.grey[300]!;
+    final highlightColor = isDark ? Colors.grey[700]! : Colors.grey[100]!;
+
     return Shimmer.fromColors(
-      baseColor: Colors.grey[850]!,
-      highlightColor: Colors.grey[700]!,
+      baseColor: baseColor,
+      highlightColor: highlightColor,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: Row(
@@ -106,15 +118,19 @@ class TrendingCommentCardShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final baseColor = isDark ? Colors.grey[850]! : Colors.grey[300]!;
+    final highlightColor = isDark ? Colors.grey[700]! : Colors.grey[100]!;
+
     return Shimmer.fromColors(
-      baseColor: Colors.grey[850]!,
-      highlightColor: Colors.grey[700]!,
+      baseColor: baseColor,
+      highlightColor: highlightColor,
       child: Container(
         width: 280,
         margin: const EdgeInsets.only(right: 12),
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: Colors.grey[850],
+          color: isDark ? Colors.grey[850] : Colors.grey[300],
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(

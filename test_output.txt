@@ -1,0 +1,299 @@
+00:00 +0: loading /home/anro/Downloads/project/Novel/lilinet_app/test/features/history/presentation/bloc/history_cubit_test.dart                                                                       00:01 +0: loading /home/anro/Downloads/project/Novel/lilinet_app/test/features/history/presentation/bloc/history_cubit_test.dart                                                                       00:01 +0: /home/anro/Downloads/project/Novel/lilinet_app/test/features/history/presentation/bloc/history_cubit_test.dart: ... loadHistory emits [loading, loaded] when history is loaded successfully  00:01 +1: /home/anro/Downloads/project/Novel/lilinet_app/test/features/history/presentation/bloc/history_cubit_test.dart: ... loadHistory emits [loading, loaded] when history is loaded successfully  00:01 +1: /home/anro/Downloads/project/Novel/lilinet_app/test/features/history/presentation/bloc/history_cubit_test.dart: HistoryCubit loadHistory emits [loading, empty] when history is empty        00:01 +2: /home/anro/Downloads/project/Novel/lilinet_app/test/features/history/presentation/bloc/history_cubit_test.dart: HistoryCubit loadHistory emits [loading, empty] when history is empty        00:01 +2: /home/anro/Downloads/project/Novel/lilinet_app/test/features/history/presentation/bloc/history_cubit_test.dart: HistoryCubit loadHistory emits [loading, error] when loading fails           00:01 +3: /home/anro/Downloads/project/Novel/lilinet_app/test/features/history/presentation/bloc/history_cubit_test.dart: HistoryCubit loadHistory emits [loading, error] when loading fails           00:01 +3: /home/anro/Downloads/project/Novel/lilinet_app/test/features/history/presentation/bloc/history_cubit_test.dart: HistoryCubit saveProgress saves progress and reloads history                 00:01 +4: /home/anro/Downloads/project/Novel/lilinet_app/test/features/history/presentation/bloc/history_cubit_test.dart: HistoryCubit saveProgress saves progress and reloads history                 00:01 +4: /home/anro/Downloads/project/Novel/lilinet_app/test/features/history/presentation/bloc/history_cubit_test.dart: HistoryCubit saveProgress handles save failure silently                      00:01 +5: /home/anro/Downloads/project/Novel/lilinet_app/test/features/history/presentation/bloc/history_cubit_test.dart: HistoryCubit saveProgress handles save failure silently                      00:01 +5: /home/anro/Downloads/project/Novel/lilinet_app/test/features/history/presentation/bloc/history_cubit_test.dart: HistoryCubit deleteProgress deletes progress and reloads history successfully00:01 +6: /home/anro/Downloads/project/Novel/lilinet_app/test/features/history/presentation/bloc/history_cubit_test.dart: HistoryCubit deleteProgress deletes progress and reloads history successfully00:01 +6: /home/anro/Downloads/project/Novel/lilinet_app/test/features/history/presentation/bloc/history_cubit_test.dart: HistoryCubit deleteProgress emits error when delete fails                    00:01 +7: /home/anro/Downloads/project/Novel/lilinet_app/test/features/history/presentation/bloc/history_cubit_test.dart: HistoryCubit deleteProgress emits error when delete fails                    00:01 +7: /home/anro/Downloads/project/Novel/lilinet_app/test/features/history/presentation/bloc/history_cubit_test.dart: HistoryCubit deleteProgress deletes all episodes when episodeId is null      00:01 +8: /home/anro/Downloads/project/Novel/lilinet_app/test/features/history/presentation/bloc/history_cubit_test.dart: HistoryCubit deleteProgress deletes all episodes when episodeId is null      00:02 +8: /home/anro/Downloads/project/Novel/lilinet_app/test/features/history/presentation/bloc/history_cubit_test.dart: HistoryCubit deleteProgress deletes all episodes when episodeId is null      00:02 +8: loading /home/anro/Downloads/project/Novel/lilinet_app/test/features/auth/data/repositories/auth_repository_impl_test.dart                                                                   00:02 +8: /home/anro/Downloads/project/Novel/lilinet_app/test/features/auth/data/repositories/auth_repository_impl_test.dart: ... should return sanitized Failure when a generic Exception occurs      00:02 +9: /home/anro/Downloads/project/Novel/lilinet_app/test/features/auth/data/repositories/auth_repository_impl_test.dart: ... should return sanitized Failure when a generic Exception occurs      00:02 +9: /home/anro/Downloads/project/Novel/lilinet_app/test/features/auth/data/repositories/auth_repository_impl_test.dart: ... should return sanitized Failure when a generic Exception occurs      00:02 +10: /home/anro/Downloads/project/Novel/lilinet_app/test/features/auth/data/repositories/auth_repository_impl_test.dart: ... should return sanitized Failure when a generic Exception occurs     00:02 +10: /home/anro/Downloads/project/Novel/lilinet_app/test/features/auth/data/repositories/auth_repository_impl_test.dart: signOut should return sanitized Failure when a generic Exception occurs 00:02 +11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/auth/data/repositories/auth_repository_impl_test.dart: signOut should return sanitized Failure when a generic Exception occurs 00:02 +11: loading /home/anro/Downloads/project/Novel/lilinet_app/test/features/auth/presentation/widgets/auth_dialog_test.dart                                                                        00:02 +11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/auth/presentation/widgets/auth_dialog_test.dart: (setUpAll)                                                                    00:02 +11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/auth/presentation/widgets/auth_dialog_test.dart: renders correctly and toggles password visibility                             00:02 +11 -1: /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/data/repositories/movie_repository_impl_test.dart: getTrendingMovies should return List<Movie> when remote call is successful [E]
+  Bad state: A test tried to use `any` or `captureAny` on a parameter of type `MovieListResponse`, but
+  registerFallbackValue was not previously called to register a fallback value for `MovieListResponse`.
+  
+  To fix, do:
+  
+  ```
+  void main() {
+    setUpAll(() {
+      registerFallbackValue(/* create a dummy instance of `MovieListResponse` */);
+    });
+  }
+  ```
+  
+  This instance of `MovieListResponse` will only be passed around, but never be interacted with.
+  Therefore, if `MovieListResponse` is a function, it does not have to return a valid object and
+  could throw unconditionally.
+  If you cannot easily create an instance of `MovieListResponse`, consider defining a `Fake`:
+  
+  ```
+  class MyTypeFake extends Fake implements MyType {}
+  
+  void main() {
+    setUpAll(() {
+      registerFallbackValue(MyTypeFake());
+    });
+  }
+  ```
+  
+  Fallbacks are required because mocktail has to know of a valid `MovieListResponse` to prevent
+  TypeErrors from being thrown in Dart's sound null safe mode, while still
+  providing a convenient syntax.
+  
+  package:mocktail/src/_register_matcher.dart 49:5                              _getFallbackValue
+  package:mocktail/src/_register_matcher.dart 160:25                            _registerMatcher
+  package:mocktail/src/_register_matcher.dart 104:10                            any
+  test/features/movies/data/repositories/movie_repository_impl_test.dart 44:55  main.<fn>.<fn>.<fn>
+  package:mocktail/src/mocktail.dart 211:9                                      when.<fn>
+  test/features/movies/data/repositories/movie_repository_impl_test.dart 43:11  main.<fn>.<fn>
+  
+
+To run this test again: dart test /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/data/repositories/movie_repository_impl_test.dart -p vm --plain-name 'getTrendingMovies should return List<Movie> when remote call is successful'
+00:02 +11 -2: /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/data/repositories/movie_repository_impl_test.dart: getTrendingMovies should cache data locally when remote call is successful and page is 1 [E]
+  Bad state: A test tried to use `any` or `captureAny` on a parameter of type `MovieListResponse`, but
+  registerFallbackValue was not previously called to register a fallback value for `MovieListResponse`.
+  
+  To fix, do:
+  
+  ```
+  void main() {
+    setUpAll(() {
+      registerFallbackValue(/* create a dummy instance of `MovieListResponse` */);
+    });
+  }
+  ```
+  
+  This instance of `MovieListResponse` will only be passed around, but never be interacted with.
+  Therefore, if `MovieListResponse` is a function, it does not have to return a valid object and
+  could throw unconditionally.
+  If you cannot easily create an instance of `MovieListResponse`, consider defining a `Fake`:
+  
+  ```
+  class MyTypeFake extends Fake implements MyType {}
+  
+  void main() {
+    setUpAll(() {
+      registerFallbackValue(MyTypeFake());
+    });
+  }
+  ```
+  
+  Fallbacks are required because mocktail has to know of a valid `MovieListResponse` to prevent
+  TypeErrors from being thrown in Dart's sound null safe mode, while still
+  providing a convenient syntax.
+  
+  package:mocktail/src/_register_matcher.dart 49:5                              _getFallbackValue
+  package:mocktail/src/_register_matcher.dart 160:25                            _registerMatcher
+  package:mocktail/src/_register_matcher.dart 104:10                            any
+  test/features/movies/data/repositories/movie_repository_impl_test.dart 68:57  main.<fn>.<fn>.<fn>
+  package:mocktail/src/mocktail.dart 211:9                                      when.<fn>
+  test/features/movies/data/repositories/movie_repository_impl_test.dart 67:13  main.<fn>.<fn>
+  
+
+To run this test again: dart test /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/data/repositories/movie_repository_impl_test.dart -p vm --plain-name 'getTrendingMovies should cache data locally when remote call is successful and page is 1'
+00:02 +11 -3: /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/data/repositories/movie_repository_impl_test.dart: getTrendingMovies should NOT cache data when page is not 1 [E]    
+  Bad state: A test tried to use `any` or `captureAny` on a parameter of type `MovieListResponse`, but
+  registerFallbackValue was not previously called to register a fallback value for `MovieListResponse`.
+  
+  To fix, do:
+  
+  ```
+  void main() {
+    setUpAll(() {
+      registerFallbackValue(/* create a dummy instance of `MovieListResponse` */);
+    });
+  }
+  ```
+  
+  This instance of `MovieListResponse` will only be passed around, but never be interacted with.
+  Therefore, if `MovieListResponse` is a function, it does not have to return a valid object and
+  could throw unconditionally.
+  If you cannot easily create an instance of `MovieListResponse`, consider defining a `Fake`:
+  
+  ```
+  class MyTypeFake extends Fake implements MyType {}
+  
+  void main() {
+    setUpAll(() {
+      registerFallbackValue(MyTypeFake());
+    });
+  }
+  ```
+  
+  Fallbacks are required because mocktail has to know of a valid `MovieListResponse` to prevent
+  TypeErrors from being thrown in Dart's sound null safe mode, while still
+  providing a convenient syntax.
+  
+  package:mocktail/src/_register_matcher.dart 49:5                              _getFallbackValue
+  package:mocktail/src/_register_matcher.dart 160:25                            _registerMatcher
+  package:mocktail/src/_register_matcher.dart 104:10                            any
+  test/features/movies/data/repositories/movie_repository_impl_test.dart 91:65  main.<fn>.<fn>.<fn>
+  package:mocktail/src/mocktail.dart 508:9                                      _makeVerify.<fn>
+  test/features/movies/data/repositories/movie_repository_impl_test.dart 91:18  main.<fn>.<fn>
+  
+
+To run this test again: dart test /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/data/repositories/movie_repository_impl_test.dart -p vm --plain-name 'getTrendingMovies should NOT cache data when page is not 1'
+00:02 +12 -3: /home/anro/Downloads/project/Novel/lilinet_app/test/features/auth/presentation/widgets/auth_dialog_test.dart: renders correctly and toggles password visibility                          00:02 +13 -3: /home/anro/Downloads/project/Novel/lilinet_app/test/features/auth/presentation/widgets/auth_dialog_test.dart: renders correctly and toggles password visibility                          00:02 +14 -3: /home/anro/Downloads/project/Novel/lilinet_app/test/features/auth/presentation/widgets/auth_dialog_test.dart: renders correctly and toggles password visibility                          00:02 +14 -4: /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/data/repositories/movie_repository_impl_test.dart: getMovieDetails should return Movie when remote call is successful [E]
+  Bad state: A test tried to use `any` or `captureAny` on a parameter of type `MovieModel`, but
+  registerFallbackValue was not previously called to register a fallback value for `MovieModel`.
+  
+  To fix, do:
+  
+  ```
+  void main() {
+    setUpAll(() {
+      registerFallbackValue(/* create a dummy instance of `MovieModel` */);
+    });
+  }
+  ```
+  
+  This instance of `MovieModel` will only be passed around, but never be interacted with.
+  Therefore, if `MovieModel` is a function, it does not have to return a valid object and
+  could throw unconditionally.
+  If you cannot easily create an instance of `MovieModel`, consider defining a `Fake`:
+  
+  ```
+  class MyTypeFake extends Fake implements MyType {}
+  
+  void main() {
+    setUpAll(() {
+      registerFallbackValue(MyTypeFake());
+    });
+  }
+  ```
+  
+  Fallbacks are required because mocktail has to know of a valid `MovieModel` to prevent
+  TypeErrors from being thrown in Dart's sound null safe mode, while still
+  providing a convenient syntax.
+  
+  package:mocktail/src/_register_matcher.dart 49:5                               _getFallbackValue
+  package:mocktail/src/_register_matcher.dart 160:25                             _registerMatcher
+  package:mocktail/src/_register_matcher.dart 104:10                             any
+  test/features/movies/data/repositories/movie_repository_impl_test.dart 175:60  main.<fn>.<fn>.<fn>
+  package:mocktail/src/mocktail.dart 211:9                                       when.<fn>
+  test/features/movies/data/repositories/movie_repository_impl_test.dart 174:11  main.<fn>.<fn>
+  
+
+To run this test again: dart test /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/data/repositories/movie_repository_impl_test.dart -p vm --plain-name 'getMovieDetails should return Movie when remote call is successful'
+00:02 +14 -5: /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/data/repositories/movie_repository_impl_test.dart: getMovieDetails should cache movie details when remote call is successful (not fastMode) [E]
+  Invalid argument(s): An argument matcher (like `any()`) was either not used as an immediate argument to Symbol("getMovieDetails") (argument matchers can only be used as an argument for the very method being stubbed or verified), or was used as a named argument without the Mocktail "named" API (Each argument matcher that is used as a named argument needs to specify the name of the argument it is being used in. For example: `when(() => obj.fn(x: any(named: "x")))`).
+  package:mocktail/src/_is_invocation.dart 252:7                                 _InvocationForMatchedArguments._reconstitutePositionalArgs
+  package:mocktail/src/_is_invocation.dart 126:33                                new _InvocationForMatchedArguments
+  package:mocktail/src/_is_invocation.dart 111:18                                _useMatchedInvocationIfSet
+  package:mocktail/src/mocktail.dart 112:18                                      Mock.noSuchMethod
+  test/features/movies/data/repositories/movie_repository_impl_test.dart 11:7    MockMovieRemoteDataSource.getMovieDetails
+  test/features/movies/data/repositories/movie_repository_impl_test.dart 195:38  main.<fn>.<fn>.<fn>
+  package:mocktail/src/mocktail.dart 211:9                                       when.<fn>
+  test/features/movies/data/repositories/movie_repository_impl_test.dart 194:13  main.<fn>.<fn>
+  
+
+To run this test again: dart test /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/data/repositories/movie_repository_impl_test.dart -p vm --plain-name 'getMovieDetails should cache movie details when remote call is successful (not fastMode)'
+00:02 +14 -6: /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/data/repositories/movie_repository_impl_test.dart: getMovieDetails should NOT cache movie details when fastMode is true [E]
+  Bad state: Verification appears to be in progress. 8 verify calls have been stored. [VerifyCall<mock: MockMovieLocalDataSource, memberName: Symbol("getCachedTrendingMovies")>, ..., VerifyCall<mock: MockMovieLocalDataSource, memberName: Symbol("getCachedMovieDetails")>]
+  package:mocktail/src/mocktail.dart 497:5                                      _makeVerify
+  package:mocktail/src/mocktail.dart 349:27                                     verifyNever
+  test/features/movies/data/repositories/movie_repository_impl_test.dart 221:7  main.<fn>.<fn>
+  
+
+To run this test again: dart test /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/data/repositories/movie_repository_impl_test.dart -p vm --plain-name 'getMovieDetails should NOT cache movie details when fastMode is true'
+00:02 +14 -7: /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/data/repositories/movie_repository_impl_test.dart: getMovieDetails should return cached Movie when remote call fails and cache exists [E]
+  Expected: <true>
+    Actual: <false>
+  
+  package:matcher                                                               expect
+  package:flutter_test/src/widget_tester.dart 473:18                            expect
+  test/features/movies/data/repositories/movie_repository_impl_test.dart 242:9  main.<fn>.<fn>
+  
+
+To run this test again: dart test /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/data/repositories/movie_repository_impl_test.dart -p vm --plain-name 'getMovieDetails should return cached Movie when remote call fails and cache exists'
+00:02 +15 -7: /home/anro/Downloads/project/Novel/lilinet_app/test/features/auth/presentation/widgets/auth_dialog_test.dart: renders correctly and toggles password visibility                          00:02 +15 -8: /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/data/repositories/movie_repository_impl_test.dart: getMovieDetails should pass provider and type parameters to remote datasource [E]
+  Bad state: A test tried to use `any` or `captureAny` on a parameter of type `MovieModel`, but
+  registerFallbackValue was not previously called to register a fallback value for `MovieModel`.
+  
+  To fix, do:
+  
+  ```
+  void main() {
+    setUpAll(() {
+      registerFallbackValue(/* create a dummy instance of `MovieModel` */);
+    });
+  }
+  ```
+  
+  This instance of `MovieModel` will only be passed around, but never be interacted with.
+  Therefore, if `MovieModel` is a function, it does not have to return a valid object and
+  could throw unconditionally.
+  If you cannot easily create an instance of `MovieModel`, consider defining a `Fake`:
+  
+  ```
+  class MyTypeFake extends Fake implements MyType {}
+  
+  void main() {
+    setUpAll(() {
+      registerFallbackValue(MyTypeFake());
+    });
+  }
+  ```
+  
+  Fallbacks are required because mocktail has to know of a valid `MovieModel` to prevent
+  TypeErrors from being thrown in Dart's sound null safe mode, while still
+  providing a convenient syntax.
+  
+  package:mocktail/src/_register_matcher.dart 49:5                               _getFallbackValue
+  package:mocktail/src/_register_matcher.dart 160:25                             _registerMatcher
+  package:mocktail/src/_register_matcher.dart 104:10                             any
+  test/features/movies/data/repositories/movie_repository_impl_test.dart 290:62  main.<fn>.<fn>.<fn>
+  package:mocktail/src/mocktail.dart 211:9                                       when.<fn>
+  test/features/movies/data/repositories/movie_repository_impl_test.dart 289:13  main.<fn>.<fn>
+  
+
+To run this test again: dart test /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/data/repositories/movie_repository_impl_test.dart -p vm --plain-name 'getMovieDetails should pass provider and type parameters to remote datasource'
+00:03 +15 -9: /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/data/repositories/movie_repository_impl_test.dart: ... should pass provider and type parameters to remote datasource 00:03 +15 -9: /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/data/repositories/movie_repository_impl_test.dart: searchMovies should return List<Movie> when search is successful [E]
+  Invalid argument(s): An argument matcher (like `any()`) was either not used as an immediate argument to Symbol("searchMovies") (argument matchers can only be used as an argument for the very method being stubbed or verified), or was used as a named argument without the Mocktail "named" API (Each argument matcher that is used as a named argument needs to specify the name of the argument it is being used in. For example: `when(() => obj.fn(x: any(named: "x")))`).
+  package:mocktail/src/_is_invocation.dart 252:7                                 _InvocationForMatchedArguments._reconstitutePositionalArgs
+  package:mocktail/src/_is_invocation.dart 126:33                                new _InvocationForMatchedArguments
+  package:mocktail/src/_is_invocation.dart 111:18                                _useMatchedInvocationIfSet
+  package:mocktail/src/mocktail.dart 112:18                                      Mock.noSuchMethod
+  test/features/movies/data/repositories/movie_repository_impl_test.dart 11:7    MockMovieRemoteDataSource.searchMovies
+  test/features/movies/data/repositories/movie_repository_impl_test.dart 328:36  main.<fn>.<fn>.<fn>
+  package:mocktail/src/mocktail.dart 211:9                                       when.<fn>
+  test/features/movies/data/repositories/movie_repository_impl_test.dart 327:11  main.<fn>.<fn>
+  
+
+To run this test again: dart test /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/data/repositories/movie_repository_impl_test.dart -p vm --plain-name 'searchMovies should return List<Movie> when search is successful'
+00:03 +16 -9: /home/anro/Downloads/project/Novel/lilinet_app/test/features/auth/presentation/widgets/auth_dialog_test.dart: renders correctly and toggles password visibility                          00:03 +16 -10: /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/data/repositories/movie_repository_impl_test.dart: getCachedTrendingMovies should return cached movies when cache exists [E]
+  Expected: not null
+    Actual: <null>
+  
+  package:matcher                                                               expect
+  package:flutter_test/src/widget_tester.dart 473:18                            expect
+  test/features/movies/data/repositories/movie_repository_impl_test.dart 383:7  main.<fn>.<fn>
+  
+
+To run this test again: dart test /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/data/repositories/movie_repository_impl_test.dart -p vm --plain-name 'getCachedTrendingMovies should return cached movies when cache exists'
+00:03 +17 -10: /home/anro/Downloads/project/Novel/lilinet_app/test/features/auth/presentation/widgets/auth_dialog_test.dart: renders correctly and toggles password visibility                         00:03 +17 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/data/repositories/movie_repository_impl_test.dart: getCachedMovieDetails should return cached movie when cache exists [E]
+  Expected: not null
+    Actual: <null>
+  
+  package:matcher                                                               expect
+  package:flutter_test/src/widget_tester.dart 473:18                            expect
+  test/features/movies/data/repositories/movie_repository_impl_test.dart 421:7  main.<fn>.<fn>
+  
+
+To run this test again: dart test /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/data/repositories/movie_repository_impl_test.dart -p vm --plain-name 'getCachedMovieDetails should return cached movie when cache exists'
+00:03 +18 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/auth/presentation/widgets/auth_dialog_test.dart: renders correctly and toggles password visibility                         00:03 +19 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/auth/presentation/widgets/auth_dialog_test.dart: renders correctly and toggles password visibility                         00:03 +20 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/auth/presentation/widgets/auth_dialog_test.dart: renders correctly and toggles password visibility                         00:03 +21 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/auth/presentation/widgets/auth_dialog_test.dart: renders correctly and toggles password visibility                         00:03 +22 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/auth/presentation/widgets/auth_dialog_test.dart: renders correctly and toggles password visibility                         00:03 +23 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/auth/presentation/widgets/auth_dialog_test.dart: renders correctly and toggles password visibility                         00:03 +24 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/auth/presentation/widgets/auth_dialog_test.dart: renders correctly and toggles password visibility                         00:03 +25 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/auth/presentation/widgets/auth_dialog_test.dart: renders correctly and toggles password visibility                         00:03 +26 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/auth/presentation/widgets/auth_dialog_test.dart: renders correctly and toggles password visibility                         00:03 +27 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/auth/presentation/widgets/auth_dialog_test.dart: renders correctly and toggles password visibility                         00:03 +28 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/auth/presentation/widgets/auth_dialog_test.dart: renders correctly and toggles password visibility                         00:03 +29 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/auth/presentation/widgets/auth_dialog_test.dart: renders correctly and toggles password visibility                         00:03 +29 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/auth/presentation/widgets/auth_dialog_test.dart: validates password length only in Sign Up mode                            00:04 +29 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/auth/presentation/widgets/auth_dialog_test.dart: validates password length only in Sign Up mode                            00:04 +30 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/presentation/widgets/trending_carousel_test.dart: TrendingCarousel passes memCacheWidth to AppCachedImage           00:04 +31 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/presentation/widgets/trending_carousel_test.dart: TrendingCarousel passes memCacheWidth to AppCachedImage           00:04 +31 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/presentation/bloc/streaming/streaming_cubit_test.dart: StreamingCubit emits [StreamingLoading, StreamingLoaded] when loading links successfully from primary provider
+🔄 Loading streaming links...
+  Provider: hianime
+  Preferred Server: auto
+  Server order: [vidcloud, upcloud, megaup]
+📡 Available servers: [vidcloud]
+✅ Streaming links loaded successfully:
+  Provider: hianime
+  Server: vidcloud
+  Sources: 1
+  Available servers: [vidcloud]
+00:04 +32 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/presentation/widgets/trending_carousel_test.dart: TrendingCarousel passes memCacheWidth to AppCachedImage           00:04 +32 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/presentation/bloc/streaming/streaming_cubit_test.dart: StreamingCubit emits [StreamingLoading, StreamingLoaded] when primary fails and fallback succeeds
+🔄 Loading streaming links...
+  Provider: hianime
+  Preferred Server: auto
+  Server order: [vidcloud, upcloud, megaup]
+📡 Available servers: [vidcloud]
+⚠️ Primary provider hianime failed. Racing fallback providers...
+00:04 +32 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/presentation/widgets/trending_carousel_test.dart: TrendingCarousel passes memCacheWidth to AppCachedImage           00:04 +32 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/presentation/bloc/streaming/streaming_cubit_test.dart: StreamingCubit emits [StreamingLoading, StreamingLoaded] when primary fails and fallback succeeds
+✅ Streaming links loaded successfully:
+  Provider: animepahe
+  Server: vidcloud
+  Sources: 1
+  Available servers: [vidcloud]
+00:04 +33 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/presentation/widgets/trending_carousel_test.dart: TrendingCarousel passes memCacheWidth to AppCachedImage           00:04 +34 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/presentation/widgets/trending_carousel_test.dart: TrendingCarousel passes memCacheWidth to AppCachedImage           00:04 +35 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/presentation/widgets/trending_carousel_test.dart: TrendingCarousel passes memCacheWidth to AppCachedImage           00:04 +36 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/presentation/widgets/trending_carousel_test.dart: TrendingCarousel passes memCacheWidth to AppCachedImage           00:04 +37 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/presentation/widgets/trending_carousel_test.dart: TrendingCarousel passes memCacheWidth to AppCachedImage           00:04 +38 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/presentation/widgets/trending_carousel_test.dart: TrendingCarousel passes memCacheWidth to AppCachedImage           00:04 +39 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/presentation/widgets/trending_carousel_test.dart: TrendingCarousel passes memCacheWidth to AppCachedImage           00:04 +40 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/presentation/widgets/trending_carousel_test.dart: TrendingCarousel passes memCacheWidth to AppCachedImage           00:04 +41 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/presentation/widgets/trending_carousel_test.dart: TrendingCarousel passes memCacheWidth to AppCachedImage           00:04 +42 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/presentation/widgets/trending_carousel_test.dart: TrendingCarousel passes memCacheWidth to AppCachedImage           00:04 +43 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/features/movies/presentation/widgets/trending_carousel_test.dart: TrendingCarousel passes memCacheWidth to AppCachedImage           00:04 +44 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/core/widgets/cached_image_test.dart: AppCachedImage uses LayoutBuilder to calculate memCacheWidth (fallback case)                   00:04 +45 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/core/widgets/cached_image_test.dart: AppCachedImage uses LayoutBuilder to calculate memCacheWidth (fallback case)                   00:04 +45 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/core/widgets/cached_image_test.dart: AppCachedImage uses provided width if available (Optimized Case)                               00:04 +46 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/core/widgets/cached_image_test.dart: AppCachedImage uses provided width if available (Optimized Case)                               00:04 +46 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/core/widgets/cached_image_test.dart: AppCachedImage falls back to default if unbounded                                              00:04 +47 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/core/widgets/cached_image_test.dart: AppCachedImage falls back to default if unbounded                                              00:04 +47 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/core/widgets/cached_image_test.dart: AppCachedImage SKIPS LayoutBuilder when memCacheWidth is provided (Optimization)               00:04 +48 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/core/widgets/cached_image_test.dart: AppCachedImage SKIPS LayoutBuilder when memCacheWidth is provided (Optimization)               00:04 +48 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/core/widgets/cached_image_test.dart: AppCachedImage SKIPS LayoutBuilder when width is provided (Optimization)                       00:04 +49 -11: /home/anro/Downloads/project/Novel/lilinet_app/test/core/widgets/cached_image_test.dart: AppCachedImage SKIPS LayoutBuilder when width is provided (Optimization)                       00:04 +49 -11: Some tests failed.                                                                                                                                                                      

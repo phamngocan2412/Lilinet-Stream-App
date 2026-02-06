@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
+import 'package:lilinet_app/l10n/app_localizations.dart';
+import '../../../../core/utils/time_formatter.dart';
 import '../../domain/entities/comment.dart';
 import '../../domain/repositories/comment_repository.dart';
 import '../../../../injection_container.dart';
@@ -63,20 +65,19 @@ class HomeTrendingSectionView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Row(
             children: [
               Text(
-                'BÌNH LUẬN NỔI BẬT',
-                style: TextStyle(
+                AppLocalizations.of(context)!.featuredCommentsTitle,
+                style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
-                  letterSpacing: 1.0,
                 ),
               ),
-              SizedBox(width: 6),
-              Text('🔥', style: TextStyle(fontSize: 16)),
+              const SizedBox(width: 6),
+              const Text('🔥', style: TextStyle(fontSize: 16)),
             ],
           ),
         ),
@@ -100,9 +101,9 @@ class HomeTrendingSectionView extends StatelessWidget {
                   // Validate videoId
                   if (videoId.isEmpty || videoId.startsWith('mock-')) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Không thể mở phim này (dữ liệu mẫu)'),
-                        duration: Duration(seconds: 2),
+                      SnackBar(
+                        content: Text(AppLocalizations.of(context)!.cannotOpenMockVideo),
+                        duration: const Duration(seconds: 2),
                       ),
                     );
                     return;
@@ -171,7 +172,7 @@ class TrendingCommentCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        comment.timeAgo,
+                        TimeFormatter.formatTimeAgo(context, comment.createdAt),
                         style: TextStyle(fontSize: 10, color: Colors.grey[600]),
                       ),
                     ],

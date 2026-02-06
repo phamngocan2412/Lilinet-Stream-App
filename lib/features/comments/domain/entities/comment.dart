@@ -27,10 +27,8 @@ abstract class Comment with _$Comment {
     @Default(false) bool isPinned,
   }) = _Comment;
 
-  // Computed Properties
-
-  /// Calculates the trending score based on the YouTube-like algorithm:
-  /// Score = (likes * 1.5) + (replies * 2.5) + (recentLikes * 3) - log(hoursSinceCreated + 1) * 2
+  /// Trending score is calculated in the Domain layer as it is business logic.
+  /// UI-facing formatting like "timeAgo" should be handled in the Presentation layer.
   double get trendingScore {
     final now = DateTime.now();
     final hoursSinceCreated = now.difference(createdAt).inHours;
@@ -47,30 +45,5 @@ abstract class Comment with _$Comment {
         (log(hoursSinceCreated + 1) * 2);
 
     return score;
-  }
-
-  /// Returns a human-readable time ago string.
-  String get timeAgo {
-    final duration = DateTime.now().difference(createdAt);
-    if (duration.inDays > 7) {
-      return '${(duration.inDays / 7).floor()} tuần trước';
-    } else if (duration.inDays > 0) {
-      return '${duration.inDays} ngày trước';
-    } else if (duration.inHours > 0) {
-      return '${duration.inHours} giờ trước';
-    } else if (duration.inMinutes > 0) {
-      return '${duration.inMinutes} phút trước';
-    } else {
-      return 'Vừa xong';
-    }
-  }
-
-  /// Returns display text with edited indicator
-  String get displayTimeAgo {
-    final timeStr = timeAgo;
-    if (isEdited && updatedAt != null) {
-      return '$timeStr (đã chỉnh sửa)';
-    }
-    return timeStr;
   }
 }

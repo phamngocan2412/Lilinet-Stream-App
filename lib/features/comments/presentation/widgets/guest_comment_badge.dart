@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:lilinet_app/l10n/app_localizations.dart';
+
+import '../../../../core/widgets/loading_indicator.dart';
 
 class GuestCommentBadge extends StatelessWidget {
   final bool isGuest;
@@ -27,19 +30,14 @@ class GuestCommentBadge extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(
+            const SizedBox(
               width: 10,
               height: 10,
-              child: CircularProgressIndicator(
-                strokeWidth: 2,
-                valueColor: AlwaysStoppedAnimation<Color>(
-                  Colors.blue.withValues(alpha: 0.7),
-                ),
-              ),
+              child: LoadingIndicator(size: 10, color: Colors.blue),
             ),
             const SizedBox(width: 4),
             Text(
-              'Đang đồng bộ...',
+              AppLocalizations.of(context)!.syncing,
               style: TextStyle(
                 fontSize: 10,
                 color: Colors.blue.withValues(alpha: 0.8),
@@ -69,7 +67,7 @@ class GuestCommentBadge extends StatelessWidget {
           ),
           const SizedBox(width: 4),
           Text(
-            'Chưa đồng bộ',
+            AppLocalizations.of(context)!.notSynced,
             style: TextStyle(
               fontSize: 10,
               color: Colors.orange.withValues(alpha: 0.8),

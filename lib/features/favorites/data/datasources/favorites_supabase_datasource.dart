@@ -8,17 +8,21 @@ class FavoritesSupabaseDataSource {
 
   FavoritesSupabaseDataSource(this.supabaseClient);
 
-  Future<List<FavoriteModel>> getFavorites() async {
+  Future<List<FavoriteModel>> getFavorites({int page = 1, int limit = 20}) async {
     final userId = supabaseClient.auth.currentUser?.id;
     if (userId == null) {
       throw Exception('User not authenticated');
     }
 
+    final from = (page - 1) * limit;
+    final to = from + limit - 1;
+
     final response = await supabaseClient
         .from('favorites')
         .select()
         .eq('user_id', userId)
-        .order('created_at', ascending: false);
+        .order('created_at', ascending: false)
+        .range(from, to);
 
     return (response as List)
         .map((json) => FavoriteModel.fromJson(json))
@@ -30,6 +34,7 @@ class FavoritesSupabaseDataSource {
     String? movieTitle,
     String? moviePoster,
     String? movieType,
+    String folder = 'Default',
   }) async {
     final userId = supabaseClient.auth.currentUser?.id;
     if (userId == null) {
@@ -42,6 +47,7 @@ class FavoritesSupabaseDataSource {
       'movie_title': movieTitle,
       'movie_poster': moviePoster,
       'movie_type': movieType,
+      'folder': folder,
     };
 
     final response =

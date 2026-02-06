@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,6 +20,8 @@ class CommentCubit extends Cubit<CommentState> {
   final GetReplies _getReplies;
   final CommentRepository _repository;
 
+  StreamSubscription? _realtimeSubscription;
+
   CommentCubit(
     this._getComments,
     this._addComment,
@@ -33,11 +36,19 @@ class CommentCubit extends Cubit<CommentState> {
     _currentVideoId = videoId;
     emit(const CommentState.loading());
 
+    // Cancel existing subscription if any
+    _realtimeSubscription?.cancel();
+
+    // Subscribe to realtime updates
+    _subscribeToRealtime(videoId);
+
     // Fetch comments and liked IDs in parallel
     final results = await Future.wait([
       _getComments(videoId),
       _repository.getLikedCommentIds(videoId),
     ]);
+
+    if (isClosed) return;
 
     final commentsResult = results[0] as Either<Failure, List<Comment>>;
     final likedIdsResult = results[1] as Either<Failure, List<String>>;
@@ -67,6 +78,48 @@ class CommentCubit extends Cubit<CommentState> {
     );
   }
 
+  void _subscribeToRealtime(String videoId) {
+    _realtimeSubscription = _repository
+        .getCommentStream(videoId)
+        .listen(
+          (events) async {
+            // When a change occurs, we simply reload the comments for now to ensure consistency.
+            // A more optimized approach would be to parse the event and update the list locally.
+            // Given we are using BLoC and immutable state, fetching fresh data is safer and easier.
+            debugPrint('🔔 Realtime comment update received');
+
+            // We do a "silent" reload - keeping the current state visible but updating data
+            final results = await Future.wait([
+              _getComments(videoId),
+              _repository.getLikedCommentIds(videoId), // Refresh likes too
+            ]);
+
+            if (isClosed) return;
+
+            final commentsResult = results[0] as Either<Failure, List<Comment>>;
+            // We keep existing liked IDs unless we want to refresh them too
+
+            state.mapOrNull(
+              loaded: (loadedState) {
+                commentsResult.fold(
+                  (l) => null, // Ignore errors on silent refresh
+                  (newComments) {
+                    final sorted = _sortComments(
+                      newComments,
+                      loadedState.sortType,
+                    );
+                    emit(loadedState.copyWith(comments: sorted));
+                  },
+                );
+              },
+            );
+          },
+          onError: (error) {
+            debugPrint('Realtime subscription error: $error');
+          },
+        );
+  }
+
   void changeSortType(CommentSortType type) {
     state.mapOrNull(
       loaded: (state) {
@@ -93,6 +146,7 @@ class CommentCubit extends Cubit<CommentState> {
 
           // Check if logic handles loading
           final result = await _getReplies(commentId);
+          if (isClosed) return;
           result.fold(
             (l) {}, // Handle error silently or show snackbar (need cleaner way)
             (replies) {
@@ -126,25 +180,26 @@ class CommentCubit extends Cubit<CommentState> {
           ),
         );
 
+        if (isClosed) return;
+
         result.fold(
           (failure) {
             debugPrint('❌ Failed to add comment: ${failure.message}');
             emit(loadedState.copyWith(isAddingComment: false));
-            // Emit error as a separate state that preserves comments
+            // Emit error message without hardcoded label. UI will handle formatting if needed.
             emit(
               CommentState.loaded(
                 comments: loadedState.comments,
                 sortType: loadedState.sortType,
-                errorMessage: 'Không thể gửi bình luận: ${failure.message}',
+                errorMessage: failure.message,
               ),
             );
           },
           (newComment) async {
             debugPrint('✅ Comment added successfully: ${newComment.id}');
-
-            // Reload comments from server to ensure we have the latest data
-            debugPrint('🔄 Reloading comments to refresh list...');
-            await loadComments(_currentVideoId!);
+            // We rely on realtime subscription to update the list,
+            // but we can manually reload to be sure or stop the loading indicator immediately.
+            emit(loadedState.copyWith(isAddingComment: false));
           },
         );
       },
@@ -218,5 +273,11 @@ class CommentCubit extends Cubit<CommentState> {
         break;
     }
     return sorted;
+  }
+
+  @override
+  Future<void> close() {
+    _realtimeSubscription?.cancel();
+    return super.close();
   }
 }

@@ -9,8 +9,11 @@ class FavoritesState with _$FavoritesState {
 
   const factory FavoritesState.loading() = FavoritesLoading;
 
-  const factory FavoritesState.loaded({required List<Favorite> favorites}) =
-      FavoritesLoaded;
+  const factory FavoritesState.loaded({
+    required List<Favorite> favorites,
+    @Default(1) int currentPage,
+    @Default(true) bool hasMore,
+  }) = FavoritesLoaded;
 
   const factory FavoritesState.error({required String message}) =
       FavoritesError;

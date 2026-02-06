@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:lilinet_app/l10n/app_localizations.dart';
 import '../../domain/entities/comment.dart';
 import '../../presentation/manager/comment_cubit.dart';
 import '../../presentation/manager/comment_state.dart';
@@ -28,6 +29,7 @@ class _CollapsedCommentViewContent extends StatelessWidget {
   void _openCommentSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
+      useRootNavigator: true, // Show above miniplayer
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) => CommentBottomSheet(videoId: videoId),
@@ -101,7 +103,7 @@ class _CollapsedCommentViewContent extends StatelessWidget {
               child: comment != null
                   ? _buildCompactPreview(comment)
                   : Text(
-                      'Chạm để xem bình luận...',
+                      AppLocalizations.of(context)!.tapToViewComments,
                       style: TextStyle(
                         fontSize: 13,
                         color: Theme.of(context).hintColor,

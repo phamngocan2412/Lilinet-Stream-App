@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/services/miniplayer_height_notifier.dart';
 import '../../../../injection_container.dart';
 import '../../../../core/widgets/loading_indicator.dart';
+import '../../../../core/widgets/empty_state_widget.dart';
 import '../../../../core/widgets/error_widget.dart';
 import '../../../movies/presentation/widgets/movie_card.dart';
 import '../bloc/explore_bloc.dart';
@@ -48,35 +50,41 @@ class GenreMoviesPage extends StatelessWidget {
 
             if (state is MoviesLoaded) {
               if (state.movies.isEmpty) {
-                return const Center(
-                  child: Text('No movies found for this genre'),
+                return const EmptyStateWidget(
+                  message: 'No movies found for this genre',
+                  icon: Icons.movie_outlined,
                 );
               }
 
-              // Calculate optimal cache width to improve performance
-              final screenWidth = MediaQuery.of(context).size.width;
-              final devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
-              // Padding (32) + CrossAxisSpacing (12) = 44
-              final cacheWidth =
-                  ((screenWidth - 44) / 2 * devicePixelRatio).ceil();
+              return ListenableBuilder(
+                listenable: getIt<MiniplayerHeightNotifier>(),
+                builder: (context, _) {
+                  final miniplayerHeight = getIt<MiniplayerHeightNotifier>().height;
 
-              return GridView.builder(
-                padding: const EdgeInsets.all(16),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 0.7,
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 12,
-                ),
-                itemCount: state.movies.length,
-                itemBuilder: (context, index) {
-                  final movie = state.movies[index];
-                  return MovieCard(
-                    movie: movie,
-                    onTap: () {
-                      context.push(
-                        '/movie/${movie.id}?type=${movie.type}',
-                        extra: movie,
+                  return GridView.builder(
+                    padding: EdgeInsets.only(
+                      left: 16,
+                      right: 16,
+                      top: 16,
+                      bottom: 16 + miniplayerHeight,
+                    ),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 0.7,
+                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 12,
+                    ),
+                    itemCount: state.movies.length,
+                    itemBuilder: (context, index) {
+                      final movie = state.movies[index];
+                      return MovieCard(
+                        movie: movie,
+                        onTap: () {
+                          context.push(
+                            '/movie/${movie.id}?type=${movie.type}',
+                            extra: movie,
+                          );
+                        },
                       );
                     },
                     memCacheWidth: cacheWidth,

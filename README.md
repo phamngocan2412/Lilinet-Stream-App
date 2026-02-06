@@ -194,6 +194,20 @@ Follow [Conventional Commits](https://www.conventionalcommits.org/):
 - `test:` Adding tests
 - `chore:` Maintenance tasks
 
+## UI/UX Analysis
+
+For detailed UI/UX review and improvement roadmap, see [UI/UX Analysis Report](./docs/UI_UX_Analysis_Report.md).
+
+**Key Areas for Improvement:**
+- Internationalization (Mixed Vietnamese/English)
+- Consistent border radius values
+- Theme color standardization
+- Error/Loading/Empty state unification
+
+## Project Description
+
+**Lilinet** là ứng dụng xem phim đa nền tảng xây dựng bằng Flutter, tích hợp nhiều nguồn phim (FlixHQ, AnimePahe, TMDB) với trải nghiệm xem mượt mà, hỗ trợ tải về offline, bình luận realtime và miniplayer linh hoạt.
+
 ## License
 
 This project is for educational purposes only.
