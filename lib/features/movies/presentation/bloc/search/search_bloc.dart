@@ -1,7 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
+import '../../../../explore/domain/utils/movie_sorter.dart';
 import '../../../domain/usecases/search_movies.dart';
+import '../../../../explore/domain/entities/filter_options.dart';
+import '../../../domain/entities/movie.dart';
 import 'search_event.dart';
 import 'search_state.dart';
 
@@ -17,13 +20,58 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     on<SearchLoadMore>(_onSearchLoadMore);
     on<SearchCleared>(_onSearchCleared);
     on<SearchFilterChanged>(_onSearchFilterChanged);
+    on<SearchOptionsChanged>(_onSearchOptionsChanged);
+  }
+
+  @override
+  Future<void> close() {
+    // Ensure all resources are disposed
+    return super.close();
   }
 
   void _onSearchFilterChanged(
     SearchFilterChanged event,
     Emitter<SearchState> emit,
   ) {
-    emit(state.copyWith(activeFilter: event.filter));
+    // Legacy filter: update MediaType in filterOptions
+    MediaType mediaType;
+    switch (event.filter) {
+      case 'TV Series':
+        mediaType = MediaType.tvSeries;
+        break;
+      case 'Movie':
+        mediaType = MediaType.movie;
+        break;
+      default:
+        mediaType = MediaType.all;
+    }
+
+    final newOptions = state.filterOptions.copyWith(mediaType: mediaType);
+    final filtered = _applyFilters(state.rawMovies, newOptions);
+
+    emit(state.copyWith(
+      activeFilter: event.filter,
+      filterOptions: newOptions,
+      movies: filtered,
+    ));
+  }
+
+  void _onSearchOptionsChanged(
+    SearchOptionsChanged event,
+    Emitter<SearchState> emit,
+  ) {
+    // Update activeFilter string based on mediaType for UI consistency
+    String activeFilter = 'All';
+    if (event.options.mediaType == MediaType.tvSeries) activeFilter = 'TV Series';
+    if (event.options.mediaType == MediaType.movie) activeFilter = 'Movie';
+
+    final filtered = _applyFilters(state.rawMovies, event.options);
+
+    emit(state.copyWith(
+      filterOptions: event.options,
+      activeFilter: activeFilter,
+      movies: filtered,
+    ));
   }
 
   Future<void> _onSearchQueryChanged(
@@ -40,7 +88,8 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         query: event.query,
         isLoading: true,
         currentPage: 1,
-        movies: [], // Clear previous results
+        movies: [],
+        rawMovies: [],
       ),
     );
 
@@ -54,14 +103,18 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
           errorMessage: failure.message,
         ),
       ),
-      (movies) => emit(
-        state.copyWith(
-          isLoading: false,
-          movies: movies,
-          hasError: false,
-          hasMore: movies.length >= 20,
-        ),
-      ),
+      (movies) {
+        final filtered = _applyFilters(movies, state.filterOptions);
+        emit(
+          state.copyWith(
+            isLoading: false,
+            rawMovies: movies,
+            movies: filtered,
+            hasError: false,
+            hasMore: movies.length >= 20,
+          ),
+        );
+      },
     );
   }
 
@@ -70,6 +123,12 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     Emitter<SearchState> emit,
   ) async {
     if (!state.hasMore || state.isLoading) return;
+
+    // Memory Optimization: Limit total results to ~400 items (20 pages)
+    if (state.rawMovies.length >= 400) {
+      emit(state.copyWith(hasMore: false));
+      return;
+    }
 
     final nextPage = state.currentPage + 1;
     emit(state.copyWith(isLoading: true));
@@ -84,19 +143,56 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
           errorMessage: failure.message,
         ),
       ),
-      (movies) => emit(
-        state.copyWith(
-          isLoading: false,
-          movies: [...state.movies, ...movies],
-          currentPage: nextPage,
-          hasMore: movies.length >= 20,
-        ),
-      ),
+      (newMovies) {
+        final allRaw = [...state.rawMovies, ...newMovies];
+        final filtered = _applyFilters(allRaw, state.filterOptions);
+
+        emit(
+          state.copyWith(
+            isLoading: false,
+            rawMovies: allRaw,
+            movies: filtered,
+            currentPage: nextPage,
+            hasMore: newMovies.length >= 20,
+          ),
+        );
+      },
     );
   }
 
   void _onSearchCleared(SearchCleared event, Emitter<SearchState> emit) {
     emit(const SearchState());
+  }
+
+  List<Movie> _applyFilters(List<Movie> movies, FilterOptions options) {
+    Iterable<Movie> result = movies;
+
+    // 1. Media Type
+    if (options.mediaType != MediaType.all) {
+      result = result.where((m) {
+        final type = m.type.toLowerCase();
+        if (options.mediaType == MediaType.movie) {
+          return type == 'movie';
+        } else {
+          return type.contains('tv') || type.contains('series');
+        }
+      });
+    }
+
+    // 2. Min Rating
+    if (options.minRating != null && options.minRating! > 0) {
+      result = result.where((m) => (m.rating ?? 0) >= options.minRating!);
+    }
+
+    // Convert to list only once at the end
+    var filteredList = result.toList();
+
+    // 3. Sorting (in-place)
+    if (filteredList.isNotEmpty) {
+      MovieSorter.sort(filteredList, options.sortBy);
+    }
+
+    return filteredList;
   }
 }
 

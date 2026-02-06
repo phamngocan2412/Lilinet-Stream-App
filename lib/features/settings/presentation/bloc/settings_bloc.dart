@@ -16,7 +16,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     required this.getSettings,
     required this.saveSettings,
     required this.repository,
-  }) : super(SettingsInitial()) {
+  }) : super(const SettingsInitial()) {
     on<LoadSettings>(_onLoadSettings);
     on<UpdateSettings>(_onUpdateSettings);
     on<ResetSettings>(_onResetSettings);
@@ -64,12 +64,11 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     Emitter<SettingsState> emit,
   ) async {
     final result = await repository.clearCache();
-    result.fold(
-      (failure) => emit(SettingsError(message: failure.message)),
-      (_) {
-        // Reload settings after clearing cache
-        add(const LoadSettings());
-      },
-    );
+    result.fold((failure) => emit(SettingsError(message: failure.message)), (
+      _,
+    ) {
+      // Reload settings after clearing cache
+      add(const LoadSettings());
+    });
   }
 }

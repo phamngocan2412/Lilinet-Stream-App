@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import '../../../../core/constants/app_constants.dart';
 import '../../../movies/data/datasources/movie_remote_datasource.dart';
 import '../../../movies/data/models/movie_model.dart';
 import '../models/genre_model.dart';
@@ -9,29 +10,11 @@ class ExploreRemoteDataSource {
 
   ExploreRemoteDataSource(this.movieDataSource);
 
-  // Hardcoded genres based on TMDB standard genres
+  // Genres from AppConstants
   Future<List<GenreModel>> getGenres() async {
-    return const [
-      GenreModel(id: '28', name: 'Action'),
-      GenreModel(id: '12', name: 'Adventure'),
-      GenreModel(id: '16', name: 'Animation'),
-      GenreModel(id: '35', name: 'Comedy'),
-      GenreModel(id: '80', name: 'Crime'),
-      GenreModel(id: '99', name: 'Documentary'),
-      GenreModel(id: '18', name: 'Drama'),
-      GenreModel(id: '10751', name: 'Family'),
-      GenreModel(id: '14', name: 'Fantasy'),
-      GenreModel(id: '36', name: 'History'),
-      GenreModel(id: '27', name: 'Horror'),
-      GenreModel(id: '10402', name: 'Music'),
-      GenreModel(id: '9648', name: 'Mystery'),
-      GenreModel(id: '10749', name: 'Romance'),
-      GenreModel(id: '878', name: 'Science Fiction'),
-      GenreModel(id: '10770', name: 'TV Movie'),
-      GenreModel(id: '53', name: 'Thriller'),
-      GenreModel(id: '10752', name: 'War'),
-      GenreModel(id: '37', name: 'Western'),
-    ];
+    return AppConstants.genres.entries
+        .map((e) => GenreModel(id: e.value, name: e.key))
+        .toList();
   }
 
   // Use trending endpoint filtered by type
@@ -62,6 +45,11 @@ class ExploreRemoteDataSource {
 
   // Popular movies (using trending)
   Future<MovieListResponse> getPopularMovies({int page = 1}) {
-    return movieDataSource.getTrendingMovies(page: page);
+    return movieDataSource.getPopularMovies(page: page);
+  }
+
+  // Top rated movies
+  Future<MovieListResponse> getTopRatedMovies({int page = 1}) {
+    return movieDataSource.getTopRatedMovies(page: page);
   }
 }

@@ -1,11 +1,12 @@
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../core/errors/failures.dart';
+import '../../../../core/extensions/repository_extensions.dart';
 import '../../../movies/domain/entities/movie.dart';
 import '../../domain/entities/filter_options.dart';
 import '../../domain/entities/genre.dart';
 import '../../domain/repositories/explore_repository.dart';
+import '../../domain/utils/movie_sorter.dart';
 import '../datasources/explore_remote_datasource.dart';
 
 @LazySingleton(as: ExploreRepository)
@@ -16,12 +17,10 @@ class ExploreRepositoryImpl implements ExploreRepository {
 
   @override
   Future<Either<Failure, List<Genre>>> getGenres() async {
-    try {
+    return safeCall(() async {
       final genres = await remoteDataSource.getGenres();
-      return Right(genres.map((g) => g.toEntity()).toList());
-    } catch (e) {
-      return const Left(Failure.server('Failed to load genres'));
-    }
+      return genres.map((g) => g.toEntity()).toList();
+    });
   }
 
   @override
@@ -29,21 +28,13 @@ class ExploreRepositoryImpl implements ExploreRepository {
     String genreId, {
     int page = 1,
   }) async {
-    try {
+    return safeCall(() async {
       final response = await remoteDataSource.getMoviesByGenre(
         genreId,
         page: page,
       );
-      final movies = response.results.map((m) => m.toEntity()).toList();
-
-      // Note: Client-side filtering by genre would go here if needed
-      // For now, returning all results
-      return Right(movies);
-    } on DioException catch (e) {
-      return Left(_handleDioError(e));
-    } catch (e) {
-      return Left(Failure.server(e.toString()));
-    }
+      return response.results.map((m) => m.toEntity()).toList();
+    });
   }
 
   @override
@@ -51,7 +42,7 @@ class ExploreRepositoryImpl implements ExploreRepository {
     FilterOptions options, {
     int page = 1,
   }) async {
-    try {
+    return safeCall(() async {
       String type = 'tv';
       if (options.mediaType == MediaType.movie) {
         type = 'movie';
@@ -86,117 +77,40 @@ class ExploreRepositoryImpl implements ExploreRepository {
       }
 
       // Sorting
-      switch (options.sortBy) {
-        case SortBy.rating:
-          movies.sort((a, b) {
-            if (a.rating == null) return 1;
-            if (b.rating == null) return -1;
-            return b.rating!.compareTo(a.rating!);
-          });
-          break;
-        case SortBy.title:
-          movies.sort((a, b) => a.title.compareTo(b.title));
-          break;
-        case SortBy.releaseDate:
-          movies.sort((a, b) {
-            if (a.releaseDate == null) return 1;
-            if (b.releaseDate == null) return -1;
-            return b.releaseDate!.compareTo(a.releaseDate!);
-          });
-          break;
-        case SortBy.popularity:
-          // Already sorted by popularity from API
-          break;
-      }
+      MovieSorter.sort(movies, options.sortBy);
 
-      return Right(movies);
-    } on DioException catch (e) {
-      return Left(_handleDioError(e));
-    } catch (e) {
-      return Left(Failure.server(e.toString()));
-    }
+      return movies;
+    });
   }
 
   @override
   Future<Either<Failure, List<Movie>>> getPopularMovies({int page = 1}) async {
-    try {
+    return safeCall(() async {
       final response = await remoteDataSource.getPopularMovies(page: page);
-      final movies = response.results.map((m) => m.toEntity()).toList();
-      return Right(movies);
-    } on DioException catch (e) {
-      return Left(_handleDioError(e));
-    } catch (e) {
-      return Left(Failure.server(e.toString()));
-    }
+      return response.results.map((m) => m.toEntity()).toList();
+    });
   }
 
-  /// WORKAROUND: Backend doesn't have dedicated top-rated endpoint.
-  /// We fetch popular movies and sort by rating client-side.
-  /// This is not ideal but works for MVP.
-  /// TODO: Replace with dedicated endpoint when backend supports it.
   @override
   Future<Either<Failure, List<Movie>>> getTopRatedMovies({int page = 1}) async {
-    try {
-      final response = await remoteDataSource.getPopularMovies(page: page);
-      var movies = response.results.map((m) => m.toEntity()).toList();
-
-      // Sort by rating (client-side workaround)
-      movies.sort((a, b) {
-        if (a.rating == null) return 1;
-        if (b.rating == null) return -1;
-        return b.rating!.compareTo(a.rating!);
-      });
-
-      return Right(movies);
-    } on DioException catch (e) {
-      return Left(_handleDioError(e));
-    } catch (e) {
-      return Left(Failure.server(e.toString()));
-    }
+    return safeCall(() async {
+      final response = await remoteDataSource.getTopRatedMovies(page: page);
+      return response.results.map((m) => m.toEntity()).toList();
+    });
   }
 
-  /// WORKAROUND: Backend doesn't have dedicated recently-added endpoint.
-  /// We fetch popular movies and sort by release date client-side.
-  /// This is not ideal but works for MVP.
-  /// TODO: Replace with dedicated endpoint when backend supports it.
+  /// We use popular movies sorted by release date for "Recently Added"
+  /// as a reasonable approximation until a dedicated endpoint exists.
   @override
   Future<Either<Failure, List<Movie>>> getRecentlyAdded({int page = 1}) async {
-    try {
+    return safeCall(() async {
       final response = await remoteDataSource.getPopularMovies(page: page);
       var movies = response.results.map((m) => m.toEntity()).toList();
 
-      // Sort by release date (client-side workaround)
-      movies.sort((a, b) {
-        if (a.releaseDate == null) return 1;
-        if (b.releaseDate == null) return -1;
-        return b.releaseDate!.compareTo(a.releaseDate!);
-      });
+      // Sort by release date
+      MovieSorter.sort(movies, SortBy.releaseDate);
 
-      return Right(movies);
-    } on DioException catch (e) {
-      return Left(_handleDioError(e));
-    } catch (e) {
-      return Left(Failure.server(e.toString()));
-    }
-  }
-
-  Failure _handleDioError(DioException error) {
-    switch (error.type) {
-      case DioExceptionType.connectionTimeout:
-      case DioExceptionType.sendTimeout:
-      case DioExceptionType.receiveTimeout:
-        return const Failure.network('Connection timeout');
-      case DioExceptionType.badResponse:
-        return const Failure.server('Server error');
-      case DioExceptionType.cancel:
-        return const Failure.network('Request cancelled');
-      case DioExceptionType.unknown:
-        if (error.error.toString().contains('SocketException')) {
-          return const Failure.network('No internet connection');
-        }
-        return const Failure.network('Unexpected error');
-      default:
-        return const Failure.network('Network error');
-    }
+      return movies;
+    });
   }
 }

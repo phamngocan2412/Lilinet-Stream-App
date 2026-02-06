@@ -9,8 +9,11 @@ class HistoryState with _$HistoryState {
 
   const factory HistoryState.loading() = HistoryLoading;
 
-  const factory HistoryState.loaded({required List<WatchProgress> history}) =
-      HistoryLoaded;
+  const factory HistoryState.loaded({
+    required List<WatchProgress> history,
+    @Default(0) int totalVideos,
+    @Default(0) int totalTimeSeconds,
+  }) = HistoryLoaded;
 
   const factory HistoryState.empty() = HistoryEmpty;
 

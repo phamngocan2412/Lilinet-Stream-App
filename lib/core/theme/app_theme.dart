@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../constants/app_border_radius.dart';
 import 'app_colors.dart';
 
 class AppTheme {
@@ -44,7 +45,7 @@ class AppTheme {
         color: AppColors.lightSurface,
         elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AppBorderRadius.medium),
           side: const BorderSide(color: AppColors.lightBorder),
         ),
         margin: EdgeInsets.zero,
@@ -58,15 +59,15 @@ class AppTheme {
           vertical: 12,
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AppBorderRadius.medium),
           borderSide: BorderSide.none,
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AppBorderRadius.medium),
           borderSide: BorderSide.none,
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AppBorderRadius.medium),
           borderSide: const BorderSide(color: AppColors.netflixRed, width: 1.5),
         ),
       ),
@@ -76,7 +77,7 @@ class AppTheme {
           backgroundColor: AppColors.brandPrimary,
           foregroundColor: Colors.white,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(AppBorderRadius.medium),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
           elevation: 0,
@@ -86,6 +87,18 @@ class AppTheme {
         iconColor: AppColors.lightTextPrimary,
         textColor: AppColors.lightTextPrimary,
         contentPadding: EdgeInsets.symmetric(horizontal: 16),
+      ),
+      dialogTheme: const DialogThemeData(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(AppBorderRadius.xlarge)),
+        ),
+      ),
+      bottomSheetTheme: const BottomSheetThemeData(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(AppBorderRadius.xlarge),
+          ),
+        ),
       ),
       textTheme: _buildTextTheme(
         base: GoogleFonts.outfitTextTheme(),
@@ -148,7 +161,7 @@ class AppTheme {
         color: AppColors.darkSurface,
         elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AppBorderRadius.medium),
           side: const BorderSide(color: AppColors.darkBorder),
         ),
         margin: EdgeInsets.zero,
@@ -167,15 +180,15 @@ class AppTheme {
           vertical: 12,
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: BorderRadius.circular(AppBorderRadius.medium),
           borderSide: BorderSide.none,
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: BorderRadius.circular(AppBorderRadius.medium),
           borderSide: BorderSide.none,
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: BorderRadius.circular(AppBorderRadius.medium),
           borderSide: const BorderSide(color: AppColors.netflixRed, width: 1.5),
         ),
       ),
@@ -183,9 +196,23 @@ class AppTheme {
         style: FilledButton.styleFrom(
           backgroundColor: AppColors.netflixRed,
           foregroundColor: Colors.white,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppBorderRadius.medium),
+          ),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
           elevation: 0,
+        ),
+      ),
+      dialogTheme: const DialogThemeData(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(AppBorderRadius.xlarge)),
+        ),
+      ),
+      bottomSheetTheme: const BottomSheetThemeData(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(AppBorderRadius.xlarge),
+          ),
         ),
       ),
       textTheme: _buildTextTheme(
@@ -218,9 +245,9 @@ class AppTheme {
             fontWeight: FontWeight.w500,
             color: displayColor,
           ),
-          bodyLarge: GoogleFonts.inter(fontSize: 16, color: bodyColor),
-          bodyMedium: GoogleFonts.inter(fontSize: 14, color: bodyColor),
-          bodySmall: GoogleFonts.inter(
+          bodyLarge: GoogleFonts.outfit(fontSize: 16, color: bodyColor),
+          bodyMedium: GoogleFonts.outfit(fontSize: 14, color: bodyColor),
+          bodySmall: GoogleFonts.outfit(
             fontSize: 12,
             color: bodyColor.withValues(alpha: 0.7),
           ),

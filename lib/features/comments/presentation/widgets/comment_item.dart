@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:lilinet_app/l10n/app_localizations.dart';
+import '../../../../core/utils/time_formatter.dart';
 import '../../domain/entities/comment.dart';
+import '../../../../core/widgets/cached_image.dart';
 
 class CommentItem extends StatelessWidget {
   final Comment comment;
@@ -33,19 +36,21 @@ class CommentItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _CommentContent(
-      comment: comment,
-      onLike: onLike,
-      onDislike: onDislike,
-      onReply: onReply,
-      onToggleReplies: onToggleReplies,
-      isRepliesExpanded: isRepliesExpanded,
-      isLiked: isLiked,
-      isReply: isReply,
-      onReplyLike: onReplyLike,
-      onReplyReply: onReplyReply,
-      onLoadMoreReplies: onLoadMoreReplies,
-      likedReplyIds: likedReplyIds,
+    return RepaintBoundary(
+      child: _CommentContent(
+        comment: comment,
+        onLike: onLike,
+        onDislike: onDislike,
+        onReply: onReply,
+        onToggleReplies: onToggleReplies,
+        isRepliesExpanded: isRepliesExpanded,
+        isLiked: isLiked,
+        isReply: isReply,
+        onReplyLike: onReplyLike,
+        onReplyReply: onReplyReply,
+        onLoadMoreReplies: onLoadMoreReplies,
+        likedReplyIds: likedReplyIds,
+      ),
     );
   }
 }
@@ -89,6 +94,7 @@ class _CommentContentState extends State<_CommentContent> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     return Container(
       padding: EdgeInsets.symmetric(
@@ -118,7 +124,7 @@ class _CommentContentState extends State<_CommentContent> {
                     vertical: 8,
                   ),
                   decoration: BoxDecoration(
-                    color: theme.colorScheme.surfaceContainerHighest.withValues(
+                    color: colorScheme.surfaceContainerHighest.withValues(
                       alpha: 0.5,
                     ),
                     borderRadius: BorderRadius.circular(12),
@@ -142,7 +148,12 @@ class _CommentContentState extends State<_CommentContent> {
                           ),
                           const SizedBox(width: 6),
                           Text(
-                            '• ${widget.comment.displayTimeAgo}',
+                            '• ${TimeFormatter.formatDisplayTimeAgo(
+                              context: context,
+                              createdAt: widget.comment.createdAt,
+                              isEdited: widget.comment.isEdited,
+                              updatedAt: widget.comment.updatedAt,
+                            )}',
                             style: TextStyle(
                               fontSize: widget.isReply ? 10 : 11,
                               color: theme.hintColor,
@@ -153,7 +164,7 @@ class _CommentContentState extends State<_CommentContent> {
                             Icon(
                               Icons.push_pin,
                               size: 10,
-                              color: theme.colorScheme.primary,
+                              color: colorScheme.primary,
                             ),
                           ],
                         ],
@@ -221,16 +232,12 @@ class _Avatar extends StatelessWidget {
       radius: radius,
       backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
       child: ClipOval(
-        child: Image.network(
-          imageUrl,
+        child: AppCachedImage(
+          imageUrl: imageUrl,
           width: radius * 2,
           height: radius * 2,
           fit: BoxFit.cover,
-          errorBuilder: (_, __, ___) => Icon(
-            Icons.person,
-            size: radius * 0.9,
-            color: Theme.of(context).colorScheme.primary,
-          ),
+          memCacheWidth: (radius * 2 * 2).toInt(), // 2x for retina
         ),
       ),
     );
@@ -253,6 +260,7 @@ class _CommentText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     if (content.length <= 120) {
       return Text(
@@ -279,7 +287,7 @@ class _CommentText extends StatelessWidget {
               text: showFull ? content : '${content.substring(0, 120)}... ',
             ),
             TextSpan(
-              text: showFull ? 'Thu gọn' : 'Xem thêm',
+              text: showFull ? l10n.collapse : l10n.seeMore,
               style: TextStyle(
                 color: theme.colorScheme.primary,
                 fontWeight: FontWeight.w500,
@@ -317,99 +325,119 @@ class _ActionButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Row(
       children: [
         // Like Button
-        GestureDetector(
+        InkWell(
           onTap: onLike,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                isLiked ? Icons.thumb_up : Icons.thumb_up_outlined,
-                size: isReply ? 12 : 14,
-                color: isLiked ? theme.colorScheme.primary : theme.hintColor,
-              ),
-              if (likes > 0) ...[
-                const SizedBox(width: 4),
-                Text(
-                  likes.toString(),
-                  style: TextStyle(
-                    fontSize: isReply ? 11 : 12,
-                    color: isLiked
-                        ? theme.colorScheme.primary
-                        : theme.hintColor,
-                    fontWeight: isLiked ? FontWeight.w600 : FontWeight.normal,
+          borderRadius: BorderRadius.circular(8),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: 48, minWidth: 48),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    isLiked ? Icons.thumb_up : Icons.thumb_up_outlined,
+                    size: isReply ? 16 : 18,
+                    color: isLiked ? theme.colorScheme.primary : theme.hintColor,
                   ),
-                ),
-              ],
-            ],
+                  if (likes > 0) ...[
+                    const SizedBox(width: 6),
+                    Text(
+                      likes.toString(),
+                      style: TextStyle(
+                        fontSize: isReply ? 12 : 13,
+                        color: isLiked
+                            ? theme.colorScheme.primary
+                            : theme.hintColor,
+                        fontWeight: isLiked ? FontWeight.w600 : FontWeight.normal,
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
           ),
         ),
 
-        const SizedBox(width: 16),
+        const SizedBox(width: 4),
 
         // Reply Button
-        GestureDetector(
+        InkWell(
           onTap: onReply,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                Icons.chat_bubble_outline,
-                size: isReply ? 12 : 14,
-                color: theme.hintColor,
+          borderRadius: BorderRadius.circular(8),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: 48, minWidth: 48),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.chat_bubble_outline,
+                    size: isReply ? 16 : 18,
+                    color: theme.hintColor,
+                  ),
+                  const SizedBox(width: 6),
+                  Text(
+                    l10n.reply,
+                    style: TextStyle(
+                      fontSize: isReply ? 12 : 13,
+                      color: theme.hintColor,
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(width: 4),
-              Text(
-                'Phản hồi',
-                style: TextStyle(
-                  fontSize: isReply ? 11 : 12,
-                  color: theme.hintColor,
-                ),
-              ),
-            ],
+            ),
           ),
         ),
 
         // Replies Toggle with count
         if (repliesCount > 0 && onToggleReplies != null) ...[
-          const SizedBox(width: 16),
-          GestureDetector(
+          const SizedBox(width: 8),
+          InkWell(
             onTap: onToggleReplies,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-              decoration: BoxDecoration(
-                color: isRepliesExpanded
-                    ? theme.colorScheme.primary.withValues(alpha: 0.1)
-                    : theme.colorScheme.surfaceContainerHighest.withValues(
-                        alpha: 0.5,
-                      ),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    isRepliesExpanded
-                        ? Icons.keyboard_arrow_up
-                        : Icons.keyboard_arrow_down,
-                    size: isReply ? 12 : 14,
-                    color: theme.colorScheme.primary,
-                  ),
-                  const SizedBox(width: 2),
-                  Text(
-                    isRepliesExpanded
-                        ? 'Ẩn $repliesCount phản hồi'
-                        : '$repliesCount phản hồi',
-                    style: TextStyle(
-                      fontSize: isReply ? 11 : 12,
+            borderRadius: BorderRadius.circular(12),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(minHeight: 48),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: isRepliesExpanded
+                      ? theme.colorScheme.primary.withValues(alpha: 0.1)
+                      : theme.colorScheme.surfaceContainerHighest.withValues(
+                          alpha: 0.5,
+                        ),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      isRepliesExpanded
+                          ? Icons.keyboard_arrow_up
+                          : Icons.keyboard_arrow_down,
+                      size: isReply ? 16 : 18,
                       color: theme.colorScheme.primary,
-                      fontWeight: FontWeight.w500,
                     ),
-                  ),
-                ],
+                    const SizedBox(width: 4),
+                    Text(
+                      isRepliesExpanded
+                          ? l10n.hideReplies(repliesCount)
+                          : l10n.viewReplies(repliesCount),
+                      style: TextStyle(
+                        fontSize: isReply ? 12 : 13,
+                        color: theme.colorScheme.primary,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -438,6 +466,7 @@ class _RepliesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       margin: const EdgeInsets.only(top: 8, left: 36),
       child: Column(
@@ -461,14 +490,18 @@ class _RepliesSection extends StatelessWidget {
           if (replies.length < repliesCount)
             Padding(
               padding: const EdgeInsets.only(left: 12, top: 4),
-              child: GestureDetector(
+              child: InkWell(
                 onTap: onLoadMoreReplies,
-                child: Text(
-                  'Xem thêm ${repliesCount - replies.length} phản hồi',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Theme.of(context).colorScheme.primary,
-                    fontWeight: FontWeight.w500,
+                borderRadius: BorderRadius.circular(4),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    l10n.viewMoreReplies(repliesCount - replies.length),
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Theme.of(context).colorScheme.primary,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
               ),

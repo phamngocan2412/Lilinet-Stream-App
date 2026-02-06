@@ -82,7 +82,11 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
     // This allows the user to see the page content almost instantly.
     // Note: This result might not have episodes if the provider is slow.
     final fastResult = await _getMovieDetails(
-      GetMovieDetailsParams(id: event.id, type: event.type, fastMode: true),
+      GetMovieDetailsParams(
+        id: event.id,
+        type: event.type.toLowerCase(), // Ensure type is lowercase
+        fastMode: true,
+      ),
     );
 
     fastResult.fold(
@@ -170,7 +174,7 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
     final fullResult = await _getMovieDetails(
       GetMovieDetailsParams(
         id: event.id,
-        type: event.type,
+        type: event.type.toLowerCase(), // Ensure type is lowercase
         provider: provider,
         fastMode: false,
       ),

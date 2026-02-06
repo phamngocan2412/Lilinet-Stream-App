@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lilinet_app/l10n/app_localizations.dart';
 
 import '../bloc/auth_bloc.dart';
 import '../bloc/auth_event.dart';
 import '../bloc/auth_state.dart';
+import '../../../../core/widgets/loading_indicator.dart';
 import 'password_reset_dialog.dart';
 
 class AuthDialog extends StatefulWidget {
@@ -32,6 +34,7 @@ class _AuthDialogState extends State<AuthDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is Authenticated) {
@@ -40,7 +43,7 @@ class _AuthDialogState extends State<AuthDialog> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
-                  'Welcome ${state.user.displayName ?? state.user.email}!'),
+                  l10n.welcomeUser(state.user.displayName ?? state.user.email)),
               backgroundColor: Colors.green,
             ),
           );
@@ -69,7 +72,7 @@ class _AuthDialogState extends State<AuthDialog> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      _isLogin ? 'Welcome Back' : 'Create Account',
+                      _isLogin ? l10n.welcomeBack : l10n.createAccount,
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     const SizedBox(height: 8),
@@ -79,7 +82,7 @@ class _AuthDialogState extends State<AuthDialog> {
                         TextButton(
                           onPressed: () => setState(() => _isLogin = true),
                           child: Text(
-                            'Login',
+                            l10n.login,
                             style: TextStyle(
                               fontWeight: _isLogin ? FontWeight.bold : null,
                               decoration:
@@ -91,7 +94,7 @@ class _AuthDialogState extends State<AuthDialog> {
                         TextButton(
                           onPressed: () => setState(() => _isLogin = false),
                           child: Text(
-                            'Sign Up',
+                            l10n.signUp,
                             style: TextStyle(
                               fontWeight: !_isLogin ? FontWeight.bold : null,
                               decoration:
@@ -109,19 +112,19 @@ class _AuthDialogState extends State<AuthDialog> {
                         FilteringTextInputFormatter.allow(
                             RegExp(r'[a-zA-Z0-9_.]')),
                       ],
-                      decoration: const InputDecoration(
-                        labelText: 'Username',
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.person),
+                      decoration: InputDecoration(
+                        labelText: l10n.username,
+                        border: const OutlineInputBorder(),
+                        prefixIcon: const Icon(Icons.person),
                         counterText: "",
                       ),
                       enabled: !isLoading,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter your username';
+                          return l10n.enterUsername;
                         }
                         if (value.length < 3) {
-                          return 'Username must be at least 3 characters';
+                          return l10n.usernameMinLength;
                         }
                         return null;
                       },
@@ -131,7 +134,7 @@ class _AuthDialogState extends State<AuthDialog> {
                       controller: _passwordController,
                       maxLength: 100,
                       decoration: InputDecoration(
-                        labelText: 'Password',
+                        labelText: l10n.password,
                         border: const OutlineInputBorder(),
                         prefixIcon: const Icon(Icons.lock),
                         counterText: "",
@@ -152,11 +155,11 @@ class _AuthDialogState extends State<AuthDialog> {
                       enabled: !isLoading,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter your password';
+                          return l10n.enterPassword;
                         }
                         // Only enforce length on registration to avoid blocking legacy users
                         if (!_isLogin && value.length < 8) {
-                          return 'Password must be at least 8 characters';
+                          return l10n.passwordMinLength;
                         }
                         return null;
                       },
@@ -167,15 +170,8 @@ class _AuthDialogState extends State<AuthDialog> {
                       child: FilledButton(
                         onPressed: isLoading ? null : _handleSubmit,
                         child: isLoading
-                            ? const SizedBox(
-                                height: 20,
-                                width: 20,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                  color: Colors.white,
-                                ),
-                              )
-                            : Text(_isLogin ? 'Login' : 'Sign Up'),
+                            ? const LoadingIndicator(size: 20, color: Colors.white)
+                            : Text(_isLogin ? l10n.login : l10n.signUp),
                       ),
                     ),
                     if (_isLogin) ...[
@@ -187,7 +183,7 @@ class _AuthDialogState extends State<AuthDialog> {
                                 Navigator.pop(context);
                                 PasswordResetDialog.show(context);
                               },
-                        child: const Text('Quên mật khẩu?'),
+                        child: Text(l10n.forgotPassword),
                       ),
                     ],
                     const SizedBox(height: 8),
@@ -197,7 +193,7 @@ class _AuthDialogState extends State<AuthDialog> {
                           : () {
                               Navigator.pop(context);
                             },
-                      child: const Text('Cancel'),
+                      child: Text(l10n.cancel),
                     ),
                   ],
                 ),

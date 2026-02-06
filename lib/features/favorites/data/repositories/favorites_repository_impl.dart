@@ -12,9 +12,9 @@ class FavoritesRepositoryImpl implements FavoritesRepository {
   FavoritesRepositoryImpl(this.dataSource);
 
   @override
-  Future<Either<Failure, List<Favorite>>> getFavorites() async {
+  Future<Either<Failure, List<Favorite>>> getFavorites({int page = 1, int limit = 20}) async {
     try {
-      final favorites = await dataSource.getFavorites();
+      final favorites = await dataSource.getFavorites(page: page, limit: limit);
       return Right(favorites.map((f) => f.toEntity()).toList());
     } catch (e) {
       return Left(Failure.server('Failed to get favorites: ${e.toString()}'));
@@ -27,6 +27,7 @@ class FavoritesRepositoryImpl implements FavoritesRepository {
     String? movieTitle,
     String? moviePoster,
     String? movieType,
+    String folder = 'Default',
   }) async {
     try {
       final favorite = await dataSource.addFavorite(
@@ -34,6 +35,7 @@ class FavoritesRepositoryImpl implements FavoritesRepository {
         movieTitle: movieTitle,
         moviePoster: moviePoster,
         movieType: movieType,
+        folder: folder,
       );
       return Right(favorite.toEntity());
     } catch (e) {

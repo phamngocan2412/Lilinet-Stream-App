@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../injection_container.dart';
+import '../../../../core/services/miniplayer_height_notifier.dart';
 import '../../../../core/widgets/loading_indicator.dart';
 import '../../../../core/widgets/error_widget.dart';
 import '../../../../core/widgets/empty_state_widget.dart';
@@ -10,6 +12,7 @@ import '../../../movies/domain/entities/movie.dart';
 import '../../../auth/presentation/bloc/auth_bloc.dart';
 import '../../../auth/presentation/bloc/auth_state.dart';
 import '../../../auth/presentation/widgets/auth_dialog.dart';
+import '../../../explore/presentation/widgets/category_chip.dart';
 import '../bloc/favorites_bloc.dart';
 import '../bloc/favorites_event.dart';
 import '../bloc/favorites_state.dart';
@@ -23,8 +26,15 @@ class FavoritesPage extends StatelessWidget {
   }
 }
 
-class FavoritesView extends StatelessWidget {
+class FavoritesView extends StatefulWidget {
   const FavoritesView({super.key});
+
+  @override
+  State<FavoritesView> createState() => _FavoritesViewState();
+}
+
+class _FavoritesViewState extends State<FavoritesView> {
+  String _selectedFolder = 'All';
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +59,7 @@ class FavoritesView extends StatelessWidget {
             // to the favorites repository (Supabase client)
             Future.delayed(const Duration(milliseconds: 500), () {
               if (context.mounted) {
-                context.read<FavoritesBloc>().add(LoadFavorites());
+                context.read<FavoritesBloc>().add(const LoadFavorites());
               }
             });
           }
@@ -100,7 +110,7 @@ class FavoritesView extends StatelessWidget {
                     child: AppErrorWidget(
                       message: state.message,
                       onRetry: () {
-                        context.read<FavoritesBloc>().add(LoadFavorites());
+                        context.read<FavoritesBloc>().add(const LoadFavorites());
                       },
                     ),
                   );
@@ -114,43 +124,96 @@ class FavoritesView extends StatelessWidget {
                     );
                   }
 
-                  return RefreshIndicator(
-                    onRefresh: () async {
-                      context.read<FavoritesBloc>().add(LoadFavorites());
-                    },
-                    child: GridView.builder(
-                      padding: const EdgeInsets.all(16),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 0.7,
-                            crossAxisSpacing: 12,
-                            mainAxisSpacing: 12,
-                          ),
-                      itemCount: state.favorites.length,
-                      itemBuilder: (context, index) {
-                        final favorite = state.favorites[index];
+                  // Extract folders
+                  final folders = {'All', ...state.favorites.map((f) => f.folder).toSet().toList()..sort()};
 
-                        // Convert Favorite to Movie for MovieCard
-                        final movie = Movie(
-                          id: favorite.movieId,
-                          title: favorite.movieTitle ?? 'Unknown',
-                          poster: favorite.moviePoster,
-                          type: favorite.movieType ?? 'Movie',
-                        );
+                  // Filter favorites based on selected folder
+                  final filteredFavorites = _selectedFolder == 'All'
+                      ? state.favorites
+                      : state.favorites.where((f) => f.folder == _selectedFolder).toList();
 
-                        return MovieCard(
-                          movie: movie,
-                          memCacheWidth: memCacheWidth,
-                          onTap: () {
-                            context.push(
-                              '/movie/${movie.id}?type=${movie.type}',
-                              extra: movie,
+                  return Column(
+                    children: [
+                      // Folder Filter List
+                      Container(
+                        height: 50,
+                        margin: const EdgeInsets.symmetric(vertical: 8),
+                        child: ListView.separated(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: folders.length,
+                          separatorBuilder: (context, index) => const SizedBox(width: 8),
+                          itemBuilder: (context, index) {
+                            final folder = folders.elementAt(index);
+                            return CategoryChip(
+                              label: folder,
+                              isSelected: folder == _selectedFolder,
+                              onTap: () {
+                                setState(() {
+                                  _selectedFolder = folder;
+                                });
+                              },
                             );
                           },
-                        );
-                      },
-                    ),
+                        ),
+                      ),
+
+                      // Favorites Grid
+                      Expanded(
+                        child: filteredFavorites.isEmpty
+                            ? const Center(child: Text("No items in this folder"))
+                            : RefreshIndicator(
+                                onRefresh: () async {
+                                  context.read<FavoritesBloc>().add(const LoadFavorites());
+                                },
+                                child: ListenableBuilder(
+                                  listenable: getIt<MiniplayerHeightNotifier>(),
+                                  builder: (context, _) {
+                                    final miniplayerHeight = getIt<MiniplayerHeightNotifier>().height;
+
+                                    return GridView.builder(
+                                      padding: EdgeInsets.only(
+                                        left: 16,
+                                        right: 16,
+                                        top: 16,
+                                        bottom: miniplayerHeight + 16,
+                                      ),
+                                      gridDelegate:
+                                          const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        childAspectRatio: 0.7,
+                                        crossAxisSpacing: 12,
+                                        mainAxisSpacing: 12,
+                                      ),
+                                      itemCount: filteredFavorites.length,
+                                      itemBuilder: (context, index) {
+                                        final favorite = filteredFavorites[index];
+
+                                        // Convert Favorite to Movie for MovieCard
+                                        final movie = Movie(
+                                          id: favorite.movieId,
+                                          title: favorite.movieTitle ?? 'Unknown',
+                                          poster: favorite.moviePoster,
+                                          type: favorite.movieType ?? 'Movie',
+                                        );
+
+                                        return MovieCard(
+                                          movie: movie,
+                                          memCacheWidth: memCacheWidth,
+                                          onTap: () {
+                                            context.push(
+                                              '/movie/${movie.id}?type=${movie.type}',
+                                              extra: movie,
+                                            );
+                                          },
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                      ),
+                    ],
                   );
                 }
 

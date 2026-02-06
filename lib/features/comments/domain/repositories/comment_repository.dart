@@ -32,4 +32,7 @@ abstract class CommentRepository {
 
   // Get trending comments from all videos
   Future<Either<Failure, List<Comment>>> getTrendingComments({int limit = 5});
+
+  // Real-time updates
+  Stream<List<Map<String, dynamic>>> getCommentStream(String videoId);
 }

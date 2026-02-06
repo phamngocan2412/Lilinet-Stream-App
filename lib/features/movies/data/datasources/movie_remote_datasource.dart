@@ -51,6 +51,30 @@ class MovieRemoteDataSource {
     );
   }
 
+  Future<MovieListResponse> getPopularMovies({int page = 1}) async {
+    debugPrint('Fetching popular via TMDB... Page: $page');
+    final response = await _dio.get(
+      ApiConstants.popularMovies,
+      queryParameters: {'page': page},
+    );
+    return await compute(
+      _parseMovieList,
+      response.data as Map<String, dynamic>,
+    );
+  }
+
+  Future<MovieListResponse> getTopRatedMovies({int page = 1}) async {
+    debugPrint('Fetching top rated via TMDB... Page: $page');
+    final response = await _dio.get(
+      ApiConstants.topRatedMovies,
+      queryParameters: {'page': page},
+    );
+    return await compute(
+      _parseMovieList,
+      response.data as Map<String, dynamic>,
+    );
+  }
+
   Future<MovieListResponse> searchMovies(String query, {int page = 1}) async {
     debugPrint('Searching for: $query via TMDB');
 
@@ -83,7 +107,7 @@ class MovieRemoteDataSource {
       queryParams['provider'] = provider;
     }
     if (type != null) {
-      queryParams['type'] = type;
+      queryParams['type'] = type.toLowerCase();
     }
 
     final response = await _dio.get(
@@ -120,6 +144,8 @@ class MovieRemoteDataSource {
       'animesaturn',
       'animeunity',
       'zoro',
+      'hianime',
+      'kickassanime',
     ];
     final isAnime = animeProviders.contains(providerKey);
     final category = isAnime ? 'anime' : 'movies';
@@ -135,7 +161,7 @@ class MovieRemoteDataSource {
       debugPrint('Using PATH param strategy for $providerKey');
       final response = await _dio.get(
         '/$category/$providerKey/watch/${Uri.encodeComponent(episodeId)}',
-        queryParameters: {if (server != null) 'server': server},
+        queryParameters: server != null ? {'server': server} : null,
       );
       return StreamingResponseModel.fromJson(response.data);
     } else {
@@ -143,12 +169,14 @@ class MovieRemoteDataSource {
       debugPrint(
         'Using QUERY param strategy for $providerKey (Movies/AnimePahe)',
       );
-      final queryParams = {
-        'episodeId': episodeId,
-        if (server != null) 'server': server,
-      };
+      final queryParams = {'episodeId': episodeId};
 
-      // Only mmovies need mediaId
+      // Add server if provided
+      if (server != null) {
+        queryParams['server'] = server;
+      }
+
+      // Only movies need mediaId
       if (!isAnime) {
         queryParams['mediaId'] = mediaId;
       }
@@ -181,6 +209,8 @@ class MovieRemoteDataSource {
       'animesaturn',
       'animeunity',
       'zoro',
+      'hianime',
+      'kickassanime',
     ];
 
     if (animeProviders.contains(providerKey)) {
@@ -191,10 +221,7 @@ class MovieRemoteDataSource {
     try {
       final response = await _dio.get(
         '/movies/$providerKey/servers',
-        queryParameters: {
-          'episodeId': episodeId,
-          'mediaId': mediaId,
-        },
+        queryParameters: {'episodeId': episodeId, 'mediaId': mediaId},
       );
 
       if (response.data is List) {

@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:lilinet_app/l10n/app_localizations.dart';
 
 /// Global error handler service for logging and reporting errors.
 ///
@@ -47,36 +48,58 @@ class ErrorHandlerService {
   }
 
   /// Converts a Failure or error to user-friendly message.
-  String getUserFriendlyMessage(Object error) {
+  String getUserFriendlyMessage(Object error, AppLocalizations l10n) {
     final errorStr = error.toString().toLowerCase();
 
     if (errorStr.contains('socket') ||
         errorStr.contains('connection') ||
         errorStr.contains('network') ||
         errorStr.contains('internet')) {
-      return 'Không có kết nối mạng. Vui lòng kiểm tra và thử lại.';
+      return l10n.noNetworkError;
     }
 
     if (errorStr.contains('timeout')) {
-      return 'Kết nối quá thời gian. Vui lòng thử lại.';
+      return l10n.timeoutError;
     }
 
-    if (errorStr.contains('unauthorized') || errorStr.contains('401')) {
-      return 'Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại.';
+    if (errorStr.contains('unauthorized') ||
+        errorStr.contains('401') ||
+        errorStr.contains('authentication required')) {
+      return l10n.authRequired;
+    }
+
+    if (errorStr.contains('invalid response')) {
+      return l10n.invalidResponse;
+    }
+
+    if (errorStr.contains('source unavailable')) {
+      return l10n.sourceUnavailable;
+    }
+
+    if (errorStr.contains('rate limit')) {
+      return l10n.rateLimited;
+    }
+
+    if (errorStr.contains('provider error')) {
+      return l10n.providerError;
+    }
+
+    if (errorStr.contains('service unavailable')) {
+      return l10n.serviceUnavailable;
     }
 
     if (errorStr.contains('forbidden') || errorStr.contains('403')) {
-      return 'Bạn không có quyền thực hiện thao tác này.';
+      return l10n.forbiddenError;
     }
 
     if (errorStr.contains('not found') || errorStr.contains('404')) {
-      return 'Không tìm thấy nội dung yêu cầu.';
+      return l10n.notFoundError;
     }
 
     if (errorStr.contains('server') || errorStr.contains('500')) {
-      return 'Lỗi máy chủ. Vui lòng thử lại sau.';
+      return l10n.serverError;
     }
 
-    return 'Đã xảy ra lỗi. Vui lòng thử lại.';
+    return l10n.unknownError;
   }
 }

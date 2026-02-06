@@ -84,7 +84,7 @@ class MovieRepositoryImpl implements MovieRepository {
       final movieModel = await _remoteDataSource.getMovieDetails(
         id,
         provider: provider,
-        type: type,
+        type: type?.toLowerCase(), // Ensure type is lowercase
       );
 
       // Only cache if it's full data (not fast mode)

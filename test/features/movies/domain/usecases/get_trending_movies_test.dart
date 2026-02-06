@@ -49,7 +49,7 @@ void main() {
       ),
     ];
 
-    final tParams = TrendingParams(type: 'all', page: 1);
+    final tParams = const TrendingParams(type: 'all', page: 1);
 
     test('should get trending movies from repository', () async {
       // Arrange
@@ -73,7 +73,7 @@ void main() {
 
     test('should get trending movies with different type', () async {
       // Arrange
-      final movieParams = TrendingParams(type: 'movie', page: 1);
+      const movieParams = TrendingParams(type: 'movie', page: 1);
       when(
         () => mockRepository.getTrendingMovies(
           type: any(named: 'type'),
@@ -93,7 +93,7 @@ void main() {
 
     test('should get trending movies with different page', () async {
       // Arrange
-      final pageParams = TrendingParams(type: 'all', page: 2);
+      const pageParams = TrendingParams(type: 'all', page: 2);
       when(
         () => mockRepository.getTrendingMovies(
           type: any(named: 'type'),
@@ -133,7 +133,7 @@ void main() {
 
     test('should use default values when not provided', () async {
       // Arrange
-      final defaultParams = TrendingParams();
+      final defaultParams = const TrendingParams();
       when(
         () => mockRepository.getTrendingMovies(
           type: any(named: 'type'),

@@ -42,8 +42,93 @@ class PlayVideo extends VideoPlayerEvent {
   ];
 }
 
+class LoadVideo extends VideoPlayerEvent {
+  final String url;
+  final String? subtitleUrl;
+  final String? subtitleLang;
+  final Map<String, String>? headers;
+  final bool isQualitySwitch;
+
+  const LoadVideo({
+    required this.url,
+    this.subtitleUrl,
+    this.subtitleLang,
+    this.headers,
+    this.isQualitySwitch = false,
+  });
+
+  @override
+  List<Object?> get props => [
+    url,
+    subtitleUrl,
+    subtitleLang,
+    headers,
+    isQualitySwitch,
+  ];
+}
+
+class TogglePlayPause extends VideoPlayerEvent {}
+
+class PauseVideoPlayback extends VideoPlayerEvent {}
+
+class ResumeVideoPlayback extends VideoPlayerEvent {}
+
+class SeekVideo extends VideoPlayerEvent {
+  final Duration position;
+  const SeekVideo(this.position);
+
+  @override
+  List<Object?> get props => [position];
+}
+
+class SetPlaybackSpeed extends VideoPlayerEvent {
+  final double speed;
+  const SetPlaybackSpeed(this.speed);
+
+  @override
+  List<Object?> get props => [speed];
+}
+
 class MinimizeVideo extends VideoPlayerEvent {}
 
 class MaximizeVideo extends VideoPlayerEvent {}
 
+class EnterPiP extends VideoPlayerEvent {}
+
 class CloseVideo extends VideoPlayerEvent {}
+
+class StartCast extends VideoPlayerEvent {
+  final String videoUrl;
+  const StartCast(this.videoUrl);
+
+  @override
+  List<Object?> get props => [videoUrl];
+}
+
+class DownloadCurrentVideo extends VideoPlayerEvent {
+  final String url;
+  final String fileName;
+  final String? movieId;
+  final String? movieTitle;
+  final String? episodeTitle;
+  final String? posterUrl;
+
+  const DownloadCurrentVideo({
+    required this.url,
+    required this.fileName,
+    this.movieId,
+    this.movieTitle,
+    this.episodeTitle,
+    this.posterUrl,
+  });
+
+  @override
+  List<Object?> get props => [
+    url,
+    fileName,
+    movieId,
+    movieTitle,
+    episodeTitle,
+    posterUrl,
+  ];
+}

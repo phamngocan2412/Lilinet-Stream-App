@@ -12,10 +12,19 @@ class MockMovieRemoteDataSource extends Mock implements MovieRemoteDataSource {}
 
 class MockMovieLocalDataSource extends Mock implements MovieLocalDataSource {}
 
+class FakeMovieListResponse extends Fake implements MovieListResponse {}
+
+class FakeMovieModel extends Fake implements MovieModel {}
+
 void main() {
   late MovieRepositoryImpl repository;
   late MockMovieRemoteDataSource mockRemoteDataSource;
   late MockMovieLocalDataSource mockLocalDataSource;
+
+  setUpAll(() {
+    registerFallbackValue(FakeMovieListResponse());
+    registerFallbackValue(FakeMovieModel());
+  });
 
   setUp(() {
     mockRemoteDataSource = MockMovieRemoteDataSource();

@@ -7,6 +7,7 @@ class Favorite extends Equatable {
   final String? movieTitle;
   final String? moviePoster;
   final String? movieType;
+  final String folder;
   final DateTime createdAt;
 
   const Favorite({
@@ -16,6 +17,7 @@ class Favorite extends Equatable {
     this.movieTitle,
     this.moviePoster,
     this.movieType,
+    this.folder = 'Default',
     required this.createdAt,
   });
 
@@ -27,6 +29,7 @@ class Favorite extends Equatable {
         movieTitle,
         moviePoster,
         movieType,
+        folder,
         createdAt,
       ];
 }

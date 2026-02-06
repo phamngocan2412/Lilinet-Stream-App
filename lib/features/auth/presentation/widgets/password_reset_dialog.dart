@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import '../../../../l10n/app_localizations.dart';
 import '../bloc/auth_bloc.dart';
 import '../bloc/auth_event.dart';
+import '../../../../core/widgets/loading_indicator.dart';
 import '../bloc/auth_state.dart';
 
 /// Dialog for requesting a password reset email.
@@ -47,7 +48,9 @@ class _PasswordResetDialogState extends State<PasswordResetDialog> {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      'Email đặt lại mật khẩu đã được gửi đến ${state.email}',
+                      AppLocalizations.of(
+                        context,
+                      )!.passwordResetEmailSent(state.email),
                     ),
                   ),
                 ],
@@ -99,7 +102,7 @@ class _PasswordResetDialogState extends State<PasswordResetDialog> {
 
                     // Title
                     Text(
-                      'Quên mật khẩu?',
+                      AppLocalizations.of(context)!.forgotPasswordTitle,
                       style: theme.textTheme.headlineSmall?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -108,7 +111,7 @@ class _PasswordResetDialogState extends State<PasswordResetDialog> {
 
                     // Description
                     Text(
-                      'Nhập email của bạn để nhận link đặt lại mật khẩu',
+                      AppLocalizations.of(context)!.passwordResetInstructions,
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: theme.hintColor,
                       ),
@@ -122,19 +125,19 @@ class _PasswordResetDialogState extends State<PasswordResetDialog> {
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.done,
                       onFieldSubmitted: (_) => _handleSubmit(),
-                      decoration: const InputDecoration(
-                        labelText: 'Email',
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.email_outlined),
-                        hintText: 'example@email.com',
+                      decoration: InputDecoration(
+                        labelText: AppLocalizations.of(context)!.email,
+                        border: const OutlineInputBorder(),
+                        prefixIcon: const Icon(Icons.email_outlined),
+                        hintText: AppLocalizations.of(context)!.emailHint,
                       ),
                       enabled: !isLoading,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Vui lòng nhập email';
+                          return AppLocalizations.of(context)!.enterEmail;
                         }
                         if (!_isValidEmail(value)) {
-                          return 'Email không hợp lệ';
+                          return AppLocalizations.of(context)!.invalidEmail;
                         }
                         return null;
                       },
@@ -147,23 +150,23 @@ class _PasswordResetDialogState extends State<PasswordResetDialog> {
                       child: FilledButton(
                         onPressed: isLoading ? null : _handleSubmit,
                         child: isLoading
-                            ? const SizedBox(
-                                height: 20,
-                                width: 20,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                  color: Colors.white,
-                                ),
+                            ? const LoadingIndicator(
+                                size: 20,
+                                color: Colors.white,
                               )
-                            : const Text('Gửi email đặt lại'),
+                            : Text(
+                                AppLocalizations.of(context)!.sendResetEmail,
+                              ),
                       ),
                     ),
                     const SizedBox(height: 12),
 
                     // Cancel button
                     TextButton(
-                      onPressed: isLoading ? null : () => Navigator.pop(context),
-                      child: const Text('Hủy'),
+                      onPressed: isLoading
+                          ? null
+                          : () => Navigator.pop(context),
+                      child: Text(AppLocalizations.of(context)!.cancel),
                     ),
                   ],
                 ),
@@ -182,8 +185,8 @@ class _PasswordResetDialogState extends State<PasswordResetDialog> {
   void _handleSubmit() {
     if (_formKey.currentState!.validate()) {
       context.read<AuthBloc>().add(
-            PasswordResetRequested(email: _emailController.text.trim()),
-          );
+        PasswordResetRequested(email: _emailController.text.trim()),
+      );
     }
   }
 }

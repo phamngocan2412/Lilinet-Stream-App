@@ -8,6 +8,7 @@ class FavoriteModel extends Favorite {
     super.movieTitle,
     super.moviePoster,
     super.movieType,
+    super.folder,
     required super.createdAt,
   });
 
@@ -19,6 +20,7 @@ class FavoriteModel extends Favorite {
       movieTitle: json['movie_title'] as String?,
       moviePoster: json['movie_poster'] as String?,
       movieType: json['movie_type'] as String?,
+      folder: json['folder'] as String? ?? 'Default',
       createdAt: DateTime.parse(json['created_at'] as String),
     );
   }
@@ -29,6 +31,7 @@ class FavoriteModel extends Favorite {
       'movie_title': movieTitle,
       'movie_poster': moviePoster,
       'movie_type': movieType,
+      'folder': folder,
     };
   }
 
@@ -40,6 +43,7 @@ class FavoriteModel extends Favorite {
       movieTitle: movieTitle,
       moviePoster: moviePoster,
       movieType: movieType,
+      folder: folder,
       createdAt: createdAt,
     );
   }

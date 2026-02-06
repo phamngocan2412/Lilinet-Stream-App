@@ -21,5 +21,17 @@ abstract class AuthRepository {
   /// Sends a password reset email to the specified email address.
   Future<Either<Failure, void>> sendPasswordResetEmail(String email);
 
+  /// Updates the user's profile information.
+  Future<Either<Failure, AppUser>> updateProfile({
+    String? displayName,
+    String? avatarUrl,
+  });
+
+  /// Changes the user's password.
+  Future<Either<Failure, void>> changePassword(String newPassword);
+
+  /// Deletes the user's account and all associated data.
+  Future<Either<Failure, void>> deleteAccount();
+
   Stream<AppUser?> get authStateChanges;
 }

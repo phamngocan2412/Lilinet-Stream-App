@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lilinet_app/l10n/app_localizations.dart';
 import 'core/extensions/settings_state_extension.dart';
 import 'core/theme/app_theme.dart';
+import 'core/network/network_cubit.dart';
+import 'core/widgets/offline_banner.dart';
 import 'routes/app_router.dart';
 import 'injection_container.dart';
 import 'features/movies/presentation/bloc/trending_movies/trending_movies_bloc.dart';
@@ -27,11 +30,12 @@ class MyApp extends StatelessWidget {
       providers: [
         // Auth BLoC - Available globally
         BlocProvider(
-          create: (context) => getIt<AuthBloc>()..add(CheckAuthStatus()),
+          create: (context) => getIt<AuthBloc>()..add(const CheckAuthStatus()),
         ),
         // Favorites BLoC - Available globally
         BlocProvider(
-          create: (context) => getIt<FavoritesBloc>()..add(LoadFavorites()),
+          create: (context) =>
+              getIt<FavoritesBloc>()..add(const LoadFavorites()),
         ),
         // History BLoC
         BlocProvider.value(value: getIt<HistoryBloc>()),
@@ -41,19 +45,21 @@ class MyApp extends StatelessWidget {
         BlocProvider.value(value: getIt<ExploreBloc>()),
         // Settings BLoC - Available globally
         BlocProvider(
-          create: (context) => getIt<SettingsBloc>()..add(LoadSettings()),
+          create: (context) => getIt<SettingsBloc>()..add(const LoadSettings()),
         ),
         // Video Player BLoC
         BlocProvider.value(value: getIt<VideoPlayerBloc>()),
         // Navigation Cubit - Available globally
         BlocProvider(create: (context) => getIt<NavigationCubit>()),
+        // Network Cubit - Available globally
+        BlocProvider(create: (context) => getIt<NetworkCubit>()),
       ],
       child: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is Authenticated) {
-            context.read<FavoritesBloc>().add(LoadFavorites());
+            context.read<FavoritesBloc>().add(const LoadFavorites());
           } else if (state is Unauthenticated) {
-            context.read<FavoritesBloc>().add(ClearFavorites());
+            context.read<FavoritesBloc>().add(const ClearFavorites());
           }
         },
         child: BlocBuilder<SettingsBloc, SettingsState>(
@@ -63,11 +69,16 @@ class MyApp extends StatelessWidget {
 
             return MaterialApp.router(
               title: 'Lilinet',
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
               debugShowCheckedModeBanner: false,
               theme: AppTheme.lightTheme,
               darkTheme: AppTheme.darkTheme,
               themeMode: themeMode,
               routerConfig: AppRouter.router,
+              builder: (context, child) {
+                return OfflineBanner(child: child!);
+              },
             );
           },
         ),

@@ -71,7 +71,11 @@ void main() {
         act: (cubit) => cubit.loadHistory(),
         expect: () => [
           const HistoryState.loading(),
-          HistoryState.loaded(history: tHistory),
+          HistoryState.loaded(
+            history: tHistory,
+            totalVideos: 2,
+            totalTimeSeconds: 720,
+          ),
         ],
         verify: (_) {
           verify(() => mockGetWatchHistory()).called(1);
@@ -170,7 +174,14 @@ void main() {
           return cubit;
         },
         act: (cubit) => cubit.deleteProgress('movie_1', episodeId: 'episode_1'),
-        expect: () => [HistoryState.loaded(history: tHistory)],
+        expect: () => [
+          const HistoryState.loading(),
+          HistoryState.loaded(
+            history: tHistory,
+            totalVideos: 2,
+            totalTimeSeconds: 720,
+          ),
+        ],
         verify: (_) {
           verify(
             () => mockDeleteWatchProgress('movie_1', episodeId: 'episode_1'),
@@ -208,7 +219,14 @@ void main() {
           return cubit;
         },
         act: (cubit) => cubit.deleteProgress('movie_1'),
-        expect: () => [HistoryState.loaded(history: tHistory)],
+        expect: () => [
+          const HistoryState.loading(),
+          HistoryState.loaded(
+            history: tHistory,
+            totalVideos: 2,
+            totalTimeSeconds: 720,
+          ),
+        ],
         verify: (_) {
           verify(
             () => mockDeleteWatchProgress('movie_1', episodeId: null),

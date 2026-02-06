@@ -5,14 +5,8 @@ import 'movie_card.dart';
 class MovieList extends StatelessWidget {
   final List<Movie> movies;
   final Function(Movie) onMovieTap;
-  final String? heroTagPrefix;
 
-  const MovieList({
-    super.key,
-    required this.movies,
-    required this.onMovieTap,
-    this.heroTagPrefix,
-  });
+  const MovieList({super.key, required this.movies, required this.onMovieTap});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +19,8 @@ class MovieList extends StatelessWidget {
     final devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
     // Assuming 32px horizontal padding (16*2) and 12px spacing.
     // Being slightly generous to be safe.
-    final cacheWidth = ((screenWidth - 32) / crossAxisCount * devicePixelRatio).ceil();
+    final cacheWidth = ((screenWidth - 32) / crossAxisCount * devicePixelRatio)
+        .ceil();
 
     return SliverGrid(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -38,9 +33,8 @@ class MovieList extends StatelessWidget {
         (context, index) {
           final movie = movies[index];
           return MovieCard(
+            key: ValueKey(movie.id),
             movie: movie,
-            heroTag:
-                heroTagPrefix != null ? '${heroTagPrefix}_${movie.id}' : null,
             onTap: () => onMovieTap(movie),
             memCacheWidth: cacheWidth,
           );

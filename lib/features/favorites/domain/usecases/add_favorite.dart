@@ -15,12 +15,14 @@ class AddFavorite {
     String? movieTitle,
     String? moviePoster,
     String? movieType,
+    String folder = 'Default',
   }) async {
     return await repository.addFavorite(
       movieId: movieId,
       movieTitle: movieTitle,
       moviePoster: moviePoster,
       movieType: movieType,
+      folder: folder,
     );
   }
 }
