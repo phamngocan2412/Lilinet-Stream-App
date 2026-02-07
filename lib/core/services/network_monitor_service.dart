@@ -54,9 +54,8 @@ class NetworkMonitorService {
 
     // Monitor connection changes
     Connectivity().onConnectivityChanged.listen((results) {
-      final result = results.isNotEmpty
-          ? results.first
-          : ConnectivityResult.none;
+      final result =
+          results.isNotEmpty ? results.first : ConnectivityResult.none;
       _isConnected = result != ConnectivityResult.none;
       _connectionType = result;
 
@@ -73,7 +72,8 @@ class NetworkMonitorService {
   /// Start monitoring network speed
   void _startMonitoring() {
     _timer?.cancel();
-    _timer = Timer.periodic(const Duration(milliseconds: _sampleInterval), (timer) {
+    _timer =
+        Timer.periodic(const Duration(milliseconds: _sampleInterval), (timer) {
       if (_isConnected) {
         _sampleNetworkSpeed();
       }
@@ -84,7 +84,8 @@ class NetworkMonitorService {
   Future<void> _sampleNetworkSpeed() async {
     try {
       final startTime = DateTime.now();
-      const url = 'http://www.google.com/generate_204'; // Lightweight URL for testing
+      const url =
+          'http://www.google.com/generate_204'; // Lightweight URL for testing
 
       final request = await HttpClient().getUrl(Uri.parse(url));
       request.headers.add(

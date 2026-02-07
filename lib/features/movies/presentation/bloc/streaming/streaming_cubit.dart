@@ -90,7 +90,8 @@ class StreamingCubit extends Cubit<StreamingState> {
         !_isCancelled &&
         server == null) {
       if (kDebugMode) {
-        debugPrint('✅ StreamingCubit: Reusing cached links for episode $episodeId');
+        debugPrint(
+            '✅ StreamingCubit: Reusing cached links for episode $episodeId');
       }
       return;
     }
@@ -407,9 +408,8 @@ class StreamingCubit extends Cubit<StreamingState> {
           _cachedAvailableServers = defaultServers;
         },
         (servers) {
-          _cachedAvailableServers = servers.isNotEmpty
-              ? servers
-              : defaultServers;
+          _cachedAvailableServers =
+              servers.isNotEmpty ? servers : defaultServers;
           if (kDebugMode) {
             debugPrint('📡 Available servers: $_cachedAvailableServers');
           }

@@ -170,7 +170,8 @@ class _AuthDialogState extends State<AuthDialog> {
                       child: FilledButton(
                         onPressed: isLoading ? null : _handleSubmit,
                         child: isLoading
-                            ? const LoadingIndicator(size: 20, color: Colors.white)
+                            ? const LoadingIndicator(
+                                size: 20, color: Colors.white)
                             : Text(_isLogin ? l10n.login : l10n.signUp),
                       ),
                     ),

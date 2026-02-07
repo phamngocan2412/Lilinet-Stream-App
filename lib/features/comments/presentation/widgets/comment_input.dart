@@ -97,8 +97,8 @@ class _CommentInputState extends State<CommentInput> {
                       child: Text(
                         AppLocalizations.of(context)!.loginToComment,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Theme.of(context).disabledColor,
-                        ),
+                              color: Theme.of(context).disabledColor,
+                            ),
                       ),
                     ),
                   ),

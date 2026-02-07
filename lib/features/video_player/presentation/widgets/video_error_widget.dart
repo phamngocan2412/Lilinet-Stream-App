@@ -28,7 +28,8 @@ class VideoErrorWidget extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(AppSpacing.md),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.error.withValues(alpha: 0.1),
+                color:
+                    Theme.of(context).colorScheme.error.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: Icon(
@@ -41,9 +42,9 @@ class VideoErrorWidget extends StatelessWidget {
             Text(
               'Playback Error',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: Theme.of(context).colorScheme.onSurface,
-                fontWeight: FontWeight.bold,
-              ),
+                    color: Theme.of(context).colorScheme.onSurface,
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
             const SizedBox(height: AppSpacing.sm),
             Text(
@@ -51,7 +52,8 @@ class VideoErrorWidget extends StatelessWidget {
               textAlign: TextAlign.center,
               style: Theme.of(
                 context,
-              ).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
+              ).textTheme.bodyMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant),
             ),
             const SizedBox(height: AppSpacing.xl),
             Wrap(
@@ -65,7 +67,8 @@ class VideoErrorWidget extends StatelessWidget {
                     icon: const Icon(Icons.home),
                     label: const Text('Back to Home'),
                     style: TextButton.styleFrom(
-                      foregroundColor: Theme.of(context).colorScheme.onSurfaceVariant,
+                      foregroundColor:
+                          Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
                   ),
                 if (onClose != null)
@@ -74,7 +77,8 @@ class VideoErrorWidget extends StatelessWidget {
                     icon: const Icon(Icons.close),
                     label: const Text('Close'),
                     style: TextButton.styleFrom(
-                      foregroundColor: Theme.of(context).colorScheme.onSurfaceVariant,
+                      foregroundColor:
+                          Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
                   ),
                 FilledButton.icon(

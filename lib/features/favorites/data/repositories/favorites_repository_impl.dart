@@ -12,7 +12,8 @@ class FavoritesRepositoryImpl implements FavoritesRepository {
   FavoritesRepositoryImpl(this.dataSource);
 
   @override
-  Future<Either<Failure, List<Favorite>>> getFavorites({int page = 1, int limit = 20}) async {
+  Future<Either<Failure, List<Favorite>>> getFavorites(
+      {int page = 1, int limit = 20}) async {
     try {
       final favorites = await dataSource.getFavorites(page: page, limit: limit);
       return Right(favorites.map((f) => f.toEntity()).toList());

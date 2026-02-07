@@ -64,7 +64,8 @@ class PlayerCommentsView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      AppLocalizations.of(context)!.commentsCount(comments.length),
+                      AppLocalizations.of(context)!
+                          .commentsCount(comments.length),
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 18,
@@ -112,8 +113,8 @@ class PlayerCommentsView extends StatelessWidget {
                         ),
                         onLike: () {
                           context.read<CommentCubit>().likeComment(
-                            comment.id,
-                          );
+                                comment.id,
+                              );
                         },
                         onDislike: () {},
                         onReply: () {
@@ -125,8 +126,8 @@ class PlayerCommentsView extends StatelessWidget {
                         },
                         onToggleReplies: () {
                           context.read<CommentCubit>().toggleReplies(
-                            comment.id,
-                          );
+                                comment.id,
+                              );
                         },
                         isRepliesExpanded: isExpanded,
                         isLiked: likedCommentIds.contains(comment.id),
@@ -138,8 +139,8 @@ class PlayerCommentsView extends StatelessWidget {
                         },
                         onLoadMoreReplies: () {
                           context.read<CommentCubit>().toggleReplies(
-                            comment.id,
-                          );
+                                comment.id,
+                              );
                         },
                         likedReplyIds: likedCommentIds,
                       );
@@ -185,9 +186,9 @@ class PlayerCommentsView extends StatelessWidget {
             onPressed: () {
               if (controller.text.trim().isNotEmpty) {
                 context.read<CommentCubit>().addComment(
-                  controller.text,
-                  parentId: commentId,
-                );
+                      controller.text,
+                      parentId: commentId,
+                    );
                 Navigator.pop(dialogContext);
               }
             },

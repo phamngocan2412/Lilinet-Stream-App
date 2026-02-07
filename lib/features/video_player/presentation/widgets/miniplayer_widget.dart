@@ -48,9 +48,9 @@ class _MiniplayerWidgetState extends State<MiniplayerWidget> {
       // Ignore streamingState changes to prevent unnecessary rebuilds
       buildWhen: (previous, current) {
         return previous.episodeId != current.episodeId ||
-               previous.status != current.status ||
-               previous.title != current.title ||
-               previous.posterUrl != current.posterUrl;
+            previous.status != current.status ||
+            previous.title != current.title ||
+            previous.posterUrl != current.posterUrl;
       },
       // Listen to all changes so we can re-expand even if status is Same
       listener: (context, state) {

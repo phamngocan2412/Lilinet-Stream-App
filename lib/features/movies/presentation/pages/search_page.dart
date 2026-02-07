@@ -105,8 +105,8 @@ class _SearchPageViewState extends State<SearchPageView> {
                             currentOptions: state.filterOptions,
                             onApply: (options) {
                               context.read<SearchBloc>().add(
-                                SearchOptionsChanged(options),
-                              );
+                                    SearchOptionsChanged(options),
+                                  );
                             },
                           ),
                         );
@@ -168,8 +168,8 @@ class _SearchPageViewState extends State<SearchPageView> {
                 message: state.errorMessage,
                 onRetry: () {
                   context.read<SearchBloc>().add(
-                    SearchQueryChanged(state.query),
-                  );
+                        SearchQueryChanged(state.query),
+                      );
                 },
               ),
             );

@@ -10,7 +10,8 @@ class GetFavorites {
 
   GetFavorites(this.repository);
 
-  Future<Either<Failure, List<Favorite>>> call({int page = 1, int limit = 20}) async {
+  Future<Either<Failure, List<Favorite>>> call(
+      {int page = 1, int limit = 20}) async {
     return await repository.getFavorites(page: page, limit: limit);
   }
 }

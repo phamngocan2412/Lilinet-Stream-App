@@ -88,7 +88,8 @@ class _NextEpisodeCountdownState extends State<NextEpisodeCountdown> {
                   CircularProgressIndicator(
                     value: _secondsRemaining / widget.durationSeconds,
                     strokeWidth: 6,
-                    valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFFC6A664)),
+                    valueColor:
+                        const AlwaysStoppedAnimation<Color>(Color(0xFFC6A664)),
                     backgroundColor: Colors.white24,
                   ),
                   Text(
@@ -111,7 +112,8 @@ class _NextEpisodeCountdownState extends State<NextEpisodeCountdown> {
                   style: OutlinedButton.styleFrom(
                     foregroundColor: Colors.white,
                     side: const BorderSide(color: Colors.white30),
-                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 12),
                   ),
                   child: const Text('Cancel'),
                 ),
@@ -121,7 +123,8 @@ class _NextEpisodeCountdownState extends State<NextEpisodeCountdown> {
                   style: FilledButton.styleFrom(
                     backgroundColor: Colors.white,
                     foregroundColor: Colors.black,
-                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 12),
                   ),
                   child: const Text('Play Now'),
                 ),

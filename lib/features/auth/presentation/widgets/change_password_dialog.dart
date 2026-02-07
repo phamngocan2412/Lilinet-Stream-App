@@ -133,7 +133,8 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
                               Navigator.pop(context);
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
-                                  content: Text('Password changed successfully'),
+                                  content:
+                                      Text('Password changed successfully'),
                                   backgroundColor: Colors.green,
                                 ),
                               );

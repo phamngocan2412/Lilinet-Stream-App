@@ -41,10 +41,9 @@ class MovieDetailsHeader extends StatelessWidget {
             AppCachedImage(
               imageUrl: movie.poster ?? movie.cover ?? '',
               fit: BoxFit.cover,
-              memCacheWidth:
-                  (MediaQuery.of(context).size.width *
-                          MediaQuery.of(context).devicePixelRatio)
-                      .toInt(),
+              memCacheWidth: (MediaQuery.of(context).size.width *
+                      MediaQuery.of(context).devicePixelRatio)
+                  .toInt(),
             ),
             // Gradient Overlay
             Container(
@@ -98,40 +97,64 @@ class MovieDetailsHeader extends StatelessWidget {
                         if (movie.releaseDate != null) ...[
                           Text(
                             movie.releaseDate!.split('-').first,
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.onSurface.withValues(alpha: 0.7),
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  color: Theme.of(
+                                    context,
+                                  )
+                                      .colorScheme
+                                      .onSurface
+                                      .withValues(alpha: 0.7),
+                                ),
                           ),
                           const SizedBox(width: 12),
                           Text(
                             '•',
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.onSurface.withValues(alpha: 0.3),
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  color: Theme.of(
+                                    context,
+                                  )
+                                      .colorScheme
+                                      .onSurface
+                                      .withValues(alpha: 0.3),
+                                ),
                           ),
                           const SizedBox(width: 12),
                         ],
                         if (movie.duration != null) ...[
                           Text(
                             movie.duration!,
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.onSurface.withValues(alpha: 0.7),
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  color: Theme.of(
+                                    context,
+                                  )
+                                      .colorScheme
+                                      .onSurface
+                                      .withValues(alpha: 0.7),
+                                ),
                           ),
                           const SizedBox(width: 12),
                           Text(
                             '•',
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.onSurface.withValues(alpha: 0.3),
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  color: Theme.of(
+                                    context,
+                                  )
+                                      .colorScheme
+                                      .onSurface
+                                      .withValues(alpha: 0.3),
+                                ),
                           ),
                           const SizedBox(width: 12),
                         ],
@@ -153,10 +176,14 @@ class MovieDetailsHeader extends StatelessWidget {
                                     movie.type.toLowerCase().contains('series'))
                                 ? 'TV'
                                 : 'HD',
-                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                              color: Theme.of(context).colorScheme.onSurface,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelSmall
+                                ?.copyWith(
+                                  color:
+                                      Theme.of(context).colorScheme.onSurface,
+                                  fontWeight: FontWeight.bold,
+                                ),
                           ),
                         ),
                       ],
@@ -173,10 +200,13 @@ class MovieDetailsHeader extends StatelessWidget {
                           icon: const Icon(Icons.play_arrow_rounded, size: 28),
                           label: Text(
                             'Play Now',
-                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
                           ),
                           style: FilledButton.styleFrom(
                             backgroundColor: Theme.of(

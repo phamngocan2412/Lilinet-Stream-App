@@ -79,45 +79,43 @@ class CommentCubit extends Cubit<CommentState> {
   }
 
   void _subscribeToRealtime(String videoId) {
-    _realtimeSubscription = _repository
-        .getCommentStream(videoId)
-        .listen(
-          (events) async {
-            // When a change occurs, we simply reload the comments for now to ensure consistency.
-            // A more optimized approach would be to parse the event and update the list locally.
-            // Given we are using BLoC and immutable state, fetching fresh data is safer and easier.
-            debugPrint('🔔 Realtime comment update received');
+    _realtimeSubscription = _repository.getCommentStream(videoId).listen(
+      (events) async {
+        // When a change occurs, we simply reload the comments for now to ensure consistency.
+        // A more optimized approach would be to parse the event and update the list locally.
+        // Given we are using BLoC and immutable state, fetching fresh data is safer and easier.
+        debugPrint('🔔 Realtime comment update received');
 
-            // We do a "silent" reload - keeping the current state visible but updating data
-            final results = await Future.wait([
-              _getComments(videoId),
-              _repository.getLikedCommentIds(videoId), // Refresh likes too
-            ]);
+        // We do a "silent" reload - keeping the current state visible but updating data
+        final results = await Future.wait([
+          _getComments(videoId),
+          _repository.getLikedCommentIds(videoId), // Refresh likes too
+        ]);
 
-            if (isClosed) return;
+        if (isClosed) return;
 
-            final commentsResult = results[0] as Either<Failure, List<Comment>>;
-            // We keep existing liked IDs unless we want to refresh them too
+        final commentsResult = results[0] as Either<Failure, List<Comment>>;
+        // We keep existing liked IDs unless we want to refresh them too
 
-            state.mapOrNull(
-              loaded: (loadedState) {
-                commentsResult.fold(
-                  (l) => null, // Ignore errors on silent refresh
-                  (newComments) {
-                    final sorted = _sortComments(
-                      newComments,
-                      loadedState.sortType,
-                    );
-                    emit(loadedState.copyWith(comments: sorted));
-                  },
+        state.mapOrNull(
+          loaded: (loadedState) {
+            commentsResult.fold(
+              (l) => null, // Ignore errors on silent refresh
+              (newComments) {
+                final sorted = _sortComments(
+                  newComments,
+                  loadedState.sortType,
                 );
+                emit(loadedState.copyWith(comments: sorted));
               },
             );
           },
-          onError: (error) {
-            debugPrint('Realtime subscription error: $error');
-          },
         );
+      },
+      onError: (error) {
+        debugPrint('Realtime subscription error: $error');
+      },
+    );
   }
 
   void changeSortType(CommentSortType type) {

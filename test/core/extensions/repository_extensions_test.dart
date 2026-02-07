@@ -14,9 +14,12 @@ void main() {
   });
 
   group('safeCall', () {
-    test('should catch generic exception and return generic failure without sensitive details', () async {
+    test(
+        'should catch generic exception and return generic failure without sensitive details',
+        () async {
       // Setup: A function that throws a sensitive exception
-      const sensitiveMessage = 'Database connection failed: user=admin password=secret';
+      const sensitiveMessage =
+          'Database connection failed: user=admin password=secret';
 
       final result = await repository.safeCall(() async {
         throw Exception(sensitiveMessage);
@@ -30,13 +33,16 @@ void main() {
 
           // Verify that sensitive details are NOT leaked
           expect(serverFailure.message, isNot(contains(sensitiveMessage)));
-          expect(serverFailure.message, equals('An unexpected error occurred. Please try again later.'));
+          expect(serverFailure.message,
+              equals('An unexpected error occurred. Please try again later.'));
         },
         (_) => fail('Should return Left(Failure)'),
       );
     });
 
-    test('should catch DioException and return generic failure without leaking URL', () async {
+    test(
+        'should catch DioException and return generic failure without leaking URL',
+        () async {
       const sensitiveUrl = 'https://api.example.com/users/123/token=SECRET';
 
       final result = await repository.safeCall(() async {
@@ -49,12 +55,13 @@ void main() {
 
       result.fold(
         (failure) {
-           expect(failure, isA<ServerFailure>());
-           final serverFailure = failure as ServerFailure;
+          expect(failure, isA<ServerFailure>());
+          final serverFailure = failure as ServerFailure;
 
-           // Verify that URL is NOT leaked
-           expect(serverFailure.message, isNot(contains(sensitiveUrl)));
-           expect(serverFailure.message, equals('An unexpected network error occurred.'));
+          // Verify that URL is NOT leaked
+          expect(serverFailure.message, isNot(contains(sensitiveUrl)));
+          expect(serverFailure.message,
+              equals('An unexpected network error occurred.'));
         },
         (_) => fail('Should return Left(Failure)'),
       );
