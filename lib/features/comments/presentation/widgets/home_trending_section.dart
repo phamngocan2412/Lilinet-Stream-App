@@ -29,16 +29,21 @@ class HomeTrendingSectionView extends StatelessWidget {
       builder: (context, state) {
         return state.when(
           initial: () => const SizedBox.shrink(),
-          loading: () => _buildLoadingShimmer(context),
-          loaded: (comments) => _buildTrendingList(context, comments),
+          loading: () => const HomeTrendingShimmer(),
+          loaded: (comments) => HomeTrendingListWidget(comments: comments),
           empty: () => const SizedBox.shrink(),
           error: (message) => const SizedBox.shrink(),
         );
       },
     );
   }
+}
 
-  Widget _buildLoadingShimmer(BuildContext context) {
+class HomeTrendingShimmer extends StatelessWidget {
+  const HomeTrendingShimmer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       height: 140,
       margin: const EdgeInsets.symmetric(vertical: 12),
@@ -60,8 +65,15 @@ class HomeTrendingSectionView extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildTrendingList(BuildContext context, List<Comment> comments) {
+class HomeTrendingListWidget extends StatelessWidget {
+  final List<Comment> comments;
+
+  const HomeTrendingListWidget({super.key, required this.comments});
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -94,15 +106,14 @@ class HomeTrendingSectionView extends StatelessWidget {
               return TrendingCommentCard(
                 comment: comment,
                 onTap: () {
-                  // Navigate to video with comment highlight
                   final mediaType = comment.mediaType ?? 'TV Series';
                   final videoId = comment.videoId;
 
-                  // Validate videoId
                   if (videoId.isEmpty || videoId.startsWith('mock-')) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text(AppLocalizations.of(context)!.cannotOpenMockVideo),
+                        content: Text(
+                            AppLocalizations.of(context)!.cannotOpenMockVideo),
                         duration: const Duration(seconds: 2),
                       ),
                     );
@@ -150,7 +161,6 @@ class TrendingCommentCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // User info row
             Row(
               children: [
                 CircleAvatar(
@@ -178,7 +188,6 @@ class TrendingCommentCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                // Trending badge
                 Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 6,
@@ -211,8 +220,6 @@ class TrendingCommentCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 6),
-
-            // Comment content
             Expanded(
               child: Text(
                 comment.content,
@@ -221,10 +228,7 @@ class TrendingCommentCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-
             const SizedBox(height: 6),
-
-            // Stats row
             Row(
               children: [
                 Icon(Icons.thumb_up, size: 14, color: Colors.grey[600]),
@@ -249,7 +253,6 @@ class TrendingCommentCard extends StatelessWidget {
   }
 }
 
-// State Management for Trending Comments
 abstract class HomeTrendingState {
   const HomeTrendingState();
 

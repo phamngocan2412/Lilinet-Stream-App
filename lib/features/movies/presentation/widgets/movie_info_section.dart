@@ -33,7 +33,7 @@ class MovieInfoSection extends StatelessWidget {
     'Thriller': '53',
     'War': '10752',
     'Western': '37',
-    'Anime': '16', // Custom mapping for Anime
+    'Anime': '16',
   };
 
   @override
@@ -45,21 +45,20 @@ class MovieInfoSection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (isLoading)
-              _buildSkeletonText(context)
+              const SkeletonTextWidget()
             else if (movie.description != null) ...[
               Text(
                 movie.description!,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Theme.of(
-                    context,
-                  ).colorScheme.onSurface.withValues(alpha: 0.8),
-                  height: 1.6,
-                ),
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withValues(alpha: 0.8),
+                      height: 1.6,
+                    ),
               ),
               const SizedBox(height: 24),
             ],
-
-            // Genres
             if (!isLoading)
               Wrap(
                 spacing: 8,
@@ -70,9 +69,8 @@ class MovieInfoSection extends StatelessWidget {
 
                   return ActionChip(
                     label: Text(genre),
-                    backgroundColor: Theme.of(
-                      context,
-                    ).colorScheme.surfaceContainerHighest,
+                    backgroundColor:
+                        Theme.of(context).colorScheme.surfaceContainerHighest,
                     labelStyle: TextStyle(
                       color: Theme.of(context).colorScheme.onSurfaceVariant,
                       fontSize: 12,
@@ -90,8 +88,6 @@ class MovieInfoSection extends StatelessWidget {
                 }).toList(),
               ),
             const SizedBox(height: 24),
-
-            // Info Grid
             if (!isLoading)
               GridView.count(
                 crossAxisCount: 2,
@@ -100,28 +96,25 @@ class MovieInfoSection extends StatelessWidget {
                 childAspectRatio: 3,
                 children: [
                   if (movie.rating != null)
-                    _buildInfoItem(
-                      context,
-                      'Rating',
-                      '${movie.rating!.toStringAsFixed(1)}/10',
-                      Icons.star_rounded,
-                      Colors.amber,
+                    InfoItemWidget(
+                      label: 'Rating',
+                      value: '${movie.rating!.toStringAsFixed(1)}/10',
+                      icon: Icons.star_rounded,
+                      iconColor: Colors.amber,
                     ),
                   if (movie.country != null)
-                    _buildInfoItem(
-                      context,
-                      'Country',
-                      movie.country!,
-                      Icons.public,
-                      Colors.blueAccent,
+                    InfoItemWidget(
+                      label: 'Country',
+                      value: movie.country!,
+                      icon: Icons.public,
+                      iconColor: Colors.blueAccent,
                     ),
                   if (movie.production != null)
-                    _buildInfoItem(
-                      context,
-                      'Production',
-                      movie.production!,
-                      Icons.business,
-                      Colors.purpleAccent,
+                    InfoItemWidget(
+                      label: 'Production',
+                      value: movie.production!,
+                      icon: Icons.business,
+                      iconColor: Colors.purpleAccent,
                     ),
                 ],
               ),
@@ -130,39 +123,58 @@ class MovieInfoSection extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildSkeletonText(BuildContext context) {
+class SkeletonTextWidget extends StatelessWidget {
+  const SkeletonTextWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
           height: 16,
           width: 300,
-          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.1),
+          color: colorScheme.onSurface.withValues(alpha: 0.1),
         ),
         const SizedBox(height: 8),
         Container(
           height: 16,
           width: 250,
-          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.1),
+          color: colorScheme.onSurface.withValues(alpha: 0.1),
         ),
         const SizedBox(height: 8),
         Container(
           height: 16,
           width: 280,
-          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.1),
+          color: colorScheme.onSurface.withValues(alpha: 0.1),
         ),
       ],
     );
   }
+}
 
-  Widget _buildInfoItem(
-    BuildContext context,
-    String label,
-    String value,
-    IconData icon,
-    Color iconColor,
-  ) {
+class InfoItemWidget extends StatelessWidget {
+  final String label;
+  final String value;
+  final IconData icon;
+  final Color iconColor;
+
+  const InfoItemWidget({
+    super.key,
+    required this.label,
+    required this.value,
+    required this.icon,
+    required this.iconColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Row(
       children: [
         Container(
@@ -182,9 +194,7 @@ class MovieInfoSection extends StatelessWidget {
               Text(
                 label,
                 style: TextStyle(
-                  color: Theme.of(
-                    context,
-                  ).colorScheme.onSurface.withValues(alpha: 0.6),
+                  color: colorScheme.onSurface.withValues(alpha: 0.6),
                   fontSize: 12,
                 ),
               ),
@@ -193,7 +203,7 @@ class MovieInfoSection extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                  color: Theme.of(context).colorScheme.onSurface,
+                  color: colorScheme.onSurface,
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
                 ),

@@ -18,9 +18,6 @@ class RecentlyWatchedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    // HistoryBloc is provided globally in MyApp
-    // Just trigger a load if needed, but BlocBuilder handles listening
-    // We can add a listener or just rely on state
     return Scaffold(
       appBar: AppBar(
         title: const Text('Continue Watching'),
@@ -62,10 +59,9 @@ class RecentlyWatchedPage extends StatelessWidget {
                       top: 16,
                       bottom: miniplayerHeight + 16,
                     ),
-                    itemCount: state.history.length + 1, // +1 for stats header
+                    itemCount: state.history.length + 1,
                     itemBuilder: (context, index) {
                       if (index == 0) {
-                        // Statistics Header
                         final hours = state.totalTimeSeconds ~/ 3600;
                         final minutes = (state.totalTimeSeconds % 3600) ~/ 60;
 
@@ -73,16 +69,14 @@ class RecentlyWatchedPage extends StatelessWidget {
                           margin: const EdgeInsets.only(bottom: 16),
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.surfaceContainer,
+                            color:
+                                Theme.of(context).colorScheme.surfaceContainer,
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              _buildStatItem(
-                                context,
+                              StatItemWidget(
                                 icon: Icons.movie_filter_outlined,
                                 value: '${state.totalVideos}',
                                 label: 'Videos Watched',
@@ -90,12 +84,11 @@ class RecentlyWatchedPage extends StatelessWidget {
                               Container(
                                 height: 40,
                                 width: 1,
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.outlineVariant,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .outlineVariant,
                               ),
-                              _buildStatItem(
-                                context,
+                              StatItemWidget(
                                 icon: Icons.timer_outlined,
                                 value: '${hours}h ${minutes}m',
                                 label: 'Total Time',
@@ -124,22 +117,21 @@ class RecentlyWatchedPage extends StatelessWidget {
                         child: InkWell(
                           onTap: () {
                             context.read<VideoPlayerBloc>().add(
-                              PlayVideo(
-                                episodeId: item.episodeId ?? item.mediaId,
-                                mediaId: item.mediaId,
-                                title: item.title,
-                                posterUrl: item.posterUrl,
-                                episodeTitle: item.episodeTitle,
-                                startPosition: Duration(
-                                  seconds: item.positionSeconds,
-                                ),
-                              ),
-                            );
+                                  PlayVideo(
+                                    episodeId: item.episodeId ?? item.mediaId,
+                                    mediaId: item.mediaId,
+                                    title: item.title,
+                                    posterUrl: item.posterUrl,
+                                    episodeTitle: item.episodeTitle,
+                                    startPosition: Duration(
+                                      seconds: item.positionSeconds,
+                                    ),
+                                  ),
+                                );
                           },
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // Thumbnail
                               SizedBox(
                                 width: 120,
                                 height: 80,
@@ -160,7 +152,6 @@ class RecentlyWatchedPage extends StatelessWidget {
                                         size: 32,
                                       ),
                                     ),
-                                    // Progress Bar
                                     Positioned(
                                       bottom: 0,
                                       left: 0,
@@ -170,14 +161,13 @@ class RecentlyWatchedPage extends StatelessWidget {
                                         backgroundColor: Colors.transparent,
                                         valueColor:
                                             AlwaysStoppedAnimation<Color>(
-                                              theme.colorScheme.primary,
-                                            ),
+                                          theme.colorScheme.primary,
+                                        ),
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
-                              // Info
                               Expanded(
                                 child: Padding(
                                   padding: const EdgeInsets.all(12.0),
@@ -189,7 +179,8 @@ class RecentlyWatchedPage extends StatelessWidget {
                                         item.title,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
-                                        style: theme.textTheme.titleMedium?.copyWith(
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -199,23 +190,26 @@ class RecentlyWatchedPage extends StatelessWidget {
                                           item.episodeTitle!,
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
-                                          style: theme.textTheme.bodyMedium?.copyWith(
-                                            color: theme.colorScheme.onSurfaceVariant,
+                                          style: theme.textTheme.bodyMedium
+                                              ?.copyWith(
+                                            color: theme
+                                                .colorScheme.onSurfaceVariant,
                                           ),
                                         ),
                                       ],
                                       const SizedBox(height: 8),
                                       Text(
                                         'Stopped at $percentage%',
-                                        style: theme.textTheme.bodySmall?.copyWith(
-                                          color: theme.colorScheme.onSurfaceVariant,
+                                        style:
+                                            theme.textTheme.bodySmall?.copyWith(
+                                          color: theme
+                                              .colorScheme.onSurfaceVariant,
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
                               ),
-                              // Delete Button
                               IconButton(
                                 icon: Icon(
                                   Icons.close,
@@ -224,9 +218,9 @@ class RecentlyWatchedPage extends StatelessWidget {
                                 ),
                                 onPressed: () {
                                   context.read<HistoryBloc>().deleteProgress(
-                                    item.mediaId,
-                                    episodeId: item.episodeId,
-                                  );
+                                        item.mediaId,
+                                        episodeId: item.episodeId,
+                                      );
                                 },
                                 tooltip: AppLocalizations.of(context)!.delete,
                               ),
@@ -245,17 +239,26 @@ class RecentlyWatchedPage extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildStatItem(
-    BuildContext context, {
-    required IconData icon,
-    required String value,
-    required String label,
-  }) {
+class StatItemWidget extends StatelessWidget {
+  final IconData icon;
+  final String value;
+  final String label;
+
+  const StatItemWidget({
+    super.key,
+    required this.icon,
+    required this.value,
+    required this.label,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Column(
       children: [
-        Icon(icon, color: Theme.of(context).colorScheme.primary),
+        Icon(icon, color: theme.colorScheme.primary),
         const SizedBox(height: 8),
         Text(
           value,
