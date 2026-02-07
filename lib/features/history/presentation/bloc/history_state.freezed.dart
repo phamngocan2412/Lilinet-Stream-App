@@ -161,15 +161,33 @@ extension HistoryStatePatterns on HistoryState {
   /// }
   /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( List<WatchProgress> history,  int totalVideos,  int totalTimeSeconds)?  loaded,TResult Function()?  empty,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
-switch (_that) {
-case HistoryInitial() when initial != null:
-return initial();case HistoryLoading() when loading != null:
-return loading();case HistoryLoaded() when loaded != null:
-return loaded(_that.history,_that.totalVideos,_that.totalTimeSeconds);case HistoryEmpty() when empty != null:
-return empty();case HistoryError() when error != null:
-return error(_that.message);case _:
-  return orElse();
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(
+            List<WatchProgress> history, int totalVideos, int totalTimeSeconds)?
+        loaded,
+    TResult Function()? empty,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case HistoryInitial() when initial != null:
+        return initial();
+      case HistoryLoading() when loading != null:
+        return loading();
+      case HistoryLoaded() when loaded != null:
+        return loaded(_that.history, _that.totalVideos, _that.totalTimeSeconds);
+      case HistoryEmpty() when empty != null:
+        return empty();
+      case HistoryError() when error != null:
+        return error(_that.message);
+      case _:
+        return orElse();
+    }
+  }
 
   /// A `switch`-like method, using callbacks.
   ///
@@ -184,48 +202,52 @@ return error(_that.message);case _:
   /// }
   /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( List<WatchProgress> history,  int totalVideos,  int totalTimeSeconds)  loaded,required TResult Function()  empty,required TResult Function( String message)  error,}) {final _that = this;
-switch (_that) {
-case HistoryInitial():
-return initial();case HistoryLoading():
-return loading();case HistoryLoaded():
-return loaded(_that.history,_that.totalVideos,_that.totalTimeSeconds);case HistoryEmpty():
-return empty();case HistoryError():
-return error(_that.message);case _:
-  throw StateError('Unexpected subclass');
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(
+            List<WatchProgress> history, int totalVideos, int totalTimeSeconds)
+        loaded,
+    required TResult Function() empty,
+    required TResult Function(String message) error,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case HistoryInitial():
+        return initial();
+      case HistoryLoading():
+        return loading();
+      case HistoryLoaded():
+        return loaded(_that.history, _that.totalVideos, _that.totalTimeSeconds);
+      case HistoryEmpty():
+        return empty();
+      case HistoryError():
+        return error(_that.message);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
 
-}
-}
-/// A variant of `when` that fallback to returning `null`
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( List<WatchProgress> history,  int totalVideos,  int totalTimeSeconds)?  loaded,TResult? Function()?  empty,TResult? Function( String message)?  error,}) {final _that = this;
-switch (_that) {
-case HistoryInitial() when initial != null:
-return initial();case HistoryLoading() when loading != null:
-return loading();case HistoryLoaded() when loaded != null:
-return loaded(_that.history,_that.totalVideos,_that.totalTimeSeconds);case HistoryEmpty() when empty != null:
-return empty();case HistoryError() when error != null:
-return error(_that.message);case _:
-  return null;
-
-}
-}
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<WatchProgress> history)? loaded,
+    TResult? Function(
+            List<WatchProgress> history, int totalVideos, int totalTimeSeconds)?
+        loaded,
     TResult? Function()? empty,
     TResult? Function(String message)? error,
   }) {
@@ -236,7 +258,7 @@ return error(_that.message);case _:
       case HistoryLoading() when loading != null:
         return loading();
       case HistoryLoaded() when loaded != null:
-        return loaded(_that.history);
+        return loaded(_that.history, _that.totalVideos, _that.totalTimeSeconds);
       case HistoryEmpty() when empty != null:
         return empty();
       case HistoryError() when error != null:
@@ -290,8 +312,11 @@ class HistoryLoading implements HistoryState {
 /// @nodoc
 
 class HistoryLoaded implements HistoryState {
-  const HistoryLoaded({required final  List<WatchProgress> history, this.totalVideos = 0, this.totalTimeSeconds = 0}): _history = history;
-  
+  const HistoryLoaded(
+      {required final List<WatchProgress> history,
+      this.totalVideos = 0,
+      this.totalTimeSeconds = 0})
+      : _history = history;
 
   final List<WatchProgress> _history;
   List<WatchProgress> get history {
@@ -300,52 +325,52 @@ class HistoryLoaded implements HistoryState {
     return EqualUnmodifiableListView(_history);
   }
 
-@JsonKey() final  int totalVideos;
-@JsonKey() final  int totalTimeSeconds;
+  @JsonKey()
+  final int totalVideos;
+  @JsonKey()
+  final int totalTimeSeconds;
 
-/// Create a copy of HistoryState
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$HistoryLoadedCopyWith<HistoryLoaded> get copyWith => _$HistoryLoadedCopyWithImpl<HistoryLoaded>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is HistoryLoaded&&const DeepCollectionEquality().equals(other._history, _history)&&(identical(other.totalVideos, totalVideos) || other.totalVideos == totalVideos)&&(identical(other.totalTimeSeconds, totalTimeSeconds) || other.totalTimeSeconds == totalTimeSeconds));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_history),totalVideos,totalTimeSeconds);
-
-@override
-String toString() {
-  return 'HistoryState.loaded(history: $history, totalVideos: $totalVideos, totalTimeSeconds: $totalTimeSeconds)';
-}
+  /// Create a copy of HistoryState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $HistoryLoadedCopyWith<HistoryLoaded> get copyWith =>
+      _$HistoryLoadedCopyWithImpl<HistoryLoaded>(this, _$identity);
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_history));
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is HistoryLoaded &&
+            const DeepCollectionEquality().equals(other._history, _history) &&
+            (identical(other.totalVideos, totalVideos) ||
+                other.totalVideos == totalVideos) &&
+            (identical(other.totalTimeSeconds, totalTimeSeconds) ||
+                other.totalTimeSeconds == totalTimeSeconds));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_history),
+      totalVideos,
+      totalTimeSeconds);
 
   @override
   String toString() {
-    return 'HistoryState.loaded(history: $history)';
+    return 'HistoryState.loaded(history: $history, totalVideos: $totalVideos, totalTimeSeconds: $totalTimeSeconds)';
   }
 }
 
 /// @nodoc
-abstract mixin class $HistoryLoadedCopyWith<$Res> implements $HistoryStateCopyWith<$Res> {
-  factory $HistoryLoadedCopyWith(HistoryLoaded value, $Res Function(HistoryLoaded) _then) = _$HistoryLoadedCopyWithImpl;
-@useResult
-$Res call({
- List<WatchProgress> history, int totalVideos, int totalTimeSeconds
-});
-
-
-
-
+abstract mixin class $HistoryLoadedCopyWith<$Res>
+    implements $HistoryStateCopyWith<$Res> {
+  factory $HistoryLoadedCopyWith(
+          HistoryLoaded value, $Res Function(HistoryLoaded) _then) =
+      _$HistoryLoadedCopyWithImpl;
+  @useResult
+  $Res call(
+      {List<WatchProgress> history, int totalVideos, int totalTimeSeconds});
 }
 
 /// @nodoc
@@ -356,18 +381,29 @@ class _$HistoryLoadedCopyWithImpl<$Res>
   final HistoryLoaded _self;
   final $Res Function(HistoryLoaded) _then;
 
-/// Create a copy of HistoryState
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? history = null,Object? totalVideos = null,Object? totalTimeSeconds = null,}) {
-  return _then(HistoryLoaded(
-history: null == history ? _self._history : history // ignore: cast_nullable_to_non_nullable
-as List<WatchProgress>,totalVideos: null == totalVideos ? _self.totalVideos : totalVideos // ignore: cast_nullable_to_non_nullable
-as int,totalTimeSeconds: null == totalTimeSeconds ? _self.totalTimeSeconds : totalTimeSeconds // ignore: cast_nullable_to_non_nullable
-as int,
-  ));
-}
-
-
+  /// Create a copy of HistoryState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? history = null,
+    Object? totalVideos = null,
+    Object? totalTimeSeconds = null,
+  }) {
+    return _then(HistoryLoaded(
+      history: null == history
+          ? _self._history
+          : history // ignore: cast_nullable_to_non_nullable
+              as List<WatchProgress>,
+      totalVideos: null == totalVideos
+          ? _self.totalVideos
+          : totalVideos // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalTimeSeconds: null == totalTimeSeconds
+          ? _self.totalTimeSeconds
+          : totalTimeSeconds // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
 }
 
 /// @nodoc

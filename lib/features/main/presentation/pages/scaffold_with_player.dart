@@ -65,8 +65,7 @@ class ScaffoldWithPlayer extends StatelessWidget {
             return Scaffold(
               body: Stack(
                 children: [
-                  // Main Content with bottom padding when miniplayer is visible
-                  // This ensures content isn't hidden behind the miniplayer
+                  // Main Content
                   Padding(
                     padding: EdgeInsets.only(
                       bottom: (!isClosed && !isExpanded) ? miniplayerHeight : 0,
@@ -74,26 +73,14 @@ class ScaffoldWithPlayer extends StatelessWidget {
                     child: child,
                   ),
 
-                  // Video Player Overlay - ONLY when not expanded
-                  // Positioned ABOVE the bottom navigation bar when nav bar is visible
-                  if (!isClosed && !isExpanded)
+                  // Stable Player Instance
+                  if (!isClosed)
                     Positioned(
+                      key: const ValueKey('video_player_overlay'),
                       left: 0,
                       right: 0,
-                      bottom: showNavBar
-                          ? 80
-                          : 0, // Add space for bottom nav bar
-                      child: MiniplayerWidget(
-                        // Dynamic height based on Nav Bar visibility
-                        miniplayerHeight: miniplayerHeight,
-                        maxWidth: MediaQuery.of(context).size.width,
-                      ),
-                    ),
-
-                  // Fullscreen Video Player Overlay - when expanded
-                  // This goes on top of everything
-                  if (isExpanded)
-                    Positioned.fill(
+                      bottom: (showNavBar && !isExpanded) ? 80 : 0,
+                      top: isExpanded ? 0 : null,
                       child: MiniplayerWidget(
                         miniplayerHeight: miniplayerHeight,
                         maxWidth: MediaQuery.of(context).size.width,

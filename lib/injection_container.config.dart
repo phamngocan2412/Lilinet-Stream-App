@@ -12,9 +12,8 @@
 import 'package:connectivity_plus/connectivity_plus.dart' as _i895;
 import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
-import 'package:hive_ce/hive.dart' as _i738;
 import 'package:hive_ce/hive_ce.dart' as _i1055;
-import 'package:hive_ce_flutter/hive_ce_flutter.dart' as _i965;
+import 'package:hive_ce_flutter/hive_flutter.dart' as _i919;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 import 'package:supabase_flutter/supabase_flutter.dart' as _i454;
@@ -137,61 +136,53 @@ extension GetItInjectableX on _i174.GetIt {
       () => registerModule.prefs,
       preResolve: true,
     );
-    await gh.factoryAsync<_i965.Box<_i422.WatchProgressModel>>(
+    await gh.factoryAsync<_i919.Box<_i422.WatchProgressModel>>(
       () => registerModule.watchHistoryBox,
       preResolve: true,
     );
-    await gh.factoryAsync<_i965.Box<_i892.MovieListResponse>>(
+    await gh.factoryAsync<_i919.Box<_i892.MovieListResponse>>(
       () => registerModule.movieCacheBox,
       preResolve: true,
     );
-    await gh.factoryAsync<_i965.Box<_i892.MovieModel>>(
+    await gh.factoryAsync<_i919.Box<_i892.MovieModel>>(
       () => registerModule.movieDetailsBox,
       preResolve: true,
     );
-    await gh.factoryAsync<_i965.Box<DateTime>>(
+    await gh.factoryAsync<_i919.Box<DateTime>>(
       () => registerModule.cacheTimestampBox,
       preResolve: true,
     );
     gh.singleton<_i148.CommentsCubit>(() => _i148.CommentsCubit());
     gh.lazySingleton<_i526.CastService>(() => _i526.CastService());
     gh.lazySingleton<_i488.ErrorHandlerService>(
-      () => _i488.ErrorHandlerService(),
-    );
+        () => _i488.ErrorHandlerService());
     gh.lazySingleton<_i102.LocalNotificationService>(
-      () => _i102.LocalNotificationService(),
-    );
+        () => _i102.LocalNotificationService());
     gh.lazySingleton<_i401.VideoPlayerService>(
-      () => _i401.VideoPlayerService(),
-    );
+        () => _i401.VideoPlayerService());
     gh.lazySingleton<_i1035.VideoSessionRepository>(
-      () => _i1035.VideoSessionRepository(),
-    );
+        () => _i1035.VideoSessionRepository());
     gh.lazySingleton<_i361.Dio>(() => registerModule.dio);
     gh.lazySingleton<_i454.SupabaseClient>(() => registerModule.supabaseClient);
     gh.lazySingleton<_i895.Connectivity>(() => registerModule.connectivity);
     gh.lazySingleton<_i111.MiniplayerHeightNotifier>(
-      () => registerModule.miniplayerHeightNotifier,
-    );
+        () => registerModule.miniplayerHeightNotifier);
     gh.lazySingleton<_i123.MovieLocalDataSource>(
         () => _i123.MovieLocalDataSource(
-              gh<_i738.Box<_i892.MovieListResponse>>(),
-              gh<_i738.Box<_i892.MovieModel>>(),
-              gh<_i738.Box<DateTime>>(),
+              gh<_i919.Box<_i892.MovieListResponse>>(),
+              gh<_i919.Box<_i892.MovieModel>>(),
+              gh<_i919.Box<DateTime>>(),
             ));
     gh.lazySingleton<_i665.LocalCommentDataSource>(
         () => _i665.LocalCommentDataSourceImpl());
     gh.lazySingleton<_i647.AuthSupabaseDataSource>(
         () => _i647.AuthSupabaseDataSource(gh<_i454.SupabaseClient>()));
     gh.lazySingleton<_i230.FavoritesSupabaseDataSource>(
-      () => _i230.FavoritesSupabaseDataSource(gh<_i454.SupabaseClient>()),
-    );
-    gh.lazySingleton<_i803.DownloadService>(
-      () => _i803.DownloadService(
-        gh<_i361.Dio>(),
-        gh<_i102.LocalNotificationService>(),
-      ),
-    );
+        () => _i230.FavoritesSupabaseDataSource(gh<_i454.SupabaseClient>()));
+    gh.lazySingleton<_i803.DownloadService>(() => _i803.DownloadService(
+          gh<_i361.Dio>(),
+          gh<_i102.LocalNotificationService>(),
+        ));
     gh.lazySingleton<_i47.MovieRemoteDataSource>(
         () => _i47.MovieRemoteDataSource(gh<_i361.Dio>()));
     gh.lazySingleton<_i799.CommentRemoteDataSource>(
@@ -204,29 +195,15 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i123.MovieLocalDataSource>(),
         ));
     gh.lazySingleton<_i387.SettingsLocalDataSource>(
-      () => _i387.SettingsLocalDataSource(gh<_i460.SharedPreferences>()),
-    );
+        () => _i387.SettingsLocalDataSource(gh<_i460.SharedPreferences>()));
     gh.factory<_i83.NetworkCubit>(
-      () => _i83.NetworkCubit(gh<_i895.Connectivity>()),
-    );
-    gh.lazySingleton<_i320.FavoritesRepository>(
-      () => _i764.FavoritesRepositoryImpl(
-        gh<_i230.FavoritesSupabaseDataSource>(),
-      ),
-    );
-    gh.lazySingleton<_i692.VideoPlayerBloc>(
-      () => _i692.VideoPlayerBloc(
-        gh<_i401.VideoPlayerService>(),
-        gh<_i526.CastService>(),
-        gh<_i803.DownloadService>(),
-      ),
-    );
-    gh.lazySingleton<_i876.CommentRepository>(
-      () => _i674.CommentRepositoryImpl(
-        gh<_i799.CommentRemoteDataSource>(),
-        gh<_i665.LocalCommentDataSource>(),
-      ),
-    );
+        () => _i83.NetworkCubit(gh<_i895.Connectivity>()));
+    gh.lazySingleton<_i320.FavoritesRepository>(() =>
+        _i764.FavoritesRepositoryImpl(gh<_i230.FavoritesSupabaseDataSource>()));
+    gh.lazySingleton<_i876.CommentRepository>(() => _i674.CommentRepositoryImpl(
+          gh<_i799.CommentRemoteDataSource>(),
+          gh<_i665.LocalCommentDataSource>(),
+        ));
     gh.lazySingleton<_i726.ExploreRemoteDataSource>(
         () => _i726.ExploreRemoteDataSource(gh<_i47.MovieRemoteDataSource>()));
     gh.lazySingleton<_i1015.AuthRepository>(
@@ -266,7 +243,7 @@ extension GetItInjectableX on _i174.GetIt {
           saveSettings: gh<_i156.SaveSettings>(),
           repository: gh<_i309.SettingsRepository>(),
         ));
-    gh.factory<_i1072.StreamingCubit>(() => _i1072.StreamingCubit(
+    gh.lazySingleton<_i1072.StreamingCubit>(() => _i1072.StreamingCubit(
           gh<_i9.GetStreamingLinks>(),
           gh<_i229.GetAvailableServers>(),
         ));
@@ -305,6 +282,13 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.lazySingleton<_i30.ExploreRepository>(
         () => _i942.ExploreRepositoryImpl(gh<_i726.ExploreRemoteDataSource>()));
+    gh.lazySingleton<_i692.VideoPlayerBloc>(() => _i692.VideoPlayerBloc(
+          gh<_i401.VideoPlayerService>(),
+          gh<_i526.CastService>(),
+          gh<_i803.DownloadService>(),
+          gh<_i9.GetStreamingLinks>(),
+          gh<_i229.GetAvailableServers>(),
+        ));
     gh.factory<_i363.AuthBloc>(() => _i363.AuthBloc(
           signInWithEmail: gh<_i509.SignInWithEmail>(),
           signUpWithEmail: gh<_i784.SignUpWithEmail>(),

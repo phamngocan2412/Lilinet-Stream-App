@@ -30,21 +30,20 @@ class PlayerCommentsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CommentCubit, CommentState>(
       builder: (context, state) {
-        return state.when(
-          initial: () => const SizedBox.shrink(),
-          loading: () => const Center(
+        return state.maybeMap(
+          loading: (_) => const Center(
             child: Padding(
               padding: EdgeInsets.all(16.0),
               child: LoadingIndicator(size: 30),
             ),
           ),
-          error: (msg) => Center(
+          error: (errorState) => Center(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
                 AppLocalizations.of(context)!.commentLoadError(
                   GetIt.I<ErrorHandlerService>().getUserFriendlyMessage(
-                    msg,
+                    errorState.message,
                     AppLocalizations.of(context)!,
                   ),
                 ),
@@ -52,109 +51,104 @@ class PlayerCommentsView extends StatelessWidget {
               ),
             ),
           ),
-          loaded:
-              (
-                comments,
-                sortType,
-                expandedReplies,
-                isAdding,
-                totalComments,
-                likedCommentIds,
-                totalLikes,
-              ) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+          loaded: (loadedState) {
+            final comments = loadedState.comments;
+            final sortType = loadedState.sortType;
+            final expandedReplies = loadedState.expandedReplies;
+            final likedCommentIds = loadedState.likedCommentIds;
+
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          AppLocalizations.of(
-                            context,
-                          )!.commentsCount(totalComments as int),
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        CommentSortTabs(
-                          currentSort: sortType,
-                          onSortChanged: (type) {
-                            context.read<CommentCubit>().changeSortType(type);
-                          },
-                        ),
-                      ],
+                    Text(
+                      AppLocalizations.of(context)!.commentsCount(comments.length),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    const SizedBox(height: 12),
-                    const Divider(height: 1, color: Colors.white24),
-                    const SizedBox(height: 12),
-                    if (comments.isEmpty)
-                      Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(24.0),
-                          child: Text(
-                            AppLocalizations.of(context)!.noCommentsYet,
-                            style: const TextStyle(color: Colors.grey),
-                          ),
+                    CommentSortTabs(
+                      currentSort: sortType,
+                      onSortChanged: (type) {
+                        context.read<CommentCubit>().changeSortType(type);
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                const Divider(height: 1, color: Colors.white24),
+                const SizedBox(height: 12),
+                if (comments.isEmpty)
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: Text(
+                        AppLocalizations.of(context)!.noCommentsYet,
+                        style: const TextStyle(color: Colors.grey),
+                      ),
+                    ),
+                  )
+                else
+                  ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: comments.length,
+                    separatorBuilder: (_, i) =>
+                        const Divider(height: 1, color: Colors.white12),
+                    itemBuilder: (context, index) {
+                      final comment = comments[index];
+                      final isExpanded = expandedReplies.containsKey(
+                        comment.id,
+                      );
+                      return CommentItem(
+                        comment: comment.copyWith(
+                          replies: isExpanded
+                              ? (expandedReplies[comment.id] ?? [])
+                              : [],
                         ),
-                      )
-                    else
-                      ListView.separated(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: comments.length,
-                        separatorBuilder: (_, i) =>
-                            const Divider(height: 1, color: Colors.white12),
-                        itemBuilder: (context, index) {
-                          final comment = comments[index];
-                          final isExpanded = expandedReplies.containsKey(
+                        onLike: () {
+                          context.read<CommentCubit>().likeComment(
                             comment.id,
                           );
-                          return CommentItem(
-                            comment: comment.copyWith(
-                              replies: isExpanded
-                                  ? (expandedReplies[comment.id] ?? [])
-                                  : [],
-                            ),
-                            onLike: () {
-                              context.read<CommentCubit>().likeComment(
-                                comment.id,
-                              );
-                            },
-                            onDislike: () {},
-                            onReply: () {
-                              _showReplyDialog(
-                                context,
-                                comment.id,
-                                comment.userName,
-                              );
-                            },
-                            onToggleReplies: () {
-                              context.read<CommentCubit>().toggleReplies(
-                                comment.id,
-                              );
-                            },
-                            isRepliesExpanded: isExpanded,
-                            isLiked: likedCommentIds.contains(comment.id),
-                            onReplyLike: (replyId) {
-                              context.read<CommentCubit>().likeComment(replyId);
-                            },
-                            onReplyReply: (replyId, userName) {
-                              _showReplyDialog(context, replyId, userName);
-                            },
-                            onLoadMoreReplies: () {
-                              context.read<CommentCubit>().toggleReplies(
-                                comment.id,
-                              );
-                            },
-                            likedReplyIds: likedCommentIds,
+                        },
+                        onDislike: () {},
+                        onReply: () {
+                          _showReplyDialog(
+                            context,
+                            comment.id,
+                            comment.userName,
                           );
                         },
-                      ),
-                  ],
-                );
-              },
+                        onToggleReplies: () {
+                          context.read<CommentCubit>().toggleReplies(
+                            comment.id,
+                          );
+                        },
+                        isRepliesExpanded: isExpanded,
+                        isLiked: likedCommentIds.contains(comment.id),
+                        onReplyLike: (replyId) {
+                          context.read<CommentCubit>().likeComment(replyId);
+                        },
+                        onReplyReply: (replyId, userName) {
+                          _showReplyDialog(context, replyId, userName);
+                        },
+                        onLoadMoreReplies: () {
+                          context.read<CommentCubit>().toggleReplies(
+                            comment.id,
+                          );
+                        },
+                        likedReplyIds: likedCommentIds,
+                      );
+                    },
+                  ),
+              ],
+            );
+          },
+          orElse: () => const SizedBox.shrink(),
         );
       },
     );

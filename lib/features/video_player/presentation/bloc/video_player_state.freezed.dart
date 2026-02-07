@@ -23,7 +23,10 @@ mixin _$VideoPlayerState {
   Duration? get startPosition;
   String? get mediaType;
   Movie? get movie;
-  int? get timestamp;
+  StreamingState get streamingState;
+  List<String>? get availableServers;
+  String? get currentServer;
+  String? get currentQuality;
 
   /// Create a copy of VideoPlayerState
   /// with the given fields replaced by the non-null parameter values.
@@ -52,8 +55,14 @@ mixin _$VideoPlayerState {
             (identical(other.mediaType, mediaType) ||
                 other.mediaType == mediaType) &&
             (identical(other.movie, movie) || other.movie == movie) &&
-            (identical(other.timestamp, timestamp) ||
-                other.timestamp == timestamp));
+            (identical(other.streamingState, streamingState) ||
+                other.streamingState == streamingState) &&
+            const DeepCollectionEquality()
+                .equals(other.availableServers, availableServers) &&
+            (identical(other.currentServer, currentServer) ||
+                other.currentServer == currentServer) &&
+            (identical(other.currentQuality, currentQuality) ||
+                other.currentQuality == currentQuality));
   }
 
   @override
@@ -68,11 +77,14 @@ mixin _$VideoPlayerState {
       startPosition,
       mediaType,
       movie,
-      timestamp);
+      streamingState,
+      const DeepCollectionEquality().hash(availableServers),
+      currentServer,
+      currentQuality);
 
   @override
   String toString() {
-    return 'VideoPlayerState(status: $status, episodeId: $episodeId, mediaId: $mediaId, title: $title, posterUrl: $posterUrl, episodeTitle: $episodeTitle, startPosition: $startPosition, mediaType: $mediaType, movie: $movie, timestamp: $timestamp)';
+    return 'VideoPlayerState(status: $status, episodeId: $episodeId, mediaId: $mediaId, title: $title, posterUrl: $posterUrl, episodeTitle: $episodeTitle, startPosition: $startPosition, mediaType: $mediaType, movie: $movie, streamingState: $streamingState, availableServers: $availableServers, currentServer: $currentServer, currentQuality: $currentQuality)';
   }
 }
 
@@ -92,9 +104,13 @@ abstract mixin class $VideoPlayerStateCopyWith<$Res> {
       Duration? startPosition,
       String? mediaType,
       Movie? movie,
-      int? timestamp});
+      StreamingState streamingState,
+      List<String>? availableServers,
+      String? currentServer,
+      String? currentQuality});
 
   $MovieCopyWith<$Res>? get movie;
+  $StreamingStateCopyWith<$Res> get streamingState;
 }
 
 /// @nodoc
@@ -119,7 +135,10 @@ class _$VideoPlayerStateCopyWithImpl<$Res>
     Object? startPosition = freezed,
     Object? mediaType = freezed,
     Object? movie = freezed,
-    Object? timestamp = freezed,
+    Object? streamingState = null,
+    Object? availableServers = freezed,
+    Object? currentServer = freezed,
+    Object? currentQuality = freezed,
   }) {
     return _then(_self.copyWith(
       status: null == status
@@ -158,10 +177,22 @@ class _$VideoPlayerStateCopyWithImpl<$Res>
           ? _self.movie
           : movie // ignore: cast_nullable_to_non_nullable
               as Movie?,
-      timestamp: freezed == timestamp
-          ? _self.timestamp
-          : timestamp // ignore: cast_nullable_to_non_nullable
-              as int?,
+      streamingState: null == streamingState
+          ? _self.streamingState
+          : streamingState // ignore: cast_nullable_to_non_nullable
+              as StreamingState,
+      availableServers: freezed == availableServers
+          ? _self.availableServers
+          : availableServers // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      currentServer: freezed == currentServer
+          ? _self.currentServer
+          : currentServer // ignore: cast_nullable_to_non_nullable
+              as String?,
+      currentQuality: freezed == currentQuality
+          ? _self.currentQuality
+          : currentQuality // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 
@@ -176,6 +207,16 @@ class _$VideoPlayerStateCopyWithImpl<$Res>
 
     return $MovieCopyWith<$Res>(_self.movie!, (value) {
       return _then(_self.copyWith(movie: value));
+    });
+  }
+
+  /// Create a copy of VideoPlayerState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $StreamingStateCopyWith<$Res> get streamingState {
+    return $StreamingStateCopyWith<$Res>(_self.streamingState, (value) {
+      return _then(_self.copyWith(streamingState: value));
     });
   }
 }
@@ -283,7 +324,10 @@ extension VideoPlayerStatePatterns on VideoPlayerState {
             Duration? startPosition,
             String? mediaType,
             Movie? movie,
-            int? timestamp)?
+            StreamingState streamingState,
+            List<String>? availableServers,
+            String? currentServer,
+            String? currentQuality)?
         $default, {
     required TResult orElse(),
   }) {
@@ -300,7 +344,10 @@ extension VideoPlayerStatePatterns on VideoPlayerState {
             _that.startPosition,
             _that.mediaType,
             _that.movie,
-            _that.timestamp);
+            _that.streamingState,
+            _that.availableServers,
+            _that.currentServer,
+            _that.currentQuality);
       case _:
         return orElse();
     }
@@ -331,7 +378,10 @@ extension VideoPlayerStatePatterns on VideoPlayerState {
             Duration? startPosition,
             String? mediaType,
             Movie? movie,
-            int? timestamp)
+            StreamingState streamingState,
+            List<String>? availableServers,
+            String? currentServer,
+            String? currentQuality)
         $default,
   ) {
     final _that = this;
@@ -347,7 +397,10 @@ extension VideoPlayerStatePatterns on VideoPlayerState {
             _that.startPosition,
             _that.mediaType,
             _that.movie,
-            _that.timestamp);
+            _that.streamingState,
+            _that.availableServers,
+            _that.currentServer,
+            _that.currentQuality);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -377,7 +430,10 @@ extension VideoPlayerStatePatterns on VideoPlayerState {
             Duration? startPosition,
             String? mediaType,
             Movie? movie,
-            int? timestamp)?
+            StreamingState streamingState,
+            List<String>? availableServers,
+            String? currentServer,
+            String? currentQuality)?
         $default,
   ) {
     final _that = this;
@@ -393,7 +449,10 @@ extension VideoPlayerStatePatterns on VideoPlayerState {
             _that.startPosition,
             _that.mediaType,
             _that.movie,
-            _that.timestamp);
+            _that.streamingState,
+            _that.availableServers,
+            _that.currentServer,
+            _that.currentQuality);
       case _:
         return null;
     }
@@ -413,7 +472,11 @@ class _VideoPlayerState implements VideoPlayerState {
       this.startPosition,
       this.mediaType,
       this.movie,
-      this.timestamp});
+      this.streamingState = const StreamingState.initial(),
+      final List<String>? availableServers,
+      this.currentServer,
+      this.currentQuality})
+      : _availableServers = availableServers;
 
   @override
   @JsonKey()
@@ -435,7 +498,23 @@ class _VideoPlayerState implements VideoPlayerState {
   @override
   final Movie? movie;
   @override
-  final int? timestamp;
+  @JsonKey()
+  final StreamingState streamingState;
+  final List<String>? _availableServers;
+  @override
+  List<String>? get availableServers {
+    final value = _availableServers;
+    if (value == null) return null;
+    if (_availableServers is EqualUnmodifiableListView)
+      return _availableServers;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  final String? currentServer;
+  @override
+  final String? currentQuality;
 
   /// Create a copy of VideoPlayerState
   /// with the given fields replaced by the non-null parameter values.
@@ -464,8 +543,14 @@ class _VideoPlayerState implements VideoPlayerState {
             (identical(other.mediaType, mediaType) ||
                 other.mediaType == mediaType) &&
             (identical(other.movie, movie) || other.movie == movie) &&
-            (identical(other.timestamp, timestamp) ||
-                other.timestamp == timestamp));
+            (identical(other.streamingState, streamingState) ||
+                other.streamingState == streamingState) &&
+            const DeepCollectionEquality()
+                .equals(other._availableServers, _availableServers) &&
+            (identical(other.currentServer, currentServer) ||
+                other.currentServer == currentServer) &&
+            (identical(other.currentQuality, currentQuality) ||
+                other.currentQuality == currentQuality));
   }
 
   @override
@@ -480,11 +565,14 @@ class _VideoPlayerState implements VideoPlayerState {
       startPosition,
       mediaType,
       movie,
-      timestamp);
+      streamingState,
+      const DeepCollectionEquality().hash(_availableServers),
+      currentServer,
+      currentQuality);
 
   @override
   String toString() {
-    return 'VideoPlayerState(status: $status, episodeId: $episodeId, mediaId: $mediaId, title: $title, posterUrl: $posterUrl, episodeTitle: $episodeTitle, startPosition: $startPosition, mediaType: $mediaType, movie: $movie, timestamp: $timestamp)';
+    return 'VideoPlayerState(status: $status, episodeId: $episodeId, mediaId: $mediaId, title: $title, posterUrl: $posterUrl, episodeTitle: $episodeTitle, startPosition: $startPosition, mediaType: $mediaType, movie: $movie, streamingState: $streamingState, availableServers: $availableServers, currentServer: $currentServer, currentQuality: $currentQuality)';
   }
 }
 
@@ -506,10 +594,15 @@ abstract mixin class _$VideoPlayerStateCopyWith<$Res>
       Duration? startPosition,
       String? mediaType,
       Movie? movie,
-      int? timestamp});
+      StreamingState streamingState,
+      List<String>? availableServers,
+      String? currentServer,
+      String? currentQuality});
 
   @override
   $MovieCopyWith<$Res>? get movie;
+  @override
+  $StreamingStateCopyWith<$Res> get streamingState;
 }
 
 /// @nodoc
@@ -534,7 +627,10 @@ class __$VideoPlayerStateCopyWithImpl<$Res>
     Object? startPosition = freezed,
     Object? mediaType = freezed,
     Object? movie = freezed,
-    Object? timestamp = freezed,
+    Object? streamingState = null,
+    Object? availableServers = freezed,
+    Object? currentServer = freezed,
+    Object? currentQuality = freezed,
   }) {
     return _then(_VideoPlayerState(
       status: null == status
@@ -573,10 +669,22 @@ class __$VideoPlayerStateCopyWithImpl<$Res>
           ? _self.movie
           : movie // ignore: cast_nullable_to_non_nullable
               as Movie?,
-      timestamp: freezed == timestamp
-          ? _self.timestamp
-          : timestamp // ignore: cast_nullable_to_non_nullable
-              as int?,
+      streamingState: null == streamingState
+          ? _self.streamingState
+          : streamingState // ignore: cast_nullable_to_non_nullable
+              as StreamingState,
+      availableServers: freezed == availableServers
+          ? _self._availableServers
+          : availableServers // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      currentServer: freezed == currentServer
+          ? _self.currentServer
+          : currentServer // ignore: cast_nullable_to_non_nullable
+              as String?,
+      currentQuality: freezed == currentQuality
+          ? _self.currentQuality
+          : currentQuality // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 
@@ -591,6 +699,16 @@ class __$VideoPlayerStateCopyWithImpl<$Res>
 
     return $MovieCopyWith<$Res>(_self.movie!, (value) {
       return _then(_self.copyWith(movie: value));
+    });
+  }
+
+  /// Create a copy of VideoPlayerState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $StreamingStateCopyWith<$Res> get streamingState {
+    return $StreamingStateCopyWith<$Res>(_self.streamingState, (value) {
+      return _then(_self.copyWith(streamingState: value));
     });
   }
 }

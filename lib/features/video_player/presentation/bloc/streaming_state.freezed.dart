@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'favorites_state.dart';
+part of 'streaming_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,11 +13,11 @@ part of 'favorites_state.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$FavoritesState {
+mixin _$StreamingState {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is FavoritesState);
+        (other.runtimeType == runtimeType && other is StreamingState);
   }
 
   @override
@@ -25,17 +25,17 @@ mixin _$FavoritesState {
 
   @override
   String toString() {
-    return 'FavoritesState()';
+    return 'StreamingState()';
   }
 }
 
 /// @nodoc
-class $FavoritesStateCopyWith<$Res> {
-  $FavoritesStateCopyWith(FavoritesState _, $Res Function(FavoritesState) __);
+class $StreamingStateCopyWith<$Res> {
+  $StreamingStateCopyWith(StreamingState _, $Res Function(StreamingState) __);
 }
 
-/// Adds pattern-matching-related methods to [FavoritesState].
-extension FavoritesStatePatterns on FavoritesState {
+/// Adds pattern-matching-related methods to [StreamingState].
+extension StreamingStatePatterns on StreamingState {
   /// A variant of `map` that fallback to returning `orElse`.
   ///
   /// It is equivalent to doing:
@@ -50,21 +50,21 @@ extension FavoritesStatePatterns on FavoritesState {
 
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(FavoritesInitial value)? initial,
-    TResult Function(FavoritesLoading value)? loading,
-    TResult Function(FavoritesLoaded value)? loaded,
-    TResult Function(FavoritesError value)? error,
+    TResult Function(StreamingInitial value)? initial,
+    TResult Function(StreamingLoading value)? loading,
+    TResult Function(StreamingLoaded value)? loaded,
+    TResult Function(StreamingError value)? error,
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
-      case FavoritesInitial() when initial != null:
+      case StreamingInitial() when initial != null:
         return initial(_that);
-      case FavoritesLoading() when loading != null:
+      case StreamingLoading() when loading != null:
         return loading(_that);
-      case FavoritesLoaded() when loaded != null:
+      case StreamingLoaded() when loaded != null:
         return loaded(_that);
-      case FavoritesError() when error != null:
+      case StreamingError() when error != null:
         return error(_that);
       case _:
         return orElse();
@@ -86,20 +86,20 @@ extension FavoritesStatePatterns on FavoritesState {
 
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(FavoritesInitial value) initial,
-    required TResult Function(FavoritesLoading value) loading,
-    required TResult Function(FavoritesLoaded value) loaded,
-    required TResult Function(FavoritesError value) error,
+    required TResult Function(StreamingInitial value) initial,
+    required TResult Function(StreamingLoading value) loading,
+    required TResult Function(StreamingLoaded value) loaded,
+    required TResult Function(StreamingError value) error,
   }) {
     final _that = this;
     switch (_that) {
-      case FavoritesInitial():
+      case StreamingInitial():
         return initial(_that);
-      case FavoritesLoading():
+      case StreamingLoading():
         return loading(_that);
-      case FavoritesLoaded():
+      case StreamingLoaded():
         return loaded(_that);
-      case FavoritesError():
+      case StreamingError():
         return error(_that);
       case _:
         throw StateError('Unexpected subclass');
@@ -120,20 +120,20 @@ extension FavoritesStatePatterns on FavoritesState {
 
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(FavoritesInitial value)? initial,
-    TResult? Function(FavoritesLoading value)? loading,
-    TResult? Function(FavoritesLoaded value)? loaded,
-    TResult? Function(FavoritesError value)? error,
+    TResult? Function(StreamingInitial value)? initial,
+    TResult? Function(StreamingLoading value)? loading,
+    TResult? Function(StreamingLoaded value)? loaded,
+    TResult? Function(StreamingError value)? error,
   }) {
     final _that = this;
     switch (_that) {
-      case FavoritesInitial() when initial != null:
+      case StreamingInitial() when initial != null:
         return initial(_that);
-      case FavoritesLoading() when loading != null:
+      case StreamingLoading() when loading != null:
         return loading(_that);
-      case FavoritesLoaded() when loaded != null:
+      case StreamingLoaded() when loaded != null:
         return loaded(_that);
-      case FavoritesError() when error != null:
+      case StreamingError() when error != null:
         return error(_that);
       case _:
         return null;
@@ -156,20 +156,21 @@ extension FavoritesStatePatterns on FavoritesState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<Favorite> favorites, int currentPage, bool hasMore)?
+    TResult Function(List<StreamingLink> links, String selectedServer,
+            String? selectedQuality)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
-      case FavoritesInitial() when initial != null:
+      case StreamingInitial() when initial != null:
         return initial();
-      case FavoritesLoading() when loading != null:
+      case StreamingLoading() when loading != null:
         return loading();
-      case FavoritesLoaded() when loaded != null:
-        return loaded(_that.favorites, _that.currentPage, _that.hasMore);
-      case FavoritesError() when error != null:
+      case StreamingLoaded() when loaded != null:
+        return loaded(_that.links, _that.selectedServer, _that.selectedQuality);
+      case StreamingError() when error != null:
         return error(_that.message);
       case _:
         return orElse();
@@ -193,20 +194,20 @@ extension FavoritesStatePatterns on FavoritesState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(
-            List<Favorite> favorites, int currentPage, bool hasMore)
+    required TResult Function(List<StreamingLink> links, String selectedServer,
+            String? selectedQuality)
         loaded,
     required TResult Function(String message) error,
   }) {
     final _that = this;
     switch (_that) {
-      case FavoritesInitial():
+      case StreamingInitial():
         return initial();
-      case FavoritesLoading():
+      case StreamingLoading():
         return loading();
-      case FavoritesLoaded():
-        return loaded(_that.favorites, _that.currentPage, _that.hasMore);
-      case FavoritesError():
+      case StreamingLoaded():
+        return loaded(_that.links, _that.selectedServer, _that.selectedQuality);
+      case StreamingError():
         return error(_that.message);
       case _:
         throw StateError('Unexpected subclass');
@@ -229,19 +230,20 @@ extension FavoritesStatePatterns on FavoritesState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<Favorite> favorites, int currentPage, bool hasMore)?
+    TResult? Function(List<StreamingLink> links, String selectedServer,
+            String? selectedQuality)?
         loaded,
     TResult? Function(String message)? error,
   }) {
     final _that = this;
     switch (_that) {
-      case FavoritesInitial() when initial != null:
+      case StreamingInitial() when initial != null:
         return initial();
-      case FavoritesLoading() when loading != null:
+      case StreamingLoading() when loading != null:
         return loading();
-      case FavoritesLoaded() when loaded != null:
-        return loaded(_that.favorites, _that.currentPage, _that.hasMore);
-      case FavoritesError() when error != null:
+      case StreamingLoaded() when loaded != null:
+        return loaded(_that.links, _that.selectedServer, _that.selectedQuality);
+      case StreamingError() when error != null:
         return error(_that.message);
       case _:
         return null;
@@ -251,13 +253,13 @@ extension FavoritesStatePatterns on FavoritesState {
 
 /// @nodoc
 
-class FavoritesInitial implements FavoritesState {
-  const FavoritesInitial();
+class StreamingInitial implements StreamingState {
+  const StreamingInitial();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is FavoritesInitial);
+        (other.runtimeType == runtimeType && other is StreamingInitial);
   }
 
   @override
@@ -265,19 +267,19 @@ class FavoritesInitial implements FavoritesState {
 
   @override
   String toString() {
-    return 'FavoritesState.initial()';
+    return 'StreamingState.initial()';
   }
 }
 
 /// @nodoc
 
-class FavoritesLoading implements FavoritesState {
-  const FavoritesLoading();
+class StreamingLoading implements StreamingState {
+  const StreamingLoading();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is FavoritesLoading);
+        (other.runtimeType == runtimeType && other is StreamingLoading);
   }
 
   @override
@@ -285,122 +287,126 @@ class FavoritesLoading implements FavoritesState {
 
   @override
   String toString() {
-    return 'FavoritesState.loading()';
+    return 'StreamingState.loading()';
   }
 }
 
 /// @nodoc
 
-class FavoritesLoaded implements FavoritesState {
-  const FavoritesLoaded(
-      {required final List<Favorite> favorites,
-      this.currentPage = 1,
-      this.hasMore = true})
-      : _favorites = favorites;
+class StreamingLoaded implements StreamingState {
+  const StreamingLoaded(
+      {required final List<StreamingLink> links,
+      required this.selectedServer,
+      this.selectedQuality})
+      : _links = links;
 
-  final List<Favorite> _favorites;
-  List<Favorite> get favorites {
-    if (_favorites is EqualUnmodifiableListView) return _favorites;
+  final List<StreamingLink> _links;
+  List<StreamingLink> get links {
+    if (_links is EqualUnmodifiableListView) return _links;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_favorites);
+    return EqualUnmodifiableListView(_links);
   }
 
-  @JsonKey()
-  final int currentPage;
-  @JsonKey()
-  final bool hasMore;
+  final String selectedServer;
+  final String? selectedQuality;
 
-  /// Create a copy of FavoritesState
+  /// Create a copy of StreamingState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $FavoritesLoadedCopyWith<FavoritesLoaded> get copyWith =>
-      _$FavoritesLoadedCopyWithImpl<FavoritesLoaded>(this, _$identity);
+  $StreamingLoadedCopyWith<StreamingLoaded> get copyWith =>
+      _$StreamingLoadedCopyWithImpl<StreamingLoaded>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is FavoritesLoaded &&
-            const DeepCollectionEquality()
-                .equals(other._favorites, _favorites) &&
-            (identical(other.currentPage, currentPage) ||
-                other.currentPage == currentPage) &&
-            (identical(other.hasMore, hasMore) || other.hasMore == hasMore));
+            other is StreamingLoaded &&
+            const DeepCollectionEquality().equals(other._links, _links) &&
+            (identical(other.selectedServer, selectedServer) ||
+                other.selectedServer == selectedServer) &&
+            (identical(other.selectedQuality, selectedQuality) ||
+                other.selectedQuality == selectedQuality));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_favorites), currentPage, hasMore);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_links),
+      selectedServer,
+      selectedQuality);
 
   @override
   String toString() {
-    return 'FavoritesState.loaded(favorites: $favorites, currentPage: $currentPage, hasMore: $hasMore)';
+    return 'StreamingState.loaded(links: $links, selectedServer: $selectedServer, selectedQuality: $selectedQuality)';
   }
 }
 
 /// @nodoc
-abstract mixin class $FavoritesLoadedCopyWith<$Res>
-    implements $FavoritesStateCopyWith<$Res> {
-  factory $FavoritesLoadedCopyWith(
-          FavoritesLoaded value, $Res Function(FavoritesLoaded) _then) =
-      _$FavoritesLoadedCopyWithImpl;
+abstract mixin class $StreamingLoadedCopyWith<$Res>
+    implements $StreamingStateCopyWith<$Res> {
+  factory $StreamingLoadedCopyWith(
+          StreamingLoaded value, $Res Function(StreamingLoaded) _then) =
+      _$StreamingLoadedCopyWithImpl;
   @useResult
-  $Res call({List<Favorite> favorites, int currentPage, bool hasMore});
+  $Res call(
+      {List<StreamingLink> links,
+      String selectedServer,
+      String? selectedQuality});
 }
 
 /// @nodoc
-class _$FavoritesLoadedCopyWithImpl<$Res>
-    implements $FavoritesLoadedCopyWith<$Res> {
-  _$FavoritesLoadedCopyWithImpl(this._self, this._then);
+class _$StreamingLoadedCopyWithImpl<$Res>
+    implements $StreamingLoadedCopyWith<$Res> {
+  _$StreamingLoadedCopyWithImpl(this._self, this._then);
 
-  final FavoritesLoaded _self;
-  final $Res Function(FavoritesLoaded) _then;
+  final StreamingLoaded _self;
+  final $Res Function(StreamingLoaded) _then;
 
-  /// Create a copy of FavoritesState
+  /// Create a copy of StreamingState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   $Res call({
-    Object? favorites = null,
-    Object? currentPage = null,
-    Object? hasMore = null,
+    Object? links = null,
+    Object? selectedServer = null,
+    Object? selectedQuality = freezed,
   }) {
-    return _then(FavoritesLoaded(
-      favorites: null == favorites
-          ? _self._favorites
-          : favorites // ignore: cast_nullable_to_non_nullable
-              as List<Favorite>,
-      currentPage: null == currentPage
-          ? _self.currentPage
-          : currentPage // ignore: cast_nullable_to_non_nullable
-              as int,
-      hasMore: null == hasMore
-          ? _self.hasMore
-          : hasMore // ignore: cast_nullable_to_non_nullable
-              as bool,
+    return _then(StreamingLoaded(
+      links: null == links
+          ? _self._links
+          : links // ignore: cast_nullable_to_non_nullable
+              as List<StreamingLink>,
+      selectedServer: null == selectedServer
+          ? _self.selectedServer
+          : selectedServer // ignore: cast_nullable_to_non_nullable
+              as String,
+      selectedQuality: freezed == selectedQuality
+          ? _self.selectedQuality
+          : selectedQuality // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
 
 /// @nodoc
 
-class FavoritesError implements FavoritesState {
-  const FavoritesError({required this.message});
+class StreamingError implements StreamingState {
+  const StreamingError(this.message);
 
   final String message;
 
-  /// Create a copy of FavoritesState
+  /// Create a copy of StreamingState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $FavoritesErrorCopyWith<FavoritesError> get copyWith =>
-      _$FavoritesErrorCopyWithImpl<FavoritesError>(this, _$identity);
+  $StreamingErrorCopyWith<StreamingError> get copyWith =>
+      _$StreamingErrorCopyWithImpl<StreamingError>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is FavoritesError &&
+            other is StreamingError &&
             (identical(other.message, message) || other.message == message));
   }
 
@@ -409,36 +415,36 @@ class FavoritesError implements FavoritesState {
 
   @override
   String toString() {
-    return 'FavoritesState.error(message: $message)';
+    return 'StreamingState.error(message: $message)';
   }
 }
 
 /// @nodoc
-abstract mixin class $FavoritesErrorCopyWith<$Res>
-    implements $FavoritesStateCopyWith<$Res> {
-  factory $FavoritesErrorCopyWith(
-          FavoritesError value, $Res Function(FavoritesError) _then) =
-      _$FavoritesErrorCopyWithImpl;
+abstract mixin class $StreamingErrorCopyWith<$Res>
+    implements $StreamingStateCopyWith<$Res> {
+  factory $StreamingErrorCopyWith(
+          StreamingError value, $Res Function(StreamingError) _then) =
+      _$StreamingErrorCopyWithImpl;
   @useResult
   $Res call({String message});
 }
 
 /// @nodoc
-class _$FavoritesErrorCopyWithImpl<$Res>
-    implements $FavoritesErrorCopyWith<$Res> {
-  _$FavoritesErrorCopyWithImpl(this._self, this._then);
+class _$StreamingErrorCopyWithImpl<$Res>
+    implements $StreamingErrorCopyWith<$Res> {
+  _$StreamingErrorCopyWithImpl(this._self, this._then);
 
-  final FavoritesError _self;
-  final $Res Function(FavoritesError) _then;
+  final StreamingError _self;
+  final $Res Function(StreamingError) _then;
 
-  /// Create a copy of FavoritesState
+  /// Create a copy of StreamingState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   $Res call({
     Object? message = null,
   }) {
-    return _then(FavoritesError(
-      message: null == message
+    return _then(StreamingError(
+      null == message
           ? _self.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,

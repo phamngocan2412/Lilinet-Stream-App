@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hive_ce_flutter/hive_ce_flutter.dart';
+import 'package:hive_ce/hive.dart';
 import '../../../../core/utils/json_converters.dart';
 import '../../domain/entities/episode.dart';
 

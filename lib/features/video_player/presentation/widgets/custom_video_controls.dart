@@ -100,29 +100,59 @@ class _CustomVideoControlsState extends State<CustomVideoControls> {
     final colorScheme = theme.colorScheme;
     final errorColor = colorScheme.error;
 
-    return MaterialDesktopVideoControlsTheme(
-      normal: MaterialDesktopVideoControlsThemeData(
+    return MaterialVideoControlsTheme(
+      normal: MaterialVideoControlsThemeData(
+        primaryButtonBar: [],
+        topButtonBar: [],
+        bottomButtonBar: [
+          const MaterialPositionIndicator(),
+          const MaterialSeekBar(),
+        ],
         seekBarThumbColor: errorColor,
         seekBarPositionColor: errorColor,
-        toggleFullscreenOnDoublePress: true,
       ),
-      fullscreen: MaterialDesktopVideoControlsThemeData(
+      fullscreen: MaterialVideoControlsThemeData(
+        primaryButtonBar: [],
+        topButtonBar: [],
+        bottomButtonBar: [
+          const MaterialPositionIndicator(),
+          const MaterialSeekBar(),
+        ],
         seekBarThumbColor: errorColor,
         seekBarPositionColor: errorColor,
       ),
-      child: GestureDetector(
-        onTap: _toggleControls,
-        behavior: HitTestBehavior.opaque,
+      child: MaterialDesktopVideoControlsTheme(
+        normal: MaterialDesktopVideoControlsThemeData(
+          seekBarThumbColor: errorColor,
+          seekBarPositionColor: errorColor,
+          toggleFullscreenOnDoublePress: true,
+          primaryButtonBar: [],
+          topButtonBar: [],
+          bottomButtonBar: [
+            const MaterialDesktopPositionIndicator(),
+            const MaterialDesktopSeekBar(),
+          ],
+        ),
+        fullscreen: MaterialDesktopVideoControlsThemeData(
+          seekBarThumbColor: errorColor,
+          seekBarPositionColor: errorColor,
+          primaryButtonBar: [],
+          topButtonBar: [],
+          bottomButtonBar: [
+            const MaterialDesktopPositionIndicator(),
+            const MaterialDesktopSeekBar(),
+          ],
+        ),
         child: Stack(
           children: [
-            // Base MaterialVideoControls (always present for seek bar)
+            MaterialVideoControls(widget.state),
             GestureDetector(
-              onVerticalDragUpdate: (details) {}, // Consume vertical drag
               onTap: _toggleControls,
-              child: MaterialVideoControls(widget.state),
+              behavior: HitTestBehavior.translucent,
+              child: Container(
+                color: Colors.transparent,
+              ),
             ),
-
-            // Custom overlay controls (conditionally visible)
             if (_controlsVisible) ...[
               // Top Bar (Minimize Button)
               Positioned(
@@ -355,7 +385,7 @@ class _CustomVideoControlsState extends State<CustomVideoControls> {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     scrollDirection: Axis.horizontal,
                     itemCount: widget.availableServers.length,
-                    separatorBuilder: (_, _) => const SizedBox(width: 8),
+                    separatorBuilder: (_, __) => const SizedBox(width: 8),
                     itemBuilder: (context, index) {
                       final server = widget.availableServers[index];
                       final isSelected = widget.currentServer == server;
@@ -400,7 +430,7 @@ class _CustomVideoControlsState extends State<CustomVideoControls> {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     scrollDirection: Axis.horizontal,
                     itemCount: widget.availableQualities.length,
-                    separatorBuilder: (_, _) => const SizedBox(width: 8),
+                    separatorBuilder: (_, __) => const SizedBox(width: 8),
                     itemBuilder: (context, index) {
                       final link = widget.availableQualities[index];
                       final isSelected = widget.currentQuality == link.quality;
@@ -474,9 +504,8 @@ class _CustomVideoControlsState extends State<CustomVideoControls> {
                     color: isSelected ? errorColor : colorScheme.onSurface,
                   ),
                 ),
-                trailing: isSelected
-                    ? Icon(Icons.check, color: errorColor)
-                    : null,
+                trailing:
+                    isSelected ? Icon(Icons.check, color: errorColor) : null,
                 onTap: () {
                   widget.onSpeedChanged(speed);
                   Navigator.pop(context);

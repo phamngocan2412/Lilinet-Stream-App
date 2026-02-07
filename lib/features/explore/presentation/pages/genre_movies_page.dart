@@ -24,9 +24,8 @@ class GenreMoviesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          getIt<ExploreBloc>()
-            ..add(LoadMoviesByGenre(genreId: genreId, genreName: genreName)),
+      create: (context) => getIt<ExploreBloc>()
+        ..add(LoadMoviesByGenre(genreId: genreId, genreName: genreName)),
       child: Scaffold(
         appBar: AppBar(title: Text(genreName)),
         body: BlocBuilder<ExploreBloc, ExploreState>(
@@ -41,8 +40,9 @@ class GenreMoviesPage extends StatelessWidget {
                   message: state.message,
                   onRetry: () {
                     context.read<ExploreBloc>().add(
-                      LoadMoviesByGenre(genreId: genreId, genreName: genreName),
-                    );
+                          LoadMoviesByGenre(
+                              genreId: genreId, genreName: genreName),
+                        );
                   },
                 ),
               );
@@ -59,7 +59,10 @@ class GenreMoviesPage extends StatelessWidget {
               return ListenableBuilder(
                 listenable: getIt<MiniplayerHeightNotifier>(),
                 builder: (context, _) {
-                  final miniplayerHeight = getIt<MiniplayerHeightNotifier>().height;
+                  final miniplayerHeight =
+                      getIt<MiniplayerHeightNotifier>().height;
+                  final cacheWidth =
+                      (MediaQuery.of(context).size.width / 2 - 24).round() * 2;
 
                   return GridView.builder(
                     padding: EdgeInsets.only(
@@ -68,7 +71,8 @@ class GenreMoviesPage extends StatelessWidget {
                       top: 16,
                       bottom: 16 + miniplayerHeight,
                     ),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       childAspectRatio: 0.7,
                       crossAxisSpacing: 12,
@@ -79,6 +83,7 @@ class GenreMoviesPage extends StatelessWidget {
                       final movie = state.movies[index];
                       return MovieCard(
                         movie: movie,
+                        memCacheWidth: cacheWidth,
                         onTap: () {
                           context.push(
                             '/movie/${movie.id}?type=${movie.type}',
@@ -87,7 +92,6 @@ class GenreMoviesPage extends StatelessWidget {
                         },
                       );
                     },
-                    memCacheWidth: cacheWidth,
                   );
                 },
               );

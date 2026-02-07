@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:hive_ce/hive.dart';
+import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:injectable/injectable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:lilinet_app/features/video_player/presentation/bloc/video_player_state.dart';

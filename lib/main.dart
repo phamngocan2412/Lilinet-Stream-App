@@ -231,7 +231,7 @@ void _loadBackgroundData() {
       getIt<VideoSessionRepository>().startPeriodicCleanup();
 
       // Load history
-      getIt<HistoryBloc>().loadHistory();
+      getIt<HistoryCubit>().loadHistory();
 
       // Small delay between operations
       await Future.delayed(const Duration(milliseconds: 100));

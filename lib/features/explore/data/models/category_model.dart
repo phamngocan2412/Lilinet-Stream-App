@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hive_ce_flutter/hive_ce_flutter.dart';
+import 'package:hive_ce/hive.dart';
 import '../../domain/entities/category.dart';
 
 part 'category_model.freezed.dart';

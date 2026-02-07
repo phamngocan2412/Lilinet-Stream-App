@@ -46,7 +46,7 @@ class _HomePageViewState extends State<HomePageView>
     final textTheme = theme.textTheme;
     final mediaQuery = MediaQuery.of(context);
     final screenWidth = mediaQuery.size.width;
-    final devicePixelRatio = mediaQuery.devicePixelRatio;
+    // final devicePixelRatio = mediaQuery.devicePixelRatio;
 
     return Scaffold(
       appBar: AppBar(
@@ -106,17 +106,18 @@ class _HomePageViewState extends State<HomePageView>
                   message: message,
                   onRetry: () {
                     context.read<TrendingMoviesBloc>().add(
-                      const TrendingMoviesEvent.load(),
-                    );
+                          const TrendingMoviesEvent.load(),
+                        );
                   },
                 ),
               ),
               loaded: (trending, categories) {
                 final trendingMovies = trending.toSet().toList();
                 // Optimization: Pre-calculate cache width for horizontal lists
-                final devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
-                final horizontalListMemCacheWidth =
-                    (130 * devicePixelRatio).toInt();
+                final devicePixelRatio =
+                    MediaQuery.of(context).devicePixelRatio;
+                // final horizontalListMemCacheWidth =
+                //     (130 * devicePixelRatio).toInt();
 
                 final genres = AppConstants.genres;
 
@@ -181,13 +182,12 @@ class _HomePageViewState extends State<HomePageView>
                                   extra: movie,
                                 ),
                               ),
-                            ),
+                            ],
                             const SizedBox(height: 32),
                           ],
-                        ],
+                        ),
                       ),
                     ),
-                  ),
 
                     // Trending Comments Section
                     const SliverToBoxAdapter(child: HomeTrendingSection()),
@@ -196,11 +196,6 @@ class _HomePageViewState extends State<HomePageView>
                     if (categories.isNotEmpty)
                       SliverList(
                         delegate: SliverChildBuilderDelegate((context, index) {
-                          // Optimization: Calculate cache width for 130px items
-                          final int memCacheWidth =
-                              (130 * MediaQuery.of(context).devicePixelRatio)
-                                  .toInt();
-
                           final categoryName = categories.keys.elementAt(index);
                           final categoryMovies = categories[categoryName]!;
 

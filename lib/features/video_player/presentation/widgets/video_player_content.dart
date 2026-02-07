@@ -14,8 +14,8 @@ import '../../../../injection_container.dart';
 import '../../../../core/services/video_player_service.dart';
 import '../../../../core/services/video_session_repository.dart';
 import '../../../../core/services/network_monitor_service.dart';
-import '../../../../core/widgets/loading_indicator.dart';
 import '../../../../core/widgets/cached_image.dart';
+import '../../../../core/widgets/shimmer_widgets.dart';
 import '../../../history/domain/entities/watch_progress.dart';
 import '../../../history/presentation/bloc/history_bloc.dart';
 import '../../../settings/domain/repositories/settings_repository.dart';
@@ -162,17 +162,17 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
         (movie) {
           debugPrint('✅ Restored movie details for: ${movie.title}');
           context.read<VideoPlayerBloc>().add(
-            PlayVideo(
-              episodeId: widget.state.episodeId!,
-              mediaId: widget.state.mediaId!,
-              title: widget.state.title!,
-              posterUrl: widget.state.posterUrl,
-              episodeTitle: widget.state.episodeTitle,
-              startPosition: widget.state.startPosition,
-              mediaType: widget.state.mediaType,
-              movie: movie,
-            ),
-          );
+                PlayVideo(
+                  episodeId: widget.state.episodeId!,
+                  mediaId: widget.state.mediaId!,
+                  title: widget.state.title!,
+                  posterUrl: widget.state.posterUrl,
+                  episodeTitle: widget.state.episodeTitle,
+                  startPosition: widget.state.startPosition,
+                  mediaType: widget.state.mediaType,
+                  movie: movie,
+                ),
+              );
         },
       );
     } catch (e) {
@@ -257,8 +257,7 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
 
   void _loadVideo() {
     // Use movie's stored provider if it exists, otherwise fall back to genres check
-    final provider =
-        widget.state.movie?.provider ??
+    final provider = widget.state.movie?.provider ??
         StreamingConfig.determineProvider(
           genres: widget.state.movie?.genres,
           movieProviderPref: _movieProvider,
@@ -278,8 +277,7 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
       currentServer = server;
     });
 
-    final provider =
-        widget.state.movie?.provider ??
+    final provider = widget.state.movie?.provider ??
         StreamingConfig.determineProvider(
           genres: widget.state.movie?.genres,
           movieProviderPref: _movieProvider,
@@ -393,16 +391,16 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
       if (currentIndex > 0) {
         final prevEpisode = episodes[currentIndex - 1];
         context.read<VideoPlayerBloc>().add(
-          PlayVideo(
-            episodeId: prevEpisode.id,
-            mediaId: widget.state.mediaId!,
-            title: widget.state.title!,
-            posterUrl: widget.state.posterUrl,
-            episodeTitle: prevEpisode.title,
-            mediaType: widget.state.mediaType,
-            movie: movie,
-          ),
-        );
+              PlayVideo(
+                episodeId: prevEpisode.id,
+                mediaId: widget.state.mediaId!,
+                title: widget.state.title!,
+                posterUrl: widget.state.posterUrl,
+                episodeTitle: prevEpisode.title,
+                mediaType: widget.state.mediaType,
+                movie: movie,
+              ),
+            );
       }
     }
   }
@@ -420,16 +418,16 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
       if (currentIndex != -1 && currentIndex < episodes.length - 1) {
         final nextEpisode = episodes[currentIndex + 1];
         context.read<VideoPlayerBloc>().add(
-          PlayVideo(
-            episodeId: nextEpisode.id,
-            mediaId: widget.state.mediaId!,
-            title: widget.state.title!,
-            posterUrl: widget.state.posterUrl,
-            episodeTitle: nextEpisode.title,
-            mediaType: widget.state.mediaType,
-            movie: movie,
-          ),
-        );
+              PlayVideo(
+                episodeId: nextEpisode.id,
+                mediaId: widget.state.mediaId!,
+                title: widget.state.title!,
+                posterUrl: widget.state.posterUrl,
+                episodeTitle: nextEpisode.title,
+                mediaType: widget.state.mediaType,
+                movie: movie,
+              ),
+            );
       }
     }
   }
@@ -494,14 +492,14 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
       return;
     }
     context.read<VideoPlayerBloc>().add(
-      LoadVideo(
-        url: url,
-        subtitleUrl: subtitleUrl,
-        subtitleLang: subtitleLang,
-        headers: headers,
-        isQualitySwitch: isQualitySwitch,
-      ),
-    );
+          LoadVideo(
+            url: url,
+            subtitleUrl: subtitleUrl,
+            subtitleLang: subtitleLang,
+            headers: headers,
+            isQualitySwitch: isQualitySwitch,
+          ),
+        );
   }
 
   @override
@@ -596,12 +594,7 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
                       },
                       onDownload: () {
                         final url = _videoService
-                            .player
-                            .state
-                            .playlist
-                            .medias
-                            .firstOrNull
-                            ?.uri;
+                            .player.state.playlist.medias.firstOrNull?.uri;
                         if (url != null) {
                           final fileName =
                               '${widget.state.title ?? "video"}_${widget.state.episodeTitle ?? "episode"}.mp4'
@@ -609,15 +602,15 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
                                   .replaceAll(' ', '_');
 
                           context.read<VideoPlayerBloc>().add(
-                            DownloadCurrentVideo(
-                              url: url,
-                              fileName: fileName,
-                              movieId: widget.state.mediaId,
-                              movieTitle: widget.state.title,
-                              episodeTitle: widget.state.episodeTitle,
-                              posterUrl: widget.state.posterUrl,
-                            ),
-                          );
+                                DownloadCurrentVideo(
+                                  url: url,
+                                  fileName: fileName,
+                                  movieId: widget.state.mediaId,
+                                  movieTitle: widget.state.title,
+                                  episodeTitle: widget.state.episodeTitle,
+                                  posterUrl: widget.state.posterUrl,
+                                ),
+                              );
 
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
@@ -675,8 +668,7 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
 
     // Check if we're on a slow connection (mobile data with poor signal)
     final networkMonitor = NetworkMonitorService();
-    final isLowBandwidth =
-        !networkMonitor.isConnected ||
+    final isLowBandwidth = !networkMonitor.isConnected ||
         networkMonitor.connectionType == ConnectivityResult.mobile ||
         networkMonitor.averageBandwidth < 500 * 1024; // < 500 KB/s
 
@@ -779,7 +771,7 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
                 ),
               Container(color: Colors.black54),
               if (state is StreamingLoading)
-                const Center(child: LoadingIndicator()),
+                VideoPlayerShimmer(isMini: widget.isMini),
               if (state is StreamingError)
                 VideoErrorWidget(
                   message: state.message,
@@ -828,12 +820,7 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
           availableServers: streamingState?.availableServers ?? [],
           currentServer: streamingState?.selectedServer,
           availableQualities: streamingState?.links ?? [],
-          currentQuality: _videoService
-              .player
-              .state
-              .playlist
-              .medias
-              .firstOrNull
+          currentQuality: _videoService.player.state.playlist.medias.firstOrNull
               ?.uri, // This might need a better way to track current quality
           onServerSelected: (server) {
             _streamingCubit.selectServer(

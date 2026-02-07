@@ -13,10 +13,13 @@ import '../../../domain/usecases/get_streaming_links.dart';
 import '../../../domain/usecases/get_available_servers.dart';
 import 'streaming_state.dart';
 
-@injectable
+@lazySingleton
 class StreamingCubit extends Cubit<StreamingState> {
   final GetStreamingLinks _getStreamingLinks;
   final GetAvailableServers _getAvailableServers;
+
+  String? _currentEpisodeId;
+  String? _currentMediaId;
 
   // Cache available servers for current episode
   List<String>? _cachedAvailableServers;
@@ -26,7 +29,10 @@ class StreamingCubit extends Cubit<StreamingState> {
   int _activeRequestCount = 0;
 
   StreamingCubit(this._getStreamingLinks, this._getAvailableServers)
-    : super(StreamingInitial());
+      : super(StreamingInitial());
+
+  String? get currentEpisodeId => _currentEpisodeId;
+  String? get currentMediaId => _currentMediaId;
 
   /// Cancel all pending requests
   void cancelPendingRequests() {
@@ -77,12 +83,27 @@ class StreamingCubit extends Cubit<StreamingState> {
     String? provider,
     PreferredServer? preferredServer,
   }) async {
+    // Skip if already loaded for this episode
+    if (_currentEpisodeId == episodeId &&
+        _currentMediaId == mediaId &&
+        state is StreamingLoaded &&
+        !_isCancelled &&
+        server == null) {
+      if (kDebugMode) {
+        debugPrint('✅ StreamingCubit: Reusing cached links for episode $episodeId');
+      }
+      return;
+    }
+
+    _currentEpisodeId = episodeId;
+    _currentMediaId = mediaId;
+
     // Reset cancellation flag for new load
     _isCancelled = false;
     _activeRequestCount++;
 
-    // Since this is now a factory instance per video session, we don't check for existing state match.
-    // Each loadLinks call implies a new request or a retry.
+    // Singleton instance - we cache episode state to avoid duplicate requests.
+    // Only load if episode/media/provider changed or specific server requested.
 
     if (isClosed || _isCancelled) {
       _activeRequestCount--;

@@ -1,0 +1,155 @@
+
+📅 Audit Date: Thứ bảy, 07 Tháng 2 năm 2026 14:27:06 +07
+📁 Project: lilinet_app
+
+[0;34m📊 Step 1/7: Project Overview[0m
+════════════════════════════════════════════════════════════
+Total Dart Files: 264
+Total Lines of Code: 44336
+Features Count: 11
+
+[0;34m📊 Step 2/7: Const Constructor Audit[0m
+════════════════════════════════════════════════════════════
+Missing const Container: 95
+Missing const SizedBox: 29
+Missing const Padding: 47
+Missing const Text: 198
+Missing const Center: 29
+Missing const Row: 60
+Missing const Column: 71
+Missing const Icon: 61
+
+TOTAL: 590 potential violations
+[0;31m❌ High const violations - needs improvement[0m
+
+[0;34m📊 Step 3/7: Widget Function Anti-Pattern[0m
+════════════════════════════════════════════════════════════
+Widget-returning functions: 21
+[0;31m❌ Too many widget functions - refactor to StatelessWidget[0m
+
+[0;34m📊 Step 4/7: ListView Performance[0m
+════════════════════════════════════════════════════════════
+ListView (inefficient): 30
+ListView.builder: 10
+RepaintBoundary usage: 3
+GridView (inefficient): 0
+[1;33m⚠️  30 lists should use .builder[0m
+
+[0;34m📊 Step 5/7: Clean Architecture[0m
+════════════════════════════════════════════════════════════
+Domain importing Flutter: 0
+Domain importing Data: 0
+Data importing Presentation: 0
+Domain importing BLoC: 0
+TOTAL violations: 0
+[0;32m✅ Perfect Clean Architecture![0m
+
+[0;34m📊 Step 6/7: Code Quality Metrics[0m
+════════════════════════════════════════════════════════════
+Files > 300 lines: 52
+TODO/FIXME comments: 0
+Deprecated usage: 40
+async* generators: 0
+
+════════════════════════════════════════════════════════════
+
+════════════════════════════════════════════════════════════
+                    📊 AUDIT SCORES                          
+════════════════════════════════════════════════════════════
+
+Const Usage:          50/100
+Widget Patterns:      60/100
+List Performance:     50/100
+Architecture:         100/100
+────────────────────────────────────────────────────────────
+[1;33mOVERALL SCORE:        67/100 (C) ⚠️[0m
+
+════════════════════════════════════════════════════════════
+                 🎯 PRIORITY ACTIONS                         
+════════════════════════════════════════════════════════════
+
+1. 🔴 HIGH: Add const to 590 widgets
+2. 🔴 HIGH: Convert 21 functions to StatelessWidget
+3. 🟡 MED: Convert 30 lists to .builder
+4. 🟢 LOW: Refactor 52 large files (>300 lines)
+
+════════════════════════════════════════════════════════════
+
+════════════════════════════════════════════════════════════
+              DETAILED BREAKDOWN
+════════════════════════════════════════════════════════════
+
+Top 10 files with missing const:
+     30 lib/features/video_player/presentation/widgets/custom_video_controls.dart
+     30 lib/features/comments/presentation/widgets/comment_item.dart
+     30 lib/features/comments/presentation/widgets/comment_bottom_sheet.dart
+     24 lib/core/widgets/shimmer_widgets.dart
+     23 lib/features/comments/presentation/widgets/home_trending_section.dart
+     21 lib/features/video_player/presentation/widgets/comment_section.dart
+     19 lib/features/downloads/presentation/pages/downloads_page.dart
+     18 lib/features/history/presentation/pages/recently_watched_page.dart
+     16 lib/features/movies/presentation/widgets/movie_info_section.dart
+     16 lib/features/movies/presentation/pages/home_page.dart
+
+Widget-returning functions:
+lib/core/widgets/cached_image.dart:108:  Widget _buildImage(
+lib/features/movies/presentation/pages/search_page.dart:239:  Widget _buildFilterChip(
+lib/features/movies/presentation/widgets/movie_info_section.dart:134:  Widget _buildSkeletonText(BuildContext context) {
+lib/features/movies/presentation/widgets/movie_info_section.dart:159:  Widget _buildInfoItem(
+lib/features/movies/presentation/widgets/season_episode_selector.dart:88:  Widget _buildEpisodeList() {
+lib/features/settings/presentation/widgets/playback_section.dart:57:  Widget _buildQualitySelector(BuildContext context) {
+lib/features/settings/presentation/widgets/playback_section.dart:96:  Widget _buildServerSelector(BuildContext context) {
+lib/features/settings/presentation/widgets/playback_section.dart:187:  Widget _buildProviderSelector(BuildContext context) {
+lib/features/history/presentation/pages/recently_watched_page.dart:249:  Widget _buildStatItem(
+lib/features/video_player/presentation/widgets/comment_section.dart:186:  Widget _buildEmptyState(AppLocalizations l10n) {
+lib/features/video_player/presentation/widgets/comment_section.dart:207:  Widget _buildCommentItem(BuildContext context, CommentModel comment) {
+lib/features/video_player/presentation/widgets/comment_section.dart:277:  Widget _buildInputArea(BuildContext context, ColorScheme colorScheme, AppLocalizations l10n) {
+lib/features/video_player/presentation/widgets/video_player_content.dart:721:  Widget _buildVideoPlayer() {
+lib/features/comments/presentation/widgets/collapsed_comment_view.dart:66:  Widget _buildCompactCard(BuildContext context, Comment? comment, int count) {
+lib/features/comments/presentation/widgets/collapsed_comment_view.dart:127:  Widget _buildCompactPreview(Comment comment) {
+lib/features/comments/presentation/widgets/comment_bottom_sheet.dart:476:  Widget _buildReplyInput() {
+lib/features/comments/presentation/widgets/comment_bottom_sheet.dart:554:  Widget _buildCommentInput() {
+lib/features/comments/presentation/widgets/comment_sort_tabs.dart:37:  Widget _buildTab(BuildContext context, String label, CommentSortType type) {
+lib/features/comments/presentation/widgets/home_trending_section.dart:41:  Widget _buildLoadingShimmer(BuildContext context) {
+lib/features/comments/presentation/widgets/home_trending_section.dart:64:  Widget _buildTrendingList(BuildContext context, List<Comment> comments) {
+
+Inefficient ListViews:
+lib/features/movies/data/models/movie_model.freezed.dart:667:    return EqualUnmodifiableListView(_genres);
+lib/features/movies/data/models/movie_model.freezed.dart:686:    return EqualUnmodifiableListView(value);
+lib/features/movies/data/models/movie_model.freezed.dart:697:    return EqualUnmodifiableListView(value);
+lib/features/movies/data/models/movie_model.freezed.dart:708:    return EqualUnmodifiableListView(value);
+lib/features/movies/data/models/movie_model.freezed.dart:727:    return EqualUnmodifiableListView(value);
+lib/features/movies/data/models/movie_model.freezed.dart:738:    return EqualUnmodifiableListView(value);
+lib/features/movies/data/models/movie_model.freezed.dart:1274:    return EqualUnmodifiableListView(_results);
+lib/features/movies/data/models/season_model.freezed.dart:276:    return EqualUnmodifiableListView(_episodes);
+lib/features/movies/data/models/streaming_link_model.freezed.dart:1026:    return EqualUnmodifiableListView(_sources);
+lib/features/movies/data/models/streaming_link_model.freezed.dart:1048:    return EqualUnmodifiableListView(value);
+lib/features/movies/domain/entities/movie.freezed.dart:576:    return EqualUnmodifiableListView(_genres);
+lib/features/movies/domain/entities/movie.freezed.dart:590:    return EqualUnmodifiableListView(value);
+lib/features/movies/domain/entities/movie.freezed.dart:600:    return EqualUnmodifiableListView(value);
+lib/features/movies/domain/entities/movie.freezed.dart:614:    return EqualUnmodifiableListView(value);
+lib/features/movies/domain/entities/movie.freezed.dart:624:    return EqualUnmodifiableListView(value);
+lib/features/movies/presentation/bloc/trending_movies/trending_movies_state.freezed.dart:307:    return EqualUnmodifiableListView(_trending);
+lib/features/favorites/presentation/bloc/favorites_state.freezed.dart:305:    return EqualUnmodifiableListView(_favorites);
+lib/features/settings/presentation/pages/settings_page.dart:73:                return ListView(
+lib/features/explore/presentation/bloc/explore_state.freezed.dart:324:    return EqualUnmodifiableListView(_genres);
+lib/features/explore/presentation/bloc/explore_state.freezed.dart:398:    return EqualUnmodifiableListView(_movies);
+
+Inefficient GridViews:
+
+Architecture violations:
+Domain importing Flutter:
+
+Domain importing Data:
+
+Large files (>400 lines):
+total 44336
+lib/features/movies/data/models/streaming_link_model.freezed.dart 1456
+lib/features/movies/data/models/movie_model.freezed.dart 1363
+lib/features/auth/presentation/bloc/auth_event.freezed.dart 934
+lib/l10n/app_localizations.dart 931
+lib/features/video_player/presentation/widgets/video_player_content.dart 867
+lib/features/movies/domain/entities/movie.freezed.dart 843
+lib/features/comments/data/models/comment_model.freezed.dart 794
+lib/features/comments/data/models/local_comment_model.freezed.dart 788
+lib/features/comments/domain/entities/comment.freezed.dart 778

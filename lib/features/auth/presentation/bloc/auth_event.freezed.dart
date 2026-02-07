@@ -48,21 +48,46 @@ extension AuthEventPatterns on AuthEvent {
   /// }
   /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( CheckAuthStatus value)?  checkAuthStatus,TResult Function( SignInRequested value)?  signInRequested,TResult Function( AuthSubmitted value)?  authSubmitted,TResult Function( SignUpRequested value)?  signUpRequested,TResult Function( SignOutRequested value)?  signOutRequested,TResult Function( AuthStateChanged value)?  authStateChanged,TResult Function( PasswordResetRequested value)?  passwordResetRequested,TResult Function( UpdateProfileRequested value)?  updateProfileRequested,TResult Function( ChangePasswordRequested value)?  changePasswordRequested,TResult Function( DeleteAccountRequested value)?  deleteAccountRequested,required TResult orElse(),}){
-final _that = this;
-switch (_that) {
-case CheckAuthStatus() when checkAuthStatus != null:
-return checkAuthStatus(_that);case SignInRequested() when signInRequested != null:
-return signInRequested(_that);case AuthSubmitted() when authSubmitted != null:
-return authSubmitted(_that);case SignUpRequested() when signUpRequested != null:
-return signUpRequested(_that);case SignOutRequested() when signOutRequested != null:
-return signOutRequested(_that);case AuthStateChanged() when authStateChanged != null:
-return authStateChanged(_that);case PasswordResetRequested() when passwordResetRequested != null:
-return passwordResetRequested(_that);case UpdateProfileRequested() when updateProfileRequested != null:
-return updateProfileRequested(_that);case ChangePasswordRequested() when changePasswordRequested != null:
-return changePasswordRequested(_that);case DeleteAccountRequested() when deleteAccountRequested != null:
-return deleteAccountRequested(_that);case _:
-  return orElse();
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(CheckAuthStatus value)? checkAuthStatus,
+    TResult Function(SignInRequested value)? signInRequested,
+    TResult Function(AuthSubmitted value)? authSubmitted,
+    TResult Function(SignUpRequested value)? signUpRequested,
+    TResult Function(SignOutRequested value)? signOutRequested,
+    TResult Function(AuthStateChanged value)? authStateChanged,
+    TResult Function(PasswordResetRequested value)? passwordResetRequested,
+    TResult Function(UpdateProfileRequested value)? updateProfileRequested,
+    TResult Function(ChangePasswordRequested value)? changePasswordRequested,
+    TResult Function(DeleteAccountRequested value)? deleteAccountRequested,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case CheckAuthStatus() when checkAuthStatus != null:
+        return checkAuthStatus(_that);
+      case SignInRequested() when signInRequested != null:
+        return signInRequested(_that);
+      case AuthSubmitted() when authSubmitted != null:
+        return authSubmitted(_that);
+      case SignUpRequested() when signUpRequested != null:
+        return signUpRequested(_that);
+      case SignOutRequested() when signOutRequested != null:
+        return signOutRequested(_that);
+      case AuthStateChanged() when authStateChanged != null:
+        return authStateChanged(_that);
+      case PasswordResetRequested() when passwordResetRequested != null:
+        return passwordResetRequested(_that);
+      case UpdateProfileRequested() when updateProfileRequested != null:
+        return updateProfileRequested(_that);
+      case ChangePasswordRequested() when changePasswordRequested != null:
+        return changePasswordRequested(_that);
+      case DeleteAccountRequested() when deleteAccountRequested != null:
+        return deleteAccountRequested(_that);
+      case _:
+        return orElse();
+    }
+  }
 
   /// A `switch`-like method, using callbacks.
   ///
@@ -77,21 +102,49 @@ return deleteAccountRequested(_that);case _:
   /// }
   /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( CheckAuthStatus value)  checkAuthStatus,required TResult Function( SignInRequested value)  signInRequested,required TResult Function( AuthSubmitted value)  authSubmitted,required TResult Function( SignUpRequested value)  signUpRequested,required TResult Function( SignOutRequested value)  signOutRequested,required TResult Function( AuthStateChanged value)  authStateChanged,required TResult Function( PasswordResetRequested value)  passwordResetRequested,required TResult Function( UpdateProfileRequested value)  updateProfileRequested,required TResult Function( ChangePasswordRequested value)  changePasswordRequested,required TResult Function( DeleteAccountRequested value)  deleteAccountRequested,}){
-final _that = this;
-switch (_that) {
-case CheckAuthStatus():
-return checkAuthStatus(_that);case SignInRequested():
-return signInRequested(_that);case AuthSubmitted():
-return authSubmitted(_that);case SignUpRequested():
-return signUpRequested(_that);case SignOutRequested():
-return signOutRequested(_that);case AuthStateChanged():
-return authStateChanged(_that);case PasswordResetRequested():
-return passwordResetRequested(_that);case UpdateProfileRequested():
-return updateProfileRequested(_that);case ChangePasswordRequested():
-return changePasswordRequested(_that);case DeleteAccountRequested():
-return deleteAccountRequested(_that);case _:
-  throw StateError('Unexpected subclass');
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(CheckAuthStatus value) checkAuthStatus,
+    required TResult Function(SignInRequested value) signInRequested,
+    required TResult Function(AuthSubmitted value) authSubmitted,
+    required TResult Function(SignUpRequested value) signUpRequested,
+    required TResult Function(SignOutRequested value) signOutRequested,
+    required TResult Function(AuthStateChanged value) authStateChanged,
+    required TResult Function(PasswordResetRequested value)
+        passwordResetRequested,
+    required TResult Function(UpdateProfileRequested value)
+        updateProfileRequested,
+    required TResult Function(ChangePasswordRequested value)
+        changePasswordRequested,
+    required TResult Function(DeleteAccountRequested value)
+        deleteAccountRequested,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case CheckAuthStatus():
+        return checkAuthStatus(_that);
+      case SignInRequested():
+        return signInRequested(_that);
+      case AuthSubmitted():
+        return authSubmitted(_that);
+      case SignUpRequested():
+        return signUpRequested(_that);
+      case SignOutRequested():
+        return signOutRequested(_that);
+      case AuthStateChanged():
+        return authStateChanged(_that);
+      case PasswordResetRequested():
+        return passwordResetRequested(_that);
+      case UpdateProfileRequested():
+        return updateProfileRequested(_that);
+      case ChangePasswordRequested():
+        return changePasswordRequested(_that);
+      case DeleteAccountRequested():
+        return deleteAccountRequested(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
 
   /// A variant of `map` that fallback to returning `null`.
   ///
@@ -105,21 +158,45 @@ return deleteAccountRequested(_that);case _:
   /// }
   /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( CheckAuthStatus value)?  checkAuthStatus,TResult? Function( SignInRequested value)?  signInRequested,TResult? Function( AuthSubmitted value)?  authSubmitted,TResult? Function( SignUpRequested value)?  signUpRequested,TResult? Function( SignOutRequested value)?  signOutRequested,TResult? Function( AuthStateChanged value)?  authStateChanged,TResult? Function( PasswordResetRequested value)?  passwordResetRequested,TResult? Function( UpdateProfileRequested value)?  updateProfileRequested,TResult? Function( ChangePasswordRequested value)?  changePasswordRequested,TResult? Function( DeleteAccountRequested value)?  deleteAccountRequested,}){
-final _that = this;
-switch (_that) {
-case CheckAuthStatus() when checkAuthStatus != null:
-return checkAuthStatus(_that);case SignInRequested() when signInRequested != null:
-return signInRequested(_that);case AuthSubmitted() when authSubmitted != null:
-return authSubmitted(_that);case SignUpRequested() when signUpRequested != null:
-return signUpRequested(_that);case SignOutRequested() when signOutRequested != null:
-return signOutRequested(_that);case AuthStateChanged() when authStateChanged != null:
-return authStateChanged(_that);case PasswordResetRequested() when passwordResetRequested != null:
-return passwordResetRequested(_that);case UpdateProfileRequested() when updateProfileRequested != null:
-return updateProfileRequested(_that);case ChangePasswordRequested() when changePasswordRequested != null:
-return changePasswordRequested(_that);case DeleteAccountRequested() when deleteAccountRequested != null:
-return deleteAccountRequested(_that);case _:
-  return null;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(CheckAuthStatus value)? checkAuthStatus,
+    TResult? Function(SignInRequested value)? signInRequested,
+    TResult? Function(AuthSubmitted value)? authSubmitted,
+    TResult? Function(SignUpRequested value)? signUpRequested,
+    TResult? Function(SignOutRequested value)? signOutRequested,
+    TResult? Function(AuthStateChanged value)? authStateChanged,
+    TResult? Function(PasswordResetRequested value)? passwordResetRequested,
+    TResult? Function(UpdateProfileRequested value)? updateProfileRequested,
+    TResult? Function(ChangePasswordRequested value)? changePasswordRequested,
+    TResult? Function(DeleteAccountRequested value)? deleteAccountRequested,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case CheckAuthStatus() when checkAuthStatus != null:
+        return checkAuthStatus(_that);
+      case SignInRequested() when signInRequested != null:
+        return signInRequested(_that);
+      case AuthSubmitted() when authSubmitted != null:
+        return authSubmitted(_that);
+      case SignUpRequested() when signUpRequested != null:
+        return signUpRequested(_that);
+      case SignOutRequested() when signOutRequested != null:
+        return signOutRequested(_that);
+      case AuthStateChanged() when authStateChanged != null:
+        return authStateChanged(_that);
+      case PasswordResetRequested() when passwordResetRequested != null:
+        return passwordResetRequested(_that);
+      case UpdateProfileRequested() when updateProfileRequested != null:
+        return updateProfileRequested(_that);
+      case ChangePasswordRequested() when changePasswordRequested != null:
+        return changePasswordRequested(_that);
+      case DeleteAccountRequested() when deleteAccountRequested != null:
+        return deleteAccountRequested(_that);
+      case _:
+        return null;
+    }
+  }
 
   /// A variant of `when` that fallback to an `orElse` callback.
   ///
@@ -133,92 +210,22 @@ return deleteAccountRequested(_that);case _:
   /// }
   /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  checkAuthStatus,TResult Function( String email,  String password)?  signInRequested,TResult Function( String username,  String password,  bool isLogin)?  authSubmitted,TResult Function( String email,  String password,  String? displayName)?  signUpRequested,TResult Function()?  signOutRequested,TResult Function( bool isAuthenticated)?  authStateChanged,TResult Function( String email)?  passwordResetRequested,TResult Function( String? displayName,  String? avatarUrl)?  updateProfileRequested,TResult Function( String newPassword)?  changePasswordRequested,TResult Function()?  deleteAccountRequested,required TResult orElse(),}) {final _that = this;
-switch (_that) {
-case CheckAuthStatus() when checkAuthStatus != null:
-return checkAuthStatus();case SignInRequested() when signInRequested != null:
-return signInRequested(_that.email,_that.password);case AuthSubmitted() when authSubmitted != null:
-return authSubmitted(_that.username,_that.password,_that.isLogin);case SignUpRequested() when signUpRequested != null:
-return signUpRequested(_that.email,_that.password,_that.displayName);case SignOutRequested() when signOutRequested != null:
-return signOutRequested();case AuthStateChanged() when authStateChanged != null:
-return authStateChanged(_that.isAuthenticated);case PasswordResetRequested() when passwordResetRequested != null:
-return passwordResetRequested(_that.email);case UpdateProfileRequested() when updateProfileRequested != null:
-return updateProfileRequested(_that.displayName,_that.avatarUrl);case ChangePasswordRequested() when changePasswordRequested != null:
-return changePasswordRequested(_that.newPassword);case DeleteAccountRequested() when deleteAccountRequested != null:
-return deleteAccountRequested();case _:
-  return orElse();
-
-  /// A `switch`-like method, using callbacks.
-  ///
-  /// As opposed to `map`, this offers destructuring.
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case Subclass2(:final field2):
-  ///     return ...;
-  /// }
-  /// ```
-
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  checkAuthStatus,required TResult Function( String email,  String password)  signInRequested,required TResult Function( String username,  String password,  bool isLogin)  authSubmitted,required TResult Function( String email,  String password,  String? displayName)  signUpRequested,required TResult Function()  signOutRequested,required TResult Function( bool isAuthenticated)  authStateChanged,required TResult Function( String email)  passwordResetRequested,required TResult Function( String? displayName,  String? avatarUrl)  updateProfileRequested,required TResult Function( String newPassword)  changePasswordRequested,required TResult Function()  deleteAccountRequested,}) {final _that = this;
-switch (_that) {
-case CheckAuthStatus():
-return checkAuthStatus();case SignInRequested():
-return signInRequested(_that.email,_that.password);case AuthSubmitted():
-return authSubmitted(_that.username,_that.password,_that.isLogin);case SignUpRequested():
-return signUpRequested(_that.email,_that.password,_that.displayName);case SignOutRequested():
-return signOutRequested();case AuthStateChanged():
-return authStateChanged(_that.isAuthenticated);case PasswordResetRequested():
-return passwordResetRequested(_that.email);case UpdateProfileRequested():
-return updateProfileRequested(_that.displayName,_that.avatarUrl);case ChangePasswordRequested():
-return changePasswordRequested(_that.newPassword);case DeleteAccountRequested():
-return deleteAccountRequested();case _:
-  throw StateError('Unexpected subclass');
-
-}
-}
-/// A variant of `when` that fallback to returning `null`
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  checkAuthStatus,TResult? Function( String email,  String password)?  signInRequested,TResult? Function( String username,  String password,  bool isLogin)?  authSubmitted,TResult? Function( String email,  String password,  String? displayName)?  signUpRequested,TResult? Function()?  signOutRequested,TResult? Function( bool isAuthenticated)?  authStateChanged,TResult? Function( String email)?  passwordResetRequested,TResult? Function( String? displayName,  String? avatarUrl)?  updateProfileRequested,TResult? Function( String newPassword)?  changePasswordRequested,TResult? Function()?  deleteAccountRequested,}) {final _that = this;
-switch (_that) {
-case CheckAuthStatus() when checkAuthStatus != null:
-return checkAuthStatus();case SignInRequested() when signInRequested != null:
-return signInRequested(_that.email,_that.password);case AuthSubmitted() when authSubmitted != null:
-return authSubmitted(_that.username,_that.password,_that.isLogin);case SignUpRequested() when signUpRequested != null:
-return signUpRequested(_that.email,_that.password,_that.displayName);case SignOutRequested() when signOutRequested != null:
-return signOutRequested();case AuthStateChanged() when authStateChanged != null:
-return authStateChanged(_that.isAuthenticated);case PasswordResetRequested() when passwordResetRequested != null:
-return passwordResetRequested(_that.email);case UpdateProfileRequested() when updateProfileRequested != null:
-return updateProfileRequested(_that.displayName,_that.avatarUrl);case ChangePasswordRequested() when changePasswordRequested != null:
-return changePasswordRequested(_that.newPassword);case DeleteAccountRequested() when deleteAccountRequested != null:
-return deleteAccountRequested();case _:
-  return null;
-
-}
-}
-
   @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? checkAuthStatus,
-    TResult? Function(String email, String password)? signInRequested,
-    TResult? Function(String username, String password, bool isLogin)?
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? checkAuthStatus,
+    TResult Function(String email, String password)? signInRequested,
+    TResult Function(String username, String password, bool isLogin)?
         authSubmitted,
-    TResult? Function(String email, String password, String? displayName)?
+    TResult Function(String email, String password, String? displayName)?
         signUpRequested,
-    TResult? Function()? signOutRequested,
-    TResult? Function(bool isAuthenticated)? authStateChanged,
-    TResult? Function(String email)? passwordResetRequested,
+    TResult Function()? signOutRequested,
+    TResult Function(bool isAuthenticated)? authStateChanged,
+    TResult Function(String email)? passwordResetRequested,
+    TResult Function(String? displayName, String? avatarUrl)?
+        updateProfileRequested,
+    TResult Function(String newPassword)? changePasswordRequested,
+    TResult Function()? deleteAccountRequested,
+    required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
@@ -236,6 +243,124 @@ return deleteAccountRequested();case _:
         return authStateChanged(_that.isAuthenticated);
       case PasswordResetRequested() when passwordResetRequested != null:
         return passwordResetRequested(_that.email);
+      case UpdateProfileRequested() when updateProfileRequested != null:
+        return updateProfileRequested(_that.displayName, _that.avatarUrl);
+      case ChangePasswordRequested() when changePasswordRequested != null:
+        return changePasswordRequested(_that.newPassword);
+      case DeleteAccountRequested() when deleteAccountRequested != null:
+        return deleteAccountRequested();
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() checkAuthStatus,
+    required TResult Function(String email, String password) signInRequested,
+    required TResult Function(String username, String password, bool isLogin)
+        authSubmitted,
+    required TResult Function(
+            String email, String password, String? displayName)
+        signUpRequested,
+    required TResult Function() signOutRequested,
+    required TResult Function(bool isAuthenticated) authStateChanged,
+    required TResult Function(String email) passwordResetRequested,
+    required TResult Function(String? displayName, String? avatarUrl)
+        updateProfileRequested,
+    required TResult Function(String newPassword) changePasswordRequested,
+    required TResult Function() deleteAccountRequested,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case CheckAuthStatus():
+        return checkAuthStatus();
+      case SignInRequested():
+        return signInRequested(_that.email, _that.password);
+      case AuthSubmitted():
+        return authSubmitted(_that.username, _that.password, _that.isLogin);
+      case SignUpRequested():
+        return signUpRequested(_that.email, _that.password, _that.displayName);
+      case SignOutRequested():
+        return signOutRequested();
+      case AuthStateChanged():
+        return authStateChanged(_that.isAuthenticated);
+      case PasswordResetRequested():
+        return passwordResetRequested(_that.email);
+      case UpdateProfileRequested():
+        return updateProfileRequested(_that.displayName, _that.avatarUrl);
+      case ChangePasswordRequested():
+        return changePasswordRequested(_that.newPassword);
+      case DeleteAccountRequested():
+        return deleteAccountRequested();
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? checkAuthStatus,
+    TResult? Function(String email, String password)? signInRequested,
+    TResult? Function(String username, String password, bool isLogin)?
+        authSubmitted,
+    TResult? Function(String email, String password, String? displayName)?
+        signUpRequested,
+    TResult? Function()? signOutRequested,
+    TResult? Function(bool isAuthenticated)? authStateChanged,
+    TResult? Function(String email)? passwordResetRequested,
+    TResult? Function(String? displayName, String? avatarUrl)?
+        updateProfileRequested,
+    TResult? Function(String newPassword)? changePasswordRequested,
+    TResult? Function()? deleteAccountRequested,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case CheckAuthStatus() when checkAuthStatus != null:
+        return checkAuthStatus();
+      case SignInRequested() when signInRequested != null:
+        return signInRequested(_that.email, _that.password);
+      case AuthSubmitted() when authSubmitted != null:
+        return authSubmitted(_that.username, _that.password, _that.isLogin);
+      case SignUpRequested() when signUpRequested != null:
+        return signUpRequested(_that.email, _that.password, _that.displayName);
+      case SignOutRequested() when signOutRequested != null:
+        return signOutRequested();
+      case AuthStateChanged() when authStateChanged != null:
+        return authStateChanged(_that.isAuthenticated);
+      case PasswordResetRequested() when passwordResetRequested != null:
+        return passwordResetRequested(_that.email);
+      case UpdateProfileRequested() when updateProfileRequested != null:
+        return updateProfileRequested(_that.displayName, _that.avatarUrl);
+      case ChangePasswordRequested() when changePasswordRequested != null:
+        return changePasswordRequested(_that.newPassword);
+      case DeleteAccountRequested() when deleteAccountRequested != null:
+        return deleteAccountRequested();
       case _:
         return null;
     }
@@ -648,51 +773,50 @@ class _$PasswordResetRequestedCopyWithImpl<$Res>
 
 /// @nodoc
 
-
 class UpdateProfileRequested implements AuthEvent {
   const UpdateProfileRequested({this.displayName, this.avatarUrl});
-  
 
- final  String? displayName;
- final  String? avatarUrl;
+  final String? displayName;
+  final String? avatarUrl;
 
-/// Create a copy of AuthEvent
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$UpdateProfileRequestedCopyWith<UpdateProfileRequested> get copyWith => _$UpdateProfileRequestedCopyWithImpl<UpdateProfileRequested>(this, _$identity);
+  /// Create a copy of AuthEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $UpdateProfileRequestedCopyWith<UpdateProfileRequested> get copyWith =>
+      _$UpdateProfileRequestedCopyWithImpl<UpdateProfileRequested>(
+          this, _$identity);
 
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is UpdateProfileRequested &&
+            (identical(other.displayName, displayName) ||
+                other.displayName == displayName) &&
+            (identical(other.avatarUrl, avatarUrl) ||
+                other.avatarUrl == avatarUrl));
+  }
 
+  @override
+  int get hashCode => Object.hash(runtimeType, displayName, avatarUrl);
 
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateProfileRequested&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,displayName,avatarUrl);
-
-@override
-String toString() {
-  return 'AuthEvent.updateProfileRequested(displayName: $displayName, avatarUrl: $avatarUrl)';
-}
-
-
+  @override
+  String toString() {
+    return 'AuthEvent.updateProfileRequested(displayName: $displayName, avatarUrl: $avatarUrl)';
+  }
 }
 
 /// @nodoc
-abstract mixin class $UpdateProfileRequestedCopyWith<$Res> implements $AuthEventCopyWith<$Res> {
-  factory $UpdateProfileRequestedCopyWith(UpdateProfileRequested value, $Res Function(UpdateProfileRequested) _then) = _$UpdateProfileRequestedCopyWithImpl;
-@useResult
-$Res call({
- String? displayName, String? avatarUrl
-});
-
-
-
-
+abstract mixin class $UpdateProfileRequestedCopyWith<$Res>
+    implements $AuthEventCopyWith<$Res> {
+  factory $UpdateProfileRequestedCopyWith(UpdateProfileRequested value,
+          $Res Function(UpdateProfileRequested) _then) =
+      _$UpdateProfileRequestedCopyWithImpl;
+  @useResult
+  $Res call({String? displayName, String? avatarUrl});
 }
+
 /// @nodoc
 class _$UpdateProfileRequestedCopyWithImpl<$Res>
     implements $UpdateProfileRequestedCopyWith<$Res> {
@@ -701,65 +825,69 @@ class _$UpdateProfileRequestedCopyWithImpl<$Res>
   final UpdateProfileRequested _self;
   final $Res Function(UpdateProfileRequested) _then;
 
-/// Create a copy of AuthEvent
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? displayName = freezed,Object? avatarUrl = freezed,}) {
-  return _then(UpdateProfileRequested(
-displayName: freezed == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
-as String?,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
-as String?,
-  ));
-}
-
-
+  /// Create a copy of AuthEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? displayName = freezed,
+    Object? avatarUrl = freezed,
+  }) {
+    return _then(UpdateProfileRequested(
+      displayName: freezed == displayName
+          ? _self.displayName
+          : displayName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      avatarUrl: freezed == avatarUrl
+          ? _self.avatarUrl
+          : avatarUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
 }
 
 /// @nodoc
-
 
 class ChangePasswordRequested implements AuthEvent {
   const ChangePasswordRequested({required this.newPassword});
-  
 
- final  String newPassword;
+  final String newPassword;
 
-/// Create a copy of AuthEvent
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$ChangePasswordRequestedCopyWith<ChangePasswordRequested> get copyWith => _$ChangePasswordRequestedCopyWithImpl<ChangePasswordRequested>(this, _$identity);
+  /// Create a copy of AuthEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $ChangePasswordRequestedCopyWith<ChangePasswordRequested> get copyWith =>
+      _$ChangePasswordRequestedCopyWithImpl<ChangePasswordRequested>(
+          this, _$identity);
 
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is ChangePasswordRequested &&
+            (identical(other.newPassword, newPassword) ||
+                other.newPassword == newPassword));
+  }
 
+  @override
+  int get hashCode => Object.hash(runtimeType, newPassword);
 
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChangePasswordRequested&&(identical(other.newPassword, newPassword) || other.newPassword == newPassword));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,newPassword);
-
-@override
-String toString() {
-  return 'AuthEvent.changePasswordRequested(newPassword: $newPassword)';
-}
-
-
+  @override
+  String toString() {
+    return 'AuthEvent.changePasswordRequested(newPassword: $newPassword)';
+  }
 }
 
 /// @nodoc
-abstract mixin class $ChangePasswordRequestedCopyWith<$Res> implements $AuthEventCopyWith<$Res> {
-  factory $ChangePasswordRequestedCopyWith(ChangePasswordRequested value, $Res Function(ChangePasswordRequested) _then) = _$ChangePasswordRequestedCopyWithImpl;
-@useResult
-$Res call({
- String newPassword
-});
-
-
-
-
+abstract mixin class $ChangePasswordRequestedCopyWith<$Res>
+    implements $AuthEventCopyWith<$Res> {
+  factory $ChangePasswordRequestedCopyWith(ChangePasswordRequested value,
+          $Res Function(ChangePasswordRequested) _then) =
+      _$ChangePasswordRequestedCopyWithImpl;
+  @useResult
+  $Res call({String newPassword});
 }
+
 /// @nodoc
 class _$ChangePasswordRequestedCopyWithImpl<$Res>
     implements $ChangePasswordRequestedCopyWith<$Res> {
@@ -768,48 +896,39 @@ class _$ChangePasswordRequestedCopyWithImpl<$Res>
   final ChangePasswordRequested _self;
   final $Res Function(ChangePasswordRequested) _then;
 
-/// Create a copy of AuthEvent
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? newPassword = null,}) {
-  return _then(ChangePasswordRequested(
-newPassword: null == newPassword ? _self.newPassword : newPassword // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
-
+  /// Create a copy of AuthEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? newPassword = null,
+  }) {
+    return _then(ChangePasswordRequested(
+      newPassword: null == newPassword
+          ? _self.newPassword
+          : newPassword // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
-
 class DeleteAccountRequested implements AuthEvent {
   const DeleteAccountRequested();
-  
 
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is DeleteAccountRequested);
+  }
 
+  @override
+  int get hashCode => runtimeType.hashCode;
 
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DeleteAccountRequested);
+  @override
+  String toString() {
+    return 'AuthEvent.deleteAccountRequested()';
+  }
 }
-
-
-@override
-int get hashCode => runtimeType.hashCode;
-
-@override
-String toString() {
-  return 'AuthEvent.deleteAccountRequested()';
-}
-
-
-}
-
-
-
 
 // dart format on
