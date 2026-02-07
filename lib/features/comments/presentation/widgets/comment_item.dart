@@ -124,8 +124,8 @@ class _CommentContentState extends State<_CommentContent> {
                     vertical: 8,
                   ),
                   decoration: BoxDecoration(
-                    color: colorScheme.surfaceContainerHighest.withValues(
-                      alpha: 0.5,
+                    color: colorScheme.surfaceContainerHighest.withOpacity(
+                      0.5,
                     ),
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -412,9 +412,9 @@ class _ActionButtons extends StatelessWidget {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: isRepliesExpanded
-                      ? theme.colorScheme.primary.withValues(alpha: 0.1)
-                      : theme.colorScheme.surfaceContainerHighest.withValues(
-                          alpha: 0.5,
+                      ? theme.colorScheme.primary.withOpacity(0.1)
+                      : theme.colorScheme.surfaceContainerHighest.withOpacity(
+                          0.5,
                         ),
                   borderRadius: BorderRadius.circular(12),
                 ),

@@ -24,11 +24,11 @@ class ContentUnavailableWidget extends StatelessWidget {
             border: Border.all(
               color: Theme.of(
                 context,
-              ).colorScheme.outlineVariant.withValues(alpha: 0.5),
+              ).colorScheme.outlineVariant.withOpacity(0.5),
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.05),
+                color: Colors.black.withOpacity(0.05),
                 blurRadius: 20,
                 offset: const Offset(0, 10),
               ),

@@ -326,7 +326,7 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
                               style: TextStyle(
                                 fontSize: 14,
                                 color: colorScheme.onSurface
-                                    .withValues(alpha: 0.6),
+                                    .withOpacity(0.6),
                               ),
                             ),
                           ],

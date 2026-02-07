@@ -54,7 +54,7 @@ class EpisodeItem extends StatelessWidget {
             : null);
 
     return Container(
-      color: isSelected ? colorScheme.primary.withValues(alpha: 0.15) : null,
+      color: isSelected ? colorScheme.primary.withOpacity(0.15) : null,
       child: ListTile(
         selected: isSelected,
         minVerticalPadding: 12,

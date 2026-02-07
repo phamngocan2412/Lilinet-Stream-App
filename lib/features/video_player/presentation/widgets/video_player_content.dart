@@ -547,7 +547,7 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
                         _buildVideoPlayer(),
                         if (_isOffline)
                           Container(
-                            color: Colors.black.withValues(alpha: 0.7),
+                            color: Colors.black.withOpacity(0.7),
                             child: const Center(
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,

@@ -15,7 +15,7 @@ class CommentHeader extends StatelessWidget {
         borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
         border: Border(
           bottom: BorderSide(
-            color: Theme.of(context).dividerColor.withValues(alpha: 0.1),
+            color: Theme.of(context).dividerColor.withOpacity(0.1),
           ),
         ),
       ),
