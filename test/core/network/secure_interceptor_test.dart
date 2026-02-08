@@ -20,7 +20,8 @@ void main() {
       final handler = RequestInterceptorHandler();
       interceptor.onRequest(options, handler);
 
-      expect(logs.any((log) => log.contains('Request: GET /test-endpoint')), isTrue);
+      expect(logs.any((log) => log.contains('Request: GET /test-endpoint')),
+          isTrue);
     });
 
     test('redacts Authorization header', () {
@@ -42,7 +43,8 @@ void main() {
       final handler = RequestInterceptorHandler();
       interceptor.onRequest(options, handler);
 
-      final headerLog = logs.firstWhere((log) => log.contains('Request Headers:'));
+      final headerLog =
+          logs.firstWhere((log) => log.contains('Request Headers:'));
       expect(headerLog, contains('Authorization: ***REDACTED***'));
       expect(headerLog, contains('Content-Type: application/json'));
       expect(headerLog, isNot(contains('secret_token')));
@@ -114,6 +116,72 @@ void main() {
 
       final bodyLog = logs.firstWhere((log) => log.contains('Request Body:'));
       expect(bodyLog, contains('plain text query'));
+    });
+
+    test('redacts sensitive data from JSON string body', () {
+      final logs = <String>[];
+      final interceptor = SecureInterceptor(
+        logCallback: (message, {name = ''}) {
+          logs.add(message);
+        },
+      );
+
+      final options = RequestOptions(
+        path: '/json-string',
+        data: '{"password": "secret_password", "email": "test@example.com"}',
+      );
+
+      final handler = RequestInterceptorHandler();
+      interceptor.onRequest(options, handler);
+
+      final bodyLog = logs.firstWhere((log) => log.contains('Request Body:'));
+      expect(bodyLog, contains('"password": "***REDACTED***"'));
+      expect(bodyLog, isNot(contains('secret_password')));
+    });
+
+    test('logs sanitized response body', () {
+      final logs = <String>[];
+      final interceptor = SecureInterceptor(
+        logCallback: (message, {name = ''}) {
+          logs.add(message);
+        },
+      );
+
+      final options = RequestOptions(path: '/response');
+      final response = Response(
+        requestOptions: options,
+        statusCode: 200,
+        data: {'token': 'secret_token', 'public': 'data'},
+      );
+
+      final handler = ResponseInterceptorHandler();
+      interceptor.onResponse(response, handler);
+
+      final bodyLog = logs.firstWhere((log) => log.contains('Response Body:'));
+      expect(bodyLog, contains('"token": "***REDACTED***"'));
+      expect(bodyLog, contains('"public": "data"'));
+      expect(bodyLog, isNot(contains('secret_token')));
+    });
+
+    test('handles binary data in request', () {
+      final logs = <String>[];
+      final interceptor = SecureInterceptor(
+        logCallback: (message, {name = ''}) {
+          logs.add(message);
+        },
+      );
+
+      final options = RequestOptions(
+        path: '/upload',
+        data: [1, 2, 3, 4, 5], // List<int>
+      );
+
+      final handler = RequestInterceptorHandler();
+      interceptor.onRequest(options, handler);
+
+      final bodyLog = logs.firstWhere((log) => log.contains('Request Body:'));
+      expect(bodyLog, contains('[Binary Data: 5 bytes]'));
+      expect(bodyLog, isNot(contains('[1, 2, 3, 4, 5]')));
     });
 
     test('redacts nested sensitive data', () {
