@@ -24,6 +24,13 @@ class EpisodeList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Optimization: Create a map for O(1) lookup
+    // This avoids O(N*M) complexity where N is episodes count and M is history size
+    final progressMap = {
+      for (final p in watchProgress)
+        if (p.mediaId == mediaId && p.episodeId != null) p.episodeId!: p
+    };
+
     return ListView.builder(
       cacheExtent: 300,
       shrinkWrap: true,
@@ -33,10 +40,7 @@ class EpisodeList extends StatelessWidget {
       itemBuilder: (context, index) {
         final episode = episodes[index];
         final isSelected = episode.id == currentEpisodeId;
-        final progress = watchProgress.firstWhere(
-          (p) => p.episodeId == episode.id && p.mediaId == mediaId,
-          orElse: () => WatchProgress.empty(),
-        );
+        final progress = progressMap[episode.id] ?? WatchProgress.empty();
 
         return EpisodeItem(
           key: ValueKey(episode.id),
