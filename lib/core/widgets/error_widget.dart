@@ -47,7 +47,7 @@ class AppErrorWidget extends StatelessWidget {
           decoration: BoxDecoration(
             color: Theme.of(
               context,
-            ).colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
+            ).colorScheme.surfaceContainerHighest.withOpacity(0.5),
             borderRadius: BorderRadius.circular(16),
           ),
           child: Column(
@@ -85,11 +85,11 @@ class AppErrorWidget extends StatelessWidget {
             border: Border.all(
               color: Theme.of(
                 context,
-              ).colorScheme.outlineVariant.withValues(alpha: 0.5),
+              ).colorScheme.outlineVariant.withOpacity(0.5),
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.05),
+                color: Colors.black.withOpacity(0.05),
                 blurRadius: 20,
                 offset: const Offset(0, 10),
               ),
@@ -102,7 +102,7 @@ class AppErrorWidget extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: iconColor.withValues(alpha: 0.1),
+                  color: iconColor.withOpacity(0.1),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(icon, size: 48, color: iconColor),
@@ -134,7 +134,7 @@ class AppErrorWidget extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: Theme.of(
                           context,
-                        ).colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
+                        ).colorScheme.onSurfaceVariant.withOpacity(0.7),
                         fontFamily: 'monospace',
                       ),
                   maxLines: 2,

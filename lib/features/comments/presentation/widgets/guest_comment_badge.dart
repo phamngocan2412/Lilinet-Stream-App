@@ -23,9 +23,9 @@ class GuestCommentBadge extends StatelessWidget {
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
         decoration: BoxDecoration(
-          color: Colors.blue.withValues(alpha: 0.1),
+          color: Colors.blue.withOpacity(0.1),
           borderRadius: BorderRadius.circular(4),
-          border: Border.all(color: Colors.blue.withValues(alpha: 0.3)),
+          border: Border.all(color: Colors.blue.withOpacity(0.3)),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -40,7 +40,7 @@ class GuestCommentBadge extends StatelessWidget {
               AppLocalizations.of(context)!.syncing,
               style: TextStyle(
                 fontSize: 10,
-                color: Colors.blue.withValues(alpha: 0.8),
+                color: Colors.blue.withOpacity(0.8),
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -53,9 +53,9 @@ class GuestCommentBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
       decoration: BoxDecoration(
-        color: Colors.orange.withValues(alpha: 0.1),
+        color: Colors.orange.withOpacity(0.1),
         borderRadius: BorderRadius.circular(4),
-        border: Border.all(color: Colors.orange.withValues(alpha: 0.3)),
+        border: Border.all(color: Colors.orange.withOpacity(0.3)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -63,14 +63,14 @@ class GuestCommentBadge extends StatelessWidget {
           Icon(
             Icons.cloud_off,
             size: 10,
-            color: Colors.orange.withValues(alpha: 0.8),
+            color: Colors.orange.withOpacity(0.8),
           ),
           const SizedBox(width: 4),
           Text(
             AppLocalizations.of(context)!.notSynced,
             style: TextStyle(
               fontSize: 10,
-              color: Colors.orange.withValues(alpha: 0.8),
+              color: Colors.orange.withOpacity(0.8),
               fontWeight: FontWeight.w500,
             ),
           ),
