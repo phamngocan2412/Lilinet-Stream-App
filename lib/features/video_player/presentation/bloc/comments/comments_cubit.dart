@@ -13,14 +13,18 @@ class CommentsCubit extends Cubit<CommentsState> {
   Future<void> loadComments(String videoId) async {
     // Return cached if available
     if (_cache.containsKey(videoId)) {
+      if (isClosed) return;
       emit(CommentsLoaded(videoId, _cache[videoId]!));
       return;
     }
 
+    if (isClosed) return;
     emit(CommentsLoading(videoId));
 
     // --- MOCK API ---
     await Future.delayed(const Duration(seconds: 1));
+
+    if (isClosed) return;
 
     final List<CommentModel> mockComments = [
       CommentModel(
@@ -48,12 +52,15 @@ class CommentsCubit extends Cubit<CommentsState> {
     // ----------------
 
     _cache[videoId] = mockComments;
+    if (isClosed) return;
     emit(CommentsLoaded(videoId, mockComments));
   }
 
   Future<void> addComment(String videoId, String content) async {
     // --- MOCK POST ---
     await Future.delayed(const Duration(milliseconds: 500));
+
+    if (isClosed) return;
 
     final newComment = CommentModel(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
@@ -67,6 +74,7 @@ class CommentsCubit extends Cubit<CommentsState> {
     final newList = [newComment, ...currentList];
 
     _cache[videoId] = newList;
+    if (isClosed) return;
     emit(CommentsLoaded(videoId, newList));
   }
 }

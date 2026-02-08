@@ -131,8 +131,9 @@ class StreamingResponseModelAdapter
 // JsonSerializableGenerator
 // **************************************************************************
 
-_StreamingLinkModel _$StreamingLinkModelFromJson(Map<String, dynamic> json) =>
-    _StreamingLinkModel(
+_$StreamingLinkModelImpl _$$StreamingLinkModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$StreamingLinkModelImpl(
       url: const AnyToStringConverter().fromJson(json['url']),
       quality: const AnyToStringConverter().fromJson(json['quality']),
       isM3U8: json['isM3U8'] as bool,
@@ -141,7 +142,8 @@ _StreamingLinkModel _$StreamingLinkModelFromJson(Map<String, dynamic> json) =>
       ),
     );
 
-Map<String, dynamic> _$StreamingLinkModelToJson(_StreamingLinkModel instance) =>
+Map<String, dynamic> _$$StreamingLinkModelImplToJson(
+        _$StreamingLinkModelImpl instance) =>
     <String, dynamic>{
       'url': const AnyToStringConverter().toJson(instance.url),
       'quality': const AnyToStringConverter().toJson(instance.quality),
@@ -149,21 +151,21 @@ Map<String, dynamic> _$StreamingLinkModelToJson(_StreamingLinkModel instance) =>
       'headers': instance.headers,
     };
 
-_SubtitleModel _$SubtitleModelFromJson(Map<String, dynamic> json) =>
-    _SubtitleModel(
+_$SubtitleModelImpl _$$SubtitleModelImplFromJson(Map<String, dynamic> json) =>
+    _$SubtitleModelImpl(
       url: const AnyToStringConverter().fromJson(json['url']),
       lang: const AnyToStringConverter().fromJson(json['lang']),
     );
 
-Map<String, dynamic> _$SubtitleModelToJson(_SubtitleModel instance) =>
+Map<String, dynamic> _$$SubtitleModelImplToJson(_$SubtitleModelImpl instance) =>
     <String, dynamic>{
       'url': const AnyToStringConverter().toJson(instance.url),
       'lang': const AnyToStringConverter().toJson(instance.lang),
     };
 
-_StreamingResponseModel _$StreamingResponseModelFromJson(
+_$StreamingResponseModelImpl _$$StreamingResponseModelImplFromJson(
         Map<String, dynamic> json) =>
-    _StreamingResponseModel(
+    _$StreamingResponseModelImpl(
       sources: (json['sources'] as List<dynamic>)
           .map((e) => StreamingLinkModel.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -175,21 +177,23 @@ _StreamingResponseModel _$StreamingResponseModelFromJson(
           .toList(),
     );
 
-Map<String, dynamic> _$StreamingResponseModelToJson(
-        _StreamingResponseModel instance) =>
+Map<String, dynamic> _$$StreamingResponseModelImplToJson(
+        _$StreamingResponseModelImpl instance) =>
     <String, dynamic>{
       'sources': instance.sources,
       'headers': instance.headers,
       'subtitles': instance.subtitles,
     };
 
-_ServerInfoModel _$ServerInfoModelFromJson(Map<String, dynamic> json) =>
-    _ServerInfoModel(
+_$ServerInfoModelImpl _$$ServerInfoModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$ServerInfoModelImpl(
       name: json['name'] as String,
       url: json['url'] as String,
     );
 
-Map<String, dynamic> _$ServerInfoModelToJson(_ServerInfoModel instance) =>
+Map<String, dynamic> _$$ServerInfoModelImplToJson(
+        _$ServerInfoModelImpl instance) =>
     <String, dynamic>{
       'name': instance.name,
       'url': instance.url,

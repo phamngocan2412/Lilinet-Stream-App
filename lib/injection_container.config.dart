@@ -1,5 +1,5 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format width=80
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
 // InjectableConfigGenerator
@@ -175,10 +175,10 @@ extension GetItInjectableX on _i174.GetIt {
             ));
     gh.lazySingleton<_i665.LocalCommentDataSource>(
         () => _i665.LocalCommentDataSourceImpl());
-    gh.lazySingleton<_i647.AuthSupabaseDataSource>(
-        () => _i647.AuthSupabaseDataSource(gh<_i454.SupabaseClient>()));
     gh.lazySingleton<_i230.FavoritesSupabaseDataSource>(
         () => _i230.FavoritesSupabaseDataSource(gh<_i454.SupabaseClient>()));
+    gh.lazySingleton<_i647.AuthSupabaseDataSource>(
+        () => _i647.AuthSupabaseDataSource(gh<_i454.SupabaseClient>()));
     gh.lazySingleton<_i803.DownloadService>(() => _i803.DownloadService(
           gh<_i361.Dio>(),
           gh<_i102.LocalNotificationService>(),
@@ -224,8 +224,6 @@ extension GetItInjectableX on _i174.GetIt {
         _i113.SettingsRepositoryImpl(gh<_i387.SettingsLocalDataSource>()));
     gh.lazySingleton<_i442.GetCachedTrendingMovies>(
         () => _i442.GetCachedTrendingMovies(gh<_i961.MovieRepository>()));
-    gh.factory<_i229.GetAvailableServers>(
-        () => _i229.GetAvailableServers(gh<_i961.MovieRepository>()));
     gh.factory<_i1004.GetMovieDetails>(
         () => _i1004.GetMovieDetails(gh<_i961.MovieRepository>()));
     gh.factory<_i9.GetStreamingLinks>(
@@ -234,6 +232,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i716.GetTrendingMovies(gh<_i961.MovieRepository>()));
     gh.factory<_i82.SearchMovies>(
         () => _i82.SearchMovies(gh<_i961.MovieRepository>()));
+    gh.factory<_i229.GetAvailableServers>(
+        () => _i229.GetAvailableServers(gh<_i961.MovieRepository>()));
     gh.lazySingleton<_i709.GetSettings>(
         () => _i709.GetSettings(gh<_i309.SettingsRepository>()));
     gh.lazySingleton<_i156.SaveSettings>(
@@ -243,20 +243,20 @@ extension GetItInjectableX on _i174.GetIt {
           saveSettings: gh<_i156.SaveSettings>(),
           repository: gh<_i309.SettingsRepository>(),
         ));
-    gh.lazySingleton<_i1072.StreamingCubit>(() => _i1072.StreamingCubit(
+    gh.factory<_i1072.StreamingCubit>(() => _i1072.StreamingCubit(
           gh<_i9.GetStreamingLinks>(),
           gh<_i229.GetAvailableServers>(),
         ));
+    gh.lazySingleton<_i509.SignInWithEmail>(
+        () => _i509.SignInWithEmail(gh<_i1015.AuthRepository>()));
+    gh.lazySingleton<_i784.SignUpWithEmail>(
+        () => _i784.SignUpWithEmail(gh<_i1015.AuthRepository>()));
+    gh.lazySingleton<_i872.SignOut>(
+        () => _i872.SignOut(gh<_i1015.AuthRepository>()));
     gh.lazySingleton<_i191.GetCurrentUser>(
         () => _i191.GetCurrentUser(gh<_i1015.AuthRepository>()));
     gh.lazySingleton<_i565.SendPasswordResetEmail>(
         () => _i565.SendPasswordResetEmail(gh<_i1015.AuthRepository>()));
-    gh.lazySingleton<_i509.SignInWithEmail>(
-        () => _i509.SignInWithEmail(gh<_i1015.AuthRepository>()));
-    gh.lazySingleton<_i872.SignOut>(
-        () => _i872.SignOut(gh<_i1015.AuthRepository>()));
-    gh.lazySingleton<_i784.SignUpWithEmail>(
-        () => _i784.SignUpWithEmail(gh<_i1015.AuthRepository>()));
     gh.factory<_i806.DeleteWatchProgress>(
         () => _i806.DeleteWatchProgress(gh<_i190.HistoryRepository>()));
     gh.factory<_i890.GetWatchHistory>(
@@ -265,14 +265,14 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i603.SaveWatchProgress(gh<_i190.HistoryRepository>()));
     gh.factory<_i730.SearchBloc>(
         () => _i730.SearchBloc(gh<_i82.SearchMovies>()));
+    gh.lazySingleton<_i907.RemoveFavorite>(
+        () => _i907.RemoveFavorite(gh<_i320.FavoritesRepository>()));
+    gh.lazySingleton<_i8.IsFavorite>(
+        () => _i8.IsFavorite(gh<_i320.FavoritesRepository>()));
     gh.lazySingleton<_i332.AddFavorite>(
         () => _i332.AddFavorite(gh<_i320.FavoritesRepository>()));
     gh.lazySingleton<_i879.GetFavorites>(
         () => _i879.GetFavorites(gh<_i320.FavoritesRepository>()));
-    gh.lazySingleton<_i8.IsFavorite>(
-        () => _i8.IsFavorite(gh<_i320.FavoritesRepository>()));
-    gh.lazySingleton<_i907.RemoveFavorite>(
-        () => _i907.RemoveFavorite(gh<_i320.FavoritesRepository>()));
     gh.factory<_i886.CommentCubit>(() => _i886.CommentCubit(
           gh<_i90.GetComments>(),
           gh<_i802.AddComment>(),
@@ -315,10 +315,10 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.lazySingleton<_i233.GetGenres>(
         () => _i233.GetGenres(gh<_i30.ExploreRepository>()));
-    gh.lazySingleton<_i877.GetMoviesByFilter>(
-        () => _i877.GetMoviesByFilter(gh<_i30.ExploreRepository>()));
     gh.lazySingleton<_i109.GetMoviesByGenre>(
         () => _i109.GetMoviesByGenre(gh<_i30.ExploreRepository>()));
+    gh.lazySingleton<_i877.GetMoviesByFilter>(
+        () => _i877.GetMoviesByFilter(gh<_i30.ExploreRepository>()));
     gh.lazySingleton<_i547.TrendingMoviesBloc>(() => _i547.TrendingMoviesBloc(
           gh<_i716.GetTrendingMovies>(),
           gh<_i442.GetCachedTrendingMovies>(),

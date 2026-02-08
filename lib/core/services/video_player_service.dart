@@ -34,18 +34,26 @@ class VideoPlayerService {
 
   VideoPlayerService();
 
-  /// Current player instance
+  /// Current player instance - auto-initialize if needed
   Player get player {
+    if (_player == null && !_isDisposed) {
+      initialize();
+    }
     if (_player == null) {
-      throw StateError('VideoPlayerService not initialized');
+      throw StateError(
+          'VideoPlayerService not initialized or already disposed');
     }
     return _player!;
   }
 
-  /// Current video controller
+  /// Current video controller - auto-initialize if needed
   VideoController get controller {
+    if (_controller == null && !_isDisposed) {
+      initialize();
+    }
     if (_controller == null) {
-      throw StateError('VideoPlayerService not initialized');
+      throw StateError(
+          'VideoPlayerService not initialized or already disposed');
     }
     return _controller!;
   }

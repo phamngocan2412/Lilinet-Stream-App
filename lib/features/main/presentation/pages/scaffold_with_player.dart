@@ -25,7 +25,7 @@ class ScaffoldWithPlayer extends StatelessWidget {
     return BlocBuilder<NavigationCubit, int>(
       builder: (context, navIndex) {
         return BlocBuilder<VideoPlayerBloc, VideoPlayerState>(
-          buildWhen: (previous, current) => previous.status != current.status,
+          // Don't use buildWhen - need to rebuild on route changes too
           builder: (context, playerState) {
             final isExpanded = playerState.status == VideoPlayerStatus.expanded;
             final isClosed = playerState.status == VideoPlayerStatus.closed;
@@ -39,14 +39,17 @@ class ScaffoldWithPlayer extends StatelessWidget {
               showNavBar = false;
             }
 
+            // Calculate NavigationBar height dynamically
+            final double navBarHeight =
+                NavigationBarTheme.of(context).height ?? 80;
+
             // Calculate miniplayer height based on Nav Bar visibility
             // If Nav Bar is visible, Miniplayer sits on top of it (no bottom padding needed)
             // If Nav Bar is hidden, Miniplayer sits at bottom of screen (needs bottom padding)
             final double baseHeight = 60;
             final double bottomPadding = MediaQuery.of(context).padding.bottom;
-            final double miniplayerHeight = showNavBar
-                ? baseHeight
-                : (baseHeight + bottomPadding);
+            final double miniplayerHeight =
+                showNavBar ? baseHeight : (baseHeight + bottomPadding);
 
             // Update miniplayer height notifier
             WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -75,11 +78,13 @@ class ScaffoldWithPlayer extends StatelessWidget {
 
                   // Stable Player Instance
                   if (!isClosed)
-                    Positioned(
+                    AnimatedPositioned(
                       key: const ValueKey('video_player_overlay'),
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
                       left: 0,
                       right: 0,
-                      bottom: (showNavBar && !isExpanded) ? 80 : 0,
+                      bottom: (showNavBar && !isExpanded) ? navBarHeight : 0,
                       top: isExpanded ? 0 : null,
                       child: MiniplayerWidget(
                         miniplayerHeight: miniplayerHeight,

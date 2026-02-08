@@ -1,5 +1,5 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,106 +9,44 @@ part of 'movie.dart';
 // FreezedGenerator
 // **************************************************************************
 
-// dart format off
 T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$Movie {
-  String get id;
-  String get title;
-  String? get poster;
-  String? get cover;
-  String? get description;
-  double? get rating;
-  String? get releaseDate;
-  String get type; // 'Movie' or 'TV Series'
-  String? get episodeId;
-  List<String> get genres;
-  int? get totalEpisodes;
-  String? get duration;
-  List<Episode>? get episodes;
-  List<Movie>? get recommendations;
-  String? get country;
-  String? get production;
-  List<String>? get casts;
-  List<String>? get tags;
-  String? get provider;
+  String get id => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
+  String? get poster => throw _privateConstructorUsedError;
+  String? get cover => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
+  double? get rating => throw _privateConstructorUsedError;
+  String? get releaseDate => throw _privateConstructorUsedError;
+  String get type =>
+      throw _privateConstructorUsedError; // 'Movie' or 'TV Series'
+  String? get episodeId => throw _privateConstructorUsedError;
+  List<String> get genres => throw _privateConstructorUsedError;
+  int? get totalEpisodes => throw _privateConstructorUsedError;
+  String? get duration => throw _privateConstructorUsedError;
+  List<Episode>? get episodes => throw _privateConstructorUsedError;
+  List<Movie>? get recommendations => throw _privateConstructorUsedError;
+  String? get country => throw _privateConstructorUsedError;
+  String? get production => throw _privateConstructorUsedError;
+  List<String>? get casts => throw _privateConstructorUsedError;
+  List<String>? get tags => throw _privateConstructorUsedError;
+  String? get provider => throw _privateConstructorUsedError;
 
   /// Create a copy of Movie
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  $MovieCopyWith<Movie> get copyWith =>
-      _$MovieCopyWithImpl<Movie>(this as Movie, _$identity);
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is Movie &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.title, title) || other.title == title) &&
-            (identical(other.poster, poster) || other.poster == poster) &&
-            (identical(other.cover, cover) || other.cover == cover) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
-            (identical(other.rating, rating) || other.rating == rating) &&
-            (identical(other.releaseDate, releaseDate) ||
-                other.releaseDate == releaseDate) &&
-            (identical(other.type, type) || other.type == type) &&
-            (identical(other.episodeId, episodeId) ||
-                other.episodeId == episodeId) &&
-            const DeepCollectionEquality().equals(other.genres, genres) &&
-            (identical(other.totalEpisodes, totalEpisodes) ||
-                other.totalEpisodes == totalEpisodes) &&
-            (identical(other.duration, duration) ||
-                other.duration == duration) &&
-            const DeepCollectionEquality().equals(other.episodes, episodes) &&
-            const DeepCollectionEquality()
-                .equals(other.recommendations, recommendations) &&
-            (identical(other.country, country) || other.country == country) &&
-            (identical(other.production, production) ||
-                other.production == production) &&
-            const DeepCollectionEquality().equals(other.casts, casts) &&
-            const DeepCollectionEquality().equals(other.tags, tags) &&
-            (identical(other.provider, provider) ||
-                other.provider == provider));
-  }
-
-  @override
-  int get hashCode => Object.hashAll([
-        runtimeType,
-        id,
-        title,
-        poster,
-        cover,
-        description,
-        rating,
-        releaseDate,
-        type,
-        episodeId,
-        const DeepCollectionEquality().hash(genres),
-        totalEpisodes,
-        duration,
-        const DeepCollectionEquality().hash(episodes),
-        const DeepCollectionEquality().hash(recommendations),
-        country,
-        production,
-        const DeepCollectionEquality().hash(casts),
-        const DeepCollectionEquality().hash(tags),
-        provider
-      ]);
-
-  @override
-  String toString() {
-    return 'Movie(id: $id, title: $title, poster: $poster, cover: $cover, description: $description, rating: $rating, releaseDate: $releaseDate, type: $type, episodeId: $episodeId, genres: $genres, totalEpisodes: $totalEpisodes, duration: $duration, episodes: $episodes, recommendations: $recommendations, country: $country, production: $production, casts: $casts, tags: $tags, provider: $provider)';
-  }
+  $MovieCopyWith<Movie> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract mixin class $MovieCopyWith<$Res> {
-  factory $MovieCopyWith(Movie value, $Res Function(Movie) _then) =
-      _$MovieCopyWithImpl;
+abstract class $MovieCopyWith<$Res> {
+  factory $MovieCopyWith(Movie value, $Res Function(Movie) then) =
+      _$MovieCopyWithImpl<$Res, Movie>;
   @useResult
   $Res call(
       {String id,
@@ -133,11 +71,14 @@ abstract mixin class $MovieCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MovieCopyWithImpl<$Res> implements $MovieCopyWith<$Res> {
-  _$MovieCopyWithImpl(this._self, this._then);
+class _$MovieCopyWithImpl<$Res, $Val extends Movie>
+    implements $MovieCopyWith<$Res> {
+  _$MovieCopyWithImpl(this._value, this._then);
 
-  final Movie _self;
-  final $Res Function(Movie) _then;
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
   /// Create a copy of Movie
   /// with the given fields replaced by the non-null parameter values.
@@ -164,365 +105,234 @@ class _$MovieCopyWithImpl<$Res> implements $MovieCopyWith<$Res> {
     Object? tags = freezed,
     Object? provider = freezed,
   }) {
-    return _then(_self.copyWith(
+    return _then(_value.copyWith(
       id: null == id
-          ? _self.id
+          ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
       title: null == title
-          ? _self.title
+          ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
       poster: freezed == poster
-          ? _self.poster
+          ? _value.poster
           : poster // ignore: cast_nullable_to_non_nullable
               as String?,
       cover: freezed == cover
-          ? _self.cover
+          ? _value.cover
           : cover // ignore: cast_nullable_to_non_nullable
               as String?,
       description: freezed == description
-          ? _self.description
+          ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
       rating: freezed == rating
-          ? _self.rating
+          ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
               as double?,
       releaseDate: freezed == releaseDate
-          ? _self.releaseDate
+          ? _value.releaseDate
           : releaseDate // ignore: cast_nullable_to_non_nullable
               as String?,
       type: null == type
-          ? _self.type
+          ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
       episodeId: freezed == episodeId
-          ? _self.episodeId
+          ? _value.episodeId
           : episodeId // ignore: cast_nullable_to_non_nullable
               as String?,
       genres: null == genres
-          ? _self.genres
+          ? _value.genres
           : genres // ignore: cast_nullable_to_non_nullable
               as List<String>,
       totalEpisodes: freezed == totalEpisodes
-          ? _self.totalEpisodes
+          ? _value.totalEpisodes
           : totalEpisodes // ignore: cast_nullable_to_non_nullable
               as int?,
       duration: freezed == duration
-          ? _self.duration
+          ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as String?,
       episodes: freezed == episodes
-          ? _self.episodes
+          ? _value.episodes
           : episodes // ignore: cast_nullable_to_non_nullable
               as List<Episode>?,
       recommendations: freezed == recommendations
-          ? _self.recommendations
+          ? _value.recommendations
           : recommendations // ignore: cast_nullable_to_non_nullable
               as List<Movie>?,
       country: freezed == country
-          ? _self.country
+          ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
               as String?,
       production: freezed == production
-          ? _self.production
+          ? _value.production
           : production // ignore: cast_nullable_to_non_nullable
               as String?,
       casts: freezed == casts
-          ? _self.casts
+          ? _value.casts
           : casts // ignore: cast_nullable_to_non_nullable
               as List<String>?,
       tags: freezed == tags
-          ? _self.tags
+          ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
               as List<String>?,
       provider: freezed == provider
-          ? _self.provider
+          ? _value.provider
+          : provider // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$MovieImplCopyWith<$Res> implements $MovieCopyWith<$Res> {
+  factory _$$MovieImplCopyWith(
+          _$MovieImpl value, $Res Function(_$MovieImpl) then) =
+      __$$MovieImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      String title,
+      String? poster,
+      String? cover,
+      String? description,
+      double? rating,
+      String? releaseDate,
+      String type,
+      String? episodeId,
+      List<String> genres,
+      int? totalEpisodes,
+      String? duration,
+      List<Episode>? episodes,
+      List<Movie>? recommendations,
+      String? country,
+      String? production,
+      List<String>? casts,
+      List<String>? tags,
+      String? provider});
+}
+
+/// @nodoc
+class __$$MovieImplCopyWithImpl<$Res>
+    extends _$MovieCopyWithImpl<$Res, _$MovieImpl>
+    implements _$$MovieImplCopyWith<$Res> {
+  __$$MovieImplCopyWithImpl(
+      _$MovieImpl _value, $Res Function(_$MovieImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of Movie
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? title = null,
+    Object? poster = freezed,
+    Object? cover = freezed,
+    Object? description = freezed,
+    Object? rating = freezed,
+    Object? releaseDate = freezed,
+    Object? type = null,
+    Object? episodeId = freezed,
+    Object? genres = null,
+    Object? totalEpisodes = freezed,
+    Object? duration = freezed,
+    Object? episodes = freezed,
+    Object? recommendations = freezed,
+    Object? country = freezed,
+    Object? production = freezed,
+    Object? casts = freezed,
+    Object? tags = freezed,
+    Object? provider = freezed,
+  }) {
+    return _then(_$MovieImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      poster: freezed == poster
+          ? _value.poster
+          : poster // ignore: cast_nullable_to_non_nullable
+              as String?,
+      cover: freezed == cover
+          ? _value.cover
+          : cover // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      rating: freezed == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as double?,
+      releaseDate: freezed == releaseDate
+          ? _value.releaseDate
+          : releaseDate // ignore: cast_nullable_to_non_nullable
+              as String?,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      episodeId: freezed == episodeId
+          ? _value.episodeId
+          : episodeId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      genres: null == genres
+          ? _value._genres
+          : genres // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      totalEpisodes: freezed == totalEpisodes
+          ? _value.totalEpisodes
+          : totalEpisodes // ignore: cast_nullable_to_non_nullable
+              as int?,
+      duration: freezed == duration
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as String?,
+      episodes: freezed == episodes
+          ? _value._episodes
+          : episodes // ignore: cast_nullable_to_non_nullable
+              as List<Episode>?,
+      recommendations: freezed == recommendations
+          ? _value._recommendations
+          : recommendations // ignore: cast_nullable_to_non_nullable
+              as List<Movie>?,
+      country: freezed == country
+          ? _value.country
+          : country // ignore: cast_nullable_to_non_nullable
+              as String?,
+      production: freezed == production
+          ? _value.production
+          : production // ignore: cast_nullable_to_non_nullable
+              as String?,
+      casts: freezed == casts
+          ? _value._casts
+          : casts // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      tags: freezed == tags
+          ? _value._tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      provider: freezed == provider
+          ? _value.provider
           : provider // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
 }
 
-/// Adds pattern-matching-related methods to [Movie].
-extension MoviePatterns on Movie {
-  /// A variant of `map` that fallback to returning `orElse`.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case _:
-  ///     return orElse();
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>(
-    TResult Function(_Movie value)? $default, {
-    required TResult orElse(),
-  }) {
-    final _that = this;
-    switch (_that) {
-      case _Movie() when $default != null:
-        return $default(_that);
-      case _:
-        return orElse();
-    }
-  }
-
-  /// A `switch`-like method, using callbacks.
-  ///
-  /// Callbacks receives the raw object, upcasted.
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case final Subclass2 value:
-  ///     return ...;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>(
-    TResult Function(_Movie value) $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _Movie():
-        return $default(_that);
-      case _:
-        throw StateError('Unexpected subclass');
-    }
-  }
-
-  /// A variant of `map` that fallback to returning `null`.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case _:
-  ///     return null;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>(
-    TResult? Function(_Movie value)? $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _Movie() when $default != null:
-        return $default(_that);
-      case _:
-        return null;
-    }
-  }
-
-  /// A variant of `when` that fallback to an `orElse` callback.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case _:
-  ///     return orElse();
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            String id,
-            String title,
-            String? poster,
-            String? cover,
-            String? description,
-            double? rating,
-            String? releaseDate,
-            String type,
-            String? episodeId,
-            List<String> genres,
-            int? totalEpisodes,
-            String? duration,
-            List<Episode>? episodes,
-            List<Movie>? recommendations,
-            String? country,
-            String? production,
-            List<String>? casts,
-            List<String>? tags,
-            String? provider)?
-        $default, {
-    required TResult orElse(),
-  }) {
-    final _that = this;
-    switch (_that) {
-      case _Movie() when $default != null:
-        return $default(
-            _that.id,
-            _that.title,
-            _that.poster,
-            _that.cover,
-            _that.description,
-            _that.rating,
-            _that.releaseDate,
-            _that.type,
-            _that.episodeId,
-            _that.genres,
-            _that.totalEpisodes,
-            _that.duration,
-            _that.episodes,
-            _that.recommendations,
-            _that.country,
-            _that.production,
-            _that.casts,
-            _that.tags,
-            _that.provider);
-      case _:
-        return orElse();
-    }
-  }
-
-  /// A `switch`-like method, using callbacks.
-  ///
-  /// As opposed to `map`, this offers destructuring.
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case Subclass2(:final field2):
-  ///     return ...;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>(
-    TResult Function(
-            String id,
-            String title,
-            String? poster,
-            String? cover,
-            String? description,
-            double? rating,
-            String? releaseDate,
-            String type,
-            String? episodeId,
-            List<String> genres,
-            int? totalEpisodes,
-            String? duration,
-            List<Episode>? episodes,
-            List<Movie>? recommendations,
-            String? country,
-            String? production,
-            List<String>? casts,
-            List<String>? tags,
-            String? provider)
-        $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _Movie():
-        return $default(
-            _that.id,
-            _that.title,
-            _that.poster,
-            _that.cover,
-            _that.description,
-            _that.rating,
-            _that.releaseDate,
-            _that.type,
-            _that.episodeId,
-            _that.genres,
-            _that.totalEpisodes,
-            _that.duration,
-            _that.episodes,
-            _that.recommendations,
-            _that.country,
-            _that.production,
-            _that.casts,
-            _that.tags,
-            _that.provider);
-      case _:
-        throw StateError('Unexpected subclass');
-    }
-  }
-
-  /// A variant of `when` that fallback to returning `null`
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case _:
-  ///     return null;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            String id,
-            String title,
-            String? poster,
-            String? cover,
-            String? description,
-            double? rating,
-            String? releaseDate,
-            String type,
-            String? episodeId,
-            List<String> genres,
-            int? totalEpisodes,
-            String? duration,
-            List<Episode>? episodes,
-            List<Movie>? recommendations,
-            String? country,
-            String? production,
-            List<String>? casts,
-            List<String>? tags,
-            String? provider)?
-        $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _Movie() when $default != null:
-        return $default(
-            _that.id,
-            _that.title,
-            _that.poster,
-            _that.cover,
-            _that.description,
-            _that.rating,
-            _that.releaseDate,
-            _that.type,
-            _that.episodeId,
-            _that.genres,
-            _that.totalEpisodes,
-            _that.duration,
-            _that.episodes,
-            _that.recommendations,
-            _that.country,
-            _that.production,
-            _that.casts,
-            _that.tags,
-            _that.provider);
-      case _:
-        return null;
-    }
-  }
-}
-
 /// @nodoc
 
-class _Movie implements Movie {
-  const _Movie(
+class _$MovieImpl implements _Movie {
+  const _$MovieImpl(
       {required this.id,
       required this.title,
       this.poster,
@@ -627,19 +437,16 @@ class _Movie implements Movie {
   @override
   final String? provider;
 
-  /// Create a copy of Movie
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  _$MovieCopyWith<_Movie> get copyWith =>
-      __$MovieCopyWithImpl<_Movie>(this, _$identity);
+  String toString() {
+    return 'Movie(id: $id, title: $title, poster: $poster, cover: $cover, description: $description, rating: $rating, releaseDate: $releaseDate, type: $type, episodeId: $episodeId, genres: $genres, totalEpisodes: $totalEpisodes, duration: $duration, episodes: $episodes, recommendations: $recommendations, country: $country, production: $production, casts: $casts, tags: $tags, provider: $provider)';
+  }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Movie &&
+            other is _$MovieImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.poster, poster) || other.poster == poster) &&
@@ -693,151 +500,80 @@ class _Movie implements Movie {
         provider
       ]);
 
+  /// Create a copy of Movie
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  String toString() {
-    return 'Movie(id: $id, title: $title, poster: $poster, cover: $cover, description: $description, rating: $rating, releaseDate: $releaseDate, type: $type, episodeId: $episodeId, genres: $genres, totalEpisodes: $totalEpisodes, duration: $duration, episodes: $episodes, recommendations: $recommendations, country: $country, production: $production, casts: $casts, tags: $tags, provider: $provider)';
-  }
+  @pragma('vm:prefer-inline')
+  _$$MovieImplCopyWith<_$MovieImpl> get copyWith =>
+      __$$MovieImplCopyWithImpl<_$MovieImpl>(this, _$identity);
 }
 
-/// @nodoc
-abstract mixin class _$MovieCopyWith<$Res> implements $MovieCopyWith<$Res> {
-  factory _$MovieCopyWith(_Movie value, $Res Function(_Movie) _then) =
-      __$MovieCopyWithImpl;
+abstract class _Movie implements Movie {
+  const factory _Movie(
+      {required final String id,
+      required final String title,
+      final String? poster,
+      final String? cover,
+      final String? description,
+      final double? rating,
+      final String? releaseDate,
+      required final String type,
+      final String? episodeId,
+      final List<String> genres,
+      final int? totalEpisodes,
+      final String? duration,
+      final List<Episode>? episodes,
+      final List<Movie>? recommendations,
+      final String? country,
+      final String? production,
+      final List<String>? casts,
+      final List<String>? tags,
+      final String? provider}) = _$MovieImpl;
+
   @override
-  @useResult
-  $Res call(
-      {String id,
-      String title,
-      String? poster,
-      String? cover,
-      String? description,
-      double? rating,
-      String? releaseDate,
-      String type,
-      String? episodeId,
-      List<String> genres,
-      int? totalEpisodes,
-      String? duration,
-      List<Episode>? episodes,
-      List<Movie>? recommendations,
-      String? country,
-      String? production,
-      List<String>? casts,
-      List<String>? tags,
-      String? provider});
-}
-
-/// @nodoc
-class __$MovieCopyWithImpl<$Res> implements _$MovieCopyWith<$Res> {
-  __$MovieCopyWithImpl(this._self, this._then);
-
-  final _Movie _self;
-  final $Res Function(_Movie) _then;
+  String get id;
+  @override
+  String get title;
+  @override
+  String? get poster;
+  @override
+  String? get cover;
+  @override
+  String? get description;
+  @override
+  double? get rating;
+  @override
+  String? get releaseDate;
+  @override
+  String get type; // 'Movie' or 'TV Series'
+  @override
+  String? get episodeId;
+  @override
+  List<String> get genres;
+  @override
+  int? get totalEpisodes;
+  @override
+  String? get duration;
+  @override
+  List<Episode>? get episodes;
+  @override
+  List<Movie>? get recommendations;
+  @override
+  String? get country;
+  @override
+  String? get production;
+  @override
+  List<String>? get casts;
+  @override
+  List<String>? get tags;
+  @override
+  String? get provider;
 
   /// Create a copy of Movie
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? id = null,
-    Object? title = null,
-    Object? poster = freezed,
-    Object? cover = freezed,
-    Object? description = freezed,
-    Object? rating = freezed,
-    Object? releaseDate = freezed,
-    Object? type = null,
-    Object? episodeId = freezed,
-    Object? genres = null,
-    Object? totalEpisodes = freezed,
-    Object? duration = freezed,
-    Object? episodes = freezed,
-    Object? recommendations = freezed,
-    Object? country = freezed,
-    Object? production = freezed,
-    Object? casts = freezed,
-    Object? tags = freezed,
-    Object? provider = freezed,
-  }) {
-    return _then(_Movie(
-      id: null == id
-          ? _self.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      title: null == title
-          ? _self.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      poster: freezed == poster
-          ? _self.poster
-          : poster // ignore: cast_nullable_to_non_nullable
-              as String?,
-      cover: freezed == cover
-          ? _self.cover
-          : cover // ignore: cast_nullable_to_non_nullable
-              as String?,
-      description: freezed == description
-          ? _self.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      rating: freezed == rating
-          ? _self.rating
-          : rating // ignore: cast_nullable_to_non_nullable
-              as double?,
-      releaseDate: freezed == releaseDate
-          ? _self.releaseDate
-          : releaseDate // ignore: cast_nullable_to_non_nullable
-              as String?,
-      type: null == type
-          ? _self.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String,
-      episodeId: freezed == episodeId
-          ? _self.episodeId
-          : episodeId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      genres: null == genres
-          ? _self._genres
-          : genres // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      totalEpisodes: freezed == totalEpisodes
-          ? _self.totalEpisodes
-          : totalEpisodes // ignore: cast_nullable_to_non_nullable
-              as int?,
-      duration: freezed == duration
-          ? _self.duration
-          : duration // ignore: cast_nullable_to_non_nullable
-              as String?,
-      episodes: freezed == episodes
-          ? _self._episodes
-          : episodes // ignore: cast_nullable_to_non_nullable
-              as List<Episode>?,
-      recommendations: freezed == recommendations
-          ? _self._recommendations
-          : recommendations // ignore: cast_nullable_to_non_nullable
-              as List<Movie>?,
-      country: freezed == country
-          ? _self.country
-          : country // ignore: cast_nullable_to_non_nullable
-              as String?,
-      production: freezed == production
-          ? _self.production
-          : production // ignore: cast_nullable_to_non_nullable
-              as String?,
-      casts: freezed == casts
-          ? _self._casts
-          : casts // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
-      tags: freezed == tags
-          ? _self._tags
-          : tags // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
-      provider: freezed == provider
-          ? _self.provider
-          : provider // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$MovieImplCopyWith<_$MovieImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
-
-// dart format on

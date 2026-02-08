@@ -1,5 +1,7 @@
 // ignore_for_file: deprecated_member_use, unreachable_switch_default
 
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -104,6 +106,9 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
   bool _isPlayerInitialized = false;
   bool _isPreloaded = false; // Track if next episode is preloaded
 
+  // Stream subscription for player state
+  StreamSubscription<bool>? _playingSubscription;
+
   @override
   void initState() {
     super.initState();
@@ -127,7 +132,8 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
     }
 
     // Listen to player playing state to update keep alive
-    _videoService.player.stream.playing.listen((playing) {
+    _playingSubscription =
+        _videoService.player.stream.playing.listen((playing) {
       if (mounted) {
         updateKeepAlive();
       }
@@ -306,6 +312,9 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
     WakelockPlus.disable();
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+
+    // Cancel stream subscription to prevent memory leak
+    _playingSubscription?.cancel();
 
     // Detach callbacks but don't dispose service to keep player alive
     _videoService.detachCallbacks();

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../features/main/presentation/pages/main_screen.dart';
 import '../features/main/presentation/pages/scaffold_with_player.dart';
@@ -20,7 +21,11 @@ class AppRouter {
       ),
       ShellRoute(
         builder: (context, state, child) {
-          return ScaffoldWithPlayer(state: state, child: child);
+          return ScaffoldWithPlayer(
+            key: ValueKey('scaffold_${state.uri.path}'),
+            state: state,
+            child: child,
+          );
         },
         routes: [
           GoRoute(
@@ -60,14 +65,12 @@ class AppRouter {
               final type = state.uri.queryParameters['type'] ?? 'TV Series';
               final episodeId = state.uri.queryParameters['episode'];
               final timestampStr = state.uri.queryParameters['time'];
-              final timestamp = timestampStr != null
-                  ? int.tryParse(timestampStr)
-                  : null;
+              final timestamp =
+                  timestampStr != null ? int.tryParse(timestampStr) : null;
 
               // Check if a Movie object was passed in 'extra'
-              final moviePreview = state.extra is Movie
-                  ? state.extra as Movie
-                  : null;
+              final moviePreview =
+                  state.extra is Movie ? state.extra as Movie : null;
               return MovieDetailsPage(
                 movieId: id,
                 mediaType: type,

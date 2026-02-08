@@ -105,8 +105,8 @@ class _SearchPageViewState extends State<SearchPageView> {
                             currentOptions: state.filterOptions,
                             onApply: (options) {
                               context.read<SearchBloc>().add(
-                                SearchOptionsChanged(options),
-                              );
+                                    SearchOptionsChanged(options),
+                                  );
                             },
                           ),
                         );
@@ -168,8 +168,8 @@ class _SearchPageViewState extends State<SearchPageView> {
                 message: state.errorMessage,
                 onRetry: () {
                   context.read<SearchBloc>().add(
-                    SearchQueryChanged(state.query),
-                  );
+                        SearchQueryChanged(state.query),
+                      );
                 },
               ),
             );
@@ -242,18 +242,19 @@ class _SearchPageViewState extends State<SearchPageView> {
     String currentFilter,
   ) {
     final isSelected = label == currentFilter;
+    final colorScheme = Theme.of(context).colorScheme;
     return FilterChip(
       label: Text(label),
       selected: isSelected,
       onSelected: (selected) {
         context.read<SearchBloc>().add(SearchFilterChanged(label));
       },
-      backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
-      selectedColor: Theme.of(context).colorScheme.primaryContainer,
+      backgroundColor: colorScheme.surfaceContainerHighest,
+      selectedColor: colorScheme.primaryContainer,
       labelStyle: TextStyle(
         color: isSelected
-            ? Theme.of(context).colorScheme.onPrimaryContainer
-            : Theme.of(context).colorScheme.onSurfaceVariant,
+            ? colorScheme.onPrimaryContainer
+            : colorScheme.onSurfaceVariant,
         fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
       ),
       shape: RoundedRectangleBorder(

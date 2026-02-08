@@ -106,7 +106,9 @@ class _CommentContentState extends State<_CommentContent> {
         children: [
           // Avatar - smaller for replies
           _Avatar(
-            imageUrl: widget.comment.avatarUrl,
+            imageUrl: widget.comment.avatarUrl.isNotEmpty
+                ? widget.comment.avatarUrl
+                : null,
             radius: widget.isReply ? 14 : 16,
           ),
           const SizedBox(width: 10),
@@ -221,23 +223,47 @@ class _CommentContentState extends State<_CommentContent> {
 }
 
 class _Avatar extends StatelessWidget {
-  final String imageUrl;
+  final String? imageUrl;
   final double radius;
 
-  const _Avatar({required this.imageUrl, this.radius = 16});
+  const _Avatar({this.imageUrl, this.radius = 16});
 
   @override
   Widget build(BuildContext context) {
+    final bgColor = Theme.of(context).colorScheme.surfaceContainerHighest;
+    final iconColor = Theme.of(context).colorScheme.onSurfaceVariant;
+
+    // If no avatar URL, show default icon immediately
+    if (imageUrl == null || imageUrl!.isEmpty) {
+      return CircleAvatar(
+        radius: radius,
+        backgroundColor: bgColor,
+        child: Icon(
+          Icons.person,
+          size: radius,
+          color: iconColor,
+        ),
+      );
+    }
+
     return CircleAvatar(
       radius: radius,
-      backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+      backgroundColor: bgColor,
       child: ClipOval(
         child: AppCachedImage(
-          imageUrl: imageUrl,
+          imageUrl: imageUrl!,
           width: radius * 2,
           height: radius * 2,
           fit: BoxFit.cover,
           memCacheWidth: (radius * 2 * 2).toInt(), // 2x for retina
+          placeholder: Container(
+            color: bgColor,
+            child: Icon(
+              Icons.person,
+              size: radius,
+              color: iconColor,
+            ),
+          ),
         ),
       ),
     );
@@ -343,7 +369,8 @@ class _ActionButtons extends StatelessWidget {
                   Icon(
                     isLiked ? Icons.thumb_up : Icons.thumb_up_outlined,
                     size: isReply ? 16 : 18,
-                    color: isLiked ? theme.colorScheme.primary : theme.hintColor,
+                    color:
+                        isLiked ? theme.colorScheme.primary : theme.hintColor,
                   ),
                   if (likes > 0) ...[
                     const SizedBox(width: 6),
@@ -354,7 +381,8 @@ class _ActionButtons extends StatelessWidget {
                         color: isLiked
                             ? theme.colorScheme.primary
                             : theme.hintColor,
-                        fontWeight: isLiked ? FontWeight.w600 : FontWeight.normal,
+                        fontWeight:
+                            isLiked ? FontWeight.w600 : FontWeight.normal,
                       ),
                     ),
                   ],
@@ -405,7 +433,8 @@ class _ActionButtons extends StatelessWidget {
             child: ConstrainedBox(
               constraints: const BoxConstraints(minHeight: 48),
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: isRepliesExpanded

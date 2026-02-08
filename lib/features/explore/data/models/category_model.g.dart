@@ -53,15 +53,15 @@ class CategoryModelAdapter extends TypeAdapter<CategoryModel> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-_CategoryModel _$CategoryModelFromJson(Map<String, dynamic> json) =>
-    _CategoryModel(
+_$CategoryModelImpl _$$CategoryModelImplFromJson(Map<String, dynamic> json) =>
+    _$CategoryModelImpl(
       id: json['id'] as String,
       name: json['name'] as String,
       description: json['description'] as String,
       icon: json['icon'] as String?,
     );
 
-Map<String, dynamic> _$CategoryModelToJson(_CategoryModel instance) =>
+Map<String, dynamic> _$$CategoryModelImplToJson(_$CategoryModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

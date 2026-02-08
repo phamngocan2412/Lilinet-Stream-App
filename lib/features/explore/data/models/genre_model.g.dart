@@ -50,13 +50,14 @@ class GenreModelAdapter extends TypeAdapter<GenreModel> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-_GenreModel _$GenreModelFromJson(Map<String, dynamic> json) => _GenreModel(
+_$GenreModelImpl _$$GenreModelImplFromJson(Map<String, dynamic> json) =>
+    _$GenreModelImpl(
       id: json['id'] as String,
       name: json['name'] as String,
       icon: json['icon'] as String?,
     );
 
-Map<String, dynamic> _$GenreModelToJson(_GenreModel instance) =>
+Map<String, dynamic> _$$GenreModelImplToJson(_$GenreModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

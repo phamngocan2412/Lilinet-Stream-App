@@ -1,5 +1,5 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,76 +9,35 @@ part of 'watch_progress.dart';
 // FreezedGenerator
 // **************************************************************************
 
-// dart format off
 T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$WatchProgress {
-  String get mediaId;
-  String get title;
-  String? get posterUrl;
-  String? get episodeId;
-  String? get episodeTitle;
-  int get positionSeconds;
-  int get durationSeconds;
-  DateTime get lastUpdated;
-  bool get isFinished;
+  String get mediaId => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
+  String? get posterUrl => throw _privateConstructorUsedError;
+  String? get episodeId => throw _privateConstructorUsedError;
+  String? get episodeTitle => throw _privateConstructorUsedError;
+  int get positionSeconds => throw _privateConstructorUsedError;
+  int get durationSeconds => throw _privateConstructorUsedError;
+  DateTime get lastUpdated => throw _privateConstructorUsedError;
+  bool get isFinished => throw _privateConstructorUsedError;
 
   /// Create a copy of WatchProgress
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
   $WatchProgressCopyWith<WatchProgress> get copyWith =>
-      _$WatchProgressCopyWithImpl<WatchProgress>(
-          this as WatchProgress, _$identity);
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is WatchProgress &&
-            (identical(other.mediaId, mediaId) || other.mediaId == mediaId) &&
-            (identical(other.title, title) || other.title == title) &&
-            (identical(other.posterUrl, posterUrl) ||
-                other.posterUrl == posterUrl) &&
-            (identical(other.episodeId, episodeId) ||
-                other.episodeId == episodeId) &&
-            (identical(other.episodeTitle, episodeTitle) ||
-                other.episodeTitle == episodeTitle) &&
-            (identical(other.positionSeconds, positionSeconds) ||
-                other.positionSeconds == positionSeconds) &&
-            (identical(other.durationSeconds, durationSeconds) ||
-                other.durationSeconds == durationSeconds) &&
-            (identical(other.lastUpdated, lastUpdated) ||
-                other.lastUpdated == lastUpdated) &&
-            (identical(other.isFinished, isFinished) ||
-                other.isFinished == isFinished));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      mediaId,
-      title,
-      posterUrl,
-      episodeId,
-      episodeTitle,
-      positionSeconds,
-      durationSeconds,
-      lastUpdated,
-      isFinished);
-
-  @override
-  String toString() {
-    return 'WatchProgress(mediaId: $mediaId, title: $title, posterUrl: $posterUrl, episodeId: $episodeId, episodeTitle: $episodeTitle, positionSeconds: $positionSeconds, durationSeconds: $durationSeconds, lastUpdated: $lastUpdated, isFinished: $isFinished)';
-  }
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract mixin class $WatchProgressCopyWith<$Res> {
+abstract class $WatchProgressCopyWith<$Res> {
   factory $WatchProgressCopyWith(
-          WatchProgress value, $Res Function(WatchProgress) _then) =
-      _$WatchProgressCopyWithImpl;
+          WatchProgress value, $Res Function(WatchProgress) then) =
+      _$WatchProgressCopyWithImpl<$Res, WatchProgress>;
   @useResult
   $Res call(
       {String mediaId,
@@ -93,12 +52,14 @@ abstract mixin class $WatchProgressCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$WatchProgressCopyWithImpl<$Res>
+class _$WatchProgressCopyWithImpl<$Res, $Val extends WatchProgress>
     implements $WatchProgressCopyWith<$Res> {
-  _$WatchProgressCopyWithImpl(this._self, this._then);
+  _$WatchProgressCopyWithImpl(this._value, this._then);
 
-  final WatchProgress _self;
-  final $Res Function(WatchProgress) _then;
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
   /// Create a copy of WatchProgress
   /// with the given fields replaced by the non-null parameter values.
@@ -115,265 +76,135 @@ class _$WatchProgressCopyWithImpl<$Res>
     Object? lastUpdated = null,
     Object? isFinished = null,
   }) {
-    return _then(_self.copyWith(
+    return _then(_value.copyWith(
       mediaId: null == mediaId
-          ? _self.mediaId
+          ? _value.mediaId
           : mediaId // ignore: cast_nullable_to_non_nullable
               as String,
       title: null == title
-          ? _self.title
+          ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
       posterUrl: freezed == posterUrl
-          ? _self.posterUrl
+          ? _value.posterUrl
           : posterUrl // ignore: cast_nullable_to_non_nullable
               as String?,
       episodeId: freezed == episodeId
-          ? _self.episodeId
+          ? _value.episodeId
           : episodeId // ignore: cast_nullable_to_non_nullable
               as String?,
       episodeTitle: freezed == episodeTitle
-          ? _self.episodeTitle
+          ? _value.episodeTitle
           : episodeTitle // ignore: cast_nullable_to_non_nullable
               as String?,
       positionSeconds: null == positionSeconds
-          ? _self.positionSeconds
+          ? _value.positionSeconds
           : positionSeconds // ignore: cast_nullable_to_non_nullable
               as int,
       durationSeconds: null == durationSeconds
-          ? _self.durationSeconds
+          ? _value.durationSeconds
           : durationSeconds // ignore: cast_nullable_to_non_nullable
               as int,
       lastUpdated: null == lastUpdated
-          ? _self.lastUpdated
+          ? _value.lastUpdated
           : lastUpdated // ignore: cast_nullable_to_non_nullable
               as DateTime,
       isFinished: null == isFinished
-          ? _self.isFinished
+          ? _value.isFinished
+          : isFinished // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$WatchProgressImplCopyWith<$Res>
+    implements $WatchProgressCopyWith<$Res> {
+  factory _$$WatchProgressImplCopyWith(
+          _$WatchProgressImpl value, $Res Function(_$WatchProgressImpl) then) =
+      __$$WatchProgressImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String mediaId,
+      String title,
+      String? posterUrl,
+      String? episodeId,
+      String? episodeTitle,
+      int positionSeconds,
+      int durationSeconds,
+      DateTime lastUpdated,
+      bool isFinished});
+}
+
+/// @nodoc
+class __$$WatchProgressImplCopyWithImpl<$Res>
+    extends _$WatchProgressCopyWithImpl<$Res, _$WatchProgressImpl>
+    implements _$$WatchProgressImplCopyWith<$Res> {
+  __$$WatchProgressImplCopyWithImpl(
+      _$WatchProgressImpl _value, $Res Function(_$WatchProgressImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of WatchProgress
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? mediaId = null,
+    Object? title = null,
+    Object? posterUrl = freezed,
+    Object? episodeId = freezed,
+    Object? episodeTitle = freezed,
+    Object? positionSeconds = null,
+    Object? durationSeconds = null,
+    Object? lastUpdated = null,
+    Object? isFinished = null,
+  }) {
+    return _then(_$WatchProgressImpl(
+      mediaId: null == mediaId
+          ? _value.mediaId
+          : mediaId // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      posterUrl: freezed == posterUrl
+          ? _value.posterUrl
+          : posterUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      episodeId: freezed == episodeId
+          ? _value.episodeId
+          : episodeId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      episodeTitle: freezed == episodeTitle
+          ? _value.episodeTitle
+          : episodeTitle // ignore: cast_nullable_to_non_nullable
+              as String?,
+      positionSeconds: null == positionSeconds
+          ? _value.positionSeconds
+          : positionSeconds // ignore: cast_nullable_to_non_nullable
+              as int,
+      durationSeconds: null == durationSeconds
+          ? _value.durationSeconds
+          : durationSeconds // ignore: cast_nullable_to_non_nullable
+              as int,
+      lastUpdated: null == lastUpdated
+          ? _value.lastUpdated
+          : lastUpdated // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      isFinished: null == isFinished
+          ? _value.isFinished
           : isFinished // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
 }
 
-/// Adds pattern-matching-related methods to [WatchProgress].
-extension WatchProgressPatterns on WatchProgress {
-  /// A variant of `map` that fallback to returning `orElse`.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case _:
-  ///     return orElse();
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>(
-    TResult Function(_WatchProgress value)? $default, {
-    required TResult orElse(),
-  }) {
-    final _that = this;
-    switch (_that) {
-      case _WatchProgress() when $default != null:
-        return $default(_that);
-      case _:
-        return orElse();
-    }
-  }
-
-  /// A `switch`-like method, using callbacks.
-  ///
-  /// Callbacks receives the raw object, upcasted.
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case final Subclass2 value:
-  ///     return ...;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>(
-    TResult Function(_WatchProgress value) $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _WatchProgress():
-        return $default(_that);
-      case _:
-        throw StateError('Unexpected subclass');
-    }
-  }
-
-  /// A variant of `map` that fallback to returning `null`.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case _:
-  ///     return null;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>(
-    TResult? Function(_WatchProgress value)? $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _WatchProgress() when $default != null:
-        return $default(_that);
-      case _:
-        return null;
-    }
-  }
-
-  /// A variant of `when` that fallback to an `orElse` callback.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case _:
-  ///     return orElse();
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            String mediaId,
-            String title,
-            String? posterUrl,
-            String? episodeId,
-            String? episodeTitle,
-            int positionSeconds,
-            int durationSeconds,
-            DateTime lastUpdated,
-            bool isFinished)?
-        $default, {
-    required TResult orElse(),
-  }) {
-    final _that = this;
-    switch (_that) {
-      case _WatchProgress() when $default != null:
-        return $default(
-            _that.mediaId,
-            _that.title,
-            _that.posterUrl,
-            _that.episodeId,
-            _that.episodeTitle,
-            _that.positionSeconds,
-            _that.durationSeconds,
-            _that.lastUpdated,
-            _that.isFinished);
-      case _:
-        return orElse();
-    }
-  }
-
-  /// A `switch`-like method, using callbacks.
-  ///
-  /// As opposed to `map`, this offers destructuring.
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case Subclass2(:final field2):
-  ///     return ...;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>(
-    TResult Function(
-            String mediaId,
-            String title,
-            String? posterUrl,
-            String? episodeId,
-            String? episodeTitle,
-            int positionSeconds,
-            int durationSeconds,
-            DateTime lastUpdated,
-            bool isFinished)
-        $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _WatchProgress():
-        return $default(
-            _that.mediaId,
-            _that.title,
-            _that.posterUrl,
-            _that.episodeId,
-            _that.episodeTitle,
-            _that.positionSeconds,
-            _that.durationSeconds,
-            _that.lastUpdated,
-            _that.isFinished);
-      case _:
-        throw StateError('Unexpected subclass');
-    }
-  }
-
-  /// A variant of `when` that fallback to returning `null`
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case _:
-  ///     return null;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            String mediaId,
-            String title,
-            String? posterUrl,
-            String? episodeId,
-            String? episodeTitle,
-            int positionSeconds,
-            int durationSeconds,
-            DateTime lastUpdated,
-            bool isFinished)?
-        $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _WatchProgress() when $default != null:
-        return $default(
-            _that.mediaId,
-            _that.title,
-            _that.posterUrl,
-            _that.episodeId,
-            _that.episodeTitle,
-            _that.positionSeconds,
-            _that.durationSeconds,
-            _that.lastUpdated,
-            _that.isFinished);
-      case _:
-        return null;
-    }
-  }
-}
-
 /// @nodoc
 
-class _WatchProgress implements WatchProgress {
-  const _WatchProgress(
+class _$WatchProgressImpl implements _WatchProgress {
+  const _$WatchProgressImpl(
       {required this.mediaId,
       required this.title,
       this.posterUrl,
@@ -403,19 +234,16 @@ class _WatchProgress implements WatchProgress {
   @override
   final bool isFinished;
 
-  /// Create a copy of WatchProgress
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  _$WatchProgressCopyWith<_WatchProgress> get copyWith =>
-      __$WatchProgressCopyWithImpl<_WatchProgress>(this, _$identity);
+  String toString() {
+    return 'WatchProgress(mediaId: $mediaId, title: $title, posterUrl: $posterUrl, episodeId: $episodeId, episodeTitle: $episodeTitle, positionSeconds: $positionSeconds, durationSeconds: $durationSeconds, lastUpdated: $lastUpdated, isFinished: $isFinished)';
+  }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _WatchProgress &&
+            other is _$WatchProgressImpl &&
             (identical(other.mediaId, mediaId) || other.mediaId == mediaId) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.posterUrl, posterUrl) ||
@@ -447,94 +275,50 @@ class _WatchProgress implements WatchProgress {
       lastUpdated,
       isFinished);
 
+  /// Create a copy of WatchProgress
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  String toString() {
-    return 'WatchProgress(mediaId: $mediaId, title: $title, posterUrl: $posterUrl, episodeId: $episodeId, episodeTitle: $episodeTitle, positionSeconds: $positionSeconds, durationSeconds: $durationSeconds, lastUpdated: $lastUpdated, isFinished: $isFinished)';
-  }
+  @pragma('vm:prefer-inline')
+  _$$WatchProgressImplCopyWith<_$WatchProgressImpl> get copyWith =>
+      __$$WatchProgressImplCopyWithImpl<_$WatchProgressImpl>(this, _$identity);
 }
 
-/// @nodoc
-abstract mixin class _$WatchProgressCopyWith<$Res>
-    implements $WatchProgressCopyWith<$Res> {
-  factory _$WatchProgressCopyWith(
-          _WatchProgress value, $Res Function(_WatchProgress) _then) =
-      __$WatchProgressCopyWithImpl;
+abstract class _WatchProgress implements WatchProgress {
+  const factory _WatchProgress(
+      {required final String mediaId,
+      required final String title,
+      final String? posterUrl,
+      final String? episodeId,
+      final String? episodeTitle,
+      required final int positionSeconds,
+      required final int durationSeconds,
+      required final DateTime lastUpdated,
+      required final bool isFinished}) = _$WatchProgressImpl;
+
   @override
-  @useResult
-  $Res call(
-      {String mediaId,
-      String title,
-      String? posterUrl,
-      String? episodeId,
-      String? episodeTitle,
-      int positionSeconds,
-      int durationSeconds,
-      DateTime lastUpdated,
-      bool isFinished});
-}
-
-/// @nodoc
-class __$WatchProgressCopyWithImpl<$Res>
-    implements _$WatchProgressCopyWith<$Res> {
-  __$WatchProgressCopyWithImpl(this._self, this._then);
-
-  final _WatchProgress _self;
-  final $Res Function(_WatchProgress) _then;
+  String get mediaId;
+  @override
+  String get title;
+  @override
+  String? get posterUrl;
+  @override
+  String? get episodeId;
+  @override
+  String? get episodeTitle;
+  @override
+  int get positionSeconds;
+  @override
+  int get durationSeconds;
+  @override
+  DateTime get lastUpdated;
+  @override
+  bool get isFinished;
 
   /// Create a copy of WatchProgress
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? mediaId = null,
-    Object? title = null,
-    Object? posterUrl = freezed,
-    Object? episodeId = freezed,
-    Object? episodeTitle = freezed,
-    Object? positionSeconds = null,
-    Object? durationSeconds = null,
-    Object? lastUpdated = null,
-    Object? isFinished = null,
-  }) {
-    return _then(_WatchProgress(
-      mediaId: null == mediaId
-          ? _self.mediaId
-          : mediaId // ignore: cast_nullable_to_non_nullable
-              as String,
-      title: null == title
-          ? _self.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      posterUrl: freezed == posterUrl
-          ? _self.posterUrl
-          : posterUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      episodeId: freezed == episodeId
-          ? _self.episodeId
-          : episodeId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      episodeTitle: freezed == episodeTitle
-          ? _self.episodeTitle
-          : episodeTitle // ignore: cast_nullable_to_non_nullable
-              as String?,
-      positionSeconds: null == positionSeconds
-          ? _self.positionSeconds
-          : positionSeconds // ignore: cast_nullable_to_non_nullable
-              as int,
-      durationSeconds: null == durationSeconds
-          ? _self.durationSeconds
-          : durationSeconds // ignore: cast_nullable_to_non_nullable
-              as int,
-      lastUpdated: null == lastUpdated
-          ? _self.lastUpdated
-          : lastUpdated // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      isFinished: null == isFinished
-          ? _self.isFinished
-          : isFinished // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$WatchProgressImplCopyWith<_$WatchProgressImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
-
-// dart format on

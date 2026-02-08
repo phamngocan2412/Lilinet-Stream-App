@@ -1,5 +1,5 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,103 +9,43 @@ part of 'comment.dart';
 // FreezedGenerator
 // **************************************************************************
 
-// dart format off
 T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$Comment {
-  String get id;
-  String get videoId;
-  String get userName;
-  String get avatarUrl;
-  String get content;
-  int get likes;
-  int get dislikes;
-  int get repliesCount;
-  DateTime get createdAt;
-  DateTime? get updatedAt;
-  List<DateTime> get likeTimestamps; // For calculating recent likes
-  List<Comment> get replies;
-  String? get parentId;
-  String? get mediaType; // 'Movie' or 'TV Series' for navigation
-  bool get isEdited;
-  bool get isDeleted;
-  bool get isPinned;
+  String get id => throw _privateConstructorUsedError;
+  String get videoId => throw _privateConstructorUsedError;
+  String get userName => throw _privateConstructorUsedError;
+  String get avatarUrl => throw _privateConstructorUsedError;
+  String get content => throw _privateConstructorUsedError;
+  int get likes => throw _privateConstructorUsedError;
+  int get dislikes => throw _privateConstructorUsedError;
+  int get repliesCount => throw _privateConstructorUsedError;
+  DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
+  List<DateTime> get likeTimestamps =>
+      throw _privateConstructorUsedError; // For calculating recent likes
+  List<Comment> get replies => throw _privateConstructorUsedError;
+  String? get parentId => throw _privateConstructorUsedError;
+  String? get mediaType =>
+      throw _privateConstructorUsedError; // 'Movie' or 'TV Series' for navigation
+  bool get isEdited => throw _privateConstructorUsedError;
+  bool get isDeleted => throw _privateConstructorUsedError;
+  bool get isPinned => throw _privateConstructorUsedError;
 
   /// Create a copy of Comment
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  $CommentCopyWith<Comment> get copyWith =>
-      _$CommentCopyWithImpl<Comment>(this as Comment, _$identity);
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is Comment &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.videoId, videoId) || other.videoId == videoId) &&
-            (identical(other.userName, userName) ||
-                other.userName == userName) &&
-            (identical(other.avatarUrl, avatarUrl) ||
-                other.avatarUrl == avatarUrl) &&
-            (identical(other.content, content) || other.content == content) &&
-            (identical(other.likes, likes) || other.likes == likes) &&
-            (identical(other.dislikes, dislikes) ||
-                other.dislikes == dislikes) &&
-            (identical(other.repliesCount, repliesCount) ||
-                other.repliesCount == repliesCount) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt) &&
-            const DeepCollectionEquality()
-                .equals(other.likeTimestamps, likeTimestamps) &&
-            const DeepCollectionEquality().equals(other.replies, replies) &&
-            (identical(other.parentId, parentId) ||
-                other.parentId == parentId) &&
-            (identical(other.mediaType, mediaType) ||
-                other.mediaType == mediaType) &&
-            (identical(other.isEdited, isEdited) ||
-                other.isEdited == isEdited) &&
-            (identical(other.isDeleted, isDeleted) ||
-                other.isDeleted == isDeleted) &&
-            (identical(other.isPinned, isPinned) ||
-                other.isPinned == isPinned));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      videoId,
-      userName,
-      avatarUrl,
-      content,
-      likes,
-      dislikes,
-      repliesCount,
-      createdAt,
-      updatedAt,
-      const DeepCollectionEquality().hash(likeTimestamps),
-      const DeepCollectionEquality().hash(replies),
-      parentId,
-      mediaType,
-      isEdited,
-      isDeleted,
-      isPinned);
-
-  @override
-  String toString() {
-    return 'Comment(id: $id, videoId: $videoId, userName: $userName, avatarUrl: $avatarUrl, content: $content, likes: $likes, dislikes: $dislikes, repliesCount: $repliesCount, createdAt: $createdAt, updatedAt: $updatedAt, likeTimestamps: $likeTimestamps, replies: $replies, parentId: $parentId, mediaType: $mediaType, isEdited: $isEdited, isDeleted: $isDeleted, isPinned: $isPinned)';
-  }
+  $CommentCopyWith<Comment> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract mixin class $CommentCopyWith<$Res> {
-  factory $CommentCopyWith(Comment value, $Res Function(Comment) _then) =
-      _$CommentCopyWithImpl;
+abstract class $CommentCopyWith<$Res> {
+  factory $CommentCopyWith(Comment value, $Res Function(Comment) then) =
+      _$CommentCopyWithImpl<$Res, Comment>;
   @useResult
   $Res call(
       {String id,
@@ -128,11 +68,14 @@ abstract mixin class $CommentCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CommentCopyWithImpl<$Res> implements $CommentCopyWith<$Res> {
-  _$CommentCopyWithImpl(this._self, this._then);
+class _$CommentCopyWithImpl<$Res, $Val extends Comment>
+    implements $CommentCopyWith<$Res> {
+  _$CommentCopyWithImpl(this._value, this._then);
 
-  final Comment _self;
-  final $Res Function(Comment) _then;
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
   /// Create a copy of Comment
   /// with the given fields replaced by the non-null parameter values.
@@ -157,345 +100,214 @@ class _$CommentCopyWithImpl<$Res> implements $CommentCopyWith<$Res> {
     Object? isDeleted = null,
     Object? isPinned = null,
   }) {
-    return _then(_self.copyWith(
+    return _then(_value.copyWith(
       id: null == id
-          ? _self.id
+          ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
       videoId: null == videoId
-          ? _self.videoId
+          ? _value.videoId
           : videoId // ignore: cast_nullable_to_non_nullable
               as String,
       userName: null == userName
-          ? _self.userName
+          ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
               as String,
       avatarUrl: null == avatarUrl
-          ? _self.avatarUrl
+          ? _value.avatarUrl
           : avatarUrl // ignore: cast_nullable_to_non_nullable
               as String,
       content: null == content
-          ? _self.content
+          ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
               as String,
       likes: null == likes
-          ? _self.likes
+          ? _value.likes
           : likes // ignore: cast_nullable_to_non_nullable
               as int,
       dislikes: null == dislikes
-          ? _self.dislikes
+          ? _value.dislikes
           : dislikes // ignore: cast_nullable_to_non_nullable
               as int,
       repliesCount: null == repliesCount
-          ? _self.repliesCount
+          ? _value.repliesCount
           : repliesCount // ignore: cast_nullable_to_non_nullable
               as int,
       createdAt: null == createdAt
-          ? _self.createdAt
+          ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
       updatedAt: freezed == updatedAt
-          ? _self.updatedAt
+          ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       likeTimestamps: null == likeTimestamps
-          ? _self.likeTimestamps
+          ? _value.likeTimestamps
           : likeTimestamps // ignore: cast_nullable_to_non_nullable
               as List<DateTime>,
       replies: null == replies
-          ? _self.replies
+          ? _value.replies
           : replies // ignore: cast_nullable_to_non_nullable
               as List<Comment>,
       parentId: freezed == parentId
-          ? _self.parentId
+          ? _value.parentId
           : parentId // ignore: cast_nullable_to_non_nullable
               as String?,
       mediaType: freezed == mediaType
-          ? _self.mediaType
+          ? _value.mediaType
           : mediaType // ignore: cast_nullable_to_non_nullable
               as String?,
       isEdited: null == isEdited
-          ? _self.isEdited
+          ? _value.isEdited
           : isEdited // ignore: cast_nullable_to_non_nullable
               as bool,
       isDeleted: null == isDeleted
-          ? _self.isDeleted
+          ? _value.isDeleted
           : isDeleted // ignore: cast_nullable_to_non_nullable
               as bool,
       isPinned: null == isPinned
-          ? _self.isPinned
+          ? _value.isPinned
+          : isPinned // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$CommentImplCopyWith<$Res> implements $CommentCopyWith<$Res> {
+  factory _$$CommentImplCopyWith(
+          _$CommentImpl value, $Res Function(_$CommentImpl) then) =
+      __$$CommentImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      String videoId,
+      String userName,
+      String avatarUrl,
+      String content,
+      int likes,
+      int dislikes,
+      int repliesCount,
+      DateTime createdAt,
+      DateTime? updatedAt,
+      List<DateTime> likeTimestamps,
+      List<Comment> replies,
+      String? parentId,
+      String? mediaType,
+      bool isEdited,
+      bool isDeleted,
+      bool isPinned});
+}
+
+/// @nodoc
+class __$$CommentImplCopyWithImpl<$Res>
+    extends _$CommentCopyWithImpl<$Res, _$CommentImpl>
+    implements _$$CommentImplCopyWith<$Res> {
+  __$$CommentImplCopyWithImpl(
+      _$CommentImpl _value, $Res Function(_$CommentImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of Comment
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? videoId = null,
+    Object? userName = null,
+    Object? avatarUrl = null,
+    Object? content = null,
+    Object? likes = null,
+    Object? dislikes = null,
+    Object? repliesCount = null,
+    Object? createdAt = null,
+    Object? updatedAt = freezed,
+    Object? likeTimestamps = null,
+    Object? replies = null,
+    Object? parentId = freezed,
+    Object? mediaType = freezed,
+    Object? isEdited = null,
+    Object? isDeleted = null,
+    Object? isPinned = null,
+  }) {
+    return _then(_$CommentImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      videoId: null == videoId
+          ? _value.videoId
+          : videoId // ignore: cast_nullable_to_non_nullable
+              as String,
+      userName: null == userName
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
+              as String,
+      avatarUrl: null == avatarUrl
+          ? _value.avatarUrl
+          : avatarUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      content: null == content
+          ? _value.content
+          : content // ignore: cast_nullable_to_non_nullable
+              as String,
+      likes: null == likes
+          ? _value.likes
+          : likes // ignore: cast_nullable_to_non_nullable
+              as int,
+      dislikes: null == dislikes
+          ? _value.dislikes
+          : dislikes // ignore: cast_nullable_to_non_nullable
+              as int,
+      repliesCount: null == repliesCount
+          ? _value.repliesCount
+          : repliesCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      likeTimestamps: null == likeTimestamps
+          ? _value._likeTimestamps
+          : likeTimestamps // ignore: cast_nullable_to_non_nullable
+              as List<DateTime>,
+      replies: null == replies
+          ? _value._replies
+          : replies // ignore: cast_nullable_to_non_nullable
+              as List<Comment>,
+      parentId: freezed == parentId
+          ? _value.parentId
+          : parentId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      mediaType: freezed == mediaType
+          ? _value.mediaType
+          : mediaType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isEdited: null == isEdited
+          ? _value.isEdited
+          : isEdited // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isDeleted: null == isDeleted
+          ? _value.isDeleted
+          : isDeleted // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isPinned: null == isPinned
+          ? _value.isPinned
           : isPinned // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
 }
 
-/// Adds pattern-matching-related methods to [Comment].
-extension CommentPatterns on Comment {
-  /// A variant of `map` that fallback to returning `orElse`.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case _:
-  ///     return orElse();
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>(
-    TResult Function(_Comment value)? $default, {
-    required TResult orElse(),
-  }) {
-    final _that = this;
-    switch (_that) {
-      case _Comment() when $default != null:
-        return $default(_that);
-      case _:
-        return orElse();
-    }
-  }
-
-  /// A `switch`-like method, using callbacks.
-  ///
-  /// Callbacks receives the raw object, upcasted.
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case final Subclass2 value:
-  ///     return ...;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>(
-    TResult Function(_Comment value) $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _Comment():
-        return $default(_that);
-      case _:
-        throw StateError('Unexpected subclass');
-    }
-  }
-
-  /// A variant of `map` that fallback to returning `null`.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case _:
-  ///     return null;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>(
-    TResult? Function(_Comment value)? $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _Comment() when $default != null:
-        return $default(_that);
-      case _:
-        return null;
-    }
-  }
-
-  /// A variant of `when` that fallback to an `orElse` callback.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case _:
-  ///     return orElse();
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            String id,
-            String videoId,
-            String userName,
-            String avatarUrl,
-            String content,
-            int likes,
-            int dislikes,
-            int repliesCount,
-            DateTime createdAt,
-            DateTime? updatedAt,
-            List<DateTime> likeTimestamps,
-            List<Comment> replies,
-            String? parentId,
-            String? mediaType,
-            bool isEdited,
-            bool isDeleted,
-            bool isPinned)?
-        $default, {
-    required TResult orElse(),
-  }) {
-    final _that = this;
-    switch (_that) {
-      case _Comment() when $default != null:
-        return $default(
-            _that.id,
-            _that.videoId,
-            _that.userName,
-            _that.avatarUrl,
-            _that.content,
-            _that.likes,
-            _that.dislikes,
-            _that.repliesCount,
-            _that.createdAt,
-            _that.updatedAt,
-            _that.likeTimestamps,
-            _that.replies,
-            _that.parentId,
-            _that.mediaType,
-            _that.isEdited,
-            _that.isDeleted,
-            _that.isPinned);
-      case _:
-        return orElse();
-    }
-  }
-
-  /// A `switch`-like method, using callbacks.
-  ///
-  /// As opposed to `map`, this offers destructuring.
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case Subclass2(:final field2):
-  ///     return ...;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>(
-    TResult Function(
-            String id,
-            String videoId,
-            String userName,
-            String avatarUrl,
-            String content,
-            int likes,
-            int dislikes,
-            int repliesCount,
-            DateTime createdAt,
-            DateTime? updatedAt,
-            List<DateTime> likeTimestamps,
-            List<Comment> replies,
-            String? parentId,
-            String? mediaType,
-            bool isEdited,
-            bool isDeleted,
-            bool isPinned)
-        $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _Comment():
-        return $default(
-            _that.id,
-            _that.videoId,
-            _that.userName,
-            _that.avatarUrl,
-            _that.content,
-            _that.likes,
-            _that.dislikes,
-            _that.repliesCount,
-            _that.createdAt,
-            _that.updatedAt,
-            _that.likeTimestamps,
-            _that.replies,
-            _that.parentId,
-            _that.mediaType,
-            _that.isEdited,
-            _that.isDeleted,
-            _that.isPinned);
-      case _:
-        throw StateError('Unexpected subclass');
-    }
-  }
-
-  /// A variant of `when` that fallback to returning `null`
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case _:
-  ///     return null;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            String id,
-            String videoId,
-            String userName,
-            String avatarUrl,
-            String content,
-            int likes,
-            int dislikes,
-            int repliesCount,
-            DateTime createdAt,
-            DateTime? updatedAt,
-            List<DateTime> likeTimestamps,
-            List<Comment> replies,
-            String? parentId,
-            String? mediaType,
-            bool isEdited,
-            bool isDeleted,
-            bool isPinned)?
-        $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _Comment() when $default != null:
-        return $default(
-            _that.id,
-            _that.videoId,
-            _that.userName,
-            _that.avatarUrl,
-            _that.content,
-            _that.likes,
-            _that.dislikes,
-            _that.repliesCount,
-            _that.createdAt,
-            _that.updatedAt,
-            _that.likeTimestamps,
-            _that.replies,
-            _that.parentId,
-            _that.mediaType,
-            _that.isEdited,
-            _that.isDeleted,
-            _that.isPinned);
-      case _:
-        return null;
-    }
-  }
-}
-
 /// @nodoc
 
-class _Comment extends Comment {
-  const _Comment(
+class _$CommentImpl extends _Comment {
+  const _$CommentImpl(
       {required this.id,
       required this.videoId,
       required this.userName,
@@ -575,19 +387,16 @@ class _Comment extends Comment {
   @JsonKey()
   final bool isPinned;
 
-  /// Create a copy of Comment
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  _$CommentCopyWith<_Comment> get copyWith =>
-      __$CommentCopyWithImpl<_Comment>(this, _$identity);
+  String toString() {
+    return 'Comment(id: $id, videoId: $videoId, userName: $userName, avatarUrl: $avatarUrl, content: $content, likes: $likes, dislikes: $dislikes, repliesCount: $repliesCount, createdAt: $createdAt, updatedAt: $updatedAt, likeTimestamps: $likeTimestamps, replies: $replies, parentId: $parentId, mediaType: $mediaType, isEdited: $isEdited, isDeleted: $isDeleted, isPinned: $isPinned)';
+  }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Comment &&
+            other is _$CommentImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.videoId, videoId) || other.videoId == videoId) &&
             (identical(other.userName, userName) ||
@@ -640,139 +449,75 @@ class _Comment extends Comment {
       isDeleted,
       isPinned);
 
+  /// Create a copy of Comment
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  String toString() {
-    return 'Comment(id: $id, videoId: $videoId, userName: $userName, avatarUrl: $avatarUrl, content: $content, likes: $likes, dislikes: $dislikes, repliesCount: $repliesCount, createdAt: $createdAt, updatedAt: $updatedAt, likeTimestamps: $likeTimestamps, replies: $replies, parentId: $parentId, mediaType: $mediaType, isEdited: $isEdited, isDeleted: $isDeleted, isPinned: $isPinned)';
-  }
+  @pragma('vm:prefer-inline')
+  _$$CommentImplCopyWith<_$CommentImpl> get copyWith =>
+      __$$CommentImplCopyWithImpl<_$CommentImpl>(this, _$identity);
 }
 
-/// @nodoc
-abstract mixin class _$CommentCopyWith<$Res> implements $CommentCopyWith<$Res> {
-  factory _$CommentCopyWith(_Comment value, $Res Function(_Comment) _then) =
-      __$CommentCopyWithImpl;
+abstract class _Comment extends Comment {
+  const factory _Comment(
+      {required final String id,
+      required final String videoId,
+      required final String userName,
+      required final String avatarUrl,
+      required final String content,
+      final int likes,
+      final int dislikes,
+      final int repliesCount,
+      required final DateTime createdAt,
+      final DateTime? updatedAt,
+      final List<DateTime> likeTimestamps,
+      final List<Comment> replies,
+      final String? parentId,
+      final String? mediaType,
+      final bool isEdited,
+      final bool isDeleted,
+      final bool isPinned}) = _$CommentImpl;
+  const _Comment._() : super._();
+
   @override
-  @useResult
-  $Res call(
-      {String id,
-      String videoId,
-      String userName,
-      String avatarUrl,
-      String content,
-      int likes,
-      int dislikes,
-      int repliesCount,
-      DateTime createdAt,
-      DateTime? updatedAt,
-      List<DateTime> likeTimestamps,
-      List<Comment> replies,
-      String? parentId,
-      String? mediaType,
-      bool isEdited,
-      bool isDeleted,
-      bool isPinned});
-}
-
-/// @nodoc
-class __$CommentCopyWithImpl<$Res> implements _$CommentCopyWith<$Res> {
-  __$CommentCopyWithImpl(this._self, this._then);
-
-  final _Comment _self;
-  final $Res Function(_Comment) _then;
+  String get id;
+  @override
+  String get videoId;
+  @override
+  String get userName;
+  @override
+  String get avatarUrl;
+  @override
+  String get content;
+  @override
+  int get likes;
+  @override
+  int get dislikes;
+  @override
+  int get repliesCount;
+  @override
+  DateTime get createdAt;
+  @override
+  DateTime? get updatedAt;
+  @override
+  List<DateTime> get likeTimestamps; // For calculating recent likes
+  @override
+  List<Comment> get replies;
+  @override
+  String? get parentId;
+  @override
+  String? get mediaType; // 'Movie' or 'TV Series' for navigation
+  @override
+  bool get isEdited;
+  @override
+  bool get isDeleted;
+  @override
+  bool get isPinned;
 
   /// Create a copy of Comment
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? id = null,
-    Object? videoId = null,
-    Object? userName = null,
-    Object? avatarUrl = null,
-    Object? content = null,
-    Object? likes = null,
-    Object? dislikes = null,
-    Object? repliesCount = null,
-    Object? createdAt = null,
-    Object? updatedAt = freezed,
-    Object? likeTimestamps = null,
-    Object? replies = null,
-    Object? parentId = freezed,
-    Object? mediaType = freezed,
-    Object? isEdited = null,
-    Object? isDeleted = null,
-    Object? isPinned = null,
-  }) {
-    return _then(_Comment(
-      id: null == id
-          ? _self.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      videoId: null == videoId
-          ? _self.videoId
-          : videoId // ignore: cast_nullable_to_non_nullable
-              as String,
-      userName: null == userName
-          ? _self.userName
-          : userName // ignore: cast_nullable_to_non_nullable
-              as String,
-      avatarUrl: null == avatarUrl
-          ? _self.avatarUrl
-          : avatarUrl // ignore: cast_nullable_to_non_nullable
-              as String,
-      content: null == content
-          ? _self.content
-          : content // ignore: cast_nullable_to_non_nullable
-              as String,
-      likes: null == likes
-          ? _self.likes
-          : likes // ignore: cast_nullable_to_non_nullable
-              as int,
-      dislikes: null == dislikes
-          ? _self.dislikes
-          : dislikes // ignore: cast_nullable_to_non_nullable
-              as int,
-      repliesCount: null == repliesCount
-          ? _self.repliesCount
-          : repliesCount // ignore: cast_nullable_to_non_nullable
-              as int,
-      createdAt: null == createdAt
-          ? _self.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      updatedAt: freezed == updatedAt
-          ? _self.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      likeTimestamps: null == likeTimestamps
-          ? _self._likeTimestamps
-          : likeTimestamps // ignore: cast_nullable_to_non_nullable
-              as List<DateTime>,
-      replies: null == replies
-          ? _self._replies
-          : replies // ignore: cast_nullable_to_non_nullable
-              as List<Comment>,
-      parentId: freezed == parentId
-          ? _self.parentId
-          : parentId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      mediaType: freezed == mediaType
-          ? _self.mediaType
-          : mediaType // ignore: cast_nullable_to_non_nullable
-              as String?,
-      isEdited: null == isEdited
-          ? _self.isEdited
-          : isEdited // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isDeleted: null == isDeleted
-          ? _self.isDeleted
-          : isDeleted // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isPinned: null == isPinned
-          ? _self.isPinned
-          : isPinned // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$CommentImplCopyWith<_$CommentImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
-
-// dart format on

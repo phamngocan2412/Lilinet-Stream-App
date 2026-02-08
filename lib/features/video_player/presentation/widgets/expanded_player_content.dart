@@ -56,17 +56,18 @@ class ExpandedPlayerContent extends StatelessWidget {
                     children: [
                       ...contentChildren,
                       const SizedBox(height: 24),
+                      // Comments section first (above recommendations)
+                      PlayerCommentsSection(
+                        mediaId: state.mediaId ?? 'unknown',
+                      ),
+                      const SizedBox(height: 24),
                       if (state.movie?.recommendations != null &&
                           state.movie!.recommendations!.isNotEmpty) ...[
                         PlayerRecommendationsSection(
                           recommendations: state.movie!.recommendations!,
                         ),
-                        const SizedBox(height: 24),
+                        const SizedBox(height: 16),
                       ],
-                      PlayerCommentsSection(
-                        mediaId: state.mediaId ?? 'unknown',
-                      ),
-                      const SizedBox(height: 16),
                     ],
                   ),
                 ),

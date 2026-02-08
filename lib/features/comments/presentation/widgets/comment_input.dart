@@ -41,12 +41,17 @@ class _CommentInputState extends State<CommentInput> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    // Use MediaQuery.viewInsetsOf to only rebuild when insets actually change
+    final bottomInset = MediaQuery.viewInsetsOf(context).bottom;
+
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 100),
+      curve: Curves.easeOut,
       padding: EdgeInsets.only(
         left: 16,
         right: 16,
         top: 12,
-        bottom: 12 + MediaQuery.of(context).viewInsets.bottom,
+        bottom: 12 + bottomInset,
       ),
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
@@ -97,8 +102,8 @@ class _CommentInputState extends State<CommentInput> {
                       child: Text(
                         AppLocalizations.of(context)!.loginToComment,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Theme.of(context).disabledColor,
-                        ),
+                              color: Theme.of(context).disabledColor,
+                            ),
                       ),
                     ),
                   ),

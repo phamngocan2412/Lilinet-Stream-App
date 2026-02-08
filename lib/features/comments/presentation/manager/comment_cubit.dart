@@ -21,6 +21,8 @@ class CommentCubit extends Cubit<CommentState> {
   final CommentRepository _repository;
 
   StreamSubscription? _realtimeSubscription;
+  Timer? _realtimeDebounceTimer;
+  static const _realtimeDebounceDuration = Duration(milliseconds: 500);
 
   CommentCubit(
     this._getComments,
@@ -29,6 +31,13 @@ class CommentCubit extends Cubit<CommentState> {
     this._getReplies,
     this._repository,
   ) : super(const CommentState.initial());
+
+  @override
+  Future<void> close() {
+    _realtimeSubscription?.cancel();
+    _realtimeDebounceTimer?.cancel();
+    return super.close();
+  }
 
   String? _currentVideoId;
 
@@ -78,46 +87,105 @@ class CommentCubit extends Cubit<CommentState> {
     );
   }
 
-  void _subscribeToRealtime(String videoId) {
-    _realtimeSubscription = _repository
-        .getCommentStream(videoId)
-        .listen(
-          (events) async {
-            // When a change occurs, we simply reload the comments for now to ensure consistency.
-            // A more optimized approach would be to parse the event and update the list locally.
-            // Given we are using BLoC and immutable state, fetching fresh data is safer and easier.
-            debugPrint('🔔 Realtime comment update received');
+  /// Silent refresh comments without canceling subscription
+  /// Use this after addComment to sync with server while keeping realtime alive
+  Future<void> _silentRefresh() async {
+    final videoId = _currentVideoId;
+    if (videoId == null) return;
 
-            // We do a "silent" reload - keeping the current state visible but updating data
-            final results = await Future.wait([
-              _getComments(videoId),
-              _repository.getLikedCommentIds(videoId), // Refresh likes too
-            ]);
+    // Cancel any pending debounce timer
+    _realtimeDebounceTimer?.cancel();
 
-            if (isClosed) return;
+    state.mapOrNull(
+      loaded: (currentState) async {
+        debugPrint('🔄 Silent refresh...');
+        final results = await Future.wait([
+          _getComments(videoId),
+          _repository.getLikedCommentIds(videoId),
+        ]);
 
-            final commentsResult = results[0] as Either<Failure, List<Comment>>;
-            // We keep existing liked IDs unless we want to refresh them too
+        if (isClosed) return;
 
-            state.mapOrNull(
-              loaded: (loadedState) {
-                commentsResult.fold(
-                  (l) => null, // Ignore errors on silent refresh
-                  (newComments) {
-                    final sorted = _sortComments(
-                      newComments,
-                      loadedState.sortType,
-                    );
-                    emit(loadedState.copyWith(comments: sorted));
-                  },
-                );
-              },
-            );
-          },
-          onError: (error) {
-            debugPrint('Realtime subscription error: $error');
+        final commentsResult = results[0] as Either<Failure, List<Comment>>;
+        final likedIdsResult = results[1] as Either<Failure, List<String>>;
+
+        final likedIds = likedIdsResult.fold(
+          (failure) => currentState.likedCommentIds,
+          (ids) => ids.toSet(),
+        );
+
+        commentsResult.fold(
+          (l) {}, // Silent fail - keep existing comments
+          (newComments) {
+            final sorted = _sortComments(newComments, currentState.sortType);
+            // Only emit if the comments are actually different
+            if (_commentsChanged(currentState.comments, sorted)) {
+              emit(currentState.copyWith(
+                comments: sorted,
+                likedCommentIds: likedIds,
+              ));
+            }
           },
         );
+      },
+    );
+  }
+
+  void _subscribeToRealtime(String videoId) {
+    _realtimeSubscription = _repository.getCommentStream(videoId).listen(
+      (events) async {
+        debugPrint('🔔 Realtime comment update received, debouncing...');
+
+        // Cancel existing debounce timer
+        _realtimeDebounceTimer?.cancel();
+
+        // Debounce to prevent too many refreshes
+        _realtimeDebounceTimer = Timer(_realtimeDebounceDuration, () async {
+          debugPrint('🔔 Executing debounced refresh...');
+
+          // Only refresh if we still have the same videoId
+          if (_currentVideoId != videoId) return;
+
+          final results = await Future.wait([
+            _getComments(videoId),
+            _repository.getLikedCommentIds(videoId),
+          ]);
+
+          if (isClosed) return;
+
+          final commentsResult = results[0] as Either<Failure, List<Comment>>;
+
+          state.mapOrNull(
+            loaded: (loadedState) {
+              commentsResult.fold(
+                (l) => null,
+                (newComments) {
+                  final sorted = _sortComments(
+                    newComments,
+                    loadedState.sortType,
+                  );
+                  // Only emit if the comments are actually different
+                  if (_commentsChanged(loadedState.comments, sorted)) {
+                    emit(loadedState.copyWith(comments: sorted));
+                  }
+                },
+              );
+            },
+          );
+        });
+      },
+      onError: (error) {
+        debugPrint('Realtime subscription error: $error');
+      },
+    );
+  }
+
+  bool _commentsChanged(List<Comment> old, List<Comment> newComments) {
+    if (old.length != newComments.length) return true;
+    for (int i = 0; i < old.length; i++) {
+      if (old[i].id != newComments[i].id) return true;
+    }
+    return false;
   }
 
   void changeSortType(CommentSortType type) {
@@ -197,9 +265,15 @@ class CommentCubit extends Cubit<CommentState> {
           },
           (newComment) async {
             debugPrint('✅ Comment added successfully: ${newComment.id}');
-            // We rely on realtime subscription to update the list,
-            // but we can manually reload to be sure or stop the loading indicator immediately.
-            emit(loadedState.copyWith(isAddingComment: false));
+            // Optimistic update - add new comment to the list immediately
+            final updatedComments = [newComment, ...loadedState.comments];
+            emit(loadedState.copyWith(
+              comments: updatedComments,
+              isAddingComment: false,
+            ));
+            // Silent refresh WITHOUT canceling subscription
+            // This keeps realtime alive and syncs with server
+            _silentRefresh();
           },
         );
       },
@@ -273,11 +347,5 @@ class CommentCubit extends Cubit<CommentState> {
         break;
     }
     return sorted;
-  }
-
-  @override
-  Future<void> close() {
-    _realtimeSubscription?.cancel();
-    return super.close();
   }
 }

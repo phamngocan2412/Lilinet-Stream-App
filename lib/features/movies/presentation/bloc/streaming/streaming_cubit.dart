@@ -13,7 +13,7 @@ import '../../../domain/usecases/get_streaming_links.dart';
 import '../../../domain/usecases/get_available_servers.dart';
 import 'streaming_state.dart';
 
-@lazySingleton
+@injectable
 class StreamingCubit extends Cubit<StreamingState> {
   final GetStreamingLinks _getStreamingLinks;
   final GetAvailableServers _getAvailableServers;
@@ -90,7 +90,8 @@ class StreamingCubit extends Cubit<StreamingState> {
         !_isCancelled &&
         server == null) {
       if (kDebugMode) {
-        debugPrint('✅ StreamingCubit: Reusing cached links for episode $episodeId');
+        debugPrint(
+            '✅ StreamingCubit: Reusing cached links for episode $episodeId');
       }
       return;
     }
@@ -407,9 +408,8 @@ class StreamingCubit extends Cubit<StreamingState> {
           _cachedAvailableServers = defaultServers;
         },
         (servers) {
-          _cachedAvailableServers = servers.isNotEmpty
-              ? servers
-              : defaultServers;
+          _cachedAvailableServers =
+              servers.isNotEmpty ? servers : defaultServers;
           if (kDebugMode) {
             debugPrint('📡 Available servers: $_cachedAvailableServers');
           }

@@ -28,6 +28,20 @@ class MiniplayerWidget extends StatefulWidget {
 
 class _MiniplayerWidgetState extends State<MiniplayerWidget> {
   final MiniplayerController _miniplayerController = MiniplayerController();
+  DateTime? _navigationBlockUntil;
+  static const _navigationBlockDuration = Duration(milliseconds: 500);
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Block auto-maximize for a short time after navigation
+    _navigationBlockUntil = DateTime.now().add(_navigationBlockDuration);
+  }
+
+  bool get _isNavigationBlocked {
+    if (_navigationBlockUntil == null) return false;
+    return DateTime.now().isBefore(_navigationBlockUntil!);
+  }
 
   @override
   void initState() {
@@ -35,10 +49,38 @@ class _MiniplayerWidgetState extends State<MiniplayerWidget> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       final state = context.read<VideoPlayerBloc>().state;
+      debugPrint('MiniplayerWidget initState: status=${state.status}');
       if (state.status == VideoPlayerStatus.expanded) {
         _miniplayerController.animateToHeight(state: PanelState.MAX);
+      } else if (state.status == VideoPlayerStatus.minimized) {
+        _miniplayerController.animateToHeight(state: PanelState.MIN);
       }
     });
+  }
+
+  @override
+  void didUpdateWidget(MiniplayerWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    debugPrint(
+        'MiniplayerWidget didUpdateWidget: height changed=${oldWidget.miniplayerHeight != widget.miniplayerHeight}');
+    // Update miniplayer height when it changes (e.g., when switching between tabs with/without nav bar)
+    if (oldWidget.miniplayerHeight != widget.miniplayerHeight) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        final state = context.read<VideoPlayerBloc>().state;
+        debugPrint('MiniplayerWidget: Updating height, status=${state.status}');
+        if (state.status == VideoPlayerStatus.minimized) {
+          // Re-animate to MIN to apply new height
+          _miniplayerController.animateToHeight(state: PanelState.MIN);
+        }
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _miniplayerController.dispose();
+    super.dispose();
   }
 
   @override
@@ -48,15 +90,22 @@ class _MiniplayerWidgetState extends State<MiniplayerWidget> {
       // Ignore streamingState changes to prevent unnecessary rebuilds
       buildWhen: (previous, current) {
         return previous.episodeId != current.episodeId ||
-               previous.status != current.status ||
-               previous.title != current.title ||
-               previous.posterUrl != current.posterUrl;
+            previous.status != current.status ||
+            previous.title != current.title ||
+            previous.posterUrl != current.posterUrl;
       },
       // Listen to all changes so we can re-expand even if status is Same
       listener: (context, state) {
         if (state.status == VideoPlayerStatus.expanded) {
+          if (_isNavigationBlocked) {
+            debugPrint(
+                'MiniplayerWidget: Status expanded but navigation blocked - ignoring');
+            return;
+          }
+          debugPrint('MiniplayerWidget: Status expanded - animating to MAX');
           _miniplayerController.animateToHeight(state: PanelState.MAX);
         } else if (state.status == VideoPlayerStatus.minimized) {
+          debugPrint('MiniplayerWidget: Status minimized - animating to MIN');
           _miniplayerController.animateToHeight(state: PanelState.MIN);
         } else if (state.status == VideoPlayerStatus.closed) {
           // Stop playback and reset URL when player is closed

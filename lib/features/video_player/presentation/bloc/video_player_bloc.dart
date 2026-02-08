@@ -104,7 +104,7 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
         server: tryServer,
       );
 
-      result.fold(
+      await result.fold(
         (failure) async {
           debugPrint('❌ Server $tryServer failed: ${failure.message}');
           if (tryServer == servers.last) {
@@ -120,7 +120,7 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
 
           if (isClosed) return;
 
-          _loadAvailableServers(emit, episodeId, mediaId, provider);
+          await _loadAvailableServers(emit, episodeId, mediaId, provider);
 
           final selectedLink = response.links.firstOrNull;
           if (selectedLink != null) {
@@ -190,10 +190,11 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
         provider: provider,
       );
 
-      result.fold(
-        (failure) =>
-            debugPrint('⚠️ Failed to load servers: ${failure.message}'),
-        (servers) {
+      await result.fold(
+        (failure) async {
+          debugPrint('⚠️ Failed to load servers: ${failure.message}');
+        },
+        (servers) async {
           emit(state.copyWith(availableServers: servers));
           debugPrint('📡 Available servers: $servers');
         },
