@@ -44,7 +44,8 @@ class StreamingConfig {
   ];
 
   /// All providers combined
-  static List<String> get allProviders => [...animeProviders, ...movieProviders];
+  static List<String> get allProviders =>
+      [...animeProviders, ...movieProviders];
 
   // ============================================
   // Server Lists
@@ -86,7 +87,6 @@ class StreamingConfig {
     'kickassanime': 'KickAssAnime',
     'animeunity': 'AnimeUnity',
     'animesaturn': 'AnimeSaturn',
-
     'goku': 'Goku.sx',
     'flixhq': 'FlixHQ',
     'himovies': 'HiMovies',
@@ -104,7 +104,6 @@ class StreamingConfig {
     'kickassanime': 'Good Player',
     'animeunity': 'Italian Sub',
     'animesaturn': 'Italian Sub',
-
     'goku': 'Best for Movies/TV',
     'flixhq': 'Alternative Source',
     'himovies': 'High Quality',
@@ -169,7 +168,8 @@ class StreamingConfig {
   }
 
   /// Get fallback providers (excluding the primary one)
-  static List<String> getFallbackProviders(String primaryProvider, bool isAnime) {
+  static List<String> getFallbackProviders(
+      String primaryProvider, bool isAnime) {
     final allList = isAnime ? animeProviders : movieProviders;
     // Try providers of the same type first, then others
     final otherList = isAnime ? movieProviders : animeProviders;

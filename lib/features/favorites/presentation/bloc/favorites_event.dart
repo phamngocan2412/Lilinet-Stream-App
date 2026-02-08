@@ -4,7 +4,8 @@ part 'favorites_event.freezed.dart';
 
 @freezed
 class FavoritesEvent with _$FavoritesEvent {
-  const factory FavoritesEvent.loadFavorites({@Default(1) int page}) = LoadFavorites;
+  const factory FavoritesEvent.loadFavorites({@Default(1) int page}) =
+      LoadFavorites;
 
   const factory FavoritesEvent.loadMoreFavorites() = LoadMoreFavorites;
 

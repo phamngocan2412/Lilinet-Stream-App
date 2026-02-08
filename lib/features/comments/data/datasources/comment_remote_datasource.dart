@@ -43,7 +43,9 @@ class SupabaseCommentDataSource implements CommentRemoteDataSource {
           callback: (payload) {
             final record = payload.newRecord.isNotEmpty
                 ? payload.newRecord
-                : (payload.oldRecord.isNotEmpty ? payload.oldRecord : <String, dynamic>{});
+                : (payload.oldRecord.isNotEmpty
+                    ? payload.oldRecord
+                    : <String, dynamic>{});
             controller.add([record]);
           },
         )
@@ -66,10 +68,8 @@ class SupabaseCommentDataSource implements CommentRemoteDataSource {
           .order('created_at', ascending: false);
 
       // Get unique user IDs
-      final userIds = response
-          .map((r) => r['user_id'] as String)
-          .toSet()
-          .toList();
+      final userIds =
+          response.map((r) => r['user_id'] as String).toSet().toList();
 
       // Fetch profiles separately
       final profilesResponse = await _supabase
@@ -204,10 +204,8 @@ class SupabaseCommentDataSource implements CommentRemoteDataSource {
       if (response.isEmpty) return [];
 
       // Get unique user IDs
-      final userIds = response
-          .map((r) => r['user_id'] as String)
-          .toSet()
-          .toList();
+      final userIds =
+          response.map((r) => r['user_id'] as String).toSet().toList();
 
       // Fetch profiles separately
       final profilesResponse = await _supabase
@@ -254,10 +252,8 @@ class SupabaseCommentDataSource implements CommentRemoteDataSource {
       if (response.isEmpty) return [];
 
       // Get unique user IDs
-      final userIds = response
-          .map((r) => r['user_id'] as String)
-          .toSet()
-          .toList();
+      final userIds =
+          response.map((r) => r['user_id'] as String).toSet().toList();
 
       // Fetch profiles separately
       final profilesResponse = await _supabase
@@ -304,9 +300,8 @@ class SupabaseCommentDataSource implements CommentRemoteDataSource {
 
       if (commentsResponse.isEmpty) return [];
 
-      final commentIds = commentsResponse
-          .map((c) => c['id'] as String)
-          .toList();
+      final commentIds =
+          commentsResponse.map((c) => c['id'] as String).toList();
 
       // Get likes for these comments by current user
       final likesResponse = await _supabase

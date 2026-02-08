@@ -107,7 +107,8 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
     } else {
       // Check for memory limit
       final currentState = state.mapOrNull(moviesLoaded: (s) => s);
-      if (currentState != null && currentState.movies.length >= _maxMoviesCount) {
+      if (currentState != null &&
+          currentState.movies.length >= _maxMoviesCount) {
         emit(currentState.copyWithMore(hasMore: false));
         return;
       }
