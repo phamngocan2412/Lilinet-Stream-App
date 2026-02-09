@@ -28,8 +28,7 @@ class VideoErrorWidget extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(AppSpacing.md),
               decoration: BoxDecoration(
-                color:
-                    Theme.of(context).colorScheme.error.withOpacity(0.1),
+                color: Theme.of(context).colorScheme.error.withOpacity(0.1),
                 shape: BoxShape.circle,
               ),
               child: Icon(
