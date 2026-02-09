@@ -180,7 +180,7 @@ class _CommentBottomSheetViewState extends State<_CommentBottomSheetView> {
             borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.2),
+                color: Colors.black.withOpacity(0.2),
                 blurRadius: 20,
                 offset: const Offset(0, -5),
               ),
@@ -250,10 +250,10 @@ class _CommentBottomSheetViewState extends State<_CommentBottomSheetView> {
                     vertical: 12,
                   ),
                   decoration: BoxDecoration(
-                    color: theme.colorScheme.primary.withValues(alpha: 0.08),
+                    color: theme.colorScheme.primary.withOpacity(0.08),
                     border: Border(
                       bottom: BorderSide(
-                        color: theme.dividerColor.withValues(alpha: 0.2),
+                        color: theme.dividerColor.withOpacity(0.2),
                       ),
                     ),
                   ),
@@ -262,8 +262,8 @@ class _CommentBottomSheetViewState extends State<_CommentBottomSheetView> {
                       Container(
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                          color: theme.colorScheme.primary.withValues(
-                            alpha: 0.15,
+                          color: theme.colorScheme.primary.withOpacity(
+                            0.1,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
@@ -365,7 +365,7 @@ class _CommentBottomSheetViewState extends State<_CommentBottomSheetView> {
                                   padding: const EdgeInsets.all(24),
                                   decoration: BoxDecoration(
                                     color: theme.colorScheme.primary
-                                        .withValues(alpha: 0.1),
+                                        .withOpacity(0.1),
                                     shape: BoxShape.circle,
                                   ),
                                   child: Icon(
@@ -442,12 +442,12 @@ class _CommentBottomSheetViewState extends State<_CommentBottomSheetView> {
                   color: theme.scaffoldBackgroundColor,
                   border: Border(
                     top: BorderSide(
-                      color: theme.dividerColor.withValues(alpha: 0.2),
+                      color: theme.dividerColor.withOpacity(0.2),
                     ),
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.05),
+                      color: Colors.black.withOpacity(0.05),
                       blurRadius: 10,
                       offset: const Offset(0, -5),
                     ),
@@ -489,7 +489,7 @@ class _CommentBottomSheetViewState extends State<_CommentBottomSheetView> {
                 color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(24),
                 border: Border.all(
-                  color: Theme.of(context).dividerColor.withValues(alpha: 0.2),
+                  color: Theme.of(context).dividerColor.withOpacity(0.2),
                 ),
               ),
               child: TextField(

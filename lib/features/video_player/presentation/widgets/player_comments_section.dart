@@ -179,7 +179,7 @@ class _PlayerCommentsViewState extends State<PlayerCommentsView> {
                             child: Container(
                               decoration: isNewComment
                                   ? BoxDecoration(
-                                      color: Colors.blue.withValues(alpha: 0.1),
+                                      color: Colors.blue.withOpacity(0.1),
                                       borderRadius: BorderRadius.circular(8),
                                     )
                                   : null,
