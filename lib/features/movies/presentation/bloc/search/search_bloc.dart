@@ -62,7 +62,8 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   ) {
     // Update activeFilter string based on mediaType for UI consistency
     String activeFilter = 'All';
-    if (event.options.mediaType == MediaType.tvSeries) activeFilter = 'TV Series';
+    if (event.options.mediaType == MediaType.tvSeries)
+      activeFilter = 'TV Series';
     if (event.options.mediaType == MediaType.movie) activeFilter = 'Movie';
 
     final filtered = _applyFilters(state.rawMovies, event.options);

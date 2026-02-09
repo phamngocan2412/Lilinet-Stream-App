@@ -33,7 +33,7 @@ class NetworkModule {
           requestBody: false, // Handled by SecureInterceptor
           responseBody: false, // Disabled huge body logging
           responseHeader: false,
-          error: true,
+          error: false, // Handled by SecureInterceptor
           compact: true,
           maxWidth: 90,
         ),

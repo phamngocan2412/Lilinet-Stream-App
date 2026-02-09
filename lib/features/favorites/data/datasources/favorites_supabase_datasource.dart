@@ -8,7 +8,8 @@ class FavoritesSupabaseDataSource {
 
   FavoritesSupabaseDataSource(this.supabaseClient);
 
-  Future<List<FavoriteModel>> getFavorites({int page = 1, int limit = 20}) async {
+  Future<List<FavoriteModel>> getFavorites(
+      {int page = 1, int limit = 20}) async {
     final userId = supabaseClient.auth.currentUser?.id;
     if (userId == null) {
       throw Exception('User not authenticated');

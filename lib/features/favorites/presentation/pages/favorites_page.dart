@@ -110,7 +110,9 @@ class _FavoritesViewState extends State<FavoritesView> {
                     child: AppErrorWidget(
                       message: state.message,
                       onRetry: () {
-                        context.read<FavoritesBloc>().add(const LoadFavorites());
+                        context
+                            .read<FavoritesBloc>()
+                            .add(const LoadFavorites());
                       },
                     ),
                   );
@@ -125,12 +127,18 @@ class _FavoritesViewState extends State<FavoritesView> {
                   }
 
                   // Extract folders
-                  final folders = {'All', ...state.favorites.map((f) => f.folder).toSet().toList()..sort()};
+                  final folders = {
+                    'All',
+                    ...state.favorites.map((f) => f.folder).toSet().toList()
+                      ..sort()
+                  };
 
                   // Filter favorites based on selected folder
                   final filteredFavorites = _selectedFolder == 'All'
                       ? state.favorites
-                      : state.favorites.where((f) => f.folder == _selectedFolder).toList();
+                      : state.favorites
+                          .where((f) => f.folder == _selectedFolder)
+                          .toList();
 
                   return Column(
                     children: [
@@ -142,7 +150,8 @@ class _FavoritesViewState extends State<FavoritesView> {
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           scrollDirection: Axis.horizontal,
                           itemCount: folders.length,
-                          separatorBuilder: (context, index) => const SizedBox(width: 8),
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(width: 8),
                           itemBuilder: (context, index) {
                             final folder = folders.elementAt(index);
                             return CategoryChip(
@@ -161,15 +170,20 @@ class _FavoritesViewState extends State<FavoritesView> {
                       // Favorites Grid
                       Expanded(
                         child: filteredFavorites.isEmpty
-                            ? const Center(child: Text("No items in this folder"))
+                            ? const Center(
+                                child: Text("No items in this folder"))
                             : RefreshIndicator(
                                 onRefresh: () async {
-                                  context.read<FavoritesBloc>().add(const LoadFavorites());
+                                  context
+                                      .read<FavoritesBloc>()
+                                      .add(const LoadFavorites());
                                 },
                                 child: ListenableBuilder(
                                   listenable: getIt<MiniplayerHeightNotifier>(),
                                   builder: (context, _) {
-                                    final miniplayerHeight = getIt<MiniplayerHeightNotifier>().height;
+                                    final miniplayerHeight =
+                                        getIt<MiniplayerHeightNotifier>()
+                                            .height;
 
                                     return GridView.builder(
                                       padding: EdgeInsets.only(
@@ -187,12 +201,14 @@ class _FavoritesViewState extends State<FavoritesView> {
                                       ),
                                       itemCount: filteredFavorites.length,
                                       itemBuilder: (context, index) {
-                                        final favorite = filteredFavorites[index];
+                                        final favorite =
+                                            filteredFavorites[index];
 
                                         // Convert Favorite to Movie for MovieCard
                                         final movie = Movie(
                                           id: favorite.movieId,
-                                          title: favorite.movieTitle ?? 'Unknown',
+                                          title:
+                                              favorite.movieTitle ?? 'Unknown',
                                           poster: favorite.moviePoster,
                                           type: favorite.movieType ?? 'Movie',
                                         );

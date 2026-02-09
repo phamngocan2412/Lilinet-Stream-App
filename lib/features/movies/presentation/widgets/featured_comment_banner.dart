@@ -80,9 +80,9 @@ class FeaturedCommentBanner extends StatelessWidget {
               // Normalize type for API
               final typeParam =
                   movieType.toString().toLowerCase().contains('tv') ||
-                      movieType.toString().toLowerCase().contains('series')
-                  ? 'tv'
-                  : 'movie';
+                          movieType.toString().toLowerCase().contains('series')
+                      ? 'tv'
+                      : 'movie';
 
               // Navigate to player/details
               // If you have a direct player route:

@@ -19,6 +19,14 @@ class SecureInterceptor extends Interceptor {
     'authorization',
     'cookie',
     'x-auth-token',
+    'api_key',
+    'apikey',
+    'bearer',
+    'session_id',
+    'jwt',
+    'access_key',
+    'otp',
+    'code',
   };
 
   SecureInterceptor({LogCallback? logCallback})
@@ -30,7 +38,8 @@ class SecureInterceptor extends Interceptor {
     if (kDebugMode) {
       try {
         // Log Method and URI
-        _log('Request: ${options.method} ${options.uri}', name: 'SecureLogger');
+        final sanitizedUri = _sanitizeUri(options.uri);
+        _log('Request: ${options.method} $sanitizedUri', name: 'SecureLogger');
 
         // Log Headers with Redaction
         final headers = options.headers;
@@ -44,22 +53,7 @@ class SecureInterceptor extends Interceptor {
           if (data is FormData) {
             _log('Request Body: [FormData]', name: 'SecureLogger');
           } else {
-            // Recursive sanitization
-            final sanitized = _sanitizeData(data);
-
-            // Pretty print JSON if possible
-            if (sanitized is Map || sanitized is List) {
-              try {
-                final prettyJson =
-                    const JsonEncoder.withIndent('  ').convert(sanitized);
-                _log('Request Body:\n$prettyJson', name: 'SecureLogger');
-              } catch (e) {
-                // Fallback for non-encodable data
-                _log('Request Body: $sanitized', name: 'SecureLogger');
-              }
-            } else {
-              _log('Request Body: $sanitized', name: 'SecureLogger');
-            }
+            _logBody(data, 'Request Body');
           }
         }
       } catch (e) {
@@ -69,8 +63,78 @@ class SecureInterceptor extends Interceptor {
     handler.next(options);
   }
 
+  @override
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
+    if (kDebugMode) {
+      try {
+        _log('Response: ${response.statusCode} ${response.statusMessage}',
+            name: 'SecureLogger');
+
+        final data = response.data;
+        if (data != null) {
+          _logBody(data, 'Response Body');
+        }
+      } catch (e) {
+        _log('Failed to log secure response body: $e', name: 'SecureLogger');
+      }
+    }
+    handler.next(response);
+  }
+
+  @override
+  void onError(DioException err, ErrorInterceptorHandler handler) {
+    if (kDebugMode) {
+      try {
+        _log('Error: ${err.message}', name: 'SecureLogger');
+        if (err.response != null) {
+          _log(
+              'Error Response: ${err.response?.statusCode} ${err.response?.statusMessage}',
+              name: 'SecureLogger');
+          final data = err.response?.data;
+          if (data != null) {
+            _logBody(data, 'Error Response Body');
+          }
+        }
+      } catch (e) {
+        _log('Failed to log secure error: $e', name: 'SecureLogger');
+      }
+    }
+    handler.next(err);
+  }
+
+  void _logBody(dynamic data, String prefix) {
+    // Recursive sanitization
+    final sanitized = _sanitizeData(data);
+
+    // Pretty print JSON if possible
+    if (sanitized is Map || sanitized is List) {
+      try {
+        final prettyJson =
+            const JsonEncoder.withIndent('  ').convert(sanitized);
+        _log('$prefix:\n$prettyJson', name: 'SecureLogger');
+      } catch (e) {
+        // Fallback for non-encodable data
+        _log('$prefix: $sanitized', name: 'SecureLogger');
+      }
+    } else {
+      _log('$prefix: $sanitized', name: 'SecureLogger');
+    }
+  }
+
   dynamic _sanitizeData(dynamic data) {
-    if (data is Map) {
+    if (data is String) {
+      try {
+        // Attempt to parse string as JSON
+        final decoded = jsonDecode(data);
+        if (decoded is Map || decoded is List) {
+          // If it is valid JSON, sanitize it recursively
+          return _sanitizeData(decoded);
+        }
+      } catch (_) {
+        // Not a JSON string, return as is
+      }
+      return data;
+    } else if (data is Map) {
       final sanitized = <String, dynamic>{};
       for (final entry in data.entries) {
         final key = entry.key.toString();
@@ -87,5 +151,20 @@ class SecureInterceptor extends Interceptor {
       return data.map((item) => _sanitizeData(item)).toList();
     }
     return data;
+  }
+
+  Uri _sanitizeUri(Uri uri) {
+    if (uri.queryParameters.isEmpty) return uri;
+
+    final sanitizedParams = <String, dynamic>{};
+    uri.queryParameters.forEach((key, value) {
+      if (_keysToRedact.contains(key.toLowerCase())) {
+        sanitizedParams[key] = '***REDACTED***';
+      } else {
+        sanitizedParams[key] = value;
+      }
+    });
+
+    return uri.replace(queryParameters: sanitizedParams);
   }
 }

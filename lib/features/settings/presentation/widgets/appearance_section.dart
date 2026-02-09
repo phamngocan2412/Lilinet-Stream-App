@@ -121,9 +121,8 @@ class _ThemeOption extends StatelessWidget {
     return ListTile(
       title: Text(title),
       leading: Icon(icon),
-      trailing: isSelected
-          ? const Icon(Icons.check, color: Colors.green)
-          : null,
+      trailing:
+          isSelected ? const Icon(Icons.check, color: Colors.green) : null,
       onTap: onTap,
     );
   }
