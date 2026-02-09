@@ -69,10 +69,10 @@ class _CollapsedCommentViewContent extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         decoration: BoxDecoration(
-          color: Theme.of(context).cardColor.withValues(alpha: 0.8),
+          color: Theme.of(context).cardColor.withOpacity(0.8),
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
-            color: Theme.of(context).dividerColor.withValues(alpha: 0.1),
+            color: Theme.of(context).dividerColor.withOpacity(0.1),
           ),
         ),
         child: Row(
