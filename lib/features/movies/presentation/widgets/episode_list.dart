@@ -29,14 +29,7 @@ class _EpisodeListState extends State<EpisodeList> {
   late Map<String, WatchProgress> _progressMap;
 
   // Optimization: Reuse empty instance to reduce allocations during scroll
-  static final _emptyProgress = WatchProgress(
-    mediaId: '',
-    title: '',
-    positionSeconds: 0,
-    durationSeconds: 0,
-    lastUpdated: DateTime.fromMillisecondsSinceEpoch(0),
-    isFinished: false,
-  );
+  static final _emptyProgress = WatchProgress.empty();
 
   @override
   void initState() {
