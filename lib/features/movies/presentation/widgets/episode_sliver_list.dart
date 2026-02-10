@@ -3,7 +3,7 @@ import '../../domain/entities/episode.dart';
 import '../../../../features/history/domain/entities/watch_progress.dart';
 import 'episode_item.dart';
 
-class EpisodeSliverList extends StatelessWidget {
+class EpisodeSliverList extends StatefulWidget {
   final List<Episode> episodes;
   final String mediaId;
   final Function(Episode) onEpisodeTap;
@@ -22,31 +22,67 @@ class EpisodeSliverList extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    // Optimization: Create a map for O(1) access to watch progress
-    final progressMap = {
-      for (final p in watchProgress)
-        if (p.mediaId == mediaId && p.episodeId != null) p.episodeId!: p
-    };
+  State<EpisodeSliverList> createState() => _EpisodeSliverListState();
+}
 
+class _EpisodeSliverListState extends State<EpisodeSliverList> {
+  late Map<String, WatchProgress> _progressMap;
+
+  // Optimization: Reuse empty instance to reduce allocations during scroll
+  static final _emptyProgress = WatchProgress(
+    mediaId: '',
+    title: '',
+    positionSeconds: 0,
+    durationSeconds: 0,
+    lastUpdated: DateTime.fromMillisecondsSinceEpoch(0),
+    isFinished: false,
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    _updateProgressMap();
+  }
+
+  @override
+  void didUpdateWidget(EpisodeSliverList oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Optimization: Only rebuild map if watchProgress list identity changes
+    // or mediaId changes. Content changes within the same list instance
+    // are not detected here, but HistoryBloc typically emits new list instances.
+    if (widget.watchProgress != oldWidget.watchProgress ||
+        widget.mediaId != oldWidget.mediaId) {
+      _updateProgressMap();
+    }
+  }
+
+  void _updateProgressMap() {
+    _progressMap = {
+      for (final p in widget.watchProgress)
+        if (p.mediaId == widget.mediaId && p.episodeId != null) p.episodeId!: p
+    };
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (context, index) {
-          final episode = episodes[index];
-          final isSelected = episode.id == currentEpisodeId;
-          final progress = progressMap[episode.id] ?? WatchProgress.empty();
+          final episode = widget.episodes[index];
+          final isSelected = episode.id == widget.currentEpisodeId;
+          final progress = _progressMap[episode.id] ?? _emptyProgress;
 
           return EpisodeItem(
             key: ValueKey(episode.id),
             episode: episode,
             isSelected: isSelected,
             progress: progress,
-            posterUrl: posterUrl,
-            onTap: () => onEpisodeTap(episode),
-            totalEpisodesCount: episodes.length,
+            posterUrl: widget.posterUrl,
+            onTap: () => widget.onEpisodeTap(episode),
+            totalEpisodesCount: widget.episodes.length,
           );
         },
-        childCount: episodes.length,
+        childCount: widget.episodes.length,
         addAutomaticKeepAlives: false,
         addRepaintBoundaries: true,
       ),
