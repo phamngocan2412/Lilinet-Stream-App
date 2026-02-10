@@ -56,7 +56,7 @@ class MovieDetailsHeader extends StatelessWidget {
                   end: Alignment.bottomCenter,
                   colors: [
                     Colors.transparent,
-                    colorScheme.surface.withValues(alpha: 0.5),
+                    colorScheme.surface.withOpacity(0.5),
                     colorScheme.surface,
                   ],
                   stops: const [0.0, 0.6, 1.0],
@@ -80,7 +80,7 @@ class MovieDetailsHeader extends StatelessWidget {
                       shadows: [
                         Shadow(
                           blurRadius: 10.0,
-                          color: colorScheme.surface.withValues(alpha: 0.8),
+                          color: colorScheme.surface.withOpacity(0.8),
                           offset: const Offset(2.0, 2.0),
                         ),
                       ],
@@ -105,7 +105,7 @@ class MovieDetailsHeader extends StatelessWidget {
                                   )
                                       .colorScheme
                                       .onSurface
-                                      .withValues(alpha: 0.7),
+                                      .withOpacity(0.7),
                                 ),
                           ),
                           const SizedBox(width: 12),
@@ -120,7 +120,7 @@ class MovieDetailsHeader extends StatelessWidget {
                                   )
                                       .colorScheme
                                       .onSurface
-                                      .withValues(alpha: 0.3),
+                                      .withOpacity(0.3),
                                 ),
                           ),
                           const SizedBox(width: 12),
@@ -137,7 +137,7 @@ class MovieDetailsHeader extends StatelessWidget {
                                   )
                                       .colorScheme
                                       .onSurface
-                                      .withValues(alpha: 0.7),
+                                      .withOpacity(0.7),
                                 ),
                           ),
                           const SizedBox(width: 12),
@@ -152,7 +152,7 @@ class MovieDetailsHeader extends StatelessWidget {
                                   )
                                       .colorScheme
                                       .onSurface
-                                      .withValues(alpha: 0.3),
+                                      .withOpacity(0.3),
                                 ),
                           ),
                           const SizedBox(width: 12),
