@@ -23,15 +23,18 @@ class EpisodeSliverList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Optimization: Create a map for O(1) access to watch progress
+    final progressMap = {
+      for (final p in watchProgress)
+        if (p.mediaId == mediaId && p.episodeId != null) p.episodeId!: p
+    };
+
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (context, index) {
           final episode = episodes[index];
           final isSelected = episode.id == currentEpisodeId;
-          final progress = watchProgress.firstWhere(
-            (p) => p.episodeId == episode.id && p.mediaId == mediaId,
-            orElse: () => WatchProgress.empty(),
-          );
+          final progress = progressMap[episode.id] ?? WatchProgress.empty();
 
           return EpisodeItem(
             key: ValueKey(episode.id),

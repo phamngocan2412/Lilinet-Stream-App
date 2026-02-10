@@ -87,13 +87,17 @@ class NetworkMonitorService {
       const url =
           'http://www.google.com/generate_204'; // Lightweight URL for testing
 
-      final request = await HttpClient().getUrl(Uri.parse(url));
+      final httpClient = HttpClient();
+      httpClient.connectionTimeout = const Duration(seconds: 5);
+
+      final request = await httpClient.getUrl(Uri.parse(url));
       request.headers.add(
         HttpHeaders.rangeHeader,
         'bytes=0-1023',
       ); // Download only 1KB
 
-      final response = await request.close();
+      final response =
+          await request.close().timeout(const Duration(seconds: 10));
 
       if (response.statusCode == 200 || response.statusCode == 206) {
         final endTime = DateTime.now();

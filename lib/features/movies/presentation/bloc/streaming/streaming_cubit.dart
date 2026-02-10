@@ -13,7 +13,7 @@ import '../../../domain/usecases/get_streaming_links.dart';
 import '../../../domain/usecases/get_available_servers.dart';
 import 'streaming_state.dart';
 
-@lazySingleton
+@injectable
 class StreamingCubit extends Cubit<StreamingState> {
   final GetStreamingLinks _getStreamingLinks;
   final GetAvailableServers _getAvailableServers;

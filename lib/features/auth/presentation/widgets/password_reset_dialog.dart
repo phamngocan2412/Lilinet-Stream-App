@@ -38,6 +38,8 @@ class _PasswordResetDialogState extends State<PasswordResetDialog> {
 
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
+        if (!context.mounted) return;
+
         if (state is PasswordResetEmailSent) {
           Navigator.pop(context);
           ScaffoldMessenger.of(context).showSnackBar(

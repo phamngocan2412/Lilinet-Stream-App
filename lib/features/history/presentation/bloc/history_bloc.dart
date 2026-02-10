@@ -91,6 +91,7 @@ class HistoryCubit extends Cubit<HistoryState> {
           totalTime += item.positionSeconds;
         }
 
+        if (isClosed) return;
         emit(currentState.copyWith(
           history: currentList,
           totalVideos: currentList.length,
@@ -127,6 +128,7 @@ class HistoryCubit extends Cubit<HistoryState> {
           totalTime += item.positionSeconds;
         }
 
+        if (isClosed) return;
         emit(currentState.copyWith(
           history: currentList,
           totalVideos: currentList.length,
@@ -136,6 +138,7 @@ class HistoryCubit extends Cubit<HistoryState> {
         await loadHistory();
       }
     } catch (e) {
+      if (isClosed) return;
       emit(HistoryError(message: e.toString()));
     }
   }

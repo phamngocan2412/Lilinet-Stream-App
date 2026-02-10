@@ -41,6 +41,7 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
     on<DownloadCurrentVideo>(_onDownloadCurrentVideo);
     on<SwitchServer>(_onSwitchServer);
     on<RetryStreaming>(_onRetryStreaming);
+    on<UpdateMovieDetails>(_onUpdateMovieDetails);
     on<SwitchQuality>(_onSwitchQuality);
   }
 
@@ -104,7 +105,7 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
         server: tryServer,
       );
 
-      result.fold(
+      await result.fold(
         (failure) async {
           debugPrint('❌ Server $tryServer failed: ${failure.message}');
           if (tryServer == servers.last) {
@@ -120,7 +121,7 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
 
           if (isClosed) return;
 
-          _loadAvailableServers(emit, episodeId, mediaId, provider);
+          await _loadAvailableServers(emit, episodeId, mediaId, provider);
 
           final selectedLink = response.links.firstOrNull;
           if (selectedLink != null) {
@@ -190,10 +191,11 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
         provider: provider,
       );
 
-      result.fold(
-        (failure) =>
-            debugPrint('⚠️ Failed to load servers: ${failure.message}'),
-        (servers) {
+      await result.fold(
+        (failure) async {
+          debugPrint('⚠️ Failed to load servers: ${failure.message}');
+        },
+        (servers) async {
           emit(state.copyWith(availableServers: servers));
           debugPrint('📡 Available servers: $servers');
         },
@@ -254,6 +256,16 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
       mediaId: state.mediaId!,
       provider: provider,
     );
+  }
+
+  Future<void> _onUpdateMovieDetails(
+    UpdateMovieDetails event,
+    Emitter<VideoPlayerState> emit,
+  ) async {
+    debugPrint(
+        '📥 VideoPlayerBloc: Updating movie details for ${event.movie.title}');
+    // Only update movie data without triggering playback reset
+    emit(state.copyWith(movie: event.movie));
   }
 
   Future<void> _onSwitchQuality(
@@ -347,11 +359,17 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
   }
 
   void _onMinimizeVideo(MinimizeVideo event, Emitter<VideoPlayerState> emit) {
-    emit(state.copyWith(status: VideoPlayerStatus.minimized));
+    // Debounce rapid minimize/maximize transitions
+    if (state.status != VideoPlayerStatus.minimized) {
+      emit(state.copyWith(status: VideoPlayerStatus.minimized));
+    }
   }
 
   void _onMaximizeVideo(MaximizeVideo event, Emitter<VideoPlayerState> emit) {
-    emit(state.copyWith(status: VideoPlayerStatus.expanded));
+    // Debounce rapid minimize/maximize transitions
+    if (state.status != VideoPlayerStatus.expanded) {
+      emit(state.copyWith(status: VideoPlayerStatus.expanded));
+    }
   }
 
   Future<void> _onEnterPiP(

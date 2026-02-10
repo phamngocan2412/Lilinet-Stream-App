@@ -1,5 +1,5 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,58 +9,32 @@ part of 'episode.dart';
 // FreezedGenerator
 // **************************************************************************
 
-// dart format off
 T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$Episode {
-  String get id;
-  String get title;
-  String? get description;
-  int get number;
-  int? get season;
-  String? get image;
-  String? get url;
-  DateTime? get releaseDate;
+  String get id => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
+  int get number => throw _privateConstructorUsedError;
+  int? get season => throw _privateConstructorUsedError;
+  String? get image => throw _privateConstructorUsedError;
+  String? get url => throw _privateConstructorUsedError;
+  DateTime? get releaseDate => throw _privateConstructorUsedError;
 
   /// Create a copy of Episode
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  $EpisodeCopyWith<Episode> get copyWith =>
-      _$EpisodeCopyWithImpl<Episode>(this as Episode, _$identity);
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is Episode &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.title, title) || other.title == title) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
-            (identical(other.number, number) || other.number == number) &&
-            (identical(other.season, season) || other.season == season) &&
-            (identical(other.image, image) || other.image == image) &&
-            (identical(other.url, url) || other.url == url) &&
-            (identical(other.releaseDate, releaseDate) ||
-                other.releaseDate == releaseDate));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, id, title, description, number,
-      season, image, url, releaseDate);
-
-  @override
-  String toString() {
-    return 'Episode(id: $id, title: $title, description: $description, number: $number, season: $season, image: $image, url: $url, releaseDate: $releaseDate)';
-  }
+  $EpisodeCopyWith<Episode> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract mixin class $EpisodeCopyWith<$Res> {
-  factory $EpisodeCopyWith(Episode value, $Res Function(Episode) _then) =
-      _$EpisodeCopyWithImpl;
+abstract class $EpisodeCopyWith<$Res> {
+  factory $EpisodeCopyWith(Episode value, $Res Function(Episode) then) =
+      _$EpisodeCopyWithImpl<$Res, Episode>;
   @useResult
   $Res call(
       {String id,
@@ -74,11 +48,14 @@ abstract mixin class $EpisodeCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$EpisodeCopyWithImpl<$Res> implements $EpisodeCopyWith<$Res> {
-  _$EpisodeCopyWithImpl(this._self, this._then);
+class _$EpisodeCopyWithImpl<$Res, $Val extends Episode>
+    implements $EpisodeCopyWith<$Res> {
+  _$EpisodeCopyWithImpl(this._value, this._then);
 
-  final Episode _self;
-  final $Res Function(Episode) _then;
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
   /// Create a copy of Episode
   /// with the given fields replaced by the non-null parameter values.
@@ -94,213 +71,124 @@ class _$EpisodeCopyWithImpl<$Res> implements $EpisodeCopyWith<$Res> {
     Object? url = freezed,
     Object? releaseDate = freezed,
   }) {
-    return _then(_self.copyWith(
+    return _then(_value.copyWith(
       id: null == id
-          ? _self.id
+          ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
       title: null == title
-          ? _self.title
+          ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
       description: freezed == description
-          ? _self.description
+          ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
       number: null == number
-          ? _self.number
+          ? _value.number
           : number // ignore: cast_nullable_to_non_nullable
               as int,
       season: freezed == season
-          ? _self.season
+          ? _value.season
           : season // ignore: cast_nullable_to_non_nullable
               as int?,
       image: freezed == image
-          ? _self.image
+          ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String?,
       url: freezed == url
-          ? _self.url
+          ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String?,
       releaseDate: freezed == releaseDate
-          ? _self.releaseDate
+          ? _value.releaseDate
+          : releaseDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$EpisodeImplCopyWith<$Res> implements $EpisodeCopyWith<$Res> {
+  factory _$$EpisodeImplCopyWith(
+          _$EpisodeImpl value, $Res Function(_$EpisodeImpl) then) =
+      __$$EpisodeImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      String title,
+      String? description,
+      int number,
+      int? season,
+      String? image,
+      String? url,
+      DateTime? releaseDate});
+}
+
+/// @nodoc
+class __$$EpisodeImplCopyWithImpl<$Res>
+    extends _$EpisodeCopyWithImpl<$Res, _$EpisodeImpl>
+    implements _$$EpisodeImplCopyWith<$Res> {
+  __$$EpisodeImplCopyWithImpl(
+      _$EpisodeImpl _value, $Res Function(_$EpisodeImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of Episode
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? title = null,
+    Object? description = freezed,
+    Object? number = null,
+    Object? season = freezed,
+    Object? image = freezed,
+    Object? url = freezed,
+    Object? releaseDate = freezed,
+  }) {
+    return _then(_$EpisodeImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      number: null == number
+          ? _value.number
+          : number // ignore: cast_nullable_to_non_nullable
+              as int,
+      season: freezed == season
+          ? _value.season
+          : season // ignore: cast_nullable_to_non_nullable
+              as int?,
+      image: freezed == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as String?,
+      url: freezed == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String?,
+      releaseDate: freezed == releaseDate
+          ? _value.releaseDate
           : releaseDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
     ));
   }
 }
 
-/// Adds pattern-matching-related methods to [Episode].
-extension EpisodePatterns on Episode {
-  /// A variant of `map` that fallback to returning `orElse`.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case _:
-  ///     return orElse();
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>(
-    TResult Function(_Episode value)? $default, {
-    required TResult orElse(),
-  }) {
-    final _that = this;
-    switch (_that) {
-      case _Episode() when $default != null:
-        return $default(_that);
-      case _:
-        return orElse();
-    }
-  }
-
-  /// A `switch`-like method, using callbacks.
-  ///
-  /// Callbacks receives the raw object, upcasted.
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case final Subclass2 value:
-  ///     return ...;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>(
-    TResult Function(_Episode value) $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _Episode():
-        return $default(_that);
-      case _:
-        throw StateError('Unexpected subclass');
-    }
-  }
-
-  /// A variant of `map` that fallback to returning `null`.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case _:
-  ///     return null;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>(
-    TResult? Function(_Episode value)? $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _Episode() when $default != null:
-        return $default(_that);
-      case _:
-        return null;
-    }
-  }
-
-  /// A variant of `when` that fallback to an `orElse` callback.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case _:
-  ///     return orElse();
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>(
-    TResult Function(String id, String title, String? description, int number,
-            int? season, String? image, String? url, DateTime? releaseDate)?
-        $default, {
-    required TResult orElse(),
-  }) {
-    final _that = this;
-    switch (_that) {
-      case _Episode() when $default != null:
-        return $default(_that.id, _that.title, _that.description, _that.number,
-            _that.season, _that.image, _that.url, _that.releaseDate);
-      case _:
-        return orElse();
-    }
-  }
-
-  /// A `switch`-like method, using callbacks.
-  ///
-  /// As opposed to `map`, this offers destructuring.
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case Subclass2(:final field2):
-  ///     return ...;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>(
-    TResult Function(String id, String title, String? description, int number,
-            int? season, String? image, String? url, DateTime? releaseDate)
-        $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _Episode():
-        return $default(_that.id, _that.title, _that.description, _that.number,
-            _that.season, _that.image, _that.url, _that.releaseDate);
-      case _:
-        throw StateError('Unexpected subclass');
-    }
-  }
-
-  /// A variant of `when` that fallback to returning `null`
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case _:
-  ///     return null;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(String id, String title, String? description, int number,
-            int? season, String? image, String? url, DateTime? releaseDate)?
-        $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _Episode() when $default != null:
-        return $default(_that.id, _that.title, _that.description, _that.number,
-            _that.season, _that.image, _that.url, _that.releaseDate);
-      case _:
-        return null;
-    }
-  }
-}
-
 /// @nodoc
 
-class _Episode implements Episode {
-  const _Episode(
+class _$EpisodeImpl implements _Episode {
+  const _$EpisodeImpl(
       {required this.id,
       required this.title,
       this.description,
@@ -327,19 +215,16 @@ class _Episode implements Episode {
   @override
   final DateTime? releaseDate;
 
-  /// Create a copy of Episode
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  _$EpisodeCopyWith<_Episode> get copyWith =>
-      __$EpisodeCopyWithImpl<_Episode>(this, _$identity);
+  String toString() {
+    return 'Episode(id: $id, title: $title, description: $description, number: $number, season: $season, image: $image, url: $url, releaseDate: $releaseDate)';
+  }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Episode &&
+            other is _$EpisodeImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
@@ -356,85 +241,47 @@ class _Episode implements Episode {
   int get hashCode => Object.hash(runtimeType, id, title, description, number,
       season, image, url, releaseDate);
 
+  /// Create a copy of Episode
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  String toString() {
-    return 'Episode(id: $id, title: $title, description: $description, number: $number, season: $season, image: $image, url: $url, releaseDate: $releaseDate)';
-  }
+  @pragma('vm:prefer-inline')
+  _$$EpisodeImplCopyWith<_$EpisodeImpl> get copyWith =>
+      __$$EpisodeImplCopyWithImpl<_$EpisodeImpl>(this, _$identity);
 }
 
-/// @nodoc
-abstract mixin class _$EpisodeCopyWith<$Res> implements $EpisodeCopyWith<$Res> {
-  factory _$EpisodeCopyWith(_Episode value, $Res Function(_Episode) _then) =
-      __$EpisodeCopyWithImpl;
+abstract class _Episode implements Episode {
+  const factory _Episode(
+      {required final String id,
+      required final String title,
+      final String? description,
+      required final int number,
+      final int? season,
+      final String? image,
+      final String? url,
+      final DateTime? releaseDate}) = _$EpisodeImpl;
+
   @override
-  @useResult
-  $Res call(
-      {String id,
-      String title,
-      String? description,
-      int number,
-      int? season,
-      String? image,
-      String? url,
-      DateTime? releaseDate});
-}
-
-/// @nodoc
-class __$EpisodeCopyWithImpl<$Res> implements _$EpisodeCopyWith<$Res> {
-  __$EpisodeCopyWithImpl(this._self, this._then);
-
-  final _Episode _self;
-  final $Res Function(_Episode) _then;
+  String get id;
+  @override
+  String get title;
+  @override
+  String? get description;
+  @override
+  int get number;
+  @override
+  int? get season;
+  @override
+  String? get image;
+  @override
+  String? get url;
+  @override
+  DateTime? get releaseDate;
 
   /// Create a copy of Episode
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? id = null,
-    Object? title = null,
-    Object? description = freezed,
-    Object? number = null,
-    Object? season = freezed,
-    Object? image = freezed,
-    Object? url = freezed,
-    Object? releaseDate = freezed,
-  }) {
-    return _then(_Episode(
-      id: null == id
-          ? _self.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      title: null == title
-          ? _self.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: freezed == description
-          ? _self.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      number: null == number
-          ? _self.number
-          : number // ignore: cast_nullable_to_non_nullable
-              as int,
-      season: freezed == season
-          ? _self.season
-          : season // ignore: cast_nullable_to_non_nullable
-              as int?,
-      image: freezed == image
-          ? _self.image
-          : image // ignore: cast_nullable_to_non_nullable
-              as String?,
-      url: freezed == url
-          ? _self.url
-          : url // ignore: cast_nullable_to_non_nullable
-              as String?,
-      releaseDate: freezed == releaseDate
-          ? _self.releaseDate
-          : releaseDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-    ));
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$EpisodeImplCopyWith<_$EpisodeImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
-
-// dart format on

@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/widgets/cached_image.dart';
 import '../../../movies/domain/entities/movie.dart';
 
-class PlayerRecommendationsSection extends StatelessWidget {
+class PlayerRecommendationsSection extends StatefulWidget {
   final List<Movie> recommendations;
 
   const PlayerRecommendationsSection({
@@ -12,7 +12,21 @@ class PlayerRecommendationsSection extends StatelessWidget {
   });
 
   @override
+  State<PlayerRecommendationsSection> createState() =>
+      _PlayerRecommendationsSectionState();
+}
+
+class _PlayerRecommendationsSectionState
+    extends State<PlayerRecommendationsSection>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context); // Required for AutomaticKeepAliveClientMixin
+    final recommendations = widget.recommendations;
+
     if (recommendations.isEmpty) return const SizedBox.shrink();
 
     // Calculate optimal cache width for performance

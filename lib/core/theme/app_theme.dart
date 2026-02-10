@@ -35,11 +35,24 @@ class AppTheme {
         ),
       ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-        backgroundColor: AppColors.darkBackground, // Black nav bar
-        selectedItemColor: AppColors.netflixRed, // Red active item
-        unselectedItemColor: AppColors.darkTextTertiary,
+        backgroundColor: AppColors.lightSurface,
+        selectedItemColor: AppColors.brandPrimary,
+        unselectedItemColor: AppColors.lightTextTertiary,
         type: BottomNavigationBarType.fixed,
         elevation: 0,
+      ),
+      navigationBarTheme: NavigationBarThemeData(
+        backgroundColor: AppColors.lightSurface,
+        indicatorColor: AppColors.brandPrimary.withValues(alpha: 0.2),
+        labelTextStyle: MaterialStateProperty.all(
+          const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+        ),
+        iconTheme: MaterialStateProperty.resolveWith((states) {
+          if (states.contains(MaterialState.selected)) {
+            return const IconThemeData(color: AppColors.brandPrimary);
+          }
+          return const IconThemeData(color: AppColors.lightTextTertiary);
+        }),
       ),
       cardTheme: CardThemeData(
         color: AppColors.lightSurface,
@@ -87,7 +100,7 @@ class AppTheme {
         textColor: AppColors.lightTextPrimary,
         contentPadding: EdgeInsets.symmetric(horizontal: 16),
       ),
-      dialogTheme: const DialogThemeData(
+      dialogTheme: const DialogTheme(
         shape: RoundedRectangleBorder(
           borderRadius:
               BorderRadius.all(Radius.circular(AppBorderRadius.xlarge)),
@@ -157,7 +170,7 @@ class AppTheme {
           return const IconThemeData(color: AppColors.darkTextTertiary);
         }),
       ),
-      cardTheme: CardThemeData(
+      cardTheme: CardTheme(
         color: AppColors.darkSurface,
         elevation: 0,
         shape: RoundedRectangleBorder(
@@ -203,7 +216,7 @@ class AppTheme {
           elevation: 0,
         ),
       ),
-      dialogTheme: const DialogThemeData(
+      dialogTheme: const DialogTheme(
         shape: RoundedRectangleBorder(
           borderRadius:
               BorderRadius.all(Radius.circular(AppBorderRadius.xlarge)),

@@ -4,7 +4,7 @@ import 'package:lilinet_app/l10n/app_localizations.dart';
 class CommentInput extends StatefulWidget {
   final ValueChanged<String> onSend;
   final bool isSending;
-  final String? userAvatar;
+  final String? userName;
   final bool isLoggedIn;
 
   const CommentInput({
@@ -12,7 +12,7 @@ class CommentInput extends StatefulWidget {
     required this.onSend,
     required this.isLoggedIn,
     this.isSending = false,
-    this.userAvatar,
+    this.userName,
   });
 
   @override
@@ -39,14 +39,28 @@ class _CommentInputState extends State<CommentInput> {
     super.dispose();
   }
 
+  String get _hintText {
+    if (!widget.isLoggedIn) {
+      return AppLocalizations.of(context)!.loginToComment;
+    }
+    final name =
+        widget.userName?.isNotEmpty == true ? widget.userName! : 'Anonymous';
+    return 'Bình luận dưới tên $name';
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
+    // Use MediaQuery.viewInsetsOf to only rebuild when insets actually change
+    final bottomInset = MediaQuery.viewInsetsOf(context).bottom;
+
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 100),
+      curve: Curves.easeOut,
       padding: EdgeInsets.only(
         left: 16,
         right: 16,
         top: 12,
-        bottom: 12 + MediaQuery.of(context).viewInsets.bottom,
+        bottom: 12 + bottomInset,
       ),
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
@@ -59,16 +73,6 @@ class _CommentInputState extends State<CommentInput> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          CircleAvatar(
-            radius: 16,
-            backgroundImage: widget.userAvatar != null
-                ? NetworkImage(widget.userAvatar!)
-                : null,
-            child: widget.userAvatar == null
-                ? const Icon(Icons.person, size: 20)
-                : null,
-          ),
-          const SizedBox(width: 12),
           Expanded(
             child: widget.isLoggedIn
                 ? TextField(
@@ -76,7 +80,7 @@ class _CommentInputState extends State<CommentInput> {
                     maxLines: null,
                     maxLength: 1000,
                     decoration: InputDecoration(
-                      hintText: AppLocalizations.of(context)!.addCommentHint,
+                      hintText: _hintText,
                       border: InputBorder.none,
                       isDense: true,
                       contentPadding: const EdgeInsets.symmetric(vertical: 8),
@@ -97,7 +101,7 @@ class _CommentInputState extends State<CommentInput> {
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       child: Text(
-                        AppLocalizations.of(context)!.loginToComment,
+                        _hintText,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                               color: Theme.of(context).disabledColor,
                             ),

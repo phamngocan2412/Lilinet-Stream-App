@@ -10,6 +10,7 @@ class AppCachedImage extends StatelessWidget {
   final double? borderRadius;
   final int? memCacheWidth;
   final int? memCacheHeight;
+  final Widget? placeholder;
 
   const AppCachedImage({
     super.key,
@@ -20,6 +21,7 @@ class AppCachedImage extends StatelessWidget {
     this.borderRadius,
     this.memCacheWidth,
     this.memCacheHeight,
+    this.placeholder,
   });
 
   @override
@@ -121,12 +123,16 @@ class AppCachedImage extends StatelessWidget {
       memCacheHeight: optimalMemCacheHeight,
       maxWidthDiskCache: 800, // Limit disk cache size
       maxHeightDiskCache: 1200,
-      placeholder: (context, url) => Container(
-        color: Colors.grey[850],
-        child: const Center(
-          child: LoadingIndicator(size: 30),
-        ),
-      ),
+      placeholder: (context, url) =>
+          placeholder ??
+          Container(
+            color: Colors.grey[850],
+            child: Center(
+              child: LoadingIndicator(
+                size: width != null && width! < 50 ? 15 : 30,
+              ),
+            ),
+          ),
       errorWidget: (context, url, error) => Container(
         width: width,
         height: height,

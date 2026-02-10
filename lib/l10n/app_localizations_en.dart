@@ -442,4 +442,60 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get quality => 'Quality';
+
+  @override
+  String get noInternetConnection => 'No Internet Connection';
+
+  @override
+  String get searchHint => 'Search anime...';
+
+  @override
+  String get searchForAnime => 'Search for anime';
+
+  @override
+  String noResultsFound(String filter, String query) {
+    return 'No $filter results found for \"$query\"';
+  }
+
+  @override
+  String get filterAll => 'All';
+
+  @override
+  String get filterTVSeries => 'TV Series';
+
+  @override
+  String get filterMovie => 'Movie';
+
+  @override
+  String get changePassword => 'Change Password';
+
+  @override
+  String get newPassword => 'New Password';
+
+  @override
+  String get confirmPassword => 'Confirm Password';
+
+  @override
+  String get passwordsDoNotMatch => 'Passwords do not match';
+
+  @override
+  String get passwordChangeSuccess => 'Password changed successfully';
+
+  @override
+  String get update => 'Update';
+
+  @override
+  String get updateProfile => 'Update Profile';
+
+  @override
+  String get displayName => 'Display Name';
+
+  @override
+  String get avatarUrl => 'Avatar URL';
+
+  @override
+  String get profileUpdateSuccess => 'Profile updated successfully';
+
+  @override
+  String get save => 'Save';
 }
