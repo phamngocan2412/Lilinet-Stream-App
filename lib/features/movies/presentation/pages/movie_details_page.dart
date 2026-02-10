@@ -86,6 +86,7 @@ class MovieDetailsView extends StatefulWidget {
 class _MovieDetailsViewState extends State<MovieDetailsView> {
   // bool _showRecommendations = false;
   final _playDebouncer = Debouncer(milliseconds: 500);
+  bool _hasPrecachedImage = false;
 
   Duration? _getStartPosition(BuildContext context, String episodeId) {
     final state = context.read<HistoryBloc>().state;
@@ -129,11 +130,14 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
   }
 
   void _precacheMovieImage() {
+    if (_hasPrecachedImage) return;
+
     final movie = widget.moviePreview;
     if (movie != null) {
       final imageUrl = movie.poster ?? movie.cover;
       if (imageUrl != null && imageUrl.isNotEmpty) {
         precacheImage(CachedNetworkImageProvider(imageUrl), context);
+        _hasPrecachedImage = true;
       }
     }
   }
@@ -326,7 +330,7 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
                               style: TextStyle(
                                 fontSize: 14,
                                 color: colorScheme.onSurface
-                                    .withOpacity(0.6),
+                                    .withValues(alpha: 0.6),
                               ),
                             ),
                           ],

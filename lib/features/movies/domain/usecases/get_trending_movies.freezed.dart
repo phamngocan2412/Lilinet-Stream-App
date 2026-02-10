@@ -1,5 +1,5 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,56 +9,41 @@ part of 'get_trending_movies.dart';
 // FreezedGenerator
 // **************************************************************************
 
-// dart format off
 T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$TrendingParams {
-  String get type;
-  int get page;
+  String get type => throw _privateConstructorUsedError;
+  int get page => throw _privateConstructorUsedError;
 
   /// Create a copy of TrendingParams
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
   $TrendingParamsCopyWith<TrendingParams> get copyWith =>
-      _$TrendingParamsCopyWithImpl<TrendingParams>(
-          this as TrendingParams, _$identity);
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is TrendingParams &&
-            (identical(other.type, type) || other.type == type) &&
-            (identical(other.page, page) || other.page == page));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, type, page);
-
-  @override
-  String toString() {
-    return 'TrendingParams(type: $type, page: $page)';
-  }
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract mixin class $TrendingParamsCopyWith<$Res> {
+abstract class $TrendingParamsCopyWith<$Res> {
   factory $TrendingParamsCopyWith(
-          TrendingParams value, $Res Function(TrendingParams) _then) =
-      _$TrendingParamsCopyWithImpl;
+          TrendingParams value, $Res Function(TrendingParams) then) =
+      _$TrendingParamsCopyWithImpl<$Res, TrendingParams>;
   @useResult
   $Res call({String type, int page});
 }
 
 /// @nodoc
-class _$TrendingParamsCopyWithImpl<$Res>
+class _$TrendingParamsCopyWithImpl<$Res, $Val extends TrendingParams>
     implements $TrendingParamsCopyWith<$Res> {
-  _$TrendingParamsCopyWithImpl(this._self, this._then);
+  _$TrendingParamsCopyWithImpl(this._value, this._then);
 
-  final TrendingParams _self;
-  final $Res Function(TrendingParams) _then;
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
   /// Create a copy of TrendingParams
   /// with the given fields replaced by the non-null parameter values.
@@ -68,180 +53,63 @@ class _$TrendingParamsCopyWithImpl<$Res>
     Object? type = null,
     Object? page = null,
   }) {
-    return _then(_self.copyWith(
+    return _then(_value.copyWith(
       type: null == type
-          ? _self.type
+          ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
       page: null == page
-          ? _self.page
+          ? _value.page
+          : page // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$TrendingParamsImplCopyWith<$Res>
+    implements $TrendingParamsCopyWith<$Res> {
+  factory _$$TrendingParamsImplCopyWith(_$TrendingParamsImpl value,
+          $Res Function(_$TrendingParamsImpl) then) =
+      __$$TrendingParamsImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String type, int page});
+}
+
+/// @nodoc
+class __$$TrendingParamsImplCopyWithImpl<$Res>
+    extends _$TrendingParamsCopyWithImpl<$Res, _$TrendingParamsImpl>
+    implements _$$TrendingParamsImplCopyWith<$Res> {
+  __$$TrendingParamsImplCopyWithImpl(
+      _$TrendingParamsImpl _value, $Res Function(_$TrendingParamsImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of TrendingParams
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? type = null,
+    Object? page = null,
+  }) {
+    return _then(_$TrendingParamsImpl(
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      page: null == page
+          ? _value.page
           : page // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
 }
 
-/// Adds pattern-matching-related methods to [TrendingParams].
-extension TrendingParamsPatterns on TrendingParams {
-  /// A variant of `map` that fallback to returning `orElse`.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case _:
-  ///     return orElse();
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>(
-    TResult Function(_TrendingParams value)? $default, {
-    required TResult orElse(),
-  }) {
-    final _that = this;
-    switch (_that) {
-      case _TrendingParams() when $default != null:
-        return $default(_that);
-      case _:
-        return orElse();
-    }
-  }
-
-  /// A `switch`-like method, using callbacks.
-  ///
-  /// Callbacks receives the raw object, upcasted.
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case final Subclass2 value:
-  ///     return ...;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>(
-    TResult Function(_TrendingParams value) $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _TrendingParams():
-        return $default(_that);
-      case _:
-        throw StateError('Unexpected subclass');
-    }
-  }
-
-  /// A variant of `map` that fallback to returning `null`.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case _:
-  ///     return null;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>(
-    TResult? Function(_TrendingParams value)? $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _TrendingParams() when $default != null:
-        return $default(_that);
-      case _:
-        return null;
-    }
-  }
-
-  /// A variant of `when` that fallback to an `orElse` callback.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case _:
-  ///     return orElse();
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>(
-    TResult Function(String type, int page)? $default, {
-    required TResult orElse(),
-  }) {
-    final _that = this;
-    switch (_that) {
-      case _TrendingParams() when $default != null:
-        return $default(_that.type, _that.page);
-      case _:
-        return orElse();
-    }
-  }
-
-  /// A `switch`-like method, using callbacks.
-  ///
-  /// As opposed to `map`, this offers destructuring.
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case Subclass2(:final field2):
-  ///     return ...;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>(
-    TResult Function(String type, int page) $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _TrendingParams():
-        return $default(_that.type, _that.page);
-      case _:
-        throw StateError('Unexpected subclass');
-    }
-  }
-
-  /// A variant of `when` that fallback to returning `null`
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case _:
-  ///     return null;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(String type, int page)? $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _TrendingParams() when $default != null:
-        return $default(_that.type, _that.page);
-      case _:
-        return null;
-    }
-  }
-}
-
 /// @nodoc
 
-class _TrendingParams implements TrendingParams {
-  const _TrendingParams({this.type = 'all', this.page = 1});
+class _$TrendingParamsImpl implements _TrendingParams {
+  const _$TrendingParamsImpl({this.type = 'all', this.page = 1});
 
   @override
   @JsonKey()
@@ -250,19 +118,16 @@ class _TrendingParams implements TrendingParams {
   @JsonKey()
   final int page;
 
-  /// Create a copy of TrendingParams
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  _$TrendingParamsCopyWith<_TrendingParams> get copyWith =>
-      __$TrendingParamsCopyWithImpl<_TrendingParams>(this, _$identity);
+  String toString() {
+    return 'TrendingParams(type: $type, page: $page)';
+  }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _TrendingParams &&
+            other is _$TrendingParamsImpl &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.page, page) || other.page == page));
   }
@@ -270,50 +135,29 @@ class _TrendingParams implements TrendingParams {
   @override
   int get hashCode => Object.hash(runtimeType, type, page);
 
+  /// Create a copy of TrendingParams
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  String toString() {
-    return 'TrendingParams(type: $type, page: $page)';
-  }
+  @pragma('vm:prefer-inline')
+  _$$TrendingParamsImplCopyWith<_$TrendingParamsImpl> get copyWith =>
+      __$$TrendingParamsImplCopyWithImpl<_$TrendingParamsImpl>(
+          this, _$identity);
 }
 
-/// @nodoc
-abstract mixin class _$TrendingParamsCopyWith<$Res>
-    implements $TrendingParamsCopyWith<$Res> {
-  factory _$TrendingParamsCopyWith(
-          _TrendingParams value, $Res Function(_TrendingParams) _then) =
-      __$TrendingParamsCopyWithImpl;
+abstract class _TrendingParams implements TrendingParams {
+  const factory _TrendingParams({final String type, final int page}) =
+      _$TrendingParamsImpl;
+
   @override
-  @useResult
-  $Res call({String type, int page});
-}
-
-/// @nodoc
-class __$TrendingParamsCopyWithImpl<$Res>
-    implements _$TrendingParamsCopyWith<$Res> {
-  __$TrendingParamsCopyWithImpl(this._self, this._then);
-
-  final _TrendingParams _self;
-  final $Res Function(_TrendingParams) _then;
+  String get type;
+  @override
+  int get page;
 
   /// Create a copy of TrendingParams
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? type = null,
-    Object? page = null,
-  }) {
-    return _then(_TrendingParams(
-      type: null == type
-          ? _self.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String,
-      page: null == page
-          ? _self.page
-          : page // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$TrendingParamsImplCopyWith<_$TrendingParamsImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
-
-// dart format on

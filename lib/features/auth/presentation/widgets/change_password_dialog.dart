@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lilinet_app/l10n/app_localizations.dart';
 import '../bloc/auth_bloc.dart';
 import '../bloc/auth_event.dart';
 import '../../../../core/widgets/loading_indicator.dart';
@@ -32,125 +33,136 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
     super.dispose();
   }
 
+  void _handleSubmit() {
+    if (_formKey.currentState!.validate()) {
+      context.read<AuthBloc>().add(
+            ChangePasswordRequested(
+              newPassword: _passwordController.text.trim(),
+            ),
+          );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthBloc, AuthState>(
+    final l10n = AppLocalizations.of(context)!;
+
+    return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
-        // If we are authenticated (re-emitted after change) or just check for error
+        if (!context.mounted) return;
+
         if (state is Authenticated) {
-          // Ideally we check if it was triggered by change password, but for simplicity
-          // we can assume success if no error is thrown immediately.
-          // However, AuthBloc re-emits Authenticated on success.
-          // A cleaner way is to pop on button press after await, but logic is in Bloc.
-          // Let's rely on user manually closing or using a success message.
-          // Since Bloc re-emits Authenticated, this listener triggers.
-          // We need to differentiate "Logged in" vs "Password Changed".
-          // For now, we'll just show a snackbar if the dialog is open.
+          // Password change successful - close dialog and show success
+          Navigator.pop(context);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(l10n.passwordChangeSuccess),
+              backgroundColor: Colors.green,
+            ),
+          );
         } else if (state is AuthError) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message), backgroundColor: Colors.red),
+            SnackBar(
+              content: Text(state.message),
+              backgroundColor: Colors.red,
+            ),
           );
         }
       },
-      child: Dialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text(
-                  'Change Password',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 24),
-                TextFormField(
-                  controller: _passwordController,
-                  obscureText: _obscurePassword,
-                  decoration: InputDecoration(
-                    labelText: 'New Password',
-                    border: const OutlineInputBorder(),
-                    prefixIcon: const Icon(Icons.lock),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _obscurePassword
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                      ),
-                      onPressed: () {
-                        setState(() => _obscurePassword = !_obscurePassword);
-                      },
+      builder: (context, state) {
+        final isLoading = state is AuthLoading;
+
+        return Dialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    l10n.changePassword,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  validator: (value) {
-                    if (value == null || value.length < 6) {
-                      return 'Password must be at least 6 characters';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: _confirmController,
-                  obscureText: _obscurePassword,
-                  decoration: const InputDecoration(
-                    labelText: 'Confirm Password',
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.lock_clock),
-                  ),
-                  validator: (value) {
-                    if (value != _passwordController.text) {
-                      return 'Passwords do not match';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 24),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: const Text('Cancel'),
-                    ),
-                    const SizedBox(width: 8),
-                    BlocBuilder<AuthBloc, AuthState>(
-                      builder: (context, state) {
-                        if (state is AuthLoading) {
-                          return const LoadingIndicator(size: 20);
-                        }
-                        return FilledButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              context.read<AuthBloc>().add(
-                                    ChangePasswordRequested(
-                                      newPassword:
-                                          _passwordController.text.trim(),
-                                    ),
+                  const SizedBox(height: 24),
+                  TextFormField(
+                    controller: _passwordController,
+                    obscureText: _obscurePassword,
+                    enabled: !isLoading,
+                    decoration: InputDecoration(
+                      labelText: l10n.newPassword,
+                      border: const OutlineInputBorder(),
+                      prefixIcon: const Icon(Icons.lock),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _obscurePassword
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                        ),
+                        onPressed: isLoading
+                            ? null
+                            : () {
+                                if (mounted) {
+                                  setState(
+                                    () => _obscurePassword = !_obscurePassword,
                                   );
-                              Navigator.pop(context);
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content:
-                                      Text('Password changed successfully'),
-                                  backgroundColor: Colors.green,
-                                ),
-                              );
-                            }
-                          },
-                          child: const Text('Update'),
-                        );
-                      },
+                                }
+                              },
+                      ),
                     ),
-                  ],
-                ),
-              ],
+                    validator: (value) {
+                      if (value == null || value.length < 6) {
+                        return l10n.passwordMinLength;
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  TextFormField(
+                    controller: _confirmController,
+                    obscureText: _obscurePassword,
+                    enabled: !isLoading,
+                    decoration: InputDecoration(
+                      labelText: l10n.confirmPassword,
+                      border: const OutlineInputBorder(),
+                      prefixIcon: const Icon(Icons.lock_clock),
+                    ),
+                    validator: (value) {
+                      if (value != _passwordController.text) {
+                        return l10n.passwordsDoNotMatch;
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 24),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed:
+                            isLoading ? null : () => Navigator.pop(context),
+                        child: Text(l10n.cancel),
+                      ),
+                      const SizedBox(width: 8),
+                      FilledButton(
+                        onPressed: isLoading ? null : _handleSubmit,
+                        child: isLoading
+                            ? const LoadingIndicator(size: 20)
+                            : Text(l10n.update),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

@@ -39,38 +39,61 @@ class ExpandedPlayerContent extends StatelessWidget {
             );
 
             if (constraints.maxHeight < 400) {
-              return SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: contentChildren,
+              return GestureDetector(
+                // FIX: Absorb tap gestures in content area to prevent miniplayer
+                // from minimizing when tapping on empty spaces in the content
+                behavior: HitTestBehavior.opaque,
+                onTap: () {
+                  // Empty onTap to absorb the gesture without any action
+                },
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: contentChildren,
+                  ),
                 ),
               );
             }
 
-            return Column(
-              children: [
-                Expanded(
-                  child: ListView(
-                    padding: const EdgeInsets.all(16),
-                    children: [
-                      ...contentChildren,
-                      const SizedBox(height: 24),
-                      if (state.movie?.recommendations != null &&
-                          state.movie!.recommendations!.isNotEmpty) ...[
-                        PlayerRecommendationsSection(
-                          recommendations: state.movie!.recommendations!,
-                        ),
+            return GestureDetector(
+              // FIX: Absorb tap gestures in content area to prevent miniplayer
+              // from minimizing when tapping on empty spaces in the content
+              behavior: HitTestBehavior.opaque,
+              onTap: () {
+                // Empty onTap to absorb the gesture without any action
+                // This prevents the gesture from propagating to miniplayer
+              },
+              child: Column(
+                children: [
+                  Expanded(
+                    child: ListView(
+                      padding: const EdgeInsets.all(16),
+                      children: [
+                        ...contentChildren,
                         const SizedBox(height: 24),
+                        if (state.mediaId != null)
+                          PlayerCommentsSection(
+                            mediaId: state.mediaId!,
+                          ),
+                        if (state.mediaId == null)
+                          const Text(
+                            'Comments will appear once the video loads.',
+                            style: TextStyle(color: Colors.white54),
+                          ),
+                        if (state.mediaId != null) const SizedBox(height: 24),
+                        if (state.movie?.recommendations != null &&
+                            state.movie!.recommendations!.isNotEmpty) ...[
+                          PlayerRecommendationsSection(
+                            recommendations: state.movie!.recommendations!,
+                          ),
+                          const SizedBox(height: 16),
+                        ],
                       ],
-                      PlayerCommentsSection(
-                        mediaId: state.mediaId ?? 'unknown',
-                      ),
-                      const SizedBox(height: 16),
-                    ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             );
           },
         );

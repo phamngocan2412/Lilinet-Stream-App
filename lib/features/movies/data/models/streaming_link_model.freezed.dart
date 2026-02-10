@@ -1,5 +1,5 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,60 +9,43 @@ part of 'streaming_link_model.dart';
 // FreezedGenerator
 // **************************************************************************
 
-// dart format off
 T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+
+StreamingLinkModel _$StreamingLinkModelFromJson(Map<String, dynamic> json) {
+  return _StreamingLinkModel.fromJson(json);
+}
 
 /// @nodoc
 mixin _$StreamingLinkModel {
   @HiveField(0)
   @AnyToStringConverter()
-  String get url;
+  String get url => throw _privateConstructorUsedError;
   @HiveField(1)
   @AnyToStringConverter()
-  String get quality;
+  String get quality => throw _privateConstructorUsedError;
   @HiveField(2)
-  bool get isM3U8;
+  bool get isM3U8 => throw _privateConstructorUsedError;
   @HiveField(3)
-  Map<String, String>? get headers;
+  Map<String, String>? get headers => throw _privateConstructorUsedError;
+
+  /// Serializes this StreamingLinkModel to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of StreamingLinkModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
   $StreamingLinkModelCopyWith<StreamingLinkModel> get copyWith =>
-      _$StreamingLinkModelCopyWithImpl<StreamingLinkModel>(
-          this as StreamingLinkModel, _$identity);
-
-  /// Serializes this StreamingLinkModel to a JSON map.
-  Map<String, dynamic> toJson();
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is StreamingLinkModel &&
-            (identical(other.url, url) || other.url == url) &&
-            (identical(other.quality, quality) || other.quality == quality) &&
-            (identical(other.isM3U8, isM3U8) || other.isM3U8 == isM3U8) &&
-            const DeepCollectionEquality().equals(other.headers, headers));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, url, quality, isM3U8,
-      const DeepCollectionEquality().hash(headers));
-
-  @override
-  String toString() {
-    return 'StreamingLinkModel(url: $url, quality: $quality, isM3U8: $isM3U8, headers: $headers)';
-  }
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract mixin class $StreamingLinkModelCopyWith<$Res> {
+abstract class $StreamingLinkModelCopyWith<$Res> {
   factory $StreamingLinkModelCopyWith(
-          StreamingLinkModel value, $Res Function(StreamingLinkModel) _then) =
-      _$StreamingLinkModelCopyWithImpl;
+          StreamingLinkModel value, $Res Function(StreamingLinkModel) then) =
+      _$StreamingLinkModelCopyWithImpl<$Res, StreamingLinkModel>;
   @useResult
   $Res call(
       {@HiveField(0) @AnyToStringConverter() String url,
@@ -72,12 +55,14 @@ abstract mixin class $StreamingLinkModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$StreamingLinkModelCopyWithImpl<$Res>
+class _$StreamingLinkModelCopyWithImpl<$Res, $Val extends StreamingLinkModel>
     implements $StreamingLinkModelCopyWith<$Res> {
-  _$StreamingLinkModelCopyWithImpl(this._self, this._then);
+  _$StreamingLinkModelCopyWithImpl(this._value, this._then);
 
-  final StreamingLinkModel _self;
-  final $Res Function(StreamingLinkModel) _then;
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
   /// Create a copy of StreamingLinkModel
   /// with the given fields replaced by the non-null parameter values.
@@ -89,211 +74,94 @@ class _$StreamingLinkModelCopyWithImpl<$Res>
     Object? isM3U8 = null,
     Object? headers = freezed,
   }) {
-    return _then(_self.copyWith(
+    return _then(_value.copyWith(
       url: null == url
-          ? _self.url
+          ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String,
       quality: null == quality
-          ? _self.quality
+          ? _value.quality
           : quality // ignore: cast_nullable_to_non_nullable
               as String,
       isM3U8: null == isM3U8
-          ? _self.isM3U8
+          ? _value.isM3U8
           : isM3U8 // ignore: cast_nullable_to_non_nullable
               as bool,
       headers: freezed == headers
-          ? _self.headers
+          ? _value.headers
+          : headers // ignore: cast_nullable_to_non_nullable
+              as Map<String, String>?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$StreamingLinkModelImplCopyWith<$Res>
+    implements $StreamingLinkModelCopyWith<$Res> {
+  factory _$$StreamingLinkModelImplCopyWith(_$StreamingLinkModelImpl value,
+          $Res Function(_$StreamingLinkModelImpl) then) =
+      __$$StreamingLinkModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {@HiveField(0) @AnyToStringConverter() String url,
+      @HiveField(1) @AnyToStringConverter() String quality,
+      @HiveField(2) bool isM3U8,
+      @HiveField(3) Map<String, String>? headers});
+}
+
+/// @nodoc
+class __$$StreamingLinkModelImplCopyWithImpl<$Res>
+    extends _$StreamingLinkModelCopyWithImpl<$Res, _$StreamingLinkModelImpl>
+    implements _$$StreamingLinkModelImplCopyWith<$Res> {
+  __$$StreamingLinkModelImplCopyWithImpl(_$StreamingLinkModelImpl _value,
+      $Res Function(_$StreamingLinkModelImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of StreamingLinkModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? url = null,
+    Object? quality = null,
+    Object? isM3U8 = null,
+    Object? headers = freezed,
+  }) {
+    return _then(_$StreamingLinkModelImpl(
+      url: null == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String,
+      quality: null == quality
+          ? _value.quality
+          : quality // ignore: cast_nullable_to_non_nullable
+              as String,
+      isM3U8: null == isM3U8
+          ? _value.isM3U8
+          : isM3U8 // ignore: cast_nullable_to_non_nullable
+              as bool,
+      headers: freezed == headers
+          ? _value._headers
           : headers // ignore: cast_nullable_to_non_nullable
               as Map<String, String>?,
     ));
   }
 }
 
-/// Adds pattern-matching-related methods to [StreamingLinkModel].
-extension StreamingLinkModelPatterns on StreamingLinkModel {
-  /// A variant of `map` that fallback to returning `orElse`.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case _:
-  ///     return orElse();
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>(
-    TResult Function(_StreamingLinkModel value)? $default, {
-    required TResult orElse(),
-  }) {
-    final _that = this;
-    switch (_that) {
-      case _StreamingLinkModel() when $default != null:
-        return $default(_that);
-      case _:
-        return orElse();
-    }
-  }
-
-  /// A `switch`-like method, using callbacks.
-  ///
-  /// Callbacks receives the raw object, upcasted.
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case final Subclass2 value:
-  ///     return ...;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>(
-    TResult Function(_StreamingLinkModel value) $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _StreamingLinkModel():
-        return $default(_that);
-      case _:
-        throw StateError('Unexpected subclass');
-    }
-  }
-
-  /// A variant of `map` that fallback to returning `null`.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case _:
-  ///     return null;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>(
-    TResult? Function(_StreamingLinkModel value)? $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _StreamingLinkModel() when $default != null:
-        return $default(_that);
-      case _:
-        return null;
-    }
-  }
-
-  /// A variant of `when` that fallback to an `orElse` callback.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case _:
-  ///     return orElse();
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            @HiveField(0) @AnyToStringConverter() String url,
-            @HiveField(1) @AnyToStringConverter() String quality,
-            @HiveField(2) bool isM3U8,
-            @HiveField(3) Map<String, String>? headers)?
-        $default, {
-    required TResult orElse(),
-  }) {
-    final _that = this;
-    switch (_that) {
-      case _StreamingLinkModel() when $default != null:
-        return $default(_that.url, _that.quality, _that.isM3U8, _that.headers);
-      case _:
-        return orElse();
-    }
-  }
-
-  /// A `switch`-like method, using callbacks.
-  ///
-  /// As opposed to `map`, this offers destructuring.
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case Subclass2(:final field2):
-  ///     return ...;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>(
-    TResult Function(
-            @HiveField(0) @AnyToStringConverter() String url,
-            @HiveField(1) @AnyToStringConverter() String quality,
-            @HiveField(2) bool isM3U8,
-            @HiveField(3) Map<String, String>? headers)
-        $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _StreamingLinkModel():
-        return $default(_that.url, _that.quality, _that.isM3U8, _that.headers);
-      case _:
-        throw StateError('Unexpected subclass');
-    }
-  }
-
-  /// A variant of `when` that fallback to returning `null`
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case _:
-  ///     return null;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            @HiveField(0) @AnyToStringConverter() String url,
-            @HiveField(1) @AnyToStringConverter() String quality,
-            @HiveField(2) bool isM3U8,
-            @HiveField(3) Map<String, String>? headers)?
-        $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _StreamingLinkModel() when $default != null:
-        return $default(_that.url, _that.quality, _that.isM3U8, _that.headers);
-      case _:
-        return null;
-    }
-  }
-}
-
 /// @nodoc
 @JsonSerializable()
-class _StreamingLinkModel extends StreamingLinkModel {
-  const _StreamingLinkModel(
+class _$StreamingLinkModelImpl extends _StreamingLinkModel {
+  const _$StreamingLinkModelImpl(
       {@HiveField(0) @AnyToStringConverter() required this.url,
       @HiveField(1) @AnyToStringConverter() required this.quality,
       @HiveField(2) required this.isM3U8,
       @HiveField(3) final Map<String, String>? headers})
       : _headers = headers,
         super._();
-  factory _StreamingLinkModel.fromJson(Map<String, dynamic> json) =>
-      _$StreamingLinkModelFromJson(json);
+
+  factory _$StreamingLinkModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$StreamingLinkModelImplFromJson(json);
 
   @override
   @HiveField(0)
@@ -317,26 +185,16 @@ class _StreamingLinkModel extends StreamingLinkModel {
     return EqualUnmodifiableMapView(value);
   }
 
-  /// Create a copy of StreamingLinkModel
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  _$StreamingLinkModelCopyWith<_StreamingLinkModel> get copyWith =>
-      __$StreamingLinkModelCopyWithImpl<_StreamingLinkModel>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$StreamingLinkModelToJson(
-      this,
-    );
+  String toString() {
+    return 'StreamingLinkModel(url: $url, quality: $quality, isM3U8: $isM3U8, headers: $headers)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _StreamingLinkModel &&
+            other is _$StreamingLinkModelImpl &&
             (identical(other.url, url) || other.url == url) &&
             (identical(other.quality, quality) || other.quality == quality) &&
             (identical(other.isM3U8, isM3U8) || other.isM3U8 == isM3U8) &&
@@ -348,110 +206,86 @@ class _StreamingLinkModel extends StreamingLinkModel {
   int get hashCode => Object.hash(runtimeType, url, quality, isM3U8,
       const DeepCollectionEquality().hash(_headers));
 
+  /// Create a copy of StreamingLinkModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  String toString() {
-    return 'StreamingLinkModel(url: $url, quality: $quality, isM3U8: $isM3U8, headers: $headers)';
+  @pragma('vm:prefer-inline')
+  _$$StreamingLinkModelImplCopyWith<_$StreamingLinkModelImpl> get copyWith =>
+      __$$StreamingLinkModelImplCopyWithImpl<_$StreamingLinkModelImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$StreamingLinkModelImplToJson(
+      this,
+    );
   }
 }
 
-/// @nodoc
-abstract mixin class _$StreamingLinkModelCopyWith<$Res>
-    implements $StreamingLinkModelCopyWith<$Res> {
-  factory _$StreamingLinkModelCopyWith(
-          _StreamingLinkModel value, $Res Function(_StreamingLinkModel) _then) =
-      __$StreamingLinkModelCopyWithImpl;
+abstract class _StreamingLinkModel extends StreamingLinkModel {
+  const factory _StreamingLinkModel(
+          {@HiveField(0) @AnyToStringConverter() required final String url,
+          @HiveField(1) @AnyToStringConverter() required final String quality,
+          @HiveField(2) required final bool isM3U8,
+          @HiveField(3) final Map<String, String>? headers}) =
+      _$StreamingLinkModelImpl;
+  const _StreamingLinkModel._() : super._();
+
+  factory _StreamingLinkModel.fromJson(Map<String, dynamic> json) =
+      _$StreamingLinkModelImpl.fromJson;
+
   @override
-  @useResult
-  $Res call(
-      {@HiveField(0) @AnyToStringConverter() String url,
-      @HiveField(1) @AnyToStringConverter() String quality,
-      @HiveField(2) bool isM3U8,
-      @HiveField(3) Map<String, String>? headers});
-}
-
-/// @nodoc
-class __$StreamingLinkModelCopyWithImpl<$Res>
-    implements _$StreamingLinkModelCopyWith<$Res> {
-  __$StreamingLinkModelCopyWithImpl(this._self, this._then);
-
-  final _StreamingLinkModel _self;
-  final $Res Function(_StreamingLinkModel) _then;
+  @HiveField(0)
+  @AnyToStringConverter()
+  String get url;
+  @override
+  @HiveField(1)
+  @AnyToStringConverter()
+  String get quality;
+  @override
+  @HiveField(2)
+  bool get isM3U8;
+  @override
+  @HiveField(3)
+  Map<String, String>? get headers;
 
   /// Create a copy of StreamingLinkModel
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? url = null,
-    Object? quality = null,
-    Object? isM3U8 = null,
-    Object? headers = freezed,
-  }) {
-    return _then(_StreamingLinkModel(
-      url: null == url
-          ? _self.url
-          : url // ignore: cast_nullable_to_non_nullable
-              as String,
-      quality: null == quality
-          ? _self.quality
-          : quality // ignore: cast_nullable_to_non_nullable
-              as String,
-      isM3U8: null == isM3U8
-          ? _self.isM3U8
-          : isM3U8 // ignore: cast_nullable_to_non_nullable
-              as bool,
-      headers: freezed == headers
-          ? _self._headers
-          : headers // ignore: cast_nullable_to_non_nullable
-              as Map<String, String>?,
-    ));
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$StreamingLinkModelImplCopyWith<_$StreamingLinkModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+SubtitleModel _$SubtitleModelFromJson(Map<String, dynamic> json) {
+  return _SubtitleModel.fromJson(json);
 }
 
 /// @nodoc
 mixin _$SubtitleModel {
   @HiveField(0)
   @AnyToStringConverter()
-  String get url;
+  String get url => throw _privateConstructorUsedError;
   @HiveField(1)
   @AnyToStringConverter()
-  String get lang;
+  String get lang => throw _privateConstructorUsedError;
+
+  /// Serializes this SubtitleModel to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of SubtitleModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
   $SubtitleModelCopyWith<SubtitleModel> get copyWith =>
-      _$SubtitleModelCopyWithImpl<SubtitleModel>(
-          this as SubtitleModel, _$identity);
-
-  /// Serializes this SubtitleModel to a JSON map.
-  Map<String, dynamic> toJson();
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is SubtitleModel &&
-            (identical(other.url, url) || other.url == url) &&
-            (identical(other.lang, lang) || other.lang == lang));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, url, lang);
-
-  @override
-  String toString() {
-    return 'SubtitleModel(url: $url, lang: $lang)';
-  }
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract mixin class $SubtitleModelCopyWith<$Res> {
+abstract class $SubtitleModelCopyWith<$Res> {
   factory $SubtitleModelCopyWith(
-          SubtitleModel value, $Res Function(SubtitleModel) _then) =
-      _$SubtitleModelCopyWithImpl;
+          SubtitleModel value, $Res Function(SubtitleModel) then) =
+      _$SubtitleModelCopyWithImpl<$Res, SubtitleModel>;
   @useResult
   $Res call(
       {@HiveField(0) @AnyToStringConverter() String url,
@@ -459,12 +293,14 @@ abstract mixin class $SubtitleModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SubtitleModelCopyWithImpl<$Res>
+class _$SubtitleModelCopyWithImpl<$Res, $Val extends SubtitleModel>
     implements $SubtitleModelCopyWith<$Res> {
-  _$SubtitleModelCopyWithImpl(this._self, this._then);
+  _$SubtitleModelCopyWithImpl(this._value, this._then);
 
-  final SubtitleModel _self;
-  final $Res Function(SubtitleModel) _then;
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
   /// Create a copy of SubtitleModel
   /// with the given fields replaced by the non-null parameter values.
@@ -474,191 +310,71 @@ class _$SubtitleModelCopyWithImpl<$Res>
     Object? url = null,
     Object? lang = null,
   }) {
-    return _then(_self.copyWith(
+    return _then(_value.copyWith(
       url: null == url
-          ? _self.url
+          ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String,
       lang: null == lang
-          ? _self.lang
+          ? _value.lang
+          : lang // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$SubtitleModelImplCopyWith<$Res>
+    implements $SubtitleModelCopyWith<$Res> {
+  factory _$$SubtitleModelImplCopyWith(
+          _$SubtitleModelImpl value, $Res Function(_$SubtitleModelImpl) then) =
+      __$$SubtitleModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {@HiveField(0) @AnyToStringConverter() String url,
+      @HiveField(1) @AnyToStringConverter() String lang});
+}
+
+/// @nodoc
+class __$$SubtitleModelImplCopyWithImpl<$Res>
+    extends _$SubtitleModelCopyWithImpl<$Res, _$SubtitleModelImpl>
+    implements _$$SubtitleModelImplCopyWith<$Res> {
+  __$$SubtitleModelImplCopyWithImpl(
+      _$SubtitleModelImpl _value, $Res Function(_$SubtitleModelImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of SubtitleModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? url = null,
+    Object? lang = null,
+  }) {
+    return _then(_$SubtitleModelImpl(
+      url: null == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String,
+      lang: null == lang
+          ? _value.lang
           : lang // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
 }
 
-/// Adds pattern-matching-related methods to [SubtitleModel].
-extension SubtitleModelPatterns on SubtitleModel {
-  /// A variant of `map` that fallback to returning `orElse`.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case _:
-  ///     return orElse();
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>(
-    TResult Function(_SubtitleModel value)? $default, {
-    required TResult orElse(),
-  }) {
-    final _that = this;
-    switch (_that) {
-      case _SubtitleModel() when $default != null:
-        return $default(_that);
-      case _:
-        return orElse();
-    }
-  }
-
-  /// A `switch`-like method, using callbacks.
-  ///
-  /// Callbacks receives the raw object, upcasted.
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case final Subclass2 value:
-  ///     return ...;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>(
-    TResult Function(_SubtitleModel value) $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _SubtitleModel():
-        return $default(_that);
-      case _:
-        throw StateError('Unexpected subclass');
-    }
-  }
-
-  /// A variant of `map` that fallback to returning `null`.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case _:
-  ///     return null;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>(
-    TResult? Function(_SubtitleModel value)? $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _SubtitleModel() when $default != null:
-        return $default(_that);
-      case _:
-        return null;
-    }
-  }
-
-  /// A variant of `when` that fallback to an `orElse` callback.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case _:
-  ///     return orElse();
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>(
-    TResult Function(@HiveField(0) @AnyToStringConverter() String url,
-            @HiveField(1) @AnyToStringConverter() String lang)?
-        $default, {
-    required TResult orElse(),
-  }) {
-    final _that = this;
-    switch (_that) {
-      case _SubtitleModel() when $default != null:
-        return $default(_that.url, _that.lang);
-      case _:
-        return orElse();
-    }
-  }
-
-  /// A `switch`-like method, using callbacks.
-  ///
-  /// As opposed to `map`, this offers destructuring.
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case Subclass2(:final field2):
-  ///     return ...;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>(
-    TResult Function(@HiveField(0) @AnyToStringConverter() String url,
-            @HiveField(1) @AnyToStringConverter() String lang)
-        $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _SubtitleModel():
-        return $default(_that.url, _that.lang);
-      case _:
-        throw StateError('Unexpected subclass');
-    }
-  }
-
-  /// A variant of `when` that fallback to returning `null`
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case _:
-  ///     return null;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(@HiveField(0) @AnyToStringConverter() String url,
-            @HiveField(1) @AnyToStringConverter() String lang)?
-        $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _SubtitleModel() when $default != null:
-        return $default(_that.url, _that.lang);
-      case _:
-        return null;
-    }
-  }
-}
-
 /// @nodoc
 @JsonSerializable()
-class _SubtitleModel extends SubtitleModel {
-  const _SubtitleModel(
+class _$SubtitleModelImpl extends _SubtitleModel {
+  const _$SubtitleModelImpl(
       {@HiveField(0) @AnyToStringConverter() required this.url,
       @HiveField(1) @AnyToStringConverter() required this.lang})
       : super._();
-  factory _SubtitleModel.fromJson(Map<String, dynamic> json) =>
-      _$SubtitleModelFromJson(json);
+
+  factory _$SubtitleModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SubtitleModelImplFromJson(json);
 
   @override
   @HiveField(0)
@@ -669,26 +385,16 @@ class _SubtitleModel extends SubtitleModel {
   @AnyToStringConverter()
   final String lang;
 
-  /// Create a copy of SubtitleModel
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  _$SubtitleModelCopyWith<_SubtitleModel> get copyWith =>
-      __$SubtitleModelCopyWithImpl<_SubtitleModel>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$SubtitleModelToJson(
-      this,
-    );
+  String toString() {
+    return 'SubtitleModel(url: $url, lang: $lang)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _SubtitleModel &&
+            other is _$SubtitleModelImpl &&
             (identical(other.url, url) || other.url == url) &&
             (identical(other.lang, lang) || other.lang == lang));
   }
@@ -697,103 +403,78 @@ class _SubtitleModel extends SubtitleModel {
   @override
   int get hashCode => Object.hash(runtimeType, url, lang);
 
+  /// Create a copy of SubtitleModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  String toString() {
-    return 'SubtitleModel(url: $url, lang: $lang)';
+  @pragma('vm:prefer-inline')
+  _$$SubtitleModelImplCopyWith<_$SubtitleModelImpl> get copyWith =>
+      __$$SubtitleModelImplCopyWithImpl<_$SubtitleModelImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$SubtitleModelImplToJson(
+      this,
+    );
   }
 }
 
-/// @nodoc
-abstract mixin class _$SubtitleModelCopyWith<$Res>
-    implements $SubtitleModelCopyWith<$Res> {
-  factory _$SubtitleModelCopyWith(
-          _SubtitleModel value, $Res Function(_SubtitleModel) _then) =
-      __$SubtitleModelCopyWithImpl;
+abstract class _SubtitleModel extends SubtitleModel {
+  const factory _SubtitleModel(
+          {@HiveField(0) @AnyToStringConverter() required final String url,
+          @HiveField(1) @AnyToStringConverter() required final String lang}) =
+      _$SubtitleModelImpl;
+  const _SubtitleModel._() : super._();
+
+  factory _SubtitleModel.fromJson(Map<String, dynamic> json) =
+      _$SubtitleModelImpl.fromJson;
+
   @override
-  @useResult
-  $Res call(
-      {@HiveField(0) @AnyToStringConverter() String url,
-      @HiveField(1) @AnyToStringConverter() String lang});
-}
-
-/// @nodoc
-class __$SubtitleModelCopyWithImpl<$Res>
-    implements _$SubtitleModelCopyWith<$Res> {
-  __$SubtitleModelCopyWithImpl(this._self, this._then);
-
-  final _SubtitleModel _self;
-  final $Res Function(_SubtitleModel) _then;
+  @HiveField(0)
+  @AnyToStringConverter()
+  String get url;
+  @override
+  @HiveField(1)
+  @AnyToStringConverter()
+  String get lang;
 
   /// Create a copy of SubtitleModel
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? url = null,
-    Object? lang = null,
-  }) {
-    return _then(_SubtitleModel(
-      url: null == url
-          ? _self.url
-          : url // ignore: cast_nullable_to_non_nullable
-              as String,
-      lang: null == lang
-          ? _self.lang
-          : lang // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$SubtitleModelImplCopyWith<_$SubtitleModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+StreamingResponseModel _$StreamingResponseModelFromJson(
+    Map<String, dynamic> json) {
+  return _StreamingResponseModel.fromJson(json);
 }
 
 /// @nodoc
 mixin _$StreamingResponseModel {
   @HiveField(0)
-  List<StreamingLinkModel> get sources;
+  List<StreamingLinkModel> get sources => throw _privateConstructorUsedError;
   @HiveField(1)
-  Map<String, String>? get headers;
+  Map<String, String>? get headers => throw _privateConstructorUsedError;
   @HiveField(2)
-  List<SubtitleModel>? get subtitles;
+  List<SubtitleModel>? get subtitles => throw _privateConstructorUsedError;
+
+  /// Serializes this StreamingResponseModel to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of StreamingResponseModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
   $StreamingResponseModelCopyWith<StreamingResponseModel> get copyWith =>
-      _$StreamingResponseModelCopyWithImpl<StreamingResponseModel>(
-          this as StreamingResponseModel, _$identity);
-
-  /// Serializes this StreamingResponseModel to a JSON map.
-  Map<String, dynamic> toJson();
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is StreamingResponseModel &&
-            const DeepCollectionEquality().equals(other.sources, sources) &&
-            const DeepCollectionEquality().equals(other.headers, headers) &&
-            const DeepCollectionEquality().equals(other.subtitles, subtitles));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(sources),
-      const DeepCollectionEquality().hash(headers),
-      const DeepCollectionEquality().hash(subtitles));
-
-  @override
-  String toString() {
-    return 'StreamingResponseModel(sources: $sources, headers: $headers, subtitles: $subtitles)';
-  }
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract mixin class $StreamingResponseModelCopyWith<$Res> {
+abstract class $StreamingResponseModelCopyWith<$Res> {
   factory $StreamingResponseModelCopyWith(StreamingResponseModel value,
-          $Res Function(StreamingResponseModel) _then) =
-      _$StreamingResponseModelCopyWithImpl;
+          $Res Function(StreamingResponseModel) then) =
+      _$StreamingResponseModelCopyWithImpl<$Res, StreamingResponseModel>;
   @useResult
   $Res call(
       {@HiveField(0) List<StreamingLinkModel> sources,
@@ -802,12 +483,15 @@ abstract mixin class $StreamingResponseModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$StreamingResponseModelCopyWithImpl<$Res>
+class _$StreamingResponseModelCopyWithImpl<$Res,
+        $Val extends StreamingResponseModel>
     implements $StreamingResponseModelCopyWith<$Res> {
-  _$StreamingResponseModelCopyWithImpl(this._self, this._then);
+  _$StreamingResponseModelCopyWithImpl(this._value, this._then);
 
-  final StreamingResponseModel _self;
-  final $Res Function(StreamingResponseModel) _then;
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
   /// Create a copy of StreamingResponseModel
   /// with the given fields replaced by the non-null parameter values.
@@ -818,204 +502,87 @@ class _$StreamingResponseModelCopyWithImpl<$Res>
     Object? headers = freezed,
     Object? subtitles = freezed,
   }) {
-    return _then(_self.copyWith(
+    return _then(_value.copyWith(
       sources: null == sources
-          ? _self.sources
+          ? _value.sources
           : sources // ignore: cast_nullable_to_non_nullable
               as List<StreamingLinkModel>,
       headers: freezed == headers
-          ? _self.headers
+          ? _value.headers
           : headers // ignore: cast_nullable_to_non_nullable
               as Map<String, String>?,
       subtitles: freezed == subtitles
-          ? _self.subtitles
+          ? _value.subtitles
+          : subtitles // ignore: cast_nullable_to_non_nullable
+              as List<SubtitleModel>?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$StreamingResponseModelImplCopyWith<$Res>
+    implements $StreamingResponseModelCopyWith<$Res> {
+  factory _$$StreamingResponseModelImplCopyWith(
+          _$StreamingResponseModelImpl value,
+          $Res Function(_$StreamingResponseModelImpl) then) =
+      __$$StreamingResponseModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {@HiveField(0) List<StreamingLinkModel> sources,
+      @HiveField(1) Map<String, String>? headers,
+      @HiveField(2) List<SubtitleModel>? subtitles});
+}
+
+/// @nodoc
+class __$$StreamingResponseModelImplCopyWithImpl<$Res>
+    extends _$StreamingResponseModelCopyWithImpl<$Res,
+        _$StreamingResponseModelImpl>
+    implements _$$StreamingResponseModelImplCopyWith<$Res> {
+  __$$StreamingResponseModelImplCopyWithImpl(
+      _$StreamingResponseModelImpl _value,
+      $Res Function(_$StreamingResponseModelImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of StreamingResponseModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? sources = null,
+    Object? headers = freezed,
+    Object? subtitles = freezed,
+  }) {
+    return _then(_$StreamingResponseModelImpl(
+      sources: null == sources
+          ? _value._sources
+          : sources // ignore: cast_nullable_to_non_nullable
+              as List<StreamingLinkModel>,
+      headers: freezed == headers
+          ? _value._headers
+          : headers // ignore: cast_nullable_to_non_nullable
+              as Map<String, String>?,
+      subtitles: freezed == subtitles
+          ? _value._subtitles
           : subtitles // ignore: cast_nullable_to_non_nullable
               as List<SubtitleModel>?,
     ));
   }
 }
 
-/// Adds pattern-matching-related methods to [StreamingResponseModel].
-extension StreamingResponseModelPatterns on StreamingResponseModel {
-  /// A variant of `map` that fallback to returning `orElse`.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case _:
-  ///     return orElse();
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>(
-    TResult Function(_StreamingResponseModel value)? $default, {
-    required TResult orElse(),
-  }) {
-    final _that = this;
-    switch (_that) {
-      case _StreamingResponseModel() when $default != null:
-        return $default(_that);
-      case _:
-        return orElse();
-    }
-  }
-
-  /// A `switch`-like method, using callbacks.
-  ///
-  /// Callbacks receives the raw object, upcasted.
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case final Subclass2 value:
-  ///     return ...;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>(
-    TResult Function(_StreamingResponseModel value) $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _StreamingResponseModel():
-        return $default(_that);
-      case _:
-        throw StateError('Unexpected subclass');
-    }
-  }
-
-  /// A variant of `map` that fallback to returning `null`.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case _:
-  ///     return null;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>(
-    TResult? Function(_StreamingResponseModel value)? $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _StreamingResponseModel() when $default != null:
-        return $default(_that);
-      case _:
-        return null;
-    }
-  }
-
-  /// A variant of `when` that fallback to an `orElse` callback.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case _:
-  ///     return orElse();
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            @HiveField(0) List<StreamingLinkModel> sources,
-            @HiveField(1) Map<String, String>? headers,
-            @HiveField(2) List<SubtitleModel>? subtitles)?
-        $default, {
-    required TResult orElse(),
-  }) {
-    final _that = this;
-    switch (_that) {
-      case _StreamingResponseModel() when $default != null:
-        return $default(_that.sources, _that.headers, _that.subtitles);
-      case _:
-        return orElse();
-    }
-  }
-
-  /// A `switch`-like method, using callbacks.
-  ///
-  /// As opposed to `map`, this offers destructuring.
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case Subclass2(:final field2):
-  ///     return ...;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>(
-    TResult Function(
-            @HiveField(0) List<StreamingLinkModel> sources,
-            @HiveField(1) Map<String, String>? headers,
-            @HiveField(2) List<SubtitleModel>? subtitles)
-        $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _StreamingResponseModel():
-        return $default(_that.sources, _that.headers, _that.subtitles);
-      case _:
-        throw StateError('Unexpected subclass');
-    }
-  }
-
-  /// A variant of `when` that fallback to returning `null`
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case _:
-  ///     return null;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            @HiveField(0) List<StreamingLinkModel> sources,
-            @HiveField(1) Map<String, String>? headers,
-            @HiveField(2) List<SubtitleModel>? subtitles)?
-        $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _StreamingResponseModel() when $default != null:
-        return $default(_that.sources, _that.headers, _that.subtitles);
-      case _:
-        return null;
-    }
-  }
-}
-
 /// @nodoc
 @JsonSerializable()
-class _StreamingResponseModel implements StreamingResponseModel {
-  const _StreamingResponseModel(
+class _$StreamingResponseModelImpl implements _StreamingResponseModel {
+  const _$StreamingResponseModelImpl(
       {@HiveField(0) required final List<StreamingLinkModel> sources,
       @HiveField(1) final Map<String, String>? headers,
       @HiveField(2) final List<SubtitleModel>? subtitles})
       : _sources = sources,
         _headers = headers,
         _subtitles = subtitles;
-  factory _StreamingResponseModel.fromJson(Map<String, dynamic> json) =>
-      _$StreamingResponseModelFromJson(json);
+
+  factory _$StreamingResponseModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$StreamingResponseModelImplFromJson(json);
 
   final List<StreamingLinkModel> _sources;
   @override
@@ -1048,27 +615,16 @@ class _StreamingResponseModel implements StreamingResponseModel {
     return EqualUnmodifiableListView(value);
   }
 
-  /// Create a copy of StreamingResponseModel
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  _$StreamingResponseModelCopyWith<_StreamingResponseModel> get copyWith =>
-      __$StreamingResponseModelCopyWithImpl<_StreamingResponseModel>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$StreamingResponseModelToJson(
-      this,
-    );
+  String toString() {
+    return 'StreamingResponseModel(sources: $sources, headers: $headers, subtitles: $subtitles)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _StreamingResponseModel &&
+            other is _$StreamingResponseModelImpl &&
             const DeepCollectionEquality().equals(other._sources, _sources) &&
             const DeepCollectionEquality().equals(other._headers, _headers) &&
             const DeepCollectionEquality()
@@ -1083,111 +639,88 @@ class _StreamingResponseModel implements StreamingResponseModel {
       const DeepCollectionEquality().hash(_headers),
       const DeepCollectionEquality().hash(_subtitles));
 
+  /// Create a copy of StreamingResponseModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  String toString() {
-    return 'StreamingResponseModel(sources: $sources, headers: $headers, subtitles: $subtitles)';
+  @pragma('vm:prefer-inline')
+  _$$StreamingResponseModelImplCopyWith<_$StreamingResponseModelImpl>
+      get copyWith => __$$StreamingResponseModelImplCopyWithImpl<
+          _$StreamingResponseModelImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$StreamingResponseModelImplToJson(
+      this,
+    );
   }
 }
 
-/// @nodoc
-abstract mixin class _$StreamingResponseModelCopyWith<$Res>
-    implements $StreamingResponseModelCopyWith<$Res> {
-  factory _$StreamingResponseModelCopyWith(_StreamingResponseModel value,
-          $Res Function(_StreamingResponseModel) _then) =
-      __$StreamingResponseModelCopyWithImpl;
+abstract class _StreamingResponseModel implements StreamingResponseModel {
+  const factory _StreamingResponseModel(
+          {@HiveField(0) required final List<StreamingLinkModel> sources,
+          @HiveField(1) final Map<String, String>? headers,
+          @HiveField(2) final List<SubtitleModel>? subtitles}) =
+      _$StreamingResponseModelImpl;
+
+  factory _StreamingResponseModel.fromJson(Map<String, dynamic> json) =
+      _$StreamingResponseModelImpl.fromJson;
+
   @override
-  @useResult
-  $Res call(
-      {@HiveField(0) List<StreamingLinkModel> sources,
-      @HiveField(1) Map<String, String>? headers,
-      @HiveField(2) List<SubtitleModel>? subtitles});
-}
-
-/// @nodoc
-class __$StreamingResponseModelCopyWithImpl<$Res>
-    implements _$StreamingResponseModelCopyWith<$Res> {
-  __$StreamingResponseModelCopyWithImpl(this._self, this._then);
-
-  final _StreamingResponseModel _self;
-  final $Res Function(_StreamingResponseModel) _then;
+  @HiveField(0)
+  List<StreamingLinkModel> get sources;
+  @override
+  @HiveField(1)
+  Map<String, String>? get headers;
+  @override
+  @HiveField(2)
+  List<SubtitleModel>? get subtitles;
 
   /// Create a copy of StreamingResponseModel
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? sources = null,
-    Object? headers = freezed,
-    Object? subtitles = freezed,
-  }) {
-    return _then(_StreamingResponseModel(
-      sources: null == sources
-          ? _self._sources
-          : sources // ignore: cast_nullable_to_non_nullable
-              as List<StreamingLinkModel>,
-      headers: freezed == headers
-          ? _self._headers
-          : headers // ignore: cast_nullable_to_non_nullable
-              as Map<String, String>?,
-      subtitles: freezed == subtitles
-          ? _self._subtitles
-          : subtitles // ignore: cast_nullable_to_non_nullable
-              as List<SubtitleModel>?,
-    ));
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$StreamingResponseModelImplCopyWith<_$StreamingResponseModelImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+ServerInfoModel _$ServerInfoModelFromJson(Map<String, dynamic> json) {
+  return _ServerInfoModel.fromJson(json);
 }
 
 /// @nodoc
 mixin _$ServerInfoModel {
-  String get name;
-  String get url;
+  String get name => throw _privateConstructorUsedError;
+  String get url => throw _privateConstructorUsedError;
+
+  /// Serializes this ServerInfoModel to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of ServerInfoModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
   $ServerInfoModelCopyWith<ServerInfoModel> get copyWith =>
-      _$ServerInfoModelCopyWithImpl<ServerInfoModel>(
-          this as ServerInfoModel, _$identity);
-
-  /// Serializes this ServerInfoModel to a JSON map.
-  Map<String, dynamic> toJson();
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is ServerInfoModel &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.url, url) || other.url == url));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, name, url);
-
-  @override
-  String toString() {
-    return 'ServerInfoModel(name: $name, url: $url)';
-  }
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract mixin class $ServerInfoModelCopyWith<$Res> {
+abstract class $ServerInfoModelCopyWith<$Res> {
   factory $ServerInfoModelCopyWith(
-          ServerInfoModel value, $Res Function(ServerInfoModel) _then) =
-      _$ServerInfoModelCopyWithImpl;
+          ServerInfoModel value, $Res Function(ServerInfoModel) then) =
+      _$ServerInfoModelCopyWithImpl<$Res, ServerInfoModel>;
   @useResult
   $Res call({String name, String url});
 }
 
 /// @nodoc
-class _$ServerInfoModelCopyWithImpl<$Res>
+class _$ServerInfoModelCopyWithImpl<$Res, $Val extends ServerInfoModel>
     implements $ServerInfoModelCopyWith<$Res> {
-  _$ServerInfoModelCopyWithImpl(this._self, this._then);
+  _$ServerInfoModelCopyWithImpl(this._value, this._then);
 
-  final ServerInfoModel _self;
-  final $Res Function(ServerInfoModel) _then;
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
   /// Create a copy of ServerInfoModel
   /// with the given fields replaced by the non-null parameter values.
@@ -1197,208 +730,82 @@ class _$ServerInfoModelCopyWithImpl<$Res>
     Object? name = null,
     Object? url = null,
   }) {
-    return _then(_self.copyWith(
+    return _then(_value.copyWith(
       name: null == name
-          ? _self.name
+          ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
       url: null == url
-          ? _self.url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$ServerInfoModelImplCopyWith<$Res>
+    implements $ServerInfoModelCopyWith<$Res> {
+  factory _$$ServerInfoModelImplCopyWith(_$ServerInfoModelImpl value,
+          $Res Function(_$ServerInfoModelImpl) then) =
+      __$$ServerInfoModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String name, String url});
+}
+
+/// @nodoc
+class __$$ServerInfoModelImplCopyWithImpl<$Res>
+    extends _$ServerInfoModelCopyWithImpl<$Res, _$ServerInfoModelImpl>
+    implements _$$ServerInfoModelImplCopyWith<$Res> {
+  __$$ServerInfoModelImplCopyWithImpl(
+      _$ServerInfoModelImpl _value, $Res Function(_$ServerInfoModelImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ServerInfoModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = null,
+    Object? url = null,
+  }) {
+    return _then(_$ServerInfoModelImpl(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      url: null == url
+          ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
 }
 
-/// Adds pattern-matching-related methods to [ServerInfoModel].
-extension ServerInfoModelPatterns on ServerInfoModel {
-  /// A variant of `map` that fallback to returning `orElse`.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case _:
-  ///     return orElse();
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>(
-    TResult Function(_ServerInfoModel value)? $default, {
-    required TResult orElse(),
-  }) {
-    final _that = this;
-    switch (_that) {
-      case _ServerInfoModel() when $default != null:
-        return $default(_that);
-      case _:
-        return orElse();
-    }
-  }
-
-  /// A `switch`-like method, using callbacks.
-  ///
-  /// Callbacks receives the raw object, upcasted.
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case final Subclass2 value:
-  ///     return ...;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>(
-    TResult Function(_ServerInfoModel value) $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _ServerInfoModel():
-        return $default(_that);
-      case _:
-        throw StateError('Unexpected subclass');
-    }
-  }
-
-  /// A variant of `map` that fallback to returning `null`.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case _:
-  ///     return null;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>(
-    TResult? Function(_ServerInfoModel value)? $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _ServerInfoModel() when $default != null:
-        return $default(_that);
-      case _:
-        return null;
-    }
-  }
-
-  /// A variant of `when` that fallback to an `orElse` callback.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case _:
-  ///     return orElse();
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>(
-    TResult Function(String name, String url)? $default, {
-    required TResult orElse(),
-  }) {
-    final _that = this;
-    switch (_that) {
-      case _ServerInfoModel() when $default != null:
-        return $default(_that.name, _that.url);
-      case _:
-        return orElse();
-    }
-  }
-
-  /// A `switch`-like method, using callbacks.
-  ///
-  /// As opposed to `map`, this offers destructuring.
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case Subclass2(:final field2):
-  ///     return ...;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>(
-    TResult Function(String name, String url) $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _ServerInfoModel():
-        return $default(_that.name, _that.url);
-      case _:
-        throw StateError('Unexpected subclass');
-    }
-  }
-
-  /// A variant of `when` that fallback to returning `null`
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case _:
-  ///     return null;
-  /// }
-  /// ```
-
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(String name, String url)? $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case _ServerInfoModel() when $default != null:
-        return $default(_that.name, _that.url);
-      case _:
-        return null;
-    }
-  }
-}
-
 /// @nodoc
 @JsonSerializable()
-class _ServerInfoModel implements ServerInfoModel {
-  const _ServerInfoModel({required this.name, required this.url});
-  factory _ServerInfoModel.fromJson(Map<String, dynamic> json) =>
-      _$ServerInfoModelFromJson(json);
+class _$ServerInfoModelImpl implements _ServerInfoModel {
+  const _$ServerInfoModelImpl({required this.name, required this.url});
+
+  factory _$ServerInfoModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ServerInfoModelImplFromJson(json);
 
   @override
   final String name;
   @override
   final String url;
 
-  /// Create a copy of ServerInfoModel
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  _$ServerInfoModelCopyWith<_ServerInfoModel> get copyWith =>
-      __$ServerInfoModelCopyWithImpl<_ServerInfoModel>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$ServerInfoModelToJson(
-      this,
-    );
+  String toString() {
+    return 'ServerInfoModel(name: $name, url: $url)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ServerInfoModel &&
+            other is _$ServerInfoModelImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.url, url) || other.url == url));
   }
@@ -1407,50 +814,40 @@ class _ServerInfoModel implements ServerInfoModel {
   @override
   int get hashCode => Object.hash(runtimeType, name, url);
 
+  /// Create a copy of ServerInfoModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  String toString() {
-    return 'ServerInfoModel(name: $name, url: $url)';
+  @pragma('vm:prefer-inline')
+  _$$ServerInfoModelImplCopyWith<_$ServerInfoModelImpl> get copyWith =>
+      __$$ServerInfoModelImplCopyWithImpl<_$ServerInfoModelImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ServerInfoModelImplToJson(
+      this,
+    );
   }
 }
 
-/// @nodoc
-abstract mixin class _$ServerInfoModelCopyWith<$Res>
-    implements $ServerInfoModelCopyWith<$Res> {
-  factory _$ServerInfoModelCopyWith(
-          _ServerInfoModel value, $Res Function(_ServerInfoModel) _then) =
-      __$ServerInfoModelCopyWithImpl;
+abstract class _ServerInfoModel implements ServerInfoModel {
+  const factory _ServerInfoModel(
+      {required final String name,
+      required final String url}) = _$ServerInfoModelImpl;
+
+  factory _ServerInfoModel.fromJson(Map<String, dynamic> json) =
+      _$ServerInfoModelImpl.fromJson;
+
   @override
-  @useResult
-  $Res call({String name, String url});
-}
-
-/// @nodoc
-class __$ServerInfoModelCopyWithImpl<$Res>
-    implements _$ServerInfoModelCopyWith<$Res> {
-  __$ServerInfoModelCopyWithImpl(this._self, this._then);
-
-  final _ServerInfoModel _self;
-  final $Res Function(_ServerInfoModel) _then;
+  String get name;
+  @override
+  String get url;
 
   /// Create a copy of ServerInfoModel
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? name = null,
-    Object? url = null,
-  }) {
-    return _then(_ServerInfoModel(
-      name: null == name
-          ? _self.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      url: null == url
-          ? _self.url
-          : url // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ServerInfoModelImplCopyWith<_$ServerInfoModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
-
-// dart format on

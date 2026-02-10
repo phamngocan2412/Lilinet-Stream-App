@@ -41,6 +41,9 @@ class _SearchPageViewState extends State<SearchPageView> {
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
+    _controller.addListener(() {
+      setState(() {});
+    });
   }
 
   @override
@@ -67,7 +70,7 @@ class _SearchPageViewState extends State<SearchPageView> {
           maxLength: 100,
           style: Theme.of(context).textTheme.bodyLarge,
           decoration: InputDecoration(
-            hintText: 'Search anime...',
+            hintText: AppLocalizations.of(context)!.searchHint,
             counterText: "",
             border: InputBorder.none,
             enabledBorder: InputBorder.none,
@@ -242,18 +245,37 @@ class _SearchPageViewState extends State<SearchPageView> {
     String currentFilter,
   ) {
     final isSelected = label == currentFilter;
+    final colorScheme = Theme.of(context).colorScheme;
+    final l10n = AppLocalizations.of(context)!;
+
+    // Map internal filter values to localized display labels
+    String displayLabel;
+    switch (label) {
+      case 'All':
+        displayLabel = l10n.filterAll;
+        break;
+      case 'TV Series':
+        displayLabel = l10n.filterTVSeries;
+        break;
+      case 'Movie':
+        displayLabel = l10n.filterMovie;
+        break;
+      default:
+        displayLabel = label;
+    }
+
     return FilterChip(
-      label: Text(label),
+      label: Text(displayLabel),
       selected: isSelected,
       onSelected: (selected) {
         context.read<SearchBloc>().add(SearchFilterChanged(label));
       },
-      backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
-      selectedColor: Theme.of(context).colorScheme.primaryContainer,
+      backgroundColor: colorScheme.surfaceContainerHighest,
+      selectedColor: colorScheme.primaryContainer,
       labelStyle: TextStyle(
         color: isSelected
-            ? Theme.of(context).colorScheme.onPrimaryContainer
-            : Theme.of(context).colorScheme.onSurfaceVariant,
+            ? colorScheme.onPrimaryContainer
+            : colorScheme.onSurfaceVariant,
         fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
       ),
       shape: RoundedRectangleBorder(

@@ -3,6 +3,12 @@ import 'package:injectable/injectable.dart';
 import '../../widgets/comment_section.dart'; // Import CommentModel
 import 'comments_state.dart';
 
+/// DEPRECATED: Use [CommentCubit] from features/comments/ instead.
+///
+/// This is a mock implementation that should not be used in production.
+/// The real comment system uses Supabase with full features (likes, replies, etc.)
+@Deprecated(
+    'Use CommentCubit from features/comments/ instead. This mock implementation will be removed.')
 @singleton
 class CommentsCubit extends Cubit<CommentsState> {
   // Simple in-memory cache: videoId -> List<CommentModel>
@@ -13,14 +19,18 @@ class CommentsCubit extends Cubit<CommentsState> {
   Future<void> loadComments(String videoId) async {
     // Return cached if available
     if (_cache.containsKey(videoId)) {
+      if (isClosed) return;
       emit(CommentsLoaded(videoId, _cache[videoId]!));
       return;
     }
 
+    if (isClosed) return;
     emit(CommentsLoading(videoId));
 
     // --- MOCK API ---
     await Future.delayed(const Duration(seconds: 1));
+
+    if (isClosed) return;
 
     final List<CommentModel> mockComments = [
       CommentModel(
@@ -48,12 +58,15 @@ class CommentsCubit extends Cubit<CommentsState> {
     // ----------------
 
     _cache[videoId] = mockComments;
+    if (isClosed) return;
     emit(CommentsLoaded(videoId, mockComments));
   }
 
   Future<void> addComment(String videoId, String content) async {
     // --- MOCK POST ---
     await Future.delayed(const Duration(milliseconds: 500));
+
+    if (isClosed) return;
 
     final newComment = CommentModel(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
@@ -67,6 +80,7 @@ class CommentsCubit extends Cubit<CommentsState> {
     final newList = [newComment, ...currentList];
 
     _cache[videoId] = newList;
+    if (isClosed) return;
     emit(CommentsLoaded(videoId, newList));
   }
 }

@@ -28,6 +28,20 @@ class MiniplayerWidget extends StatefulWidget {
 
 class _MiniplayerWidgetState extends State<MiniplayerWidget> {
   final MiniplayerController _miniplayerController = MiniplayerController();
+  DateTime? _navigationBlockUntil;
+  static const _navigationBlockDuration = Duration(milliseconds: 500);
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Block auto-maximize for a short time after navigation
+    _navigationBlockUntil = DateTime.now().add(_navigationBlockDuration);
+  }
+
+  bool get _isNavigationBlocked {
+    if (_navigationBlockUntil == null) return false;
+    return DateTime.now().isBefore(_navigationBlockUntil!);
+  }
 
   @override
   void initState() {
@@ -35,10 +49,40 @@ class _MiniplayerWidgetState extends State<MiniplayerWidget> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       final state = context.read<VideoPlayerBloc>().state;
-      if (state.status == VideoPlayerStatus.expanded) {
-        _miniplayerController.animateToHeight(state: PanelState.MAX);
+      debugPrint('MiniplayerWidget initState: status=${state.status}');
+      // FIX: Don't auto-expand when widget is first created.
+      // Only set to minimized if that's the current state.
+      // This prevents unwanted auto-expand when navigating between routes.
+      if (state.status == VideoPlayerStatus.minimized) {
+        _miniplayerController.animateToHeight(state: PanelState.MIN);
       }
+      // Note: We don't auto-expand here - user must explicitly tap to expand
     });
+  }
+
+  @override
+  void didUpdateWidget(MiniplayerWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    debugPrint(
+        'MiniplayerWidget didUpdateWidget: height changed=${oldWidget.miniplayerHeight != widget.miniplayerHeight}');
+    // Update miniplayer height when it changes (e.g., when switching between tabs with/without nav bar)
+    if (oldWidget.miniplayerHeight != widget.miniplayerHeight) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        final state = context.read<VideoPlayerBloc>().state;
+        debugPrint('MiniplayerWidget: Updating height, status=${state.status}');
+        if (state.status == VideoPlayerStatus.minimized) {
+          // Re-animate to MIN to apply new height
+          _miniplayerController.animateToHeight(state: PanelState.MIN);
+        }
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _miniplayerController.dispose();
+    super.dispose();
   }
 
   @override
@@ -55,8 +99,15 @@ class _MiniplayerWidgetState extends State<MiniplayerWidget> {
       // Listen to all changes so we can re-expand even if status is Same
       listener: (context, state) {
         if (state.status == VideoPlayerStatus.expanded) {
+          if (_isNavigationBlocked) {
+            debugPrint(
+                'MiniplayerWidget: Status expanded but navigation blocked - ignoring');
+            return;
+          }
+          debugPrint('MiniplayerWidget: Status expanded - animating to MAX');
           _miniplayerController.animateToHeight(state: PanelState.MAX);
         } else if (state.status == VideoPlayerStatus.minimized) {
+          debugPrint('MiniplayerWidget: Status minimized - animating to MIN');
           _miniplayerController.animateToHeight(state: PanelState.MIN);
         } else if (state.status == VideoPlayerStatus.closed) {
           // Stop playback and reset URL when player is closed
@@ -101,14 +152,14 @@ class _MiniplayerWidgetState extends State<MiniplayerWidget> {
               },
             );
 
-            // Only wrap with PopScope when expanded
+            // Only wrap with PopScope when expanded to handle back button
             if (state.status == VideoPlayerStatus.expanded) {
               return PopScope(
                 canPop: false,
                 onPopInvokedWithResult: (didPop, result) {
                   if (didPop) return;
 
-                  // If expanded, minimize instead of popping
+                  // If expanded, minimize instead of popping route
                   _miniplayerController.animateToHeight(state: PanelState.MIN);
                   context.read<VideoPlayerBloc>().add(MinimizeVideo());
                 },

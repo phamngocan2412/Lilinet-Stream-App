@@ -1,5 +1,7 @@
 // ignore_for_file: deprecated_member_use, unreachable_switch_default
 
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -33,6 +35,7 @@ import 'expanded_player_content.dart';
 import 'video_error_widget.dart';
 
 import '../../../../core/network/network_cubit.dart';
+import '../../../../core/utils/media_type_helper.dart';
 
 import '../../../../features/movies/domain/usecases/get_movie_details.dart';
 
@@ -63,20 +66,13 @@ class VideoPlayerContent extends StatefulWidget {
 }
 
 class _VideoPlayerContentState extends State<VideoPlayerContent>
-    with WidgetsBindingObserver, AutomaticKeepAliveClientMixin {
+    with WidgetsBindingObserver {
   final GlobalKey _videoKey = GlobalKey();
 
-  // Only keep alive when video is playing to prevent memory leaks
-  // When video is paused or closed, allow disposal
-  @override
-  bool get wantKeepAlive {
-    // Keep alive only when player is initialized and playing
-    if (_isPlayerInitialized && _videoService.player.state.playing) {
-      return true;
-    }
-    // Allow disposal when video is paused, minimized, or closed
-    return false;
-  }
+  // Debounce mechanism to prevent rapid rebuilds during transitions
+  bool _isTransitioning = false;
+  Timer? _transitionDebounceTimer;
+  static const _transitionDebounceDuration = Duration(milliseconds: 150);
 
   // Access video service via Bloc to keep widget "dumb" about service instantiation
   late final VideoPlayerService _videoService;
@@ -93,8 +89,7 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
   VideoQuality _defaultQuality = VideoQuality.auto;
   PreferredServer _preferredServer = PreferredServer.auto;
 
-  // Offline handling
-  bool _isOffline = false;
+  // Offline handling - used for auto-resume when connection restored
   bool _wasPlayingBeforeOffline = false;
 
   // Countdown handling
@@ -103,6 +98,9 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
 
   bool _isPlayerInitialized = false;
   bool _isPreloaded = false; // Track if next episode is preloaded
+
+  // Stream subscription for player state
+  StreamSubscription<bool>? _playingSubscription;
 
   @override
   void initState() {
@@ -126,16 +124,18 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
       _fetchMovieDetails();
     }
 
-    // Listen to player playing state to update keep alive
-    _videoService.player.stream.playing.listen((playing) {
-      if (mounted) {
-        updateKeepAlive();
-      }
+    // Listen to player playing state
+    _playingSubscription =
+        _videoService.player.stream.playing.listen((playing) {
+      // Handle playing state changes
     });
 
     if (widget.state.status == VideoPlayerStatus.expanded) {
+      // Schedule the expansion after the first frame to prevent layout conflicts
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        widget.miniplayerController.animateToHeight(state: PanelState.MAX);
+        if (mounted) {
+          widget.miniplayerController.animateToHeight(state: PanelState.MAX);
+        }
       });
     }
   }
@@ -161,18 +161,9 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
         },
         (movie) {
           debugPrint('✅ Restored movie details for: ${movie.title}');
-          context.read<VideoPlayerBloc>().add(
-                PlayVideo(
-                  episodeId: widget.state.episodeId!,
-                  mediaId: widget.state.mediaId!,
-                  title: widget.state.title!,
-                  posterUrl: widget.state.posterUrl,
-                  episodeTitle: widget.state.episodeTitle,
-                  startPosition: widget.state.startPosition,
-                  mediaType: widget.state.mediaType,
-                  movie: movie,
-                ),
-              );
+          // H-003 FIX: Use UpdateMovieDetails instead of PlayVideo to avoid
+          // double-dispatch and playback reset when player is already running
+          context.read<VideoPlayerBloc>().add(UpdateMovieDetails(movie));
         },
       );
     } catch (e) {
@@ -256,13 +247,35 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
   }
 
   void _loadVideo() {
-    // Use movie's stored provider if it exists, otherwise fall back to genres check
-    final provider = widget.state.movie?.provider ??
-        StreamingConfig.determineProvider(
-          genres: widget.state.movie?.genres,
-          movieProviderPref: _movieProvider,
-          animeProviderPref: _animeProvider,
-        );
+    // Check if we have required data to load video
+    if (widget.state.episodeId == null || widget.state.mediaId == null) {
+      debugPrint('⚠️ Cannot load video: episodeId or mediaId is null');
+      return;
+    }
+
+    // Determine provider based on media type and genres, prioritizing accurate detection
+    // Even if movie.provider is set, re-check based on genres to prevent misclassification
+    String provider;
+
+    // First, try to determine provider based on genres
+    provider = StreamingConfig.determineProvider(
+      genres: widget.state.movie?.genres,
+      movieProviderPref: _movieProvider,
+      animeProviderPref: _animeProvider,
+    );
+
+    // If that doesn't give us a provider, fall back to movie's stored provider or type-based default
+    if (provider.isEmpty) {
+      if (widget.state.movie != null &&
+          widget.state.movie!.provider != null &&
+          widget.state.movie!.provider!.isNotEmpty) {
+        provider = widget.state.movie!.provider!;
+      } else {
+        provider = (MediaTypeHelper.isAnime(widget.state.mediaType)
+            ? (_animeProvider ?? StreamingConfig.defaultAnimeProvider)
+            : (_movieProvider ?? StreamingConfig.defaultMovieProvider));
+      }
+    }
 
     _streamingCubit.loadLinks(
       episodeId: widget.state.episodeId!,
@@ -273,22 +286,45 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
   }
 
   void switchServer(String server) {
+    // Check if we have required data
+    if (widget.state.episodeId == null || widget.state.mediaId == null) {
+      debugPrint('⚠️ Cannot switch server: episodeId or mediaId is null');
+      return;
+    }
+
     setState(() {
       currentServer = server;
     });
 
-    final provider = widget.state.movie?.provider ??
-        StreamingConfig.determineProvider(
-          genres: widget.state.movie?.genres,
-          movieProviderPref: _movieProvider,
-          animeProviderPref: _animeProvider,
-        );
+    // Determine provider based on media type and genres, prioritizing accurate detection
+    String provider;
+
+    // First, try to determine provider based on genres
+    provider = StreamingConfig.determineProvider(
+      genres: widget.state.movie?.genres,
+      movieProviderPref: _movieProvider,
+      animeProviderPref: _animeProvider,
+    );
+
+    // If that doesn't give us a provider, fall back to movie's stored provider or type-based default
+    if (provider.isEmpty) {
+      if (widget.state.movie != null &&
+          widget.state.movie!.provider != null &&
+          widget.state.movie!.provider!.isNotEmpty) {
+        provider = widget.state.movie!.provider!;
+      } else {
+        provider = (MediaTypeHelper.isAnime(widget.state.mediaType)
+            ? (_animeProvider ?? StreamingConfig.defaultAnimeProvider)
+            : (_movieProvider ?? StreamingConfig.defaultMovieProvider));
+      }
+    }
 
     _streamingCubit.loadLinks(
       episodeId: widget.state.episodeId!,
       mediaId: widget.state.mediaId!,
       server: server,
       provider: provider,
+      preferredServer: _preferredServer,
     );
   }
 
@@ -307,21 +343,34 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
+    // Cancel transition debounce timer
+    _transitionDebounceTimer?.cancel();
+
+    // Cancel stream subscription to prevent memory leak
+    _playingSubscription?.cancel();
+
     // Detach callbacks but don't dispose service to keep player alive
     _videoService.detachCallbacks();
 
     // Cancel any pending network requests before closing
     _streamingCubit.cancelPendingRequests();
 
-    // Do NOT close the singleton Cubit
-    // BUT since we changed it to Factory, we SHOULD close it now!
-    _streamingCubit.close();
+    // Add a small delay before closing the cubit to prevent race conditions
+    Future.microtask(() {
+      if (!_streamingCubit.isClosed) {
+        _streamingCubit.close();
+      }
+    });
+
     super.dispose();
   }
 
   void _onVideoCompleted() {
-    // Only auto-play for TV Series if setting enabled
-    if (!_autoPlayEnabled || widget.state.mediaType != 'TV Series') return;
+    // Only auto-play for series (TV/Anime) if setting enabled
+    if (!_autoPlayEnabled ||
+        !MediaTypeHelper.isSeries(widget.state.mediaType)) {
+      return;
+    }
 
     final movie = widget.state.movie;
     if (movie != null) {
@@ -345,8 +394,8 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
 
   /// Preload next episode when current episode is 70% complete
   void _preloadNextEpisode(Duration position, Duration duration) {
-    // Only preload for TV Series
-    if (widget.state.mediaType != 'TV Series') return;
+    // Only preload for series (TV/Anime)
+    if (!MediaTypeHelper.isSeries(widget.state.mediaType)) return;
 
     // Check if we're at 70% of the video
     if (duration.inSeconds > 0 &&
@@ -504,19 +553,30 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context); // Required for AutomaticKeepAliveClientMixin
+    // Debounce rapid rebuilds during mini/fullscreen transitions
+    if (_isTransitioning) {
+      // Return cached widget if we're in a transition
+      return const SizedBox.shrink();
+    }
+
+    // Mark as transitioning briefly to prevent layout mutations
+    _isTransitioning = true;
+    _transitionDebounceTimer?.cancel();
+    _transitionDebounceTimer = Timer(_transitionDebounceDuration, () {
+      if (mounted) {
+        setState(() {
+          _isTransitioning = false;
+        });
+      }
+    });
+
+    // Use the constraints already provided by parent Miniplayer LayoutBuilder
     return BlocListener<NetworkCubit, bool>(
       listener: (context, isConnected) {
         if (!isConnected) {
-          setState(() {
-            _isOffline = true;
-            _wasPlayingBeforeOffline = _videoService.player.state.playing;
-          });
+          _wasPlayingBeforeOffline = _videoService.player.state.playing;
           context.read<VideoPlayerBloc>().add(PauseVideoPlayback());
         } else {
-          setState(() {
-            _isOffline = false;
-          });
           if (_wasPlayingBeforeOffline) {
             context.read<VideoPlayerBloc>().add(ResumeVideoPlayback());
           } else {
@@ -581,50 +641,57 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
                     ),
                   ),
 
-                // Expanded Content Area
+                // Expanded Content Area - Only render when needed to prevent
+                // blank space showing in miniplayer
                 if (!widget.isMini && widget.height > 300)
                   Expanded(
-                    child: ExpandedPlayerContent(
-                      state: widget.state,
-                      onMinimize: () {
-                        widget.miniplayerController.animateToHeight(
-                          state: PanelState.MIN,
-                        );
-                        context.read<VideoPlayerBloc>().add(MinimizeVideo());
+                    child: GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () {
+                        // Absorb tap to prevent miniplayer gesture detection
                       },
-                      onDownload: () {
-                        final url = _videoService
-                            .player.state.playlist.medias.firstOrNull?.uri;
-                        if (url != null) {
-                          final fileName =
-                              '${widget.state.title ?? "video"}_${widget.state.episodeTitle ?? "episode"}.mp4'
-                                  .replaceAll(RegExp(r'[^\w\s\.-]'), '')
-                                  .replaceAll(' ', '_');
-
-                          context.read<VideoPlayerBloc>().add(
-                                DownloadCurrentVideo(
-                                  url: url,
-                                  fileName: fileName,
-                                  movieId: widget.state.mediaId,
-                                  movieTitle: widget.state.title,
-                                  episodeTitle: widget.state.episodeTitle,
-                                  posterUrl: widget.state.posterUrl,
-                                ),
-                              );
-
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Download started...'),
-                            ),
+                      child: ExpandedPlayerContent(
+                        state: widget.state,
+                        onMinimize: () {
+                          widget.miniplayerController.animateToHeight(
+                            state: PanelState.MIN,
                           );
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('No video loaded to download'),
-                            ),
-                          );
-                        }
-                      },
+                          context.read<VideoPlayerBloc>().add(MinimizeVideo());
+                        },
+                        onDownload: () {
+                          final url = _videoService
+                              .player.state.playlist.medias.firstOrNull?.uri;
+                          if (url != null) {
+                            final fileName =
+                                '${widget.state.title ?? "video"}_${widget.state.episodeTitle ?? "episode"}.mp4'
+                                    .replaceAll(RegExp(r'[^\w\s\.-]'), '')
+                                    .replaceAll(' ', '_');
+
+                            context.read<VideoPlayerBloc>().add(
+                                  DownloadCurrentVideo(
+                                    url: url,
+                                    fileName: fileName,
+                                    movieId: widget.state.mediaId,
+                                    movieTitle: widget.state.title,
+                                    episodeTitle: widget.state.episodeTitle,
+                                    posterUrl: widget.state.posterUrl,
+                                  ),
+                                );
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Download started...'),
+                              ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('No video loaded to download'),
+                              ),
+                            );
+                          }
+                        },
+                      ),
                     ),
                   ),
               ],
@@ -827,7 +894,7 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
               episodeId: widget.state.episodeId!,
               mediaId: widget.state.mediaId!,
               server: server,
-              provider: widget.state.mediaType == 'Anime'
+              provider: MediaTypeHelper.isAnime(widget.state.mediaType)
                   ? _animeProvider
                   : _movieProvider,
               preferredServer: _preferredServer,

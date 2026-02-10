@@ -5,22 +5,22 @@ import '../features/movies/presentation/pages/movie_details_page.dart';
 import '../features/movies/domain/entities/movie.dart';
 import '../features/movies/presentation/pages/search_page.dart';
 import '../features/settings/presentation/pages/settings_page.dart';
-import '../features/splash/presentation/pages/splash_page.dart';
 import '../features/explore/presentation/pages/genre_movies_page.dart';
 import '../features/downloads/presentation/pages/downloads_page.dart';
 
 class AppRouter {
   static final router = GoRouter(
-    initialLocation: '/splash',
+    initialLocation: '/',
     routes: [
-      GoRoute(
-        path: '/splash',
-        name: 'splash',
-        builder: (context, state) => const SplashPage(),
-      ),
       ShellRoute(
         builder: (context, state, child) {
-          return ScaffoldWithPlayer(state: state, child: child);
+          return ScaffoldWithPlayer(
+            // FIX: Remove dynamic key to prevent ScaffoldWithPlayer from
+            // being recreated on every route change. This was causing
+            // MiniplayerWidget to reset and auto-expand.
+            state: state,
+            child: child,
+          );
         },
         routes: [
           GoRoute(
