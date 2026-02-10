@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lilinet_app/l10n/app_localizations.dart';
+import 'package:shimmer/shimmer.dart';
 import '../../../../core/utils/time_formatter.dart';
 import '../../domain/entities/comment.dart';
 import '../../../../core/widgets/cached_image.dart';
+import 'mention_text.dart';
 
 class CommentItem extends StatelessWidget {
   final Comment comment;
@@ -95,126 +97,146 @@ class _CommentContentState extends State<_CommentContent> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final isSending = widget.comment.isSending;
 
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: widget.isReply ? 12 : 16,
-        vertical: widget.isReply ? 6 : 8,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Avatar - smaller for replies
-          _Avatar(
-            imageUrl: widget.comment.avatarUrl.isNotEmpty
-                ? widget.comment.avatarUrl
-                : null,
-            radius: widget.isReply ? 14 : 16,
-          ),
-          const SizedBox(width: 10),
-
-          // Content Column
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // Comment Container with background
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 8,
-                  ),
-                  decoration: BoxDecoration(
-                    color: colorScheme.surfaceContainerHighest.withOpacity(0.5),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      // Header Row - Name, Time
-                      Row(
-                        children: [
-                          Flexible(
-                            child: Text(
-                              widget.comment.userName,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: widget.isReply ? 12 : 13,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          const SizedBox(width: 6),
-                          Text(
-                            '• ${TimeFormatter.formatDisplayTimeAgo(
-                              context: context,
-                              createdAt: widget.comment.createdAt,
-                              isEdited: widget.comment.isEdited,
-                              updatedAt: widget.comment.updatedAt,
-                            )}',
-                            style: TextStyle(
-                              fontSize: widget.isReply ? 10 : 11,
-                              color: theme.hintColor,
-                            ),
-                          ),
-                          if (widget.comment.isPinned) ...[
-                            const SizedBox(width: 4),
-                            Icon(
-                              Icons.push_pin,
-                              size: 10,
-                              color: colorScheme.primary,
-                            ),
-                          ],
-                        ],
-                      ),
-
-                      const SizedBox(height: 4),
-
-                      // Comment Text
-                      _CommentText(
-                        content: widget.comment.content,
-                        showFull: _showFullText,
-                        onToggle: () =>
-                            setState(() => _showFullText = !_showFullText),
-                        fontSize: widget.isReply ? 12 : 13,
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 4),
-
-                // Action Buttons Row
-                _ActionButtons(
-                  likes: widget.comment.likes,
-                  repliesCount: widget.comment.repliesCount,
-                  onLike: widget.onLike,
-                  onReply: widget.onReply,
-                  onToggleReplies: widget.comment.repliesCount > 0
-                      ? widget.onToggleReplies
-                      : null,
-                  isRepliesExpanded: widget.isRepliesExpanded,
-                  isLiked: widget.isLiked,
-                  isReply: widget.isReply,
-                ),
-
-                // Replies Section - nested and indented
-                if (widget.isRepliesExpanded &&
-                    widget.comment.replies.isNotEmpty)
-                  _RepliesSection(
-                    replies: widget.comment.replies,
-                    repliesCount: widget.comment.repliesCount,
-                    onReplyLike: widget.onReplyLike,
-                    onReplyReply: widget.onReplyReply,
-                    onLoadMoreReplies: widget.onLoadMoreReplies,
-                    likedReplyIds: widget.likedReplyIds,
-                  ),
-              ],
+    return Opacity(
+      opacity: isSending ? 0.6 : 1.0,
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: widget.isReply ? 12 : 16,
+          vertical: widget.isReply ? 6 : 8,
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Avatar - smaller for replies
+            _Avatar(
+              imageUrl: widget.comment.avatarUrl.isNotEmpty
+                  ? widget.comment.avatarUrl
+                  : null,
+              radius: widget.isReply ? 14 : 16,
             ),
-          ),
-        ],
+            const SizedBox(width: 10),
+
+            // Content Column
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Comment Container with background
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
+                    decoration: BoxDecoration(
+                      color: colorScheme.surfaceContainerHighest.withValues(
+                        alpha: 0.5,
+                      ),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // Header Row - Name, Time, Sending indicator
+                        Row(
+                          children: [
+                            Flexible(
+                              child: Text(
+                                widget.comment.userName,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: widget.isReply ? 12 : 13,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            const SizedBox(width: 6),
+                            if (isSending)
+                              Padding(
+                                padding: const EdgeInsets.only(right: 4),
+                                child: SizedBox(
+                                  width: 10,
+                                  height: 10,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 1.5,
+                                    color: theme.hintColor,
+                                  ),
+                                ),
+                              )
+                            else
+                              Text(
+                                '• ${TimeFormatter.formatDisplayTimeAgo(
+                                  context: context,
+                                  createdAt: widget.comment.createdAt,
+                                  isEdited: widget.comment.isEdited,
+                                  updatedAt: widget.comment.updatedAt,
+                                )}',
+                                style: TextStyle(
+                                  fontSize: widget.isReply ? 10 : 11,
+                                  color: theme.hintColor,
+                                ),
+                              ),
+                            if (widget.comment.isPinned) ...[
+                              const SizedBox(width: 4),
+                              Icon(
+                                Icons.push_pin,
+                                size: 10,
+                                color: colorScheme.primary,
+                              ),
+                            ],
+                          ],
+                        ),
+
+                        const SizedBox(height: 4),
+
+                        // Comment Text with @mention highlighting
+                        _CommentText(
+                          content: widget.comment.content,
+                          showFull: _showFullText,
+                          onToggle: () =>
+                              setState(() => _showFullText = !_showFullText),
+                          fontSize: widget.isReply ? 12 : 13,
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 4),
+
+                  // Action Buttons Row (hide when sending)
+                  if (!isSending)
+                    _ActionButtons(
+                      likes: widget.comment.likes,
+                      repliesCount: widget.comment.repliesCount,
+                      onLike: widget.onLike,
+                      onReply: widget.onReply,
+                      onToggleReplies: widget.comment.repliesCount > 0
+                          ? widget.onToggleReplies
+                          : null,
+                      isRepliesExpanded: widget.isRepliesExpanded,
+                      isLiked: widget.isLiked,
+                      isReply: widget.isReply,
+                    ),
+
+                  // Replies Section - nested and indented
+                  if (widget.isRepliesExpanded &&
+                      widget.comment.replies.isNotEmpty)
+                    _RepliesSection(
+                      replies: widget.comment.replies,
+                      repliesCount: widget.comment.repliesCount,
+                      onReplyLike: widget.onReplyLike,
+                      onReplyReply: widget.onReplyReply,
+                      onLoadMoreReplies: widget.onLoadMoreReplies,
+                      likedReplyIds: widget.likedReplyIds,
+                    ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -230,6 +252,12 @@ class _Avatar extends StatelessWidget {
   Widget build(BuildContext context) {
     final bgColor = Theme.of(context).colorScheme.surfaceContainerHighest;
     final iconColor = Theme.of(context).colorScheme.onSurfaceVariant;
+    final shimmerBase = Theme.of(context).brightness == Brightness.dark
+        ? Colors.grey[800]!
+        : Colors.grey[300]!;
+    final shimmerHighlight = Theme.of(context).brightness == Brightness.dark
+        ? Colors.grey[700]!
+        : Colors.grey[100]!;
 
     // If no avatar URL, show default icon immediately
     if (imageUrl == null || imageUrl!.isEmpty) {
@@ -249,17 +277,19 @@ class _Avatar extends StatelessWidget {
       backgroundColor: bgColor,
       child: ClipOval(
         child: AppCachedImage(
+          key: ValueKey(imageUrl), // Force rebuild when URL changes
           imageUrl: imageUrl!,
           width: radius * 2,
           height: radius * 2,
           fit: BoxFit.cover,
           memCacheWidth: (radius * 2 * 2).toInt(), // 2x for retina
-          placeholder: Container(
-            color: bgColor,
-            child: Icon(
-              Icons.person,
-              size: radius,
-              color: iconColor,
+          placeholder: Shimmer.fromColors(
+            baseColor: shimmerBase,
+            highlightColor: shimmerHighlight,
+            child: Container(
+              width: radius * 2,
+              height: radius * 2,
+              color: shimmerBase,
             ),
           ),
         ),
@@ -285,41 +315,40 @@ class _CommentText extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
+    final textStyle = TextStyle(
+      fontSize: fontSize,
+      height: 1.3,
+      color: theme.textTheme.bodyMedium?.color,
+    );
 
     if (content.length <= 120) {
-      return Text(
-        content,
-        style: TextStyle(
-          fontSize: fontSize,
-          height: 1.3,
-          color: theme.textTheme.bodyMedium?.color,
-        ),
+      return MentionText(
+        text: content,
+        style: textStyle,
       );
     }
 
+    final displayText = showFull ? content : '${content.substring(0, 120)}... ';
+
     return GestureDetector(
       onTap: onToggle,
-      child: RichText(
-        text: TextSpan(
-          style: TextStyle(
-            fontSize: fontSize,
-            height: 1.3,
-            color: theme.textTheme.bodyMedium?.color,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          MentionText(
+            text: displayText,
+            style: textStyle,
           ),
-          children: [
-            TextSpan(
-              text: showFull ? content : '${content.substring(0, 120)}... ',
+          Text(
+            showFull ? l10n.collapse : l10n.seeMore,
+            style: TextStyle(
+              color: theme.colorScheme.primary,
+              fontWeight: FontWeight.w500,
+              fontSize: fontSize - 1,
             ),
-            TextSpan(
-              text: showFull ? l10n.collapse : l10n.seeMore,
-              style: TextStyle(
-                color: theme.colorScheme.primary,
-                fontWeight: FontWeight.w500,
-                fontSize: fontSize - 1,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -437,8 +466,9 @@ class _ActionButtons extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: isRepliesExpanded
                       ? theme.colorScheme.primary.withOpacity(0.1)
-                      : theme.colorScheme.surfaceContainerHighest
-                          .withOpacity(0.5),
+                      : theme.colorScheme.surfaceContainerHighest.withOpacity(
+                          0.5,
+                        ),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(
@@ -505,7 +535,11 @@ class _RepliesSection extends StatelessWidget {
               comment: reply,
               onLike: () => onReplyLike?.call(reply.id),
               onDislike: () {},
-              onReply: () => onReplyReply?.call(reply.id, reply.userName),
+              // Always reply to the root thread, not to the reply itself
+              onReply: () => onReplyReply?.call(
+                reply.parentId ?? reply.id,
+                reply.userName,
+              ),
               onToggleReplies: () {},
               isReply: true,
               isLiked: likedReplyIds.contains(reply.id),

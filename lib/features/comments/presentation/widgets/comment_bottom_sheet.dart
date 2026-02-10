@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lilinet_app/l10n/app_localizations.dart';
 import 'package:get_it/get_it.dart';
 import '../../../../core/services/error_handler_service.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import '../../../../core/widgets/cached_image.dart';
 import '../../../../core/widgets/loading_indicator.dart';
 import '../../presentation/manager/comment_cubit.dart';
 import '../../presentation/manager/comment_state.dart';
@@ -89,6 +91,12 @@ class _CommentBottomSheetViewState extends State<_CommentBottomSheetView> {
   }
 
   bool get _isLoggedIn => Supabase.instance.client.auth.currentUser != null;
+
+  String? get _userName {
+    final user = Supabase.instance.client.auth.currentUser;
+    return user?.userMetadata?['display_name'] as String? ??
+        user?.email?.split('@').first;
+  }
 
   void _showLoginPrompt() {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -262,7 +270,9 @@ class _CommentBottomSheetViewState extends State<_CommentBottomSheetView> {
                       Container(
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                          color: theme.colorScheme.primary.withOpacity(0.15),
+                          color: theme.colorScheme.primary.withOpacity(
+                            0.1,
+                          ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Icon(
@@ -363,7 +373,7 @@ class _CommentBottomSheetViewState extends State<_CommentBottomSheetView> {
                                   padding: const EdgeInsets.all(24),
                                   decoration: BoxDecoration(
                                     color: theme.colorScheme.primary
-                                        .withOpacity(0.1),
+                                        .withValues(alpha: 0.1),
                                     shape: BoxShape.circle,
                                   ),
                                   child: Icon(
@@ -465,20 +475,50 @@ class _CommentBottomSheetViewState extends State<_CommentBottomSheetView> {
     );
   }
 
+  /// Builds the avatar for the reply input using [AppCachedImage] with shimmer.
+  Widget _buildReplyAvatar() {
+    final user = Supabase.instance.client.auth.currentUser;
+    final userName = user?.userMetadata?['display_name'] as String? ??
+        user?.userMetadata?['name'] as String? ??
+        user?.email?.split('@').first ??
+        'Anonymous';
+    final avatarUrl = user?.userMetadata?['avatar_url'] as String? ??
+        'https://ui-avatars.com/api/?name=${Uri.encodeComponent(userName)}';
+
+    final shimmerBase = Theme.of(context).brightness == Brightness.dark
+        ? Colors.grey[800]!
+        : Colors.grey[300]!;
+    final shimmerHighlight = Theme.of(context).brightness == Brightness.dark
+        ? Colors.grey[700]!
+        : Colors.grey[100]!;
+
+    return CircleAvatar(
+      radius: 18,
+      backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+      child: ClipOval(
+        child: AppCachedImage(
+          imageUrl: avatarUrl,
+          width: 36,
+          height: 36,
+          fit: BoxFit.cover,
+          memCacheWidth: 72,
+          placeholder: Shimmer.fromColors(
+            baseColor: shimmerBase,
+            highlightColor: shimmerHighlight,
+            child: Container(width: 36, height: 36, color: shimmerBase),
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildReplyInput() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          CircleAvatar(
-            radius: 18,
-            backgroundImage: NetworkImage(
-              Supabase.instance.client.auth.currentUser
-                      ?.userMetadata?['avatar_url'] ??
-                  'https://ui-avatars.com/api/?name=User',
-            ),
-          ),
+          _buildReplyAvatar(),
           const SizedBox(width: 12),
           Expanded(
             child: Container(
@@ -552,8 +592,7 @@ class _CommentBottomSheetViewState extends State<_CommentBottomSheetView> {
           onSend: (content) {
             context.read<CommentCubit>().addComment(content);
           },
-          userAvatar: Supabase
-              .instance.client.auth.currentUser?.userMetadata?['avatar_url'],
+          userName: _userName,
           isLoggedIn: _isLoggedIn,
         );
       },

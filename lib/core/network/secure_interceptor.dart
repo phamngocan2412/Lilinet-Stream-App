@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer' as developer;
+import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
@@ -19,6 +20,14 @@ class SecureInterceptor extends Interceptor {
     'authorization',
     'cookie',
     'x-auth-token',
+    'api_key',
+    'apikey',
+    'bearer',
+    'session_id',
+    'jwt',
+    'access_key',
+    'otp',
+    'code',
   };
 
   SecureInterceptor({LogCallback? logCallback})
@@ -30,7 +39,8 @@ class SecureInterceptor extends Interceptor {
     if (kDebugMode) {
       try {
         // Log Method and URI
-        _log('Request: ${options.method} ${options.uri}', name: 'SecureLogger');
+        final sanitizedUri = _sanitizeUri(options.uri);
+        _log('Request: ${options.method} $sanitizedUri', name: 'SecureLogger');
 
         // Log Headers with Redaction
         final headers = options.headers;
@@ -44,22 +54,7 @@ class SecureInterceptor extends Interceptor {
           if (data is FormData) {
             _log('Request Body: [FormData]', name: 'SecureLogger');
           } else {
-            // Recursive sanitization
-            final sanitized = _sanitizeData(data);
-
-            // Pretty print JSON if possible
-            if (sanitized is Map || sanitized is List) {
-              try {
-                final prettyJson =
-                    const JsonEncoder.withIndent('  ').convert(sanitized);
-                _log('Request Body:\n$prettyJson', name: 'SecureLogger');
-              } catch (e) {
-                // Fallback for non-encodable data
-                _log('Request Body: $sanitized', name: 'SecureLogger');
-              }
-            } else {
-              _log('Request Body: $sanitized', name: 'SecureLogger');
-            }
+            _logBody(data, 'Request Body');
           }
         }
       } catch (e) {
@@ -69,7 +64,56 @@ class SecureInterceptor extends Interceptor {
     handler.next(options);
   }
 
+  @override
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
+    if (kDebugMode) {
+      try {
+        _log('Response: ${response.statusCode} ${response.requestOptions.uri}',
+            name: 'SecureLogger');
+
+        // Log Headers (sanitized)
+        final headers = response.headers.map;
+        if (headers.isNotEmpty) {
+          final sanitizedHeaders = _sanitizeData(headers);
+          _log('Response Headers: $sanitizedHeaders', name: 'SecureLogger');
+        }
+
+        final data = response.data;
+        if (data != null) {
+          final sanitized = _sanitizeData(data);
+          if (sanitized is Map || sanitized is List) {
+            try {
+              final prettyJson =
+                  const JsonEncoder.withIndent('  ').convert(sanitized);
+              _log('Response Body:\n$prettyJson', name: 'SecureLogger');
+            } catch (e) {
+              _log('Response Body: $sanitized', name: 'SecureLogger');
+            }
+          } else {
+            _log('Response Body: $sanitized', name: 'SecureLogger');
+          }
+        }
+      } catch (e) {
+        _log('Failed to log secure response: $e', name: 'SecureLogger');
+      }
+    }
+    handler.next(response);
+  }
+
   dynamic _sanitizeData(dynamic data) {
+    if (data is String) {
+      try {
+        // Attempt to parse string as JSON to sanitize internal fields
+        if (data.trim().startsWith('{') || data.trim().startsWith('[')) {
+          final decoded = jsonDecode(data);
+          return _sanitizeData(decoded);
+        }
+      } catch (_) {
+        // Not valid JSON, return as is
+      }
+      return data;
+    }
+
     if (data is Map) {
       final sanitized = <String, dynamic>{};
       for (final entry in data.entries) {
@@ -83,9 +127,30 @@ class SecureInterceptor extends Interceptor {
         }
       }
       return sanitized;
+    } else if (data is Uint8List || (data is List<int> && data is! String)) {
+      // Handle binary data to prevent massive logs
+      return '[Binary Data: ${(data as List).length} bytes]';
     } else if (data is List) {
       return data.map((item) => _sanitizeData(item)).toList();
+    } else if (data is ResponseBody) {
+      return '[Stream ResponseBody]';
     }
+
     return data;
+  }
+
+  Uri _sanitizeUri(Uri uri) {
+    if (uri.queryParameters.isEmpty) return uri;
+
+    final sanitizedParams = <String, dynamic>{};
+    uri.queryParameters.forEach((key, value) {
+      if (_keysToRedact.contains(key.toLowerCase())) {
+        sanitizedParams[key] = '***REDACTED***';
+      } else {
+        sanitizedParams[key] = value;
+      }
+    });
+
+    return uri.replace(queryParameters: sanitizedParams);
   }
 }

@@ -445,4 +445,60 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get quality => 'Chất lượng';
+
+  @override
+  String get noInternetConnection => 'Không có kết nối Internet';
+
+  @override
+  String get searchHint => 'Tìm kiếm anime...';
+
+  @override
+  String get searchForAnime => 'Tìm kiếm anime';
+
+  @override
+  String noResultsFound(String filter, String query) {
+    return 'Không tìm thấy kết quả $filter cho \"$query\"';
+  }
+
+  @override
+  String get filterAll => 'Tất cả';
+
+  @override
+  String get filterTVSeries => 'TV Series';
+
+  @override
+  String get filterMovie => 'Phim lẻ';
+
+  @override
+  String get changePassword => 'Thay đổi mật khẩu';
+
+  @override
+  String get newPassword => 'Mật khẩu mới';
+
+  @override
+  String get confirmPassword => 'Xác nhận mật khẩu';
+
+  @override
+  String get passwordsDoNotMatch => 'Mật khẩu không khớp';
+
+  @override
+  String get passwordChangeSuccess => 'Thay đổi mật khẩu thành công';
+
+  @override
+  String get update => 'Cập nhật';
+
+  @override
+  String get updateProfile => 'Cập nhật hồ sơ';
+
+  @override
+  String get displayName => 'Tên hiển thị';
+
+  @override
+  String get avatarUrl => 'URL ảnh đại diện';
+
+  @override
+  String get profileUpdateSuccess => 'Cập nhật hồ sơ thành công';
+
+  @override
+  String get save => 'Lưu';
 }

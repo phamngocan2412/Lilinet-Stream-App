@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lilinet_app/features/comments/presentation/widgets/comment_input.dart';
+import 'package:lilinet_app/l10n/app_localizations.dart';
 
 void main() {
   testWidgets('CommentInput has maxLength limit to prevent DoS',
       (tester) async {
     await tester.pumpWidget(
       MaterialApp(
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [Locale('en')],
         home: Scaffold(
           body: CommentInput(
             onSend: (_) {},

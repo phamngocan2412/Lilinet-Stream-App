@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lilinet_app/l10n/app_localizations.dart';
 import '../bloc/auth_bloc.dart';
 import '../bloc/auth_event.dart';
 import '../../../../core/widgets/loading_indicator.dart';
@@ -52,16 +53,29 @@ class _UpdateProfileDialogState extends State<UpdateProfileDialog> {
     super.dispose();
   }
 
+  void _handleSubmit() {
+    context.read<AuthBloc>().add(
+          UpdateProfileRequested(
+            displayName: _nameController.text.trim(),
+            avatarUrl: _avatarController.text.trim(),
+          ),
+        );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthBloc, AuthState>(
+    final l10n = AppLocalizations.of(context)!;
+
+    return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
+        if (!context.mounted) return;
+
         if (state is Authenticated) {
-          // Success implies we are still authenticated with updated data
+          // Success - close dialog and show confirmation
           Navigator.pop(context);
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Profile updated successfully'),
+            SnackBar(
+              content: Text(l10n.profileUpdateSuccess),
               backgroundColor: Colors.green,
             ),
           );
@@ -74,71 +88,70 @@ class _UpdateProfileDialogState extends State<UpdateProfileDialog> {
           );
         }
       },
-      child: Dialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text(
-                  'Update Profile',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 24),
-                TextFormField(
-                  controller: _nameController,
-                  decoration: const InputDecoration(
-                    labelText: 'Display Name',
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.person),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: _avatarController,
-                  decoration: const InputDecoration(
-                    labelText: 'Avatar URL',
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.image),
-                  ),
-                ),
-                const SizedBox(height: 24),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: const Text('Cancel'),
+      builder: (context, state) {
+        final isLoading = state is AuthLoading;
+
+        return Dialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    l10n.updateProfile,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
-                    const SizedBox(width: 8),
-                    BlocBuilder<AuthBloc, AuthState>(
-                      builder: (context, state) {
-                        if (state is AuthLoading) {
-                          return const LoadingIndicator(size: 20);
-                        }
-                        return FilledButton(
-                          onPressed: () {
-                            context.read<AuthBloc>().add(
-                                  UpdateProfileRequested(
-                                    displayName: _nameController.text.trim(),
-                                    avatarUrl: _avatarController.text.trim(),
-                                  ),
-                                );
-                          },
-                          child: const Text('Save'),
-                        );
-                      },
+                  ),
+                  const SizedBox(height: 24),
+                  TextFormField(
+                    controller: _nameController,
+                    enabled: !isLoading,
+                    decoration: InputDecoration(
+                      labelText: l10n.displayName,
+                      border: const OutlineInputBorder(),
+                      prefixIcon: const Icon(Icons.person),
                     ),
-                  ],
-                ),
-              ],
+                  ),
+                  const SizedBox(height: 16),
+                  TextFormField(
+                    controller: _avatarController,
+                    enabled: !isLoading,
+                    decoration: InputDecoration(
+                      labelText: l10n.avatarUrl,
+                      border: const OutlineInputBorder(),
+                      prefixIcon: const Icon(Icons.image),
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed:
+                            isLoading ? null : () => Navigator.pop(context),
+                        child: Text(l10n.cancel),
+                      ),
+                      const SizedBox(width: 8),
+                      FilledButton(
+                        onPressed: isLoading ? null : _handleSubmit,
+                        child: isLoading
+                            ? const LoadingIndicator(size: 20)
+                            : Text(l10n.save),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

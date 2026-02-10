@@ -43,8 +43,6 @@ void main() {
     // Setup GetIt
     GetIt.instance
         .registerFactory<HomeTrendingCubit>(() => mockHomeTrendingCubit);
-    GetIt.instance.registerSingleton<MiniplayerHeightNotifier>(
-        MiniplayerHeightNotifier());
 
     // Stub HomeTrendingCubit
     when(() => mockHomeTrendingCubit.state).thenReturn(HomeTrendingInitial());

@@ -895,6 +895,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Quality'**
   String get quality;
+
+  /// No description provided for @noInternetConnection.
+  ///
+  /// In en, this message translates to:
+  /// **'No Internet Connection'**
+  String get noInternetConnection;
+
+  /// No description provided for @searchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search anime...'**
+  String get searchHint;
+
+  /// No description provided for @searchForAnime.
+  ///
+  /// In en, this message translates to:
+  /// **'Search for anime'**
+  String get searchForAnime;
+
+  /// No description provided for @noResultsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No {filter} results found for \"{query}\"'**
+  String noResultsFound(String filter, String query);
+
+  /// No description provided for @filterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get filterAll;
+
+  /// No description provided for @filterTVSeries.
+  ///
+  /// In en, this message translates to:
+  /// **'TV Series'**
+  String get filterTVSeries;
+
+  /// No description provided for @filterMovie.
+  ///
+  /// In en, this message translates to:
+  /// **'Movie'**
+  String get filterMovie;
+
+  /// No description provided for @changePassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Password'**
+  String get changePassword;
+
+  /// No description provided for @newPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'New Password'**
+  String get newPassword;
+
+  /// No description provided for @confirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get confirmPassword;
+
+  /// No description provided for @passwordsDoNotMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get passwordsDoNotMatch;
+
+  /// No description provided for @passwordChangeSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Password changed successfully'**
+  String get passwordChangeSuccess;
+
+  /// No description provided for @update.
+  ///
+  /// In en, this message translates to:
+  /// **'Update'**
+  String get update;
+
+  /// No description provided for @updateProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Profile'**
+  String get updateProfile;
+
+  /// No description provided for @displayName.
+  ///
+  /// In en, this message translates to:
+  /// **'Display Name'**
+  String get displayName;
+
+  /// No description provided for @avatarUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Avatar URL'**
+  String get avatarUrl;
+
+  /// No description provided for @profileUpdateSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile updated successfully'**
+  String get profileUpdateSuccess;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
 }
 
 class _AppLocalizationsDelegate

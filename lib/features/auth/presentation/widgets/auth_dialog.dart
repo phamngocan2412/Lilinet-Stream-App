@@ -37,6 +37,8 @@ class _AuthDialogState extends State<AuthDialog> {
     final l10n = AppLocalizations.of(context)!;
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
+        if (!context.mounted) return;
+
         if (state is Authenticated) {
           Navigator.pop(context);
           widget.onLoginSuccess?.call();

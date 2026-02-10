@@ -49,9 +49,8 @@ class _MiniPlayerContentState extends State<MiniPlayerContent> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => _handleTap(context),
-      behavior: HitTestBehavior.translucent,
+      behavior: HitTestBehavior.opaque,
       child: Material(
-        // Add Material widget for proper elevation and touch handling
         color: const Color(0xFF1A1A1A),
         elevation: 8,
         child: Row(

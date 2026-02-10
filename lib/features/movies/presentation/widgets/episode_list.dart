@@ -24,9 +24,9 @@ class EpisodeList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Optimization: Convert list to map for O(1) access to avoid O(N*M) complexity
+    // Optimization: Create a map for O(1) access to watch progress
     final progressMap = {
-      for (var p in watchProgress)
+      for (final p in watchProgress)
         if (p.mediaId == mediaId && p.episodeId != null) p.episodeId!: p
     };
 

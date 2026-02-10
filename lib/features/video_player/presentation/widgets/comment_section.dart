@@ -7,11 +7,15 @@ import '../../../../core/widgets/loading_indicator.dart';
 import '../bloc/comments/comments_cubit.dart';
 import '../bloc/comments/comments_state.dart';
 
-// Removed _CommentSectionStrings as we now use AppLocalizations
+// DEPRECATED: Use PlayerCommentsSection instead which integrates with the real
+// Supabase-backed comment system from features/comments/
+// This file is kept for reference but should not be used in production.
 
 // ==========================================
-// 1. Data Model
+// 1. Data Model (DEPRECATED)
 // ==========================================
+/// DEPRECATED: Use CommentModel from features/comments/data/models/ instead
+@Deprecated('Use CommentModel from features/comments/data/models/ instead')
 class CommentModel {
   final String id;
   final String userName;
@@ -39,8 +43,15 @@ class CommentModel {
 }
 
 // ==========================================
-// 2. Comment Section Widget
+// 2. Comment Section Widget (DEPRECATED)
 // ==========================================
+/// DEPRECATED: Use [PlayerCommentsSection] instead.
+///
+/// This widget uses the mock [CommentsCubit] which provides in-memory
+/// mock data only. For production, use PlayerCommentsSection which
+/// integrates with the real Supabase-backed comment system.
+@Deprecated(
+    'Use PlayerCommentsSection instead. This mock implementation will be removed.')
 class CommentSection extends StatelessWidget {
   final String videoId;
 
@@ -296,11 +307,13 @@ class _CommentSectionViewState extends State<_CommentSectionView> {
             child: TextField(
               controller: _controller,
               style: const TextStyle(color: Colors.white),
+              maxLength: 1000,
               decoration: InputDecoration(
                 hintText: l10n.addCommentHint,
                 hintStyle: TextStyle(color: Colors.grey[600]),
                 border: InputBorder.none,
                 isDense: true,
+                counterText: "",
               ),
               minLines: 1,
               maxLines: 3,

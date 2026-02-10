@@ -3,6 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../../core/errors/failures.dart';
 import '../../domain/entities/comment.dart';
 import '../../domain/repositories/comment_repository.dart';
@@ -71,9 +72,12 @@ class CommentCubit extends Cubit<CommentState> {
           (ids) => ids.toSet(),
         );
 
+        // Filter out replies - only show root comments (parentId is null)
+        final rootComments = comments.where((c) => c.parentId == null).toList();
+
         // Default sort is Trending
         final sortedComments = _sortComments(
-          comments,
+          rootComments,
           CommentSortType.trending,
         );
         emit(
@@ -117,7 +121,11 @@ class CommentCubit extends Cubit<CommentState> {
         commentsResult.fold(
           (l) {}, // Silent fail - keep existing comments
           (newComments) {
-            final sorted = _sortComments(newComments, currentState.sortType);
+            // Filter out replies - only show root comments (parentId is null)
+            final rootComments =
+                newComments.where((c) => c.parentId == null).toList();
+            final sorted = _sortComments(rootComments, currentState.sortType);
+
             // Only emit if the comments are actually different
             if (_commentsChanged(currentState.comments, sorted)) {
               emit(currentState.copyWith(
@@ -160,8 +168,11 @@ class CommentCubit extends Cubit<CommentState> {
               commentsResult.fold(
                 (l) => null,
                 (newComments) {
+                  // Filter out replies - only show root comments (parentId is null)
+                  final rootComments =
+                      newComments.where((c) => c.parentId == null).toList();
                   final sorted = _sortComments(
-                    newComments,
+                    rootComments,
                     loadedState.sortType,
                   );
                   // Only emit if the comments are actually different
@@ -238,8 +249,55 @@ class CommentCubit extends Cubit<CommentState> {
     await state.maybeMap(
       loaded: (loadedState) async {
         emit(loadedState.copyWith(isAddingComment: true));
-        debugPrint('⏳ Emitting loading state');
 
+        // --- Optimistic Insert ---
+        final tempId = 'temp_${DateTime.now().millisecondsSinceEpoch}';
+        final user = _getCurrentUser();
+        final optimisticComment = Comment(
+          id: tempId,
+          videoId: _currentVideoId!,
+          userName: user['userName']!,
+          avatarUrl: user['avatarUrl']!,
+          content: content,
+          createdAt: DateTime.now(),
+          parentId: parentId,
+          isSending: true,
+        );
+
+        if (parentId != null) {
+          // Optimistic reply: add to parent's replies
+          final updatedComments = loadedState.comments.map((comment) {
+            if (comment.id == parentId) {
+              return comment.copyWith(
+                replies: [...comment.replies, optimisticComment],
+                repliesCount: comment.repliesCount + 1,
+              );
+            }
+            return comment;
+          }).toList();
+
+          final updatedExpandedReplies = Map<String, List<Comment>>.from(
+            loadedState.expandedReplies,
+          );
+          if (updatedExpandedReplies.containsKey(parentId)) {
+            updatedExpandedReplies[parentId] = [
+              ...updatedExpandedReplies[parentId]!,
+              optimisticComment,
+            ];
+          }
+          emit(loadedState.copyWith(
+            comments: updatedComments,
+            expandedReplies: updatedExpandedReplies,
+          ));
+        } else {
+          // Optimistic root comment: prepend to list
+          emit(loadedState.copyWith(
+            comments: [optimisticComment, ...loadedState.comments],
+          ));
+        }
+        debugPrint('⚡ Optimistic comment shown: $tempId');
+
+        // --- Real API call ---
         final result = await _addComment(
           AddCommentParams(
             videoId: _currentVideoId!,
@@ -250,29 +308,49 @@ class CommentCubit extends Cubit<CommentState> {
 
         if (isClosed) return;
 
+        // Get the current state after the optimistic emit
+        final currentState = state.maybeMap(
+          loaded: (s) => s,
+          orElse: () => null,
+        );
+        if (currentState == null) return;
+
         result.fold(
           (failure) {
             debugPrint('❌ Failed to add comment: ${failure.message}');
-            emit(loadedState.copyWith(isAddingComment: false));
-            // Emit error message without hardcoded label. UI will handle formatting if needed.
-            emit(
-              CommentState.loaded(
-                comments: loadedState.comments,
-                sortType: loadedState.sortType,
-                errorMessage: failure.message,
-              ),
+            // Remove optimistic comment on failure
+            final cleaned = _removeCommentById(currentState.comments, tempId);
+            final cleanedReplies = Map<String, List<Comment>>.from(
+              currentState.expandedReplies,
             );
+            cleanedReplies.forEach((key, replies) {
+              cleanedReplies[key] =
+                  replies.where((r) => r.id != tempId).toList();
+            });
+            emit(currentState.copyWith(
+              comments: cleaned,
+              expandedReplies: cleanedReplies,
+              isAddingComment: false,
+              errorMessage: failure.message,
+            ));
           },
           (newComment) async {
             debugPrint('✅ Comment added successfully: ${newComment.id}');
-            // Optimistic update - add new comment to the list immediately
-            final updatedComments = [newComment, ...loadedState.comments];
-            emit(loadedState.copyWith(
-              comments: updatedComments,
+            // Replace optimistic comment with real one
+            final replaced =
+                _replaceComment(currentState.comments, tempId, newComment);
+            final replacedReplies = Map<String, List<Comment>>.from(
+              currentState.expandedReplies,
+            );
+            replacedReplies.forEach((key, replies) {
+              replacedReplies[key] =
+                  replies.map((r) => r.id == tempId ? newComment : r).toList();
+            });
+            emit(currentState.copyWith(
+              comments: replaced,
+              expandedReplies: replacedReplies,
               isAddingComment: false,
             ));
-            // Silent refresh WITHOUT canceling subscription
-            // This keeps realtime alive and syncs with server
             _silentRefresh();
           },
         );
@@ -282,6 +360,60 @@ class CommentCubit extends Cubit<CommentState> {
         await loadComments(_currentVideoId!);
       },
     );
+  }
+
+  /// Returns current user info for optimistic comment creation.
+  Map<String, String> _getCurrentUser() {
+    try {
+      // Import would create circular dependency, use dynamic access
+      final supabase = (Supabase.instance.client).auth.currentUser;
+      final name = supabase?.userMetadata?['display_name'] as String? ??
+          supabase?.userMetadata?['name'] as String? ??
+          supabase?.email?.split('@').first ??
+          'Anonymous';
+      final avatar = supabase?.userMetadata?['avatar_url'] as String? ??
+          'https://ui-avatars.com/api/?name=${Uri.encodeComponent(name)}';
+      return {'userName': name, 'avatarUrl': avatar};
+    } catch (_) {
+      return {
+        'userName': 'Anonymous',
+        'avatarUrl': 'https://ui-avatars.com/api/?name=Anonymous',
+      };
+    }
+  }
+
+  /// Removes a comment by ID from the list (including nested replies).
+  List<Comment> _removeCommentById(List<Comment> comments, String id) {
+    return comments.where((c) {
+      if (c.id == id) return false;
+      return true;
+    }).map((c) {
+      if (c.replies.any((r) => r.id == id)) {
+        return c.copyWith(
+          replies: c.replies.where((r) => r.id != id).toList(),
+          repliesCount: (c.repliesCount - 1).clamp(0, c.repliesCount),
+        );
+      }
+      return c;
+    }).toList();
+  }
+
+  /// Replaces a temp comment with the real server comment.
+  List<Comment> _replaceComment(
+    List<Comment> comments,
+    String tempId,
+    Comment replacement,
+  ) {
+    return comments.map((c) {
+      if (c.id == tempId) return replacement;
+      if (c.replies.any((r) => r.id == tempId)) {
+        return c.copyWith(
+          replies:
+              c.replies.map((r) => r.id == tempId ? replacement : r).toList(),
+        );
+      }
+      return c;
+    }).toList();
   }
 
   Future<void> likeComment(String commentId) async {
