@@ -11,15 +11,43 @@ import '../../../comments/presentation/widgets/comment_item.dart';
 import '../../../comments/presentation/widgets/comment_sort_tabs.dart';
 import '../../../../core/widgets/loading_indicator.dart';
 
-class PlayerCommentsSection extends StatelessWidget {
+class PlayerCommentsSection extends StatefulWidget {
   final String mediaId;
 
   const PlayerCommentsSection({super.key, required this.mediaId});
 
   @override
+  State<PlayerCommentsSection> createState() => _PlayerCommentsSectionState();
+}
+
+class _PlayerCommentsSectionState extends State<PlayerCommentsSection> {
+  late final CommentCubit _commentCubit;
+
+  @override
+  void initState() {
+    super.initState();
+    _commentCubit = GetIt.I<CommentCubit>();
+    _commentCubit.loadComments(widget.mediaId);
+  }
+
+  @override
+  void didUpdateWidget(PlayerCommentsSection oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.mediaId != widget.mediaId) {
+      _commentCubit.loadComments(widget.mediaId);
+    }
+  }
+
+  @override
+  void dispose() {
+    _commentCubit.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => GetIt.I<CommentCubit>()..loadComments(mediaId),
+    return BlocProvider.value(
+      value: _commentCubit,
       child: const PlayerCommentsView(),
     );
   }
@@ -32,14 +60,19 @@ class PlayerCommentsView extends StatefulWidget {
   State<PlayerCommentsView> createState() => _PlayerCommentsViewState();
 }
 
-class _PlayerCommentsViewState extends State<PlayerCommentsView> {
+class _PlayerCommentsViewState extends State<PlayerCommentsView>
+    with AutomaticKeepAliveClientMixin {
   bool get _isLoggedIn => Supabase.instance.client.auth.currentUser != null;
   final ScrollController _scrollController = ScrollController();
   String? _lastAddedCommentId;
 
-  String? get _userAvatar {
+  @override
+  bool get wantKeepAlive => true;
+
+  String? get _userName {
     final user = Supabase.instance.client.auth.currentUser;
-    return user?.userMetadata?['avatar_url'] as String?;
+    return user?.userMetadata?['display_name'] as String? ??
+        user?.email?.split('@').first;
   }
 
   @override
@@ -60,6 +93,7 @@ class _PlayerCommentsViewState extends State<PlayerCommentsView> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context); // Required for AutomaticKeepAliveClientMixin
     return BlocConsumer<CommentCubit, CommentState>(
       listener: (context, state) {
         state.mapOrNull(
@@ -102,27 +136,90 @@ class _PlayerCommentsViewState extends State<PlayerCommentsView> {
             final expandedReplies = loadedState.expandedReplies;
             final likedCommentIds = loadedState.likedCommentIds;
 
-            return SingleChildScrollView(
-              controller: _scrollController,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!
-                            .commentsCount(comments.length),
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!
+                          .commentsCount(comments.length),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
                       ),
-                      CommentSortTabs(
-                        currentSort: sortType,
-                        onSortChanged: (type) {
-                          context.read<CommentCubit>().changeSortType(type);
+                    ),
+                    CommentSortTabs(
+                      currentSort: sortType,
+                      onSortChanged: (type) {
+                        context.read<CommentCubit>().changeSortType(type);
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                const Divider(height: 1, color: Colors.white24),
+                const SizedBox(height: 12),
+                if (comments.isEmpty)
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: Text(
+                        AppLocalizations.of(context)!.noCommentsYet,
+                        style: const TextStyle(color: Colors.grey),
+                      ),
+                    ),
+                  )
+                else
+                  ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: comments.length,
+                    separatorBuilder: (_, i) =>
+                        const Divider(height: 1, color: Colors.white12),
+                    itemBuilder: (context, index) {
+                      final comment = comments[index];
+                      final isExpanded = expandedReplies.containsKey(
+                        comment.id,
+                      );
+                      return CommentItem(
+                        comment: comment.copyWith(
+                          replies: isExpanded
+                              ? (expandedReplies[comment.id] ?? [])
+                              : [],
+                        ),
+                        onLike: () {
+                          context.read<CommentCubit>().likeComment(
+                                comment.id,
+                              );
+                        },
+                        onDislike: () {},
+                        onReply: () {
+                          _showReplyDialog(
+                            context,
+                            comment.id,
+                            comment.userName,
+                          );
+                        },
+                        onToggleReplies: () {
+                          context.read<CommentCubit>().toggleReplies(
+                                comment.id,
+                              );
+                        },
+                        isRepliesExpanded: isExpanded,
+                        isLiked: likedCommentIds.contains(comment.id),
+                        onReplyLike: (replyId) {
+                          context.read<CommentCubit>().likeComment(replyId);
+                        },
+                        onReplyReply: (replyId, userName) {
+                          _showReplyDialog(context, replyId, userName);
+                        },
+                        onLoadMoreReplies: () {
+                          context.read<CommentCubit>().toggleReplies(
+                                comment.id,
+                              );
                         },
                       ),
                     ],
@@ -133,7 +230,7 @@ class _PlayerCommentsViewState extends State<PlayerCommentsView> {
                   // Comment Input at the top
                   CommentInput(
                     isLoggedIn: _isLoggedIn,
-                    userAvatar: _userAvatar,
+                    userName: _userName,
                     isSending: loadedState.isAddingComment,
                     onSend: (text) {
                       context.read<CommentCubit>().addComment(text);

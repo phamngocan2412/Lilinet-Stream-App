@@ -25,6 +25,7 @@ abstract class Comment with _$Comment {
     @Default(false) bool isEdited,
     @Default(false) bool isDeleted,
     @Default(false) bool isPinned,
+    @Default(false) bool isSending,
   }) = _Comment;
 
   /// Trending score is calculated in the Domain layer as it is business logic.

@@ -50,11 +50,13 @@ class _MiniplayerWidgetState extends State<MiniplayerWidget> {
       if (!mounted) return;
       final state = context.read<VideoPlayerBloc>().state;
       debugPrint('MiniplayerWidget initState: status=${state.status}');
-      if (state.status == VideoPlayerStatus.expanded) {
-        _miniplayerController.animateToHeight(state: PanelState.MAX);
-      } else if (state.status == VideoPlayerStatus.minimized) {
+      // FIX: Don't auto-expand when widget is first created.
+      // Only set to minimized if that's the current state.
+      // This prevents unwanted auto-expand when navigating between routes.
+      if (state.status == VideoPlayerStatus.minimized) {
         _miniplayerController.animateToHeight(state: PanelState.MIN);
       }
+      // Note: We don't auto-expand here - user must explicitly tap to expand
     });
   }
 
@@ -150,14 +152,14 @@ class _MiniplayerWidgetState extends State<MiniplayerWidget> {
               },
             );
 
-            // Only wrap with PopScope when expanded
+            // Only wrap with PopScope when expanded to handle back button
             if (state.status == VideoPlayerStatus.expanded) {
               return PopScope(
                 canPop: false,
                 onPopInvokedWithResult: (didPop, result) {
                   if (didPop) return;
 
-                  // If expanded, minimize instead of popping
+                  // If expanded, minimize instead of popping route
                   _miniplayerController.animateToHeight(state: PanelState.MIN);
                   context.read<VideoPlayerBloc>().add(MinimizeVideo());
                 },

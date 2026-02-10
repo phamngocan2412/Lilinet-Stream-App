@@ -194,10 +194,14 @@ class StreamingConfig {
       return movieProviderPref ?? defaultMovieProvider;
     }
 
+    // Check for anime content in genres (case insensitive, including partial matches)
     final isAnime = genres.any(
-      (g) =>
-          g.toLowerCase().contains('anime') ||
-          g.toLowerCase().contains('animation'),
+      (g) {
+        final lowerGenre = g.toLowerCase();
+        return lowerGenre.contains('anime') ||
+            lowerGenre.contains('animation') ||
+            lowerGenre.contains('japan'); // Japanese anime detection
+      },
     );
 
     if (isAnime) {

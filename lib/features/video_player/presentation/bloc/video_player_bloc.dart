@@ -41,6 +41,7 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
     on<DownloadCurrentVideo>(_onDownloadCurrentVideo);
     on<SwitchServer>(_onSwitchServer);
     on<RetryStreaming>(_onRetryStreaming);
+    on<UpdateMovieDetails>(_onUpdateMovieDetails);
     on<SwitchQuality>(_onSwitchQuality);
   }
 
@@ -257,6 +258,16 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
     );
   }
 
+  Future<void> _onUpdateMovieDetails(
+    UpdateMovieDetails event,
+    Emitter<VideoPlayerState> emit,
+  ) async {
+    debugPrint(
+        '📥 VideoPlayerBloc: Updating movie details for ${event.movie.title}');
+    // Only update movie data without triggering playback reset
+    emit(state.copyWith(movie: event.movie));
+  }
+
   Future<void> _onSwitchQuality(
     SwitchQuality event,
     Emitter<VideoPlayerState> emit,
@@ -348,11 +359,17 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
   }
 
   void _onMinimizeVideo(MinimizeVideo event, Emitter<VideoPlayerState> emit) {
-    emit(state.copyWith(status: VideoPlayerStatus.minimized));
+    // Debounce rapid minimize/maximize transitions
+    if (state.status != VideoPlayerStatus.minimized) {
+      emit(state.copyWith(status: VideoPlayerStatus.minimized));
+    }
   }
 
   void _onMaximizeVideo(MaximizeVideo event, Emitter<VideoPlayerState> emit) {
-    emit(state.copyWith(status: VideoPlayerStatus.expanded));
+    // Debounce rapid minimize/maximize transitions
+    if (state.status != VideoPlayerStatus.expanded) {
+      emit(state.copyWith(status: VideoPlayerStatus.expanded));
+    }
   }
 
   Future<void> _onEnterPiP(

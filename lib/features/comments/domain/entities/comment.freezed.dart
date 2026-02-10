@@ -35,6 +35,7 @@ mixin _$Comment {
   bool get isEdited => throw _privateConstructorUsedError;
   bool get isDeleted => throw _privateConstructorUsedError;
   bool get isPinned => throw _privateConstructorUsedError;
+  bool get isSending => throw _privateConstructorUsedError;
 
   /// Create a copy of Comment
   /// with the given fields replaced by the non-null parameter values.
@@ -64,7 +65,8 @@ abstract class $CommentCopyWith<$Res> {
       String? mediaType,
       bool isEdited,
       bool isDeleted,
-      bool isPinned});
+      bool isPinned,
+      bool isSending});
 }
 
 /// @nodoc
@@ -99,6 +101,7 @@ class _$CommentCopyWithImpl<$Res, $Val extends Comment>
     Object? isEdited = null,
     Object? isDeleted = null,
     Object? isPinned = null,
+    Object? isSending = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -169,6 +172,10 @@ class _$CommentCopyWithImpl<$Res, $Val extends Comment>
           ? _value.isPinned
           : isPinned // ignore: cast_nullable_to_non_nullable
               as bool,
+      isSending: null == isSending
+          ? _value.isSending
+          : isSending // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -197,7 +204,8 @@ abstract class _$$CommentImplCopyWith<$Res> implements $CommentCopyWith<$Res> {
       String? mediaType,
       bool isEdited,
       bool isDeleted,
-      bool isPinned});
+      bool isPinned,
+      bool isSending});
 }
 
 /// @nodoc
@@ -230,6 +238,7 @@ class __$$CommentImplCopyWithImpl<$Res>
     Object? isEdited = null,
     Object? isDeleted = null,
     Object? isPinned = null,
+    Object? isSending = null,
   }) {
     return _then(_$CommentImpl(
       id: null == id
@@ -300,6 +309,10 @@ class __$$CommentImplCopyWithImpl<$Res>
           ? _value.isPinned
           : isPinned // ignore: cast_nullable_to_non_nullable
               as bool,
+      isSending: null == isSending
+          ? _value.isSending
+          : isSending // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -324,7 +337,8 @@ class _$CommentImpl extends _Comment {
       this.mediaType,
       this.isEdited = false,
       this.isDeleted = false,
-      this.isPinned = false})
+      this.isPinned = false,
+      this.isSending = false})
       : _likeTimestamps = likeTimestamps,
         _replies = replies,
         super._();
@@ -386,10 +400,13 @@ class _$CommentImpl extends _Comment {
   @override
   @JsonKey()
   final bool isPinned;
+  @override
+  @JsonKey()
+  final bool isSending;
 
   @override
   String toString() {
-    return 'Comment(id: $id, videoId: $videoId, userName: $userName, avatarUrl: $avatarUrl, content: $content, likes: $likes, dislikes: $dislikes, repliesCount: $repliesCount, createdAt: $createdAt, updatedAt: $updatedAt, likeTimestamps: $likeTimestamps, replies: $replies, parentId: $parentId, mediaType: $mediaType, isEdited: $isEdited, isDeleted: $isDeleted, isPinned: $isPinned)';
+    return 'Comment(id: $id, videoId: $videoId, userName: $userName, avatarUrl: $avatarUrl, content: $content, likes: $likes, dislikes: $dislikes, repliesCount: $repliesCount, createdAt: $createdAt, updatedAt: $updatedAt, likeTimestamps: $likeTimestamps, replies: $replies, parentId: $parentId, mediaType: $mediaType, isEdited: $isEdited, isDeleted: $isDeleted, isPinned: $isPinned, isSending: $isSending)';
   }
 
   @override
@@ -425,7 +442,9 @@ class _$CommentImpl extends _Comment {
             (identical(other.isDeleted, isDeleted) ||
                 other.isDeleted == isDeleted) &&
             (identical(other.isPinned, isPinned) ||
-                other.isPinned == isPinned));
+                other.isPinned == isPinned) &&
+            (identical(other.isSending, isSending) ||
+                other.isSending == isSending));
   }
 
   @override
@@ -447,7 +466,8 @@ class _$CommentImpl extends _Comment {
       mediaType,
       isEdited,
       isDeleted,
-      isPinned);
+      isPinned,
+      isSending);
 
   /// Create a copy of Comment
   /// with the given fields replaced by the non-null parameter values.
@@ -476,7 +496,8 @@ abstract class _Comment extends Comment {
       final String? mediaType,
       final bool isEdited,
       final bool isDeleted,
-      final bool isPinned}) = _$CommentImpl;
+      final bool isPinned,
+      final bool isSending}) = _$CommentImpl;
   const _Comment._() : super._();
 
   @override
@@ -513,6 +534,8 @@ abstract class _Comment extends Comment {
   bool get isDeleted;
   @override
   bool get isPinned;
+  @override
+  bool get isSending;
 
   /// Create a copy of Comment
   /// with the given fields replaced by the non-null parameter values.

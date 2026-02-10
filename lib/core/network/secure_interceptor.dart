@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer' as developer;
+import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
@@ -67,74 +68,53 @@ class SecureInterceptor extends Interceptor {
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     if (kDebugMode) {
       try {
-        _log('Response: ${response.statusCode} ${response.statusMessage}',
+        _log('Response: ${response.statusCode} ${response.requestOptions.uri}',
             name: 'SecureLogger');
+
+        // Log Headers (sanitized)
+        final headers = response.headers.map;
+        if (headers.isNotEmpty) {
+          final sanitizedHeaders = _sanitizeData(headers);
+          _log('Response Headers: $sanitizedHeaders', name: 'SecureLogger');
+        }
 
         final data = response.data;
         if (data != null) {
-          _logBody(data, 'Response Body');
+          final sanitized = _sanitizeData(data);
+          if (sanitized is Map || sanitized is List) {
+            try {
+              final prettyJson =
+                  const JsonEncoder.withIndent('  ').convert(sanitized);
+              _log('Response Body:\n$prettyJson', name: 'SecureLogger');
+            } catch (e) {
+              _log('Response Body: $sanitized', name: 'SecureLogger');
+            }
+          } else {
+            _log('Response Body: $sanitized', name: 'SecureLogger');
+          }
         }
       } catch (e) {
-        _log('Failed to log secure response body: $e', name: 'SecureLogger');
+        _log('Failed to log secure response: $e', name: 'SecureLogger');
       }
     }
     handler.next(response);
   }
 
-  @override
-  void onError(DioException err, ErrorInterceptorHandler handler) {
-    if (kDebugMode) {
-      try {
-        _log('Error: ${err.message}', name: 'SecureLogger');
-        if (err.response != null) {
-          _log(
-              'Error Response: ${err.response?.statusCode} ${err.response?.statusMessage}',
-              name: 'SecureLogger');
-          final data = err.response?.data;
-          if (data != null) {
-            _logBody(data, 'Error Response Body');
-          }
-        }
-      } catch (e) {
-        _log('Failed to log secure error: $e', name: 'SecureLogger');
-      }
-    }
-    handler.next(err);
-  }
-
-  void _logBody(dynamic data, String prefix) {
-    // Recursive sanitization
-    final sanitized = _sanitizeData(data);
-
-    // Pretty print JSON if possible
-    if (sanitized is Map || sanitized is List) {
-      try {
-        final prettyJson =
-            const JsonEncoder.withIndent('  ').convert(sanitized);
-        _log('$prefix:\n$prettyJson', name: 'SecureLogger');
-      } catch (e) {
-        // Fallback for non-encodable data
-        _log('$prefix: $sanitized', name: 'SecureLogger');
-      }
-    } else {
-      _log('$prefix: $sanitized', name: 'SecureLogger');
-    }
-  }
-
   dynamic _sanitizeData(dynamic data) {
     if (data is String) {
       try {
-        // Attempt to parse string as JSON
-        final decoded = jsonDecode(data);
-        if (decoded is Map || decoded is List) {
-          // If it is valid JSON, sanitize it recursively
+        // Attempt to parse string as JSON to sanitize internal fields
+        if (data.trim().startsWith('{') || data.trim().startsWith('[')) {
+          final decoded = jsonDecode(data);
           return _sanitizeData(decoded);
         }
       } catch (_) {
-        // Not a JSON string, return as is
+        // Not valid JSON, return as is
       }
       return data;
-    } else if (data is Map) {
+    }
+
+    if (data is Map) {
       final sanitized = <String, dynamic>{};
       for (final entry in data.entries) {
         final key = entry.key.toString();
@@ -147,9 +127,15 @@ class SecureInterceptor extends Interceptor {
         }
       }
       return sanitized;
+    } else if (data is Uint8List || (data is List<int> && data is! String)) {
+      // Handle binary data to prevent massive logs
+      return '[Binary Data: ${(data as List).length} bytes]';
     } else if (data is List) {
       return data.map((item) => _sanitizeData(item)).toList();
+    } else if (data is ResponseBody) {
+      return '[Stream ResponseBody]';
     }
+
     return data;
   }
 

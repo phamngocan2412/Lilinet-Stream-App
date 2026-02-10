@@ -329,7 +329,8 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
                               '${movie.episodes?.length ?? 0} episodes total',
                               style: TextStyle(
                                 fontSize: 14,
-                                color: colorScheme.onSurface.withOpacity(0.6),
+                                color: colorScheme.onSurface
+                                    .withOpacity(0.6),
                               ),
                             ),
                           ],

@@ -144,6 +144,17 @@ class SwitchServer extends VideoPlayerEvent {
 
 class RetryStreaming extends VideoPlayerEvent {}
 
+// H-003: Update movie details without triggering full playback reset
+// Used when restoring session and fetching missing movie data
+class UpdateMovieDetails extends VideoPlayerEvent {
+  final Movie movie;
+
+  const UpdateMovieDetails(this.movie);
+
+  @override
+  List<Object?> get props => [movie];
+}
+
 class SwitchQuality extends VideoPlayerEvent {
   final String quality;
 

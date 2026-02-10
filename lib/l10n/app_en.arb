@@ -225,5 +225,33 @@
   "sortNewest": "Newest",
   "more": "More",
   "server": "Server",
-  "quality": "Quality"
+  "quality": "Quality",
+  "noInternetConnection": "No Internet Connection",
+  "searchHint": "Search anime...",
+  "searchForAnime": "Search for anime",
+  "noResultsFound": "No {filter} results found for \"{query}\"",
+  "@noResultsFound": {
+    "placeholders": {
+      "filter": {
+        "type": "String"
+      },
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "filterAll": "All",
+  "filterTVSeries": "TV Series",
+  "filterMovie": "Movie",
+  "changePassword": "Change Password",
+  "newPassword": "New Password",
+  "confirmPassword": "Confirm Password",
+  "passwordsDoNotMatch": "Passwords do not match",
+  "passwordChangeSuccess": "Password changed successfully",
+  "update": "Update",
+  "updateProfile": "Update Profile",
+  "displayName": "Display Name",
+  "avatarUrl": "Avatar URL",
+  "profileUpdateSuccess": "Profile updated successfully",
+  "save": "Save"
 }

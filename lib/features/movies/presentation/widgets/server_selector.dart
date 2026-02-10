@@ -24,7 +24,10 @@ class ServerSelector extends StatelessWidget {
           Text(
             'Server: ',
             style: TextStyle(
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+              color: Theme.of(context)
+                  .colorScheme
+                  .onSurface
+                  .withOpacity(0.7),
             ),
           ),
           const SizedBox(width: 8),
