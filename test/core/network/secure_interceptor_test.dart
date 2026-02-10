@@ -1,6 +1,16 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:dio/dio.dart';
 import 'package:lilinet_app/core/network/secure_interceptor.dart';
+import 'package:mocktail/mocktail.dart';
+
+class MockRequestInterceptorHandler extends Mock
+    implements RequestInterceptorHandler {}
+
+class MockResponseInterceptorHandler extends Mock
+    implements ResponseInterceptorHandler {}
+
+class MockErrorInterceptorHandler extends Mock
+    implements ErrorInterceptorHandler {}
 
 void main() {
   group('SecureInterceptor', () {
@@ -233,6 +243,139 @@ void main() {
       expect(bodyLog, contains('"password": "***REDACTED***"'));
       expect(bodyLog, isNot(contains('secret_pass_1')));
       expect(bodyLog, isNot(contains('secret_pass_2')));
+    });
+
+    group('Query Parameters', () {
+      test('redacts sensitive query parameters', () {
+        final logs = <String>[];
+        final interceptor = SecureInterceptor(
+          logCallback: (message, {name = ''}) {
+            logs.add(message);
+          },
+        );
+        final options = RequestOptions(
+          path: '/api',
+          queryParameters: {
+            'api_key': 'secret_api_key',
+            'token': 'secret_token',
+            'public': 'public_value',
+          },
+        );
+
+        final handler = MockRequestInterceptorHandler();
+        interceptor.onRequest(options, handler);
+
+        final requestLog = logs.firstWhere((log) => log.contains('Request:'));
+
+        expect(
+            requestLog,
+            anyOf(contains('api_key=***REDACTED***'),
+                contains('api_key=%2A%2A%2AREDACTED%2A%2A%2A')));
+        expect(
+            requestLog,
+            anyOf(contains('token=***REDACTED***'),
+                contains('token=%2A%2A%2AREDACTED%2A%2A%2A')));
+        expect(requestLog, contains('public=public_value'));
+
+        expect(requestLog, isNot(contains('secret_api_key')));
+        expect(requestLog, isNot(contains('secret_token')));
+
+        verify(() => handler.next(options)).called(1);
+      });
+    });
+
+    group('Response Logging', () {
+      test('redacts sensitive data in response body', () {
+        final logs = <String>[];
+        final interceptor = SecureInterceptor(
+          logCallback: (message, {name = ''}) {
+            logs.add(message);
+          },
+        );
+        final options = RequestOptions(path: '/user');
+        final response = Response(
+          requestOptions: options,
+          statusCode: 200,
+          statusMessage: 'OK',
+          data: {
+            'id': 1,
+            'email': 'user@example.com',
+            'token': 'secret_response_token',
+          },
+        );
+
+        final handler = MockResponseInterceptorHandler();
+        interceptor.onResponse(response, handler);
+
+        final responseLog =
+            logs.firstWhere((log) => log.contains('Response Body:'));
+        expect(responseLog, contains('"token": "***REDACTED***"'));
+        expect(responseLog, contains('"email": "user@example.com"'));
+        expect(responseLog, isNot(contains('secret_response_token')));
+
+        verify(() => handler.next(response)).called(1);
+      });
+    });
+
+    group('Error Logging', () {
+      test('redacts sensitive known keys in error response', () {
+        final logs = <String>[];
+        final interceptor = SecureInterceptor(
+          logCallback: (message, {name = ''}) {
+            logs.add(message);
+          },
+        );
+        final options = RequestOptions(path: '/login');
+        final errorResponse = Response(
+          requestOptions: options,
+          statusCode: 401,
+          statusMessage: 'Unauthorized',
+          data: {
+            'error': 'Invalid credentials',
+            'access_token': 'leaked_access_token',
+          },
+        );
+        final error = DioException(
+          requestOptions: options,
+          response: errorResponse,
+          message: 'Http status error [401]',
+        );
+
+        final handler = MockErrorInterceptorHandler();
+        interceptor.onError(error, handler);
+
+        final errorLog =
+            logs.firstWhere((log) => log.contains('Error Response Body:'));
+        expect(errorLog, contains('"access_token": "***REDACTED***"'));
+        expect(errorLog, isNot(contains('leaked_access_token')));
+
+        verify(() => handler.next(error)).called(1);
+      });
+    });
+
+    group('JSON String Parsing', () {
+      test('parses and redacts JSON string in request body', () {
+        final logs = <String>[];
+        final interceptor = SecureInterceptor(
+          logCallback: (message, {name = ''}) {
+            logs.add(message);
+          },
+        );
+        final options = RequestOptions(
+          path: '/update',
+          data:
+              '{"user": "test", "password": "secret_password"}', // Stringified JSON
+        );
+
+        final handler = MockRequestInterceptorHandler();
+        interceptor.onRequest(options, handler);
+
+        final bodyLog = logs.firstWhere((log) => log.contains('Request Body:'));
+        expect(bodyLog, contains('"password": "***REDACTED***"'));
+        expect(bodyLog, isNot(contains('secret_password')));
+
+        verify(() => handler.next(options)).called(1);
+      });
     });
   });
 }

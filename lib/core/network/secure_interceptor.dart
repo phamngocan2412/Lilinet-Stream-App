@@ -20,6 +20,14 @@ class SecureInterceptor extends Interceptor {
     'authorization',
     'cookie',
     'x-auth-token',
+    'api_key',
+    'apikey',
+    'bearer',
+    'session_id',
+    'jwt',
+    'access_key',
+    'otp',
+    'code',
   };
 
   SecureInterceptor({LogCallback? logCallback})
@@ -31,7 +39,8 @@ class SecureInterceptor extends Interceptor {
     if (kDebugMode) {
       try {
         // Log Method and URI
-        _log('Request: ${options.method} ${options.uri}', name: 'SecureLogger');
+        final sanitizedUri = _sanitizeUri(options.uri);
+        _log('Request: ${options.method} $sanitizedUri', name: 'SecureLogger');
 
         // Log Headers with Redaction
         final headers = options.headers;
@@ -45,22 +54,7 @@ class SecureInterceptor extends Interceptor {
           if (data is FormData) {
             _log('Request Body: [FormData]', name: 'SecureLogger');
           } else {
-            // Recursive sanitization
-            final sanitized = _sanitizeData(data);
-
-            // Pretty print JSON if possible
-            if (sanitized is Map || sanitized is List) {
-              try {
-                final prettyJson =
-                    const JsonEncoder.withIndent('  ').convert(sanitized);
-                _log('Request Body:\n$prettyJson', name: 'SecureLogger');
-              } catch (e) {
-                // Fallback for non-encodable data
-                _log('Request Body: $sanitized', name: 'SecureLogger');
-              }
-            } else {
-              _log('Request Body: $sanitized', name: 'SecureLogger');
-            }
+            _logBody(data, 'Request Body');
           }
         }
       } catch (e) {
@@ -143,5 +137,20 @@ class SecureInterceptor extends Interceptor {
     }
 
     return data;
+  }
+
+  Uri _sanitizeUri(Uri uri) {
+    if (uri.queryParameters.isEmpty) return uri;
+
+    final sanitizedParams = <String, dynamic>{};
+    uri.queryParameters.forEach((key, value) {
+      if (_keysToRedact.contains(key.toLowerCase())) {
+        sanitizedParams[key] = '***REDACTED***';
+      } else {
+        sanitizedParams[key] = value;
+      }
+    });
+
+    return uri.replace(queryParameters: sanitizedParams);
   }
 }
