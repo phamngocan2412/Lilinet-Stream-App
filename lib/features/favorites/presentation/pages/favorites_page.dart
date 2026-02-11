@@ -4,9 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../injection_container.dart';
 import '../../../../core/services/miniplayer_height_notifier.dart';
-import '../../../../core/widgets/loading_indicator.dart';
-import '../../../../core/widgets/error_widget.dart';
-import '../../../../core/widgets/empty_state_widget.dart';
+import '../../../../core/widgets/app_state_widgets.dart';
 import '../../../movies/presentation/widgets/movie_card.dart';
 import '../../../movies/domain/entities/movie.dart';
 import '../../../auth/presentation/bloc/auth_bloc.dart';
@@ -102,25 +100,21 @@ class _FavoritesViewState extends State<FavoritesView> {
             return BlocBuilder<FavoritesBloc, FavoritesState>(
               builder: (context, state) {
                 if (state is FavoritesLoading) {
-                  return const Center(child: LoadingIndicator());
+                  return const AppLoadingState();
                 }
 
                 if (state is FavoritesError) {
-                  return Center(
-                    child: AppErrorWidget(
-                      message: state.message,
-                      onRetry: () {
-                        context
-                            .read<FavoritesBloc>()
-                            .add(const LoadFavorites());
-                      },
-                    ),
+                  return AppErrorState(
+                    message: state.message,
+                    onRetry: () {
+                      context.read<FavoritesBloc>().add(const LoadFavorites());
+                    },
                   );
                 }
 
                 if (state is FavoritesLoaded) {
                   if (state.favorites.isEmpty) {
-                    return const EmptyStateWidget(
+                    return const AppEmptyState(
                       icon: Icons.favorite_border,
                       message: 'No favorites yet\nStart adding movies!',
                     );
@@ -170,8 +164,10 @@ class _FavoritesViewState extends State<FavoritesView> {
                       // Favorites Grid
                       Expanded(
                         child: filteredFavorites.isEmpty
-                            ? const Center(
-                                child: Text("No items in this folder"))
+                            ? const AppEmptyState(
+                                icon: Icons.folder_off_outlined,
+                                message: 'No items in this folder',
+                              )
                             : RefreshIndicator(
                                 onRefresh: () async {
                                   context

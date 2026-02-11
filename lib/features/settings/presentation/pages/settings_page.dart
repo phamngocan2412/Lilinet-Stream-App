@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../injection_container.dart';
 import '../../../../core/services/miniplayer_height_notifier.dart';
-import '../../../../core/widgets/loading_indicator.dart';
+import '../../../../core/widgets/app_state_widgets.dart';
 import '../../../../core/constants/app_spacing.dart';
 // import '../../../../core/constants/app_border_radius.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -54,11 +54,11 @@ class SettingsView extends StatelessWidget {
       body: BlocBuilder<SettingsBloc, SettingsState>(
         builder: (context, settingsState) {
           if (settingsState is SettingsLoading) {
-            return const Center(child: LoadingIndicator());
+            return const AppLoadingState();
           }
 
           if (settingsState is SettingsError) {
-            return Center(child: Text(settingsState.message));
+            return AppErrorState(message: settingsState.message);
           }
 
           if (settingsState is SettingsLoaded ||

@@ -1,7 +1,8 @@
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'dart:convert';
+
+import '../../../../core/cache/app_image_cache_manager.dart';
 import '../../domain/entities/app_settings.dart';
 
 @lazySingleton
@@ -30,6 +31,6 @@ class SettingsLocalDataSource {
   }
 
   Future<void> clearCache() async {
-    await DefaultCacheManager().emptyCache();
+    await AppImageCacheManager.clear();
   }
 }
