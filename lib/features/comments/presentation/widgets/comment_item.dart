@@ -131,8 +131,8 @@ class _CommentContentState extends State<_CommentContent> {
                       vertical: 8,
                     ),
                     decoration: BoxDecoration(
-                      color: colorScheme.surfaceContainerHighest.withValues(
-                        alpha: 0.5,
+                      color: colorScheme.surfaceContainerHighest.withOpacity(
+                        0.5,
                       ),
                       borderRadius: BorderRadius.circular(12),
                     ),

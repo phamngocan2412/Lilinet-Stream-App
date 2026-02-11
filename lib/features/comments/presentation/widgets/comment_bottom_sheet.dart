@@ -373,7 +373,7 @@ class _CommentBottomSheetViewState extends State<_CommentBottomSheetView> {
                                   padding: const EdgeInsets.all(24),
                                   decoration: BoxDecoration(
                                     color: theme.colorScheme.primary
-                                        .withValues(alpha: 0.1),
+                                        .withOpacity(0.1),
                                     shape: BoxShape.circle,
                                   ),
                                   child: Icon(

@@ -1,34 +1,13 @@
 import 'dart:convert';
 import 'dart:developer' as developer;
-import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import '../utils/security_utils.dart';
 
 typedef LogCallback = void Function(String message, {String name});
 
 class SecureInterceptor extends Interceptor {
   final LogCallback _log;
-
-  static const _keysToRedact = {
-    'password',
-    'confirm_password',
-    'old_password',
-    'token',
-    'access_token',
-    'refresh_token',
-    'secret',
-    'authorization',
-    'cookie',
-    'x-auth-token',
-    'api_key',
-    'apikey',
-    'bearer',
-    'session_id',
-    'jwt',
-    'access_key',
-    'otp',
-    'code',
-  };
 
   SecureInterceptor({LogCallback? logCallback})
       : _log = logCallback ??
@@ -39,13 +18,13 @@ class SecureInterceptor extends Interceptor {
     if (kDebugMode) {
       try {
         // Log Method and URI
-        final sanitizedUri = _sanitizeUri(options.uri);
+        final sanitizedUri = SecurityUtils.sanitizeUri(options.uri);
         _log('Request: ${options.method} $sanitizedUri', name: 'SecureLogger');
 
         // Log Headers with Redaction
         final headers = options.headers;
         if (headers.isNotEmpty) {
-          final sanitizedHeaders = _sanitizeData(headers);
+          final sanitizedHeaders = SecurityUtils.sanitizeData(headers);
           _log('Request Headers: $sanitizedHeaders', name: 'SecureLogger');
         }
 
@@ -85,24 +64,13 @@ class SecureInterceptor extends Interceptor {
         // Log Headers (sanitized)
         final headers = response.headers.map;
         if (headers.isNotEmpty) {
-          final sanitizedHeaders = _sanitizeData(headers);
+          final sanitizedHeaders = SecurityUtils.sanitizeData(headers);
           _log('Response Headers: $sanitizedHeaders', name: 'SecureLogger');
         }
 
         final data = response.data;
         if (data != null) {
-          final sanitized = _sanitizeData(data);
-          if (sanitized is Map || sanitized is List) {
-            try {
-              final prettyJson =
-                  const JsonEncoder.withIndent('  ').convert(sanitized);
-              _log('Response Body:\n$prettyJson', name: 'SecureLogger');
-            } catch (e) {
-              _log('Response Body: $sanitized', name: 'SecureLogger');
-            }
-          } else {
-            _log('Response Body: $sanitized', name: 'SecureLogger');
-          }
+          _logBody(data, 'Response Body');
         }
       } catch (e) {
         _log('Failed to log secure response: $e', name: 'SecureLogger');
@@ -111,58 +79,54 @@ class SecureInterceptor extends Interceptor {
     handler.next(response);
   }
 
-  dynamic _sanitizeData(dynamic data) {
-    if (data is String) {
+  @override
+  void onError(DioException err, ErrorInterceptorHandler handler) {
+    if (kDebugMode) {
       try {
-        // Attempt to parse string as JSON to sanitize internal fields
-        if (data.trim().startsWith('{') || data.trim().startsWith('[')) {
-          final decoded = jsonDecode(data);
-          return _sanitizeData(decoded);
+        _log(
+          'Error: ${err.error} ${err.message}',
+          name: 'SecureLogger',
+        );
+
+        final response = err.response;
+        if (response != null) {
+          _log(
+            'Error Response: ${response.statusCode} ${response.requestOptions.uri}',
+            name: 'SecureLogger',
+          );
+
+          final headers = response.headers.map;
+          if (headers.isNotEmpty) {
+            final sanitizedHeaders = SecurityUtils.sanitizeData(headers);
+            _log('Error Response Headers: $sanitizedHeaders',
+                name: 'SecureLogger');
+          }
+
+          final data = response.data;
+          if (data != null) {
+            _logBody(data, 'Error Response Body');
+          }
         }
-      } catch (_) {
-        // Not valid JSON, return as is
+      } catch (e) {
+        _log('Failed to log secure error: $e', name: 'SecureLogger');
       }
-      return data;
     }
-
-    if (data is Map) {
-      final sanitized = <String, dynamic>{};
-      for (final entry in data.entries) {
-        final key = entry.key.toString();
-        final value = entry.value;
-
-        if (_keysToRedact.contains(key.toLowerCase())) {
-          sanitized[key] = '***REDACTED***';
-        } else {
-          sanitized[key] = _sanitizeData(value);
-        }
-      }
-      return sanitized;
-    } else if (data is Uint8List || (data is List<int> && data is! String)) {
-      // Handle binary data to prevent massive logs
-      return '[Binary Data: ${(data as List).length} bytes]';
-    } else if (data is List) {
-      return data.map((item) => _sanitizeData(item)).toList();
-    } else if (data is ResponseBody) {
-      return '[Stream ResponseBody]';
-    }
-
-    return data;
+    handler.next(err);
   }
 
-  Uri _sanitizeUri(Uri uri) {
-    if (uri.queryParameters.isEmpty) return uri;
-
-    final sanitizedParams = <String, dynamic>{};
-    uri.queryParameters.forEach((key, value) {
-      if (_keysToRedact.contains(key.toLowerCase())) {
-        sanitizedParams[key] = '***REDACTED***';
-      } else {
-        sanitizedParams[key] = value;
+  void _logBody(dynamic data, String label) {
+    final sanitized = SecurityUtils.sanitizeData(data);
+    if (sanitized is Map || sanitized is List) {
+      try {
+        final prettyJson =
+            const JsonEncoder.withIndent('  ').convert(sanitized);
+        _log('$label:\n$prettyJson', name: 'SecureLogger');
+      } catch (e) {
+        _log('$label: $sanitized', name: 'SecureLogger');
       }
-    });
-
-    return uri.replace(queryParameters: sanitizedParams);
+    } else {
+      _log('$label: $sanitized', name: 'SecureLogger');
+    }
   }
 
 }

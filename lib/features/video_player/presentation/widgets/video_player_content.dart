@@ -571,7 +571,7 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
     });
 
     // Use the constraints already provided by parent Miniplayer LayoutBuilder
-    return BlocListener<NetworkCubit, bool>(
+    return BlocConsumer<NetworkCubit, bool>(
       listener: (context, isConnected) {
         if (!isConnected) {
           _wasPlayingBeforeOffline = _videoService.player.state.playing;
@@ -587,118 +587,123 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
           }
         }
       },
-      child: BlocProvider.value(
-        value: _streamingCubit,
-        child: Material(
-          color: kBgColor,
-          child: SizedBox(
-            height: widget.height,
-            width: MediaQuery.of(context).size.width,
-            child: Column(
-              children: [
-                // Video Area
-                if (widget.isMini)
-                  Expanded(child: _buildVideoPlayer())
-                else
-                  SizedBox(
-                    height: 250 > widget.height ? widget.height : 250,
-                    child: Stack(
-                      children: [
-                        _buildVideoPlayer(),
-                        if (_isOffline)
-                          Container(
-                            color: Colors.black.withOpacity(0.7),
-                            child: const Center(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Icon(
-                                    Icons.wifi_off_rounded,
-                                    color: Colors.white,
-                                    size: 48,
-                                  ),
-                                  SizedBox(height: 16),
-                                  Text(
-                                    'No Internet Connection',
-                                    style: TextStyle(
+      builder: (context, isConnected) {
+        final isOffline = !isConnected;
+        return BlocProvider.value(
+          value: _streamingCubit,
+          child: Material(
+            color: kBgColor,
+            child: SizedBox(
+              height: widget.height,
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                children: [
+                  // Video Area
+                  if (widget.isMini)
+                    Expanded(child: _buildVideoPlayer())
+                  else
+                    SizedBox(
+                      height: 250 > widget.height ? widget.height : 250,
+                      child: Stack(
+                        children: [
+                          _buildVideoPlayer(),
+                          if (isOffline)
+                            Container(
+                              color: Colors.black.withOpacity(0.7),
+                              child: const Center(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(
+                                      Icons.wifi_off_rounded,
                                       color: Colors.white,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
+                                      size: 48,
                                     ),
-                                  ),
-                                  Text(
-                                    'Waiting for network...',
-                                    style: TextStyle(
-                                      color: Colors.white70,
-                                      fontSize: 14,
+                                    SizedBox(height: 16),
+                                    Text(
+                                      'No Internet Connection',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                    Text(
+                                      'Waiting for network...',
+                                      style: TextStyle(
+                                        color: Colors.white70,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                      ],
-                    ),
-                  ),
-
-                // Expanded Content Area - Only render when needed to prevent
-                // blank space showing in miniplayer
-                if (!widget.isMini && widget.height > 300)
-                  Expanded(
-                    child: GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onTap: () {
-                        // Absorb tap to prevent miniplayer gesture detection
-                      },
-                      child: ExpandedPlayerContent(
-                        state: widget.state,
-                        onMinimize: () {
-                          widget.miniplayerController.animateToHeight(
-                            state: PanelState.MIN,
-                          );
-                          context.read<VideoPlayerBloc>().add(MinimizeVideo());
-                        },
-                        onDownload: () {
-                          final url = _videoService
-                              .player.state.playlist.medias.firstOrNull?.uri;
-                          if (url != null) {
-                            final fileName =
-                                '${widget.state.title ?? "video"}_${widget.state.episodeTitle ?? "episode"}.mp4'
-                                    .replaceAll(RegExp(r'[^\w\s\.-]'), '')
-                                    .replaceAll(' ', '_');
-
-                            context.read<VideoPlayerBloc>().add(
-                                  DownloadCurrentVideo(
-                                    url: url,
-                                    fileName: fileName,
-                                    movieId: widget.state.mediaId,
-                                    movieTitle: widget.state.title,
-                                    episodeTitle: widget.state.episodeTitle,
-                                    posterUrl: widget.state.posterUrl,
-                                  ),
-                                );
-
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Download started...'),
-                              ),
-                            );
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('No video loaded to download'),
-                              ),
-                            );
-                          }
-                        },
+                        ],
                       ),
                     ),
-                  ),
-              ],
+
+                  // Expanded Content Area - Only render when needed to prevent
+                  // blank space showing in miniplayer
+                  if (!widget.isMini && widget.height > 300)
+                    Expanded(
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {
+                          // Absorb tap to prevent miniplayer gesture detection
+                        },
+                        child: ExpandedPlayerContent(
+                          state: widget.state,
+                          onMinimize: () {
+                            widget.miniplayerController.animateToHeight(
+                              state: PanelState.MIN,
+                            );
+                            context
+                                .read<VideoPlayerBloc>()
+                                .add(MinimizeVideo());
+                          },
+                          onDownload: () {
+                            final url = _videoService
+                                .player.state.playlist.medias.firstOrNull?.uri;
+                            if (url != null) {
+                              final fileName =
+                                  '${widget.state.title ?? "video"}_${widget.state.episodeTitle ?? "episode"}.mp4'
+                                      .replaceAll(RegExp(r'[^\w\s\.-]'), '')
+                                      .replaceAll(' ', '_');
+
+                              context.read<VideoPlayerBloc>().add(
+                                    DownloadCurrentVideo(
+                                      url: url,
+                                      fileName: fileName,
+                                      movieId: widget.state.mediaId,
+                                      movieTitle: widget.state.title,
+                                      episodeTitle: widget.state.episodeTitle,
+                                      posterUrl: widget.state.posterUrl,
+                                    ),
+                                  );
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Download started...'),
+                                ),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('No video loaded to download'),
+                                ),
+                              );
+                            }
+                          },
+                        ),
+                      ),
+                    ),
+                ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
