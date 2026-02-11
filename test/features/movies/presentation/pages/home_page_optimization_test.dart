@@ -119,8 +119,8 @@ void main() {
 
     // Debugging: Print the widget tree if not found
     if (find.text('TOP ANIME').evaluate().isEmpty) {
-       debugPrint('TOP ANIME not found. Dumping widget tree...');
-       // debugDumpApp(); // Only useful in full debug mode, but good to know
+      debugPrint('TOP ANIME not found. Dumping widget tree...');
+      // debugDumpApp(); // Only useful in full debug mode, but good to know
     }
 
     // Assert
@@ -150,7 +150,8 @@ void main() {
           reason: 'memCacheWidth should be optimized for 130 logical width');
     } else {
       // Mark as skipped/passed with warning if we can't verify the optimization due to test env issues
-      debugPrint('WARNING: Could not find MovieCard to verify optimization. Skipping assertion.');
+      debugPrint(
+          'WARNING: Could not find MovieCard to verify optimization. Skipping assertion.');
     }
 
     addTearDown(() {
