@@ -53,11 +53,8 @@ class FavoritesSupabaseDataSource {
       'folder': folder,
     };
 
-    final response = await supabaseClient
-        .from('favorites')
-        .insert(data)
-        .select()
-        .single();
+    final response =
+        await supabaseClient.from('favorites').insert(data).select().single();
 
     return FavoriteModel.fromJson(response);
   }

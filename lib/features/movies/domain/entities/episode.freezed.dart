@@ -75,40 +75,39 @@ class _$EpisodeCopyWithImpl<$Res, $Val extends Episode>
   }) {
     return _then(
       _value.copyWith(
-            id: null == id
-                ? _value.id
-                : id // ignore: cast_nullable_to_non_nullable
-                      as String,
-            title: null == title
-                ? _value.title
-                : title // ignore: cast_nullable_to_non_nullable
-                      as String,
-            description: freezed == description
-                ? _value.description
-                : description // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            number: null == number
-                ? _value.number
-                : number // ignore: cast_nullable_to_non_nullable
-                      as int,
-            season: freezed == season
-                ? _value.season
-                : season // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            image: freezed == image
-                ? _value.image
-                : image // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            url: freezed == url
-                ? _value.url
-                : url // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            releaseDate: freezed == releaseDate
-                ? _value.releaseDate
-                : releaseDate // ignore: cast_nullable_to_non_nullable
-                      as DateTime?,
-          )
-          as $Val,
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                as String,
+        title: null == title
+            ? _value.title
+            : title // ignore: cast_nullable_to_non_nullable
+                as String,
+        description: freezed == description
+            ? _value.description
+            : description // ignore: cast_nullable_to_non_nullable
+                as String?,
+        number: null == number
+            ? _value.number
+            : number // ignore: cast_nullable_to_non_nullable
+                as int,
+        season: freezed == season
+            ? _value.season
+            : season // ignore: cast_nullable_to_non_nullable
+                as int?,
+        image: freezed == image
+            ? _value.image
+            : image // ignore: cast_nullable_to_non_nullable
+                as String?,
+        url: freezed == url
+            ? _value.url
+            : url // ignore: cast_nullable_to_non_nullable
+                as String?,
+        releaseDate: freezed == releaseDate
+            ? _value.releaseDate
+            : releaseDate // ignore: cast_nullable_to_non_nullable
+                as DateTime?,
+      ) as $Val,
     );
   }
 }
@@ -161,35 +160,35 @@ class __$$EpisodeImplCopyWithImpl<$Res>
         id: null == id
             ? _value.id
             : id // ignore: cast_nullable_to_non_nullable
-                  as String,
+                as String,
         title: null == title
             ? _value.title
             : title // ignore: cast_nullable_to_non_nullable
-                  as String,
+                as String,
         description: freezed == description
             ? _value.description
             : description // ignore: cast_nullable_to_non_nullable
-                  as String?,
+                as String?,
         number: null == number
             ? _value.number
             : number // ignore: cast_nullable_to_non_nullable
-                  as int,
+                as int,
         season: freezed == season
             ? _value.season
             : season // ignore: cast_nullable_to_non_nullable
-                  as int?,
+                as int?,
         image: freezed == image
             ? _value.image
             : image // ignore: cast_nullable_to_non_nullable
-                  as String?,
+                as String?,
         url: freezed == url
             ? _value.url
             : url // ignore: cast_nullable_to_non_nullable
-                  as String?,
+                as String?,
         releaseDate: freezed == releaseDate
             ? _value.releaseDate
             : releaseDate // ignore: cast_nullable_to_non_nullable
-                  as DateTime?,
+                as DateTime?,
       ),
     );
   }
@@ -250,16 +249,16 @@ class _$EpisodeImpl implements _Episode {
 
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    id,
-    title,
-    description,
-    number,
-    season,
-    image,
-    url,
-    releaseDate,
-  );
+        runtimeType,
+        id,
+        title,
+        description,
+        number,
+        season,
+        image,
+        url,
+        releaseDate,
+      );
 
   /// Create a copy of Episode
   /// with the given fields replaced by the non-null parameter values.

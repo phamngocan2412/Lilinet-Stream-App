@@ -29,10 +29,10 @@ mixin _$CommentState {
       String? errorMessage,
       Set<String> likedCommentIds,
       Set<String> likingInProgress,
-    )
-    loaded,
+    ) loaded,
     required TResult Function(String message) error,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
@@ -45,10 +45,10 @@ mixin _$CommentState {
       String? errorMessage,
       Set<String> likedCommentIds,
       Set<String> likingInProgress,
-    )?
-    loaded,
+    )? loaded,
     TResult? Function(String message)? error,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
@@ -61,25 +61,27 @@ mixin _$CommentState {
       String? errorMessage,
       Set<String> likedCommentIds,
       Set<String> likingInProgress,
-    )?
-    loaded,
+    )? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
@@ -87,7 +89,8 @@ mixin _$CommentState {
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
     required TResult orElse(),
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -165,8 +168,7 @@ class _$InitialImpl implements _Initial {
       String? errorMessage,
       Set<String> likedCommentIds,
       Set<String> likingInProgress,
-    )
-    loaded,
+    ) loaded,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -185,8 +187,7 @@ class _$InitialImpl implements _Initial {
       String? errorMessage,
       Set<String> likedCommentIds,
       Set<String> likingInProgress,
-    )?
-    loaded,
+    )? loaded,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -205,8 +206,7 @@ class _$InitialImpl implements _Initial {
       String? errorMessage,
       Set<String> likedCommentIds,
       Set<String> likingInProgress,
-    )?
-    loaded,
+    )? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -311,8 +311,7 @@ class _$LoadingImpl implements _Loading {
       String? errorMessage,
       Set<String> likedCommentIds,
       Set<String> likingInProgress,
-    )
-    loaded,
+    ) loaded,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -331,8 +330,7 @@ class _$LoadingImpl implements _Loading {
       String? errorMessage,
       Set<String> likedCommentIds,
       Set<String> likingInProgress,
-    )?
-    loaded,
+    )? loaded,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -351,8 +349,7 @@ class _$LoadingImpl implements _Loading {
       String? errorMessage,
       Set<String> likedCommentIds,
       Set<String> likingInProgress,
-    )?
-    loaded,
+    )? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -449,31 +446,31 @@ class __$$LoadedImplCopyWithImpl<$Res>
         comments: null == comments
             ? _value._comments
             : comments // ignore: cast_nullable_to_non_nullable
-                  as List<Comment>,
+                as List<Comment>,
         sortType: null == sortType
             ? _value.sortType
             : sortType // ignore: cast_nullable_to_non_nullable
-                  as CommentSortType,
+                as CommentSortType,
         expandedReplies: null == expandedReplies
             ? _value._expandedReplies
             : expandedReplies // ignore: cast_nullable_to_non_nullable
-                  as Map<String, List<Comment>>,
+                as Map<String, List<Comment>>,
         isAddingComment: null == isAddingComment
             ? _value.isAddingComment
             : isAddingComment // ignore: cast_nullable_to_non_nullable
-                  as bool,
+                as bool,
         errorMessage: freezed == errorMessage
             ? _value.errorMessage
             : errorMessage // ignore: cast_nullable_to_non_nullable
-                  as String?,
+                as String?,
         likedCommentIds: null == likedCommentIds
             ? _value._likedCommentIds
             : likedCommentIds // ignore: cast_nullable_to_non_nullable
-                  as Set<String>,
+                as Set<String>,
         likingInProgress: null == likingInProgress
             ? _value._likingInProgress
             : likingInProgress // ignore: cast_nullable_to_non_nullable
-                  as Set<String>,
+                as Set<String>,
       ),
     );
   }
@@ -490,10 +487,10 @@ class _$LoadedImpl implements _Loaded {
     this.errorMessage,
     final Set<String> likedCommentIds = const {},
     final Set<String> likingInProgress = const {},
-  }) : _comments = comments,
-       _expandedReplies = expandedReplies,
-       _likedCommentIds = likedCommentIds,
-       _likingInProgress = likingInProgress;
+  })  : _comments = comments,
+        _expandedReplies = expandedReplies,
+        _likedCommentIds = likedCommentIds,
+        _likingInProgress = likingInProgress;
 
   final List<Comment> _comments;
   @override
@@ -570,15 +567,15 @@ class _$LoadedImpl implements _Loaded {
 
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    const DeepCollectionEquality().hash(_comments),
-    sortType,
-    const DeepCollectionEquality().hash(_expandedReplies),
-    isAddingComment,
-    errorMessage,
-    const DeepCollectionEquality().hash(_likedCommentIds),
-    const DeepCollectionEquality().hash(_likingInProgress),
-  );
+        runtimeType,
+        const DeepCollectionEquality().hash(_comments),
+        sortType,
+        const DeepCollectionEquality().hash(_expandedReplies),
+        isAddingComment,
+        errorMessage,
+        const DeepCollectionEquality().hash(_likedCommentIds),
+        const DeepCollectionEquality().hash(_likingInProgress),
+      );
 
   /// Create a copy of CommentState
   /// with the given fields replaced by the non-null parameter values.
@@ -601,8 +598,7 @@ class _$LoadedImpl implements _Loaded {
       String? errorMessage,
       Set<String> likedCommentIds,
       Set<String> likingInProgress,
-    )
-    loaded,
+    ) loaded,
     required TResult Function(String message) error,
   }) {
     return loaded(
@@ -629,8 +625,7 @@ class _$LoadedImpl implements _Loaded {
       String? errorMessage,
       Set<String> likedCommentIds,
       Set<String> likingInProgress,
-    )?
-    loaded,
+    )? loaded,
     TResult? Function(String message)? error,
   }) {
     return loaded?.call(
@@ -657,8 +652,7 @@ class _$LoadedImpl implements _Loaded {
       String? errorMessage,
       Set<String> likedCommentIds,
       Set<String> likingInProgress,
-    )?
-    loaded,
+    )? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -769,7 +763,7 @@ class __$$ErrorImplCopyWithImpl<$Res>
         null == message
             ? _value.message
             : message // ignore: cast_nullable_to_non_nullable
-                  as String,
+                as String,
       ),
     );
   }
@@ -820,8 +814,7 @@ class _$ErrorImpl implements _Error {
       String? errorMessage,
       Set<String> likedCommentIds,
       Set<String> likingInProgress,
-    )
-    loaded,
+    ) loaded,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -840,8 +833,7 @@ class _$ErrorImpl implements _Error {
       String? errorMessage,
       Set<String> likedCommentIds,
       Set<String> likingInProgress,
-    )?
-    loaded,
+    )? loaded,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -860,8 +852,7 @@ class _$ErrorImpl implements _Error {
       String? errorMessage,
       Set<String> likedCommentIds,
       Set<String> likingInProgress,
-    )?
-    loaded,
+    )? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {

@@ -161,8 +161,8 @@ class _CommentSectionViewState extends State<_CommentSectionView> {
                     Text(
                       l10n.commentsCount(comments.length),
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
                   ],
                 ),
@@ -174,16 +174,17 @@ class _CommentSectionViewState extends State<_CommentSectionView> {
                 child: isLoading
                     ? const Center(child: LoadingIndicator())
                     : comments.isEmpty
-                    ? _buildEmptyState(l10n)
-                    : ListView.builder(
-                        cacheExtent: 300,
-                        controller: _scrollController,
-                        itemCount: comments.length,
-                        padding: const EdgeInsets.only(bottom: 16),
-                        itemBuilder: (context, index) {
-                          return _buildCommentItem(context, comments[index]);
-                        },
-                      ),
+                        ? _buildEmptyState(l10n)
+                        : ListView.builder(
+                            cacheExtent: 300,
+                            controller: _scrollController,
+                            itemCount: comments.length,
+                            padding: const EdgeInsets.only(bottom: 16),
+                            itemBuilder: (context, index) {
+                              return _buildCommentItem(
+                                  context, comments[index]);
+                            },
+                          ),
               ),
 
               // --- Input Field ---
@@ -218,9 +219,8 @@ class _CommentSectionViewState extends State<_CommentSectionView> {
 
   Widget _buildCommentItem(BuildContext context, CommentModel comment) {
     final l10n = AppLocalizations.of(context)!;
-    final userName = comment.userName.isEmpty
-        ? l10n.anonymous
-        : comment.userName;
+    final userName =
+        comment.userName.isEmpty ? l10n.anonymous : comment.userName;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -333,9 +333,8 @@ class _CommentSectionViewState extends State<_CommentSectionView> {
                     ? const LoadingIndicator(size: 20)
                     : Icon(
                         Icons.send_rounded,
-                        color: isEnabled
-                            ? colorScheme.primary
-                            : Colors.grey[700],
+                        color:
+                            isEnabled ? colorScheme.primary : Colors.grey[700],
                       ),
                 onPressed: isEnabled ? _postComment : null,
                 tooltip: l10n.send,

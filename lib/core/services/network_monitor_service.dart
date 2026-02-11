@@ -54,9 +54,8 @@ class NetworkMonitorService {
 
     // Monitor connection changes
     Connectivity().onConnectivityChanged.listen((results) {
-      final result = results.isNotEmpty
-          ? results.first
-          : ConnectivityResult.none;
+      final result =
+          results.isNotEmpty ? results.first : ConnectivityResult.none;
       _isConnected = result != ConnectivityResult.none;
       _connectionType = result;
 
@@ -99,8 +98,8 @@ class NetworkMonitorService {
       ); // Download only 1KB
 
       final response = await request.close().timeout(
-        const Duration(seconds: 10),
-      );
+            const Duration(seconds: 10),
+          );
 
       if (response.statusCode == 200 || response.statusCode == 206) {
         final endTime = DateTime.now();

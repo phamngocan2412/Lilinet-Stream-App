@@ -96,60 +96,59 @@ class _$VideoPlayerStateCopyWithImpl<$Res, $Val extends VideoPlayerState>
   }) {
     return _then(
       _value.copyWith(
-            status: null == status
-                ? _value.status
-                : status // ignore: cast_nullable_to_non_nullable
-                      as VideoPlayerStatus,
-            episodeId: freezed == episodeId
-                ? _value.episodeId
-                : episodeId // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            mediaId: freezed == mediaId
-                ? _value.mediaId
-                : mediaId // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            title: freezed == title
-                ? _value.title
-                : title // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            posterUrl: freezed == posterUrl
-                ? _value.posterUrl
-                : posterUrl // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            episodeTitle: freezed == episodeTitle
-                ? _value.episodeTitle
-                : episodeTitle // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            startPosition: freezed == startPosition
-                ? _value.startPosition
-                : startPosition // ignore: cast_nullable_to_non_nullable
-                      as Duration?,
-            mediaType: freezed == mediaType
-                ? _value.mediaType
-                : mediaType // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            movie: freezed == movie
-                ? _value.movie
-                : movie // ignore: cast_nullable_to_non_nullable
-                      as Movie?,
-            streamingState: null == streamingState
-                ? _value.streamingState
-                : streamingState // ignore: cast_nullable_to_non_nullable
-                      as StreamingState,
-            availableServers: freezed == availableServers
-                ? _value.availableServers
-                : availableServers // ignore: cast_nullable_to_non_nullable
-                      as List<String>?,
-            currentServer: freezed == currentServer
-                ? _value.currentServer
-                : currentServer // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            currentQuality: freezed == currentQuality
-                ? _value.currentQuality
-                : currentQuality // ignore: cast_nullable_to_non_nullable
-                      as String?,
-          )
-          as $Val,
+        status: null == status
+            ? _value.status
+            : status // ignore: cast_nullable_to_non_nullable
+                as VideoPlayerStatus,
+        episodeId: freezed == episodeId
+            ? _value.episodeId
+            : episodeId // ignore: cast_nullable_to_non_nullable
+                as String?,
+        mediaId: freezed == mediaId
+            ? _value.mediaId
+            : mediaId // ignore: cast_nullable_to_non_nullable
+                as String?,
+        title: freezed == title
+            ? _value.title
+            : title // ignore: cast_nullable_to_non_nullable
+                as String?,
+        posterUrl: freezed == posterUrl
+            ? _value.posterUrl
+            : posterUrl // ignore: cast_nullable_to_non_nullable
+                as String?,
+        episodeTitle: freezed == episodeTitle
+            ? _value.episodeTitle
+            : episodeTitle // ignore: cast_nullable_to_non_nullable
+                as String?,
+        startPosition: freezed == startPosition
+            ? _value.startPosition
+            : startPosition // ignore: cast_nullable_to_non_nullable
+                as Duration?,
+        mediaType: freezed == mediaType
+            ? _value.mediaType
+            : mediaType // ignore: cast_nullable_to_non_nullable
+                as String?,
+        movie: freezed == movie
+            ? _value.movie
+            : movie // ignore: cast_nullable_to_non_nullable
+                as Movie?,
+        streamingState: null == streamingState
+            ? _value.streamingState
+            : streamingState // ignore: cast_nullable_to_non_nullable
+                as StreamingState,
+        availableServers: freezed == availableServers
+            ? _value.availableServers
+            : availableServers // ignore: cast_nullable_to_non_nullable
+                as List<String>?,
+        currentServer: freezed == currentServer
+            ? _value.currentServer
+            : currentServer // ignore: cast_nullable_to_non_nullable
+                as String?,
+        currentQuality: freezed == currentQuality
+            ? _value.currentQuality
+            : currentQuality // ignore: cast_nullable_to_non_nullable
+                as String?,
+      ) as $Val,
     );
   }
 
@@ -242,55 +241,55 @@ class __$$VideoPlayerStateImplCopyWithImpl<$Res>
         status: null == status
             ? _value.status
             : status // ignore: cast_nullable_to_non_nullable
-                  as VideoPlayerStatus,
+                as VideoPlayerStatus,
         episodeId: freezed == episodeId
             ? _value.episodeId
             : episodeId // ignore: cast_nullable_to_non_nullable
-                  as String?,
+                as String?,
         mediaId: freezed == mediaId
             ? _value.mediaId
             : mediaId // ignore: cast_nullable_to_non_nullable
-                  as String?,
+                as String?,
         title: freezed == title
             ? _value.title
             : title // ignore: cast_nullable_to_non_nullable
-                  as String?,
+                as String?,
         posterUrl: freezed == posterUrl
             ? _value.posterUrl
             : posterUrl // ignore: cast_nullable_to_non_nullable
-                  as String?,
+                as String?,
         episodeTitle: freezed == episodeTitle
             ? _value.episodeTitle
             : episodeTitle // ignore: cast_nullable_to_non_nullable
-                  as String?,
+                as String?,
         startPosition: freezed == startPosition
             ? _value.startPosition
             : startPosition // ignore: cast_nullable_to_non_nullable
-                  as Duration?,
+                as Duration?,
         mediaType: freezed == mediaType
             ? _value.mediaType
             : mediaType // ignore: cast_nullable_to_non_nullable
-                  as String?,
+                as String?,
         movie: freezed == movie
             ? _value.movie
             : movie // ignore: cast_nullable_to_non_nullable
-                  as Movie?,
+                as Movie?,
         streamingState: null == streamingState
             ? _value.streamingState
             : streamingState // ignore: cast_nullable_to_non_nullable
-                  as StreamingState,
+                as StreamingState,
         availableServers: freezed == availableServers
             ? _value._availableServers
             : availableServers // ignore: cast_nullable_to_non_nullable
-                  as List<String>?,
+                as List<String>?,
         currentServer: freezed == currentServer
             ? _value.currentServer
             : currentServer // ignore: cast_nullable_to_non_nullable
-                  as String?,
+                as String?,
         currentQuality: freezed == currentQuality
             ? _value.currentQuality
             : currentQuality // ignore: cast_nullable_to_non_nullable
-                  as String?,
+                as String?,
       ),
     );
   }
@@ -391,21 +390,21 @@ class _$VideoPlayerStateImpl implements _VideoPlayerState {
 
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    status,
-    episodeId,
-    mediaId,
-    title,
-    posterUrl,
-    episodeTitle,
-    startPosition,
-    mediaType,
-    movie,
-    streamingState,
-    const DeepCollectionEquality().hash(_availableServers),
-    currentServer,
-    currentQuality,
-  );
+        runtimeType,
+        status,
+        episodeId,
+        mediaId,
+        title,
+        posterUrl,
+        episodeTitle,
+        startPosition,
+        mediaType,
+        movie,
+        streamingState,
+        const DeepCollectionEquality().hash(_availableServers),
+        currentServer,
+        currentQuality,
+      );
 
   /// Create a copy of VideoPlayerState
   /// with the given fields replaced by the non-null parameter values.

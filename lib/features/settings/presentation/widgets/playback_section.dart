@@ -25,8 +25,8 @@ class PlaybackSection extends StatelessWidget {
           value: settings.autoPlay,
           onChanged: (value) {
             context.read<SettingsBloc>().add(
-              UpdateSettings(settings.copyWith(autoPlay: value)),
-            );
+                  UpdateSettings(settings.copyWith(autoPlay: value)),
+                );
           },
         ),
         SettingsSwitchTile(
@@ -35,8 +35,8 @@ class PlaybackSection extends StatelessWidget {
           value: settings.skipIntro,
           onChanged: (value) {
             context.read<SettingsBloc>().add(
-              UpdateSettings(settings.copyWith(skipIntro: value)),
-            );
+                  UpdateSettings(settings.copyWith(skipIntro: value)),
+                );
           },
         ),
         _buildQualitySelector(context),
@@ -129,8 +129,7 @@ class PlaybackSection extends StatelessWidget {
                 _ServerOption(
                   title: 'VidCloud',
                   subtitle: 'Fast and reliable',
-                  isSelected:
-                      settings.preferredServer ==
+                  isSelected: settings.preferredServer ==
                       domain.PreferredServer.vidcloud,
                   onTap: () {
                     settingsBloc.add(
@@ -146,8 +145,7 @@ class PlaybackSection extends StatelessWidget {
                 _ServerOption(
                   title: 'UpCloud',
                   subtitle: 'Good for movies',
-                  isSelected:
-                      settings.preferredServer ==
+                  isSelected: settings.preferredServer ==
                       domain.PreferredServer.upcloud,
                   onTap: () {
                     settingsBloc.add(
@@ -318,9 +316,8 @@ class _ServerOption extends StatelessWidget {
     return ListTile(
       title: Text(title),
       subtitle: Text(subtitle),
-      trailing: isSelected
-          ? const Icon(Icons.check, color: Colors.green)
-          : null,
+      trailing:
+          isSelected ? const Icon(Icons.check, color: Colors.green) : null,
       onTap: onTap,
     );
   }
@@ -343,15 +340,13 @@ class _ProviderOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isSelected = isMovie
-        ? settings.movieProvider == id
-        : settings.animeProvider == id;
+    final isSelected =
+        isMovie ? settings.movieProvider == id : settings.animeProvider == id;
 
     return ListTile(
       title: Text(label),
-      trailing: isSelected
-          ? const Icon(Icons.check, color: Colors.green)
-          : null,
+      trailing:
+          isSelected ? const Icon(Icons.check, color: Colors.green) : null,
       onTap: () {
         bloc.add(
           UpdateSettings(

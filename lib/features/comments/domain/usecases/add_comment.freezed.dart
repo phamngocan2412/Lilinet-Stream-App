@@ -59,20 +59,19 @@ class _$AddCommentParamsCopyWithImpl<$Res, $Val extends AddCommentParams>
   }) {
     return _then(
       _value.copyWith(
-            videoId: null == videoId
-                ? _value.videoId
-                : videoId // ignore: cast_nullable_to_non_nullable
-                      as String,
-            content: null == content
-                ? _value.content
-                : content // ignore: cast_nullable_to_non_nullable
-                      as String,
-            parentId: freezed == parentId
-                ? _value.parentId
-                : parentId // ignore: cast_nullable_to_non_nullable
-                      as String?,
-          )
-          as $Val,
+        videoId: null == videoId
+            ? _value.videoId
+            : videoId // ignore: cast_nullable_to_non_nullable
+                as String,
+        content: null == content
+            ? _value.content
+            : content // ignore: cast_nullable_to_non_nullable
+                as String,
+        parentId: freezed == parentId
+            ? _value.parentId
+            : parentId // ignore: cast_nullable_to_non_nullable
+                as String?,
+      ) as $Val,
     );
   }
 }
@@ -112,15 +111,15 @@ class __$$AddCommentParamsImplCopyWithImpl<$Res>
         videoId: null == videoId
             ? _value.videoId
             : videoId // ignore: cast_nullable_to_non_nullable
-                  as String,
+                as String,
         content: null == content
             ? _value.content
             : content // ignore: cast_nullable_to_non_nullable
-                  as String,
+                as String,
         parentId: freezed == parentId
             ? _value.parentId
             : parentId // ignore: cast_nullable_to_non_nullable
-                  as String?,
+                as String?,
       ),
     );
   }

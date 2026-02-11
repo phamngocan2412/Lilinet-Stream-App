@@ -29,7 +29,7 @@ class StreamingCubit extends Cubit<StreamingState> {
   int _activeRequestCount = 0;
 
   StreamingCubit(this._getStreamingLinks, this._getAvailableServers)
-    : super(StreamingInitial());
+      : super(StreamingInitial());
 
   String? get currentEpisodeId => _currentEpisodeId;
   String? get currentMediaId => _currentMediaId;
@@ -409,9 +409,8 @@ class StreamingCubit extends Cubit<StreamingState> {
           _cachedAvailableServers = defaultServers;
         },
         (servers) {
-          _cachedAvailableServers = servers.isNotEmpty
-              ? servers
-              : defaultServers;
+          _cachedAvailableServers =
+              servers.isNotEmpty ? servers : defaultServers;
           if (kDebugMode) {
             debugPrint('📡 Available servers: $_cachedAvailableServers');
           }

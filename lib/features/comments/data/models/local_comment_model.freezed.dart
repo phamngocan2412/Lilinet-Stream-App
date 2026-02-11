@@ -125,72 +125,71 @@ class _$LocalCommentModelCopyWithImpl<$Res, $Val extends LocalCommentModel>
   }) {
     return _then(
       _value.copyWith(
-            localId: null == localId
-                ? _value.localId
-                : localId // ignore: cast_nullable_to_non_nullable
-                      as String,
-            serverId: freezed == serverId
-                ? _value.serverId
-                : serverId // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            videoId: null == videoId
-                ? _value.videoId
-                : videoId // ignore: cast_nullable_to_non_nullable
-                      as String,
-            content: null == content
-                ? _value.content
-                : content // ignore: cast_nullable_to_non_nullable
-                      as String,
-            createdAt: null == createdAt
-                ? _value.createdAt
-                : createdAt // ignore: cast_nullable_to_non_nullable
-                      as DateTime,
-            isSynced: null == isSynced
-                ? _value.isSynced
-                : isSynced // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            isGuest: null == isGuest
-                ? _value.isGuest
-                : isGuest // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            tempUserName: freezed == tempUserName
-                ? _value.tempUserName
-                : tempUserName // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            tempAvatarUrl: freezed == tempAvatarUrl
-                ? _value.tempAvatarUrl
-                : tempAvatarUrl // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            userId: freezed == userId
-                ? _value.userId
-                : userId // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            likes: null == likes
-                ? _value.likes
-                : likes // ignore: cast_nullable_to_non_nullable
-                      as int,
-            dislikes: null == dislikes
-                ? _value.dislikes
-                : dislikes // ignore: cast_nullable_to_non_nullable
-                      as int,
-            repliesCount: null == repliesCount
-                ? _value.repliesCount
-                : repliesCount // ignore: cast_nullable_to_non_nullable
-                      as int,
-            parentId: freezed == parentId
-                ? _value.parentId
-                : parentId // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            likeTimestamps: null == likeTimestamps
-                ? _value.likeTimestamps
-                : likeTimestamps // ignore: cast_nullable_to_non_nullable
-                      as List<DateTime>,
-            mediaType: freezed == mediaType
-                ? _value.mediaType
-                : mediaType // ignore: cast_nullable_to_non_nullable
-                      as String?,
-          )
-          as $Val,
+        localId: null == localId
+            ? _value.localId
+            : localId // ignore: cast_nullable_to_non_nullable
+                as String,
+        serverId: freezed == serverId
+            ? _value.serverId
+            : serverId // ignore: cast_nullable_to_non_nullable
+                as String?,
+        videoId: null == videoId
+            ? _value.videoId
+            : videoId // ignore: cast_nullable_to_non_nullable
+                as String,
+        content: null == content
+            ? _value.content
+            : content // ignore: cast_nullable_to_non_nullable
+                as String,
+        createdAt: null == createdAt
+            ? _value.createdAt
+            : createdAt // ignore: cast_nullable_to_non_nullable
+                as DateTime,
+        isSynced: null == isSynced
+            ? _value.isSynced
+            : isSynced // ignore: cast_nullable_to_non_nullable
+                as bool,
+        isGuest: null == isGuest
+            ? _value.isGuest
+            : isGuest // ignore: cast_nullable_to_non_nullable
+                as bool,
+        tempUserName: freezed == tempUserName
+            ? _value.tempUserName
+            : tempUserName // ignore: cast_nullable_to_non_nullable
+                as String?,
+        tempAvatarUrl: freezed == tempAvatarUrl
+            ? _value.tempAvatarUrl
+            : tempAvatarUrl // ignore: cast_nullable_to_non_nullable
+                as String?,
+        userId: freezed == userId
+            ? _value.userId
+            : userId // ignore: cast_nullable_to_non_nullable
+                as String?,
+        likes: null == likes
+            ? _value.likes
+            : likes // ignore: cast_nullable_to_non_nullable
+                as int,
+        dislikes: null == dislikes
+            ? _value.dislikes
+            : dislikes // ignore: cast_nullable_to_non_nullable
+                as int,
+        repliesCount: null == repliesCount
+            ? _value.repliesCount
+            : repliesCount // ignore: cast_nullable_to_non_nullable
+                as int,
+        parentId: freezed == parentId
+            ? _value.parentId
+            : parentId // ignore: cast_nullable_to_non_nullable
+                as String?,
+        likeTimestamps: null == likeTimestamps
+            ? _value.likeTimestamps
+            : likeTimestamps // ignore: cast_nullable_to_non_nullable
+                as List<DateTime>,
+        mediaType: freezed == mediaType
+            ? _value.mediaType
+            : mediaType // ignore: cast_nullable_to_non_nullable
+                as String?,
+      ) as $Val,
     );
   }
 }
@@ -260,67 +259,67 @@ class __$$LocalCommentModelImplCopyWithImpl<$Res>
         localId: null == localId
             ? _value.localId
             : localId // ignore: cast_nullable_to_non_nullable
-                  as String,
+                as String,
         serverId: freezed == serverId
             ? _value.serverId
             : serverId // ignore: cast_nullable_to_non_nullable
-                  as String?,
+                as String?,
         videoId: null == videoId
             ? _value.videoId
             : videoId // ignore: cast_nullable_to_non_nullable
-                  as String,
+                as String,
         content: null == content
             ? _value.content
             : content // ignore: cast_nullable_to_non_nullable
-                  as String,
+                as String,
         createdAt: null == createdAt
             ? _value.createdAt
             : createdAt // ignore: cast_nullable_to_non_nullable
-                  as DateTime,
+                as DateTime,
         isSynced: null == isSynced
             ? _value.isSynced
             : isSynced // ignore: cast_nullable_to_non_nullable
-                  as bool,
+                as bool,
         isGuest: null == isGuest
             ? _value.isGuest
             : isGuest // ignore: cast_nullable_to_non_nullable
-                  as bool,
+                as bool,
         tempUserName: freezed == tempUserName
             ? _value.tempUserName
             : tempUserName // ignore: cast_nullable_to_non_nullable
-                  as String?,
+                as String?,
         tempAvatarUrl: freezed == tempAvatarUrl
             ? _value.tempAvatarUrl
             : tempAvatarUrl // ignore: cast_nullable_to_non_nullable
-                  as String?,
+                as String?,
         userId: freezed == userId
             ? _value.userId
             : userId // ignore: cast_nullable_to_non_nullable
-                  as String?,
+                as String?,
         likes: null == likes
             ? _value.likes
             : likes // ignore: cast_nullable_to_non_nullable
-                  as int,
+                as int,
         dislikes: null == dislikes
             ? _value.dislikes
             : dislikes // ignore: cast_nullable_to_non_nullable
-                  as int,
+                as int,
         repliesCount: null == repliesCount
             ? _value.repliesCount
             : repliesCount // ignore: cast_nullable_to_non_nullable
-                  as int,
+                as int,
         parentId: freezed == parentId
             ? _value.parentId
             : parentId // ignore: cast_nullable_to_non_nullable
-                  as String?,
+                as String?,
         likeTimestamps: null == likeTimestamps
             ? _value._likeTimestamps
             : likeTimestamps // ignore: cast_nullable_to_non_nullable
-                  as List<DateTime>,
+                as List<DateTime>,
         mediaType: freezed == mediaType
             ? _value.mediaType
             : mediaType // ignore: cast_nullable_to_non_nullable
-                  as String?,
+                as String?,
       ),
     );
   }
@@ -346,8 +345,8 @@ class _$LocalCommentModelImpl extends _LocalCommentModel {
     @HiveField(13) this.parentId,
     @HiveField(14) final List<DateTime> likeTimestamps = const [],
     @HiveField(15) this.mediaType,
-  }) : _likeTimestamps = likeTimestamps,
-       super._();
+  })  : _likeTimestamps = likeTimestamps,
+        super._();
 
   factory _$LocalCommentModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$LocalCommentModelImplFromJson(json);
@@ -456,24 +455,24 @@ class _$LocalCommentModelImpl extends _LocalCommentModel {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    localId,
-    serverId,
-    videoId,
-    content,
-    createdAt,
-    isSynced,
-    isGuest,
-    tempUserName,
-    tempAvatarUrl,
-    userId,
-    likes,
-    dislikes,
-    repliesCount,
-    parentId,
-    const DeepCollectionEquality().hash(_likeTimestamps),
-    mediaType,
-  );
+        runtimeType,
+        localId,
+        serverId,
+        videoId,
+        content,
+        createdAt,
+        isSynced,
+        isGuest,
+        tempUserName,
+        tempAvatarUrl,
+        userId,
+        likes,
+        dislikes,
+        repliesCount,
+        parentId,
+        const DeepCollectionEquality().hash(_likeTimestamps),
+        mediaType,
+      );
 
   /// Create a copy of LocalCommentModel
   /// with the given fields replaced by the non-null parameter values.

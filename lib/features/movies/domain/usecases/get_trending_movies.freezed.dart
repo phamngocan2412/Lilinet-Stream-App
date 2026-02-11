@@ -54,16 +54,15 @@ class _$TrendingParamsCopyWithImpl<$Res, $Val extends TrendingParams>
   $Res call({Object? type = null, Object? page = null}) {
     return _then(
       _value.copyWith(
-            type: null == type
-                ? _value.type
-                : type // ignore: cast_nullable_to_non_nullable
-                      as String,
-            page: null == page
-                ? _value.page
-                : page // ignore: cast_nullable_to_non_nullable
-                      as int,
-          )
-          as $Val,
+        type: null == type
+            ? _value.type
+            : type // ignore: cast_nullable_to_non_nullable
+                as String,
+        page: null == page
+            ? _value.page
+            : page // ignore: cast_nullable_to_non_nullable
+                as int,
+      ) as $Val,
     );
   }
 }
@@ -99,11 +98,11 @@ class __$$TrendingParamsImplCopyWithImpl<$Res>
         type: null == type
             ? _value.type
             : type // ignore: cast_nullable_to_non_nullable
-                  as String,
+                as String,
         page: null == page
             ? _value.page
             : page // ignore: cast_nullable_to_non_nullable
-                  as int,
+                as int,
       ),
     );
   }

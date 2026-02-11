@@ -52,16 +52,15 @@ class _$SubtitleCopyWithImpl<$Res, $Val extends Subtitle>
   $Res call({Object? url = null, Object? lang = null}) {
     return _then(
       _value.copyWith(
-            url: null == url
-                ? _value.url
-                : url // ignore: cast_nullable_to_non_nullable
-                      as String,
-            lang: null == lang
-                ? _value.lang
-                : lang // ignore: cast_nullable_to_non_nullable
-                      as String,
-          )
-          as $Val,
+        url: null == url
+            ? _value.url
+            : url // ignore: cast_nullable_to_non_nullable
+                as String,
+        lang: null == lang
+            ? _value.lang
+            : lang // ignore: cast_nullable_to_non_nullable
+                as String,
+      ) as $Val,
     );
   }
 }
@@ -97,11 +96,11 @@ class __$$SubtitleImplCopyWithImpl<$Res>
         url: null == url
             ? _value.url
             : url // ignore: cast_nullable_to_non_nullable
-                  as String,
+                as String,
         lang: null == lang
             ? _value.lang
             : lang // ignore: cast_nullable_to_non_nullable
-                  as String,
+                as String,
       ),
     );
   }

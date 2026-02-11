@@ -74,8 +74,8 @@ class AppCachedImage extends StatelessWidget {
         int? optimalMemCacheWidth;
 
         if (constraints.hasBoundedWidth) {
-          optimalMemCacheWidth = (constraints.maxWidth * devicePixelRatio)
-              .toInt();
+          optimalMemCacheWidth =
+              (constraints.maxWidth * devicePixelRatio).toInt();
         } else {
           optimalMemCacheWidth = 700; // Fallback
         }

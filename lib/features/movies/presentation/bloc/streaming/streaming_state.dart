@@ -30,12 +30,12 @@ class StreamingLoaded extends StreamingState {
 
   @override
   List<Object?> get props => [
-    episodeId,
-    links,
-    selectedServer,
-    subtitles,
-    availableServers,
-  ];
+        episodeId,
+        links,
+        selectedServer,
+        subtitles,
+        availableServers,
+      ];
 }
 
 class StreamingError extends StreamingState {

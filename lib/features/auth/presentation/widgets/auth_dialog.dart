@@ -85,9 +85,8 @@ class _AuthDialogState extends State<AuthDialog> {
                             l10n.login,
                             style: TextStyle(
                               fontWeight: _isLogin ? FontWeight.bold : null,
-                              decoration: _isLogin
-                                  ? TextDecoration.underline
-                                  : null,
+                              decoration:
+                                  _isLogin ? TextDecoration.underline : null,
                             ),
                           ),
                         ),
@@ -98,9 +97,8 @@ class _AuthDialogState extends State<AuthDialog> {
                             l10n.signUp,
                             style: TextStyle(
                               fontWeight: !_isLogin ? FontWeight.bold : null,
-                              decoration: !_isLogin
-                                  ? TextDecoration.underline
-                                  : null,
+                              decoration:
+                                  !_isLogin ? TextDecoration.underline : null,
                             ),
                           ),
                         ),
@@ -214,12 +212,12 @@ class _AuthDialogState extends State<AuthDialog> {
   void _handleSubmit() {
     if (_formKey.currentState!.validate()) {
       context.read<AuthBloc>().add(
-        AuthSubmitted(
-          username: _usernameController.text.trim(),
-          password: _passwordController.text,
-          isLogin: _isLogin,
-        ),
-      );
+            AuthSubmitted(
+              username: _usernameController.text.trim(),
+              password: _passwordController.text,
+              isLogin: _isLogin,
+            ),
+          );
     }
   }
 }

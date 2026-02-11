@@ -23,13 +23,13 @@ class Favorite extends Equatable {
 
   @override
   List<Object?> get props => [
-    id,
-    userId,
-    movieId,
-    movieTitle,
-    moviePoster,
-    movieType,
-    folder,
-    createdAt,
-  ];
+        id,
+        userId,
+        movieId,
+        movieTitle,
+        moviePoster,
+        movieType,
+        folder,
+        createdAt,
+      ];
 }

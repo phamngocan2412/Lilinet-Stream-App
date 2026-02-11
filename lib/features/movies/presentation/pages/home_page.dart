@@ -106,8 +106,8 @@ class _HomePageViewState extends State<HomePageView>
                   message: message,
                   onRetry: () {
                     context.read<TrendingMoviesBloc>().add(
-                      const TrendingMoviesEvent.load(),
-                    );
+                          const TrendingMoviesEvent.load(),
+                        );
                   },
                 ),
               ),
@@ -238,8 +238,7 @@ class _HomePageViewState extends State<HomePageView>
                                           lookupKey = 'Action';
                                         }
 
-                                        final genreId =
-                                            genres[lookupKey] ??
+                                        final genreId = genres[lookupKey] ??
                                             genres[categoryName
                                                 .replaceAll('Movies', '')
                                                 .trim()];

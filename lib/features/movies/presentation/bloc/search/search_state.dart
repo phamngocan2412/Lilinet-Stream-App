@@ -12,7 +12,7 @@ class SearchState extends Equatable {
   final int currentPage;
   final bool hasMore;
   final String
-  activeFilter; // 'All', 'TV Series', 'Movie' (Legacy simple filter)
+      activeFilter; // 'All', 'TV Series', 'Movie' (Legacy simple filter)
   final FilterOptions filterOptions;
 
   const SearchState({
@@ -56,15 +56,15 @@ class SearchState extends Equatable {
 
   @override
   List<Object> get props => [
-    query,
-    movies,
-    rawMovies,
-    isLoading,
-    hasError,
-    errorMessage,
-    currentPage,
-    hasMore,
-    activeFilter,
-    filterOptions,
-  ];
+        query,
+        movies,
+        rawMovies,
+        isLoading,
+        hasError,
+        errorMessage,
+        currentPage,
+        hasMore,
+        activeFilter,
+        filterOptions,
+      ];
 }

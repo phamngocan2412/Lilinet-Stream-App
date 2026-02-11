@@ -81,44 +81,43 @@ class _$WatchProgressCopyWithImpl<$Res, $Val extends WatchProgress>
   }) {
     return _then(
       _value.copyWith(
-            mediaId: null == mediaId
-                ? _value.mediaId
-                : mediaId // ignore: cast_nullable_to_non_nullable
-                      as String,
-            title: null == title
-                ? _value.title
-                : title // ignore: cast_nullable_to_non_nullable
-                      as String,
-            posterUrl: freezed == posterUrl
-                ? _value.posterUrl
-                : posterUrl // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            episodeId: freezed == episodeId
-                ? _value.episodeId
-                : episodeId // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            episodeTitle: freezed == episodeTitle
-                ? _value.episodeTitle
-                : episodeTitle // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            positionSeconds: null == positionSeconds
-                ? _value.positionSeconds
-                : positionSeconds // ignore: cast_nullable_to_non_nullable
-                      as int,
-            durationSeconds: null == durationSeconds
-                ? _value.durationSeconds
-                : durationSeconds // ignore: cast_nullable_to_non_nullable
-                      as int,
-            lastUpdated: null == lastUpdated
-                ? _value.lastUpdated
-                : lastUpdated // ignore: cast_nullable_to_non_nullable
-                      as DateTime,
-            isFinished: null == isFinished
-                ? _value.isFinished
-                : isFinished // ignore: cast_nullable_to_non_nullable
-                      as bool,
-          )
-          as $Val,
+        mediaId: null == mediaId
+            ? _value.mediaId
+            : mediaId // ignore: cast_nullable_to_non_nullable
+                as String,
+        title: null == title
+            ? _value.title
+            : title // ignore: cast_nullable_to_non_nullable
+                as String,
+        posterUrl: freezed == posterUrl
+            ? _value.posterUrl
+            : posterUrl // ignore: cast_nullable_to_non_nullable
+                as String?,
+        episodeId: freezed == episodeId
+            ? _value.episodeId
+            : episodeId // ignore: cast_nullable_to_non_nullable
+                as String?,
+        episodeTitle: freezed == episodeTitle
+            ? _value.episodeTitle
+            : episodeTitle // ignore: cast_nullable_to_non_nullable
+                as String?,
+        positionSeconds: null == positionSeconds
+            ? _value.positionSeconds
+            : positionSeconds // ignore: cast_nullable_to_non_nullable
+                as int,
+        durationSeconds: null == durationSeconds
+            ? _value.durationSeconds
+            : durationSeconds // ignore: cast_nullable_to_non_nullable
+                as int,
+        lastUpdated: null == lastUpdated
+            ? _value.lastUpdated
+            : lastUpdated // ignore: cast_nullable_to_non_nullable
+                as DateTime,
+        isFinished: null == isFinished
+            ? _value.isFinished
+            : isFinished // ignore: cast_nullable_to_non_nullable
+                as bool,
+      ) as $Val,
     );
   }
 }
@@ -174,39 +173,39 @@ class __$$WatchProgressImplCopyWithImpl<$Res>
         mediaId: null == mediaId
             ? _value.mediaId
             : mediaId // ignore: cast_nullable_to_non_nullable
-                  as String,
+                as String,
         title: null == title
             ? _value.title
             : title // ignore: cast_nullable_to_non_nullable
-                  as String,
+                as String,
         posterUrl: freezed == posterUrl
             ? _value.posterUrl
             : posterUrl // ignore: cast_nullable_to_non_nullable
-                  as String?,
+                as String?,
         episodeId: freezed == episodeId
             ? _value.episodeId
             : episodeId // ignore: cast_nullable_to_non_nullable
-                  as String?,
+                as String?,
         episodeTitle: freezed == episodeTitle
             ? _value.episodeTitle
             : episodeTitle // ignore: cast_nullable_to_non_nullable
-                  as String?,
+                as String?,
         positionSeconds: null == positionSeconds
             ? _value.positionSeconds
             : positionSeconds // ignore: cast_nullable_to_non_nullable
-                  as int,
+                as int,
         durationSeconds: null == durationSeconds
             ? _value.durationSeconds
             : durationSeconds // ignore: cast_nullable_to_non_nullable
-                  as int,
+                as int,
         lastUpdated: null == lastUpdated
             ? _value.lastUpdated
             : lastUpdated // ignore: cast_nullable_to_non_nullable
-                  as DateTime,
+                as DateTime,
         isFinished: null == isFinished
             ? _value.isFinished
             : isFinished // ignore: cast_nullable_to_non_nullable
-                  as bool,
+                as bool,
       ),
     );
   }
@@ -276,17 +275,17 @@ class _$WatchProgressImpl implements _WatchProgress {
 
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    mediaId,
-    title,
-    posterUrl,
-    episodeId,
-    episodeTitle,
-    positionSeconds,
-    durationSeconds,
-    lastUpdated,
-    isFinished,
-  );
+        runtimeType,
+        mediaId,
+        title,
+        posterUrl,
+        episodeId,
+        episodeTitle,
+        positionSeconds,
+        durationSeconds,
+        lastUpdated,
+        isFinished,
+      );
 
   /// Create a copy of WatchProgress
   /// with the given fields replaced by the non-null parameter values.
