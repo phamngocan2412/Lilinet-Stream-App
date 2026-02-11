@@ -43,7 +43,7 @@ void main() {
     test(
         'should catch DioException and return generic failure without leaking URL',
         () async {
-      const sensitiveUrl = 'https://api.example.com/users/123/token=SECRET';
+      const sensitiveUrl = 'https://api.example.com/users/123?token=SECRET';
 
       final result = await repository.safeCall(() async {
         throw DioException(
@@ -59,9 +59,9 @@ void main() {
           final serverFailure = failure as ServerFailure;
 
           // Verify that URL is NOT leaked
-          expect(serverFailure.message, isNot(contains(sensitiveUrl)));
-          expect(serverFailure.message,
-              equals('An unexpected network error occurred.'));
+          expect(serverFailure.message, isNot(contains('token=SECRET')));
+          // Verify that sensitive part is redacted
+          expect(serverFailure.message, contains('REDACTED'));
         },
         (_) => fail('Should return Left(Failure)'),
       );

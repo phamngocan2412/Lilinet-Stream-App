@@ -102,10 +102,7 @@ class MovieDetailsHeader extends StatelessWidget {
                                 ?.copyWith(
                                   color: Theme.of(
                                     context,
-                                  )
-                                      .colorScheme
-                                      .onSurface
-                                      .withOpacity(0.7),
+                                  ).colorScheme.onSurface.withOpacity(0.7),
                                 ),
                           ),
                           const SizedBox(width: 12),
@@ -117,10 +114,7 @@ class MovieDetailsHeader extends StatelessWidget {
                                 ?.copyWith(
                                   color: Theme.of(
                                     context,
-                                  )
-                                      .colorScheme
-                                      .onSurface
-                                      .withOpacity(0.3),
+                                  ).colorScheme.onSurface.withOpacity(0.3),
                                 ),
                           ),
                           const SizedBox(width: 12),
@@ -134,10 +128,7 @@ class MovieDetailsHeader extends StatelessWidget {
                                 ?.copyWith(
                                   color: Theme.of(
                                     context,
-                                  )
-                                      .colorScheme
-                                      .onSurface
-                                      .withOpacity(0.7),
+                                  ).colorScheme.onSurface.withOpacity(0.7),
                                 ),
                           ),
                           const SizedBox(width: 12),
@@ -149,10 +140,7 @@ class MovieDetailsHeader extends StatelessWidget {
                                 ?.copyWith(
                                   color: Theme.of(
                                     context,
-                                  )
-                                      .colorScheme
-                                      .onSurface
-                                      .withOpacity(0.3),
+                                  ).colorScheme.onSurface.withOpacity(0.3),
                                 ),
                           ),
                           const SizedBox(width: 12),

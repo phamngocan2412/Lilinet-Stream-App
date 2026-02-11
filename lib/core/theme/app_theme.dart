@@ -43,7 +43,7 @@ class AppTheme {
       ),
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: AppColors.lightSurface,
-        indicatorColor: AppColors.brandPrimary.withValues(alpha: 0.2),
+        indicatorColor: AppColors.brandPrimary.withOpacity(0.2),
         labelTextStyle: MaterialStateProperty.all(
           const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
         ),
@@ -54,7 +54,7 @@ class AppTheme {
           return const IconThemeData(color: AppColors.lightTextTertiary);
         }),
       ),
-      cardTheme: CardThemeData(
+      cardTheme: CardTheme(
         color: AppColors.lightSurface,
         elevation: 0,
         shape: RoundedRectangleBorder(
