@@ -33,7 +33,7 @@ class SecureInterceptor extends Interceptor {
           if (data is FormData) {
             _log('Request Body: [FormData]', name: 'SecureLogger');
           } else {
-            final sanitized = _sanitizeData(data);
+            final sanitized = SecurityUtils.sanitizeData(data);
             if (sanitized is Map || sanitized is List) {
               try {
                 final prettyJson =
@@ -58,7 +58,9 @@ class SecureInterceptor extends Interceptor {
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     if (kDebugMode) {
       try {
-        _log('Response: ${response.statusCode} ${response.requestOptions.uri}',
+        final sanitizedUri =
+            SecurityUtils.sanitizeUri(response.requestOptions.uri);
+        _log('Response: ${response.statusCode} $sanitizedUri',
             name: 'SecureLogger');
 
         // Log Headers (sanitized)
@@ -83,15 +85,19 @@ class SecureInterceptor extends Interceptor {
   void onError(DioException err, ErrorInterceptorHandler handler) {
     if (kDebugMode) {
       try {
+        final sanitizedMessage =
+            SecurityUtils.sanitizeUrlInString(err.message ?? '');
         _log(
-          'Error: ${err.error} ${err.message}',
+          'Error: ${err.error} $sanitizedMessage',
           name: 'SecureLogger',
         );
 
         final response = err.response;
         if (response != null) {
+          final sanitizedUri =
+              SecurityUtils.sanitizeUri(response.requestOptions.uri);
           _log(
-            'Error Response: ${response.statusCode} ${response.requestOptions.uri}',
+            'Error Response: ${response.statusCode} $sanitizedUri',
             name: 'SecureLogger',
           );
 
@@ -128,5 +134,4 @@ class SecureInterceptor extends Interceptor {
       _log('$label: $sanitized', name: 'SecureLogger');
     }
   }
-
 }

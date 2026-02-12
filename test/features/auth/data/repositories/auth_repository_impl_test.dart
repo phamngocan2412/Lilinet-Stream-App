@@ -42,7 +42,8 @@ void main() {
         // Assert
         expect(
           result,
-          equals(const Left(Failure.server('Exception: $tSensitiveError'))),
+          equals(const Left(Failure.server(
+              'An unexpected error occurred. Please try again later.'))),
         );
       },
     );
@@ -70,7 +71,8 @@ void main() {
         // Assert
         expect(
           result,
-          equals(const Left(Failure.server('Exception: $tSensitiveError'))),
+          equals(const Left(Failure.server(
+              'An unexpected error occurred. Please try again later.'))),
         );
       },
     );
@@ -91,7 +93,8 @@ void main() {
         // Assert
         expect(
           result,
-          equals(const Left(Failure.server('Exception: $tSensitiveError'))),
+          equals(const Left(Failure.server(
+              'An unexpected error occurred. Please try again later.'))),
         );
       },
     );
@@ -112,7 +115,7 @@ void main() {
         expect(
           result,
           equals(const Left(Failure.server(
-              'Đã xảy ra lỗi không mong muốn khi gửi email đặt lại mật khẩu.'))),
+              'An unexpected error occurred. Please try again later.'))),
         );
       },
     );

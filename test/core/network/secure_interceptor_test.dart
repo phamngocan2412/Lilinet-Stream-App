@@ -351,6 +351,38 @@ void main() {
 
         verify(() => handler.next(error)).called(1);
       });
+
+      test('redacts sensitive URL in error message', () {
+        final logs = <String>[];
+        final interceptor = SecureInterceptor(
+          logCallback: (message, {name = ''}) {
+            logs.add(message);
+          },
+        );
+
+        final options = RequestOptions(
+          path: 'https://api.example.com/api',
+          queryParameters: {'token': 'secret_token_123'},
+        );
+
+        final fullUrl = options.uri.toString();
+        final error = DioException(
+          requestOptions: options,
+          message: 'Failed to connect to $fullUrl',
+        );
+
+        final handler = MockErrorInterceptorHandler();
+        interceptor.onError(error, handler);
+
+        final errorLog = logs.firstWhere((log) => log.contains('Error:'));
+
+        expect(errorLog, isNot(contains('secret_token_123')),
+            reason: 'Should NOT leak token');
+        expect(errorLog, contains('REDACTED'),
+            reason: 'Should contain REDACTED');
+
+        verify(() => handler.next(error)).called(1);
+      });
     });
 
     group('JSON String Parsing', () {
