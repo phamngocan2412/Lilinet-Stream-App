@@ -41,8 +41,12 @@ class _ExpandedPlayerContentState extends State<ExpandedPlayerContent> {
 
   void _initCubit() {
     if (widget.state.mediaId != null) {
-      _commentCubit = GetIt.I<CommentCubit>();
-      _commentCubit!.loadComments(widget.state.mediaId!);
+      final mediaId = widget.state.mediaId;
+      if (mediaId == null) return;
+
+      final commentCubit = GetIt.I<CommentCubit>();
+      commentCubit.loadComments(mediaId);
+      _commentCubit = commentCubit;
     }
   }
 
