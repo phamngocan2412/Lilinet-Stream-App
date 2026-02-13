@@ -127,7 +127,8 @@ class CommentCubit extends Cubit<CommentState> {
             final sorted = _sortComments(rootComments, currentState.sortType);
 
             // Only emit if the comments are actually different
-            if (_commentsChanged(currentState.comments, sorted)) {
+            if (_commentsChanged(currentState.comments, sorted) ||
+                !setEquals(likedIds, currentState.likedCommentIds)) {
               emit(currentState.copyWith(
                 comments: sorted,
                 likedCommentIds: likedIds,
@@ -162,9 +163,15 @@ class CommentCubit extends Cubit<CommentState> {
           if (isClosed) return;
 
           final commentsResult = results[0] as Either<Failure, List<Comment>>;
+          final likedIdsResult = results[1] as Either<Failure, List<String>>;
 
           state.mapOrNull(
             loaded: (loadedState) {
+              final likedIds = likedIdsResult.fold(
+                (failure) => loadedState.likedCommentIds,
+                (ids) => ids.toSet(),
+              );
+
               commentsResult.fold(
                 (l) => null,
                 (newComments) {
@@ -176,8 +183,12 @@ class CommentCubit extends Cubit<CommentState> {
                     loadedState.sortType,
                   );
                   // Only emit if the comments are actually different
-                  if (_commentsChanged(loadedState.comments, sorted)) {
-                    emit(loadedState.copyWith(comments: sorted));
+                  if (_commentsChanged(loadedState.comments, sorted) ||
+                      !setEquals(likedIds, loadedState.likedCommentIds)) {
+                    emit(loadedState.copyWith(
+                      comments: sorted,
+                      likedCommentIds: likedIds,
+                    ));
                   }
                 },
               );
@@ -194,9 +205,27 @@ class CommentCubit extends Cubit<CommentState> {
   bool _commentsChanged(List<Comment> old, List<Comment> newComments) {
     if (old.length != newComments.length) return true;
     for (int i = 0; i < old.length; i++) {
-      if (old[i].id != newComments[i].id) return true;
+      if (_commentFingerprint(old[i]) != _commentFingerprint(newComments[i])) {
+        return true;
+      }
     }
     return false;
+  }
+
+  String _commentFingerprint(Comment comment) {
+    final updatedAt = comment.updatedAt?.millisecondsSinceEpoch ?? 0;
+    return [
+      comment.id,
+      comment.content,
+      comment.likes,
+      comment.dislikes,
+      comment.repliesCount,
+      comment.replies.length,
+      updatedAt,
+      comment.isEdited ? 1 : 0,
+      comment.isDeleted ? 1 : 0,
+      comment.isPinned ? 1 : 0,
+    ].join('|');
   }
 
   void changeSortType(CommentSortType type) {
@@ -417,54 +446,116 @@ class CommentCubit extends Cubit<CommentState> {
   }
 
   Future<void> likeComment(String commentId) async {
-    state.mapOrNull(
-      loaded: (currentState) {
-        // Prevent multiple simultaneous operations
-        if (currentState.likingInProgress.contains(commentId)) {
-          return;
-        }
+    final currentState = state.maybeMap(
+      loaded: (loadedState) => loadedState,
+      orElse: () => null,
+    );
+    if (currentState == null) return;
 
-        final isAlreadyLiked = currentState.likedCommentIds.contains(commentId);
+    if (currentState.likingInProgress.contains(commentId)) {
+      return;
+    }
 
-        // Add to likingInProgress
-        final newLikingInProgress = Set<String>.from(
-          currentState.likingInProgress,
-        )..add(commentId);
+    final isAlreadyLiked = currentState.likedCommentIds.contains(commentId);
+    final likeDelta = isAlreadyLiked ? -1 : 1;
 
-        emit(currentState.copyWith(likingInProgress: newLikingInProgress));
+    final optimisticLikedIds = Set<String>.from(currentState.likedCommentIds);
+    if (isAlreadyLiked) {
+      optimisticLikedIds.remove(commentId);
+    } else {
+      optimisticLikedIds.add(commentId);
+    }
 
-        // Optimistic update - toggle like state
-        final updatedComments = currentState.comments.map((c) {
-          if (c.id == commentId) {
-            return c.copyWith(
-              likes: isAlreadyLiked ? c.likes - 1 : c.likes + 1,
-            );
-          }
-          return c;
-        }).toList();
+    final optimisticInProgress = Set<String>.from(currentState.likingInProgress)
+      ..add(commentId);
 
-        // Toggle liked state and remove from inProgress
-        final newLikedIds = Set<String>.from(currentState.likedCommentIds);
+    emit(currentState.copyWith(
+      comments: _applyLikeDelta(currentState.comments, commentId, likeDelta),
+      expandedReplies: _applyExpandedReplyLikeDelta(
+        currentState.expandedReplies,
+        commentId,
+        likeDelta,
+      ),
+      likedCommentIds: optimisticLikedIds,
+      likingInProgress: optimisticInProgress,
+      errorMessage: '',
+    ));
+
+    final result = await _likeComment(commentId);
+    if (isClosed) return;
+
+    final latestState = state.maybeMap(
+      loaded: (loadedState) => loadedState,
+      orElse: () => null,
+    );
+    if (latestState == null) return;
+
+    final completedInProgress = Set<String>.from(latestState.likingInProgress)
+      ..remove(commentId);
+
+    result.fold(
+      (failure) {
+        final rollbackDelta = -likeDelta;
+        final rollbackLikedIds = Set<String>.from(latestState.likedCommentIds);
         if (isAlreadyLiked) {
-          newLikedIds.remove(commentId);
+          rollbackLikedIds.add(commentId);
         } else {
-          newLikedIds.add(commentId);
+          rollbackLikedIds.remove(commentId);
         }
-        final finalLikingInProgress = Set<String>.from(newLikingInProgress)
-          ..remove(commentId);
 
-        emit(
-          currentState.copyWith(
-            comments: updatedComments,
-            likedCommentIds: newLikedIds,
-            likingInProgress: finalLikingInProgress,
+        emit(latestState.copyWith(
+          comments: _applyLikeDelta(
+            latestState.comments,
+            commentId,
+            rollbackDelta,
           ),
-        );
-
-        // Call backend - it handles toggle logic (like/unlike)
-        _likeComment(commentId);
+          expandedReplies: _applyExpandedReplyLikeDelta(
+            latestState.expandedReplies,
+            commentId,
+            rollbackDelta,
+          ),
+          likedCommentIds: rollbackLikedIds,
+          likingInProgress: completedInProgress,
+          errorMessage: failure.message,
+        ));
+      },
+      (_) {
+        emit(latestState.copyWith(
+          likingInProgress: completedInProgress,
+        ));
       },
     );
+  }
+
+  Map<String, List<Comment>> _applyExpandedReplyLikeDelta(
+    Map<String, List<Comment>> expandedReplies,
+    String commentId,
+    int likeDelta,
+  ) {
+    final updated = <String, List<Comment>>{};
+    expandedReplies.forEach((key, replies) {
+      updated[key] = _applyLikeDelta(replies, commentId, likeDelta);
+    });
+    return updated;
+  }
+
+  List<Comment> _applyLikeDelta(
+    List<Comment> comments,
+    String commentId,
+    int likeDelta,
+  ) {
+    return comments.map((comment) {
+      if (comment.id == commentId) {
+        final nextLikes = comment.likes + likeDelta;
+        return comment.copyWith(likes: nextLikes < 0 ? 0 : nextLikes);
+      }
+
+      if (comment.replies.isEmpty) return comment;
+
+      final updatedReplies =
+          _applyLikeDelta(comment.replies, commentId, likeDelta);
+      return comment.copyWith(replies: updatedReplies);
+    }).toList();
   }
 
   List<Comment> _sortComments(List<Comment> comments, CommentSortType type) {

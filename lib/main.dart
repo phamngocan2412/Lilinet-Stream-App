@@ -8,6 +8,7 @@ import 'core/supabase/supabase_config.dart';
 import 'core/services/video_player_service.dart';
 import 'core/services/cast_service.dart';
 import 'core/services/download_service.dart';
+import 'core/services/network_monitor_service.dart';
 import 'core/services/video_session_repository.dart';
 import 'app.dart';
 import 'features/history/presentation/bloc/history_bloc.dart';
@@ -159,6 +160,9 @@ Future<void> _initializeApp() async {
 
     // Register app lifecycle observer
     WidgetsBinding.instance.addObserver(_AppLifecycleObserver());
+
+    // Start global network monitor for adaptive quality heuristics
+    unawaited(NetworkMonitorService().initialize());
 
     // Switch to main app
     runApp(const MyApp());

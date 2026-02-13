@@ -15,9 +15,11 @@ class NetworkMonitorService {
   // Current network status
   bool _isConnected = true;
   ConnectivityResult _connectionType = ConnectivityResult.mobile;
+  bool _isInitialized = false;
 
   // Timer to update speed samples
   Timer? _timer;
+  StreamSubscription<List<ConnectivityResult>>? _connectivitySubscription;
 
   // Stream controller to send bandwidth change events
   final StreamController<double> _bandwidthController =
@@ -42,8 +44,13 @@ class NetworkMonitorService {
     return _instance;
   }
 
+  bool get isInitialized => _isInitialized;
+
   /// Initialize service
   Future<void> initialize() async {
+    if (_isInitialized) return;
+    _isInitialized = true;
+
     // Get initial connection status
     final connectivityResults = await Connectivity().checkConnectivity();
     final connectivityResult = connectivityResults.isNotEmpty
@@ -53,7 +60,10 @@ class NetworkMonitorService {
     _isConnected = connectivityResult != ConnectivityResult.none;
 
     // Monitor connection changes
-    Connectivity().onConnectivityChanged.listen((results) {
+    _connectivitySubscription?.cancel();
+    _connectivitySubscription = Connectivity().onConnectivityChanged.listen((
+      results,
+    ) {
       final result =
           results.isNotEmpty ? results.first : ConnectivityResult.none;
       _isConnected = result != ConnectivityResult.none;
@@ -155,7 +165,11 @@ class NetworkMonitorService {
 
   /// Dispose service
   void dispose() {
+    _connectivitySubscription?.cancel();
     _timer?.cancel();
-    _bandwidthController.close();
+    _isInitialized = false;
+    if (!_bandwidthController.isClosed) {
+      _bandwidthController.close();
+    }
   }
 }

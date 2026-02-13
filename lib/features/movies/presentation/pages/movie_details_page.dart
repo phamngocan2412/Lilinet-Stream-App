@@ -87,6 +87,7 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
   // bool _showRecommendations = false;
   final _playDebouncer = Debouncer(milliseconds: 500);
   bool _hasPrecachedImage = false;
+  bool _didAutoPlayInitialEpisode = false;
 
   Duration? _getStartPosition(BuildContext context, String episodeId) {
     final state = context.read<HistoryBloc>().state;
@@ -129,6 +130,15 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
     super.dispose();
   }
 
+  @override
+  void didUpdateWidget(covariant MovieDetailsView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.initialEpisodeId != widget.initialEpisodeId ||
+        oldWidget.movieId != widget.movieId) {
+      _didAutoPlayInitialEpisode = false;
+    }
+  }
+
   void _precacheMovieImage() {
     if (_hasPrecachedImage) return;
 
@@ -151,7 +161,9 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
       backgroundColor: colorScheme.surface,
       body: BlocConsumer<MovieDetailsBloc, MovieDetailsState>(
         listener: (context, state) {
-          if (state is MovieDetailsLoaded && widget.initialEpisodeId != null) {
+          if (state is MovieDetailsLoaded &&
+              widget.initialEpisodeId != null &&
+              !_didAutoPlayInitialEpisode) {
             final movie = state.movie;
             final episodes = movie.episodes;
             if (episodes != null) {
@@ -159,6 +171,7 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
                 final episode = episodes.firstWhere(
                   (e) => e.id == widget.initialEpisodeId,
                 );
+                _didAutoPlayInitialEpisode = true;
 
                 // Calculate start position
                 Duration startPos = Duration.zero;
@@ -189,6 +202,7 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
                       ),
                     );
               } catch (_) {
+                _didAutoPlayInitialEpisode = true;
                 debugPrint(
                   'Initial episode not found: ${widget.initialEpisodeId}',
                 );

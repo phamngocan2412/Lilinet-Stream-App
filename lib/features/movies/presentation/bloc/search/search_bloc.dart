@@ -11,11 +11,13 @@ import 'search_state.dart';
 @injectable
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
   final SearchMovies _searchMovies;
+  int _queryGeneration = 0;
+  int _loadMoreRequestId = 0;
 
   SearchBloc(this._searchMovies) : super(const SearchState()) {
     on<SearchQueryChanged>(
       _onSearchQueryChanged,
-      transformer: debounce(const Duration(milliseconds: 300)),
+      transformer: debounceRestartable(const Duration(milliseconds: 300)),
     );
     on<SearchLoadMore>(_onSearchLoadMore);
     on<SearchCleared>(_onSearchCleared);
@@ -62,8 +64,12 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   ) {
     // Update activeFilter string based on mediaType for UI consistency
     String activeFilter = 'All';
-    if (event.options.mediaType == MediaType.tvSeries) activeFilter = 'TV Series';
-    if (event.options.mediaType == MediaType.movie) activeFilter = 'Movie';
+    if (event.options.mediaType == MediaType.tvSeries) {
+      activeFilter = 'TV Series';
+    }
+    if (event.options.mediaType == MediaType.movie) {
+      activeFilter = 'Movie';
+    }
 
     final filtered = _applyFilters(state.rawMovies, event.options);
 
@@ -78,14 +84,18 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     SearchQueryChanged event,
     Emitter<SearchState> emit,
   ) async {
-    if (event.query.isEmpty) {
+    final query = event.query.trim();
+    _queryGeneration++;
+    final requestGeneration = _queryGeneration;
+
+    if (query.isEmpty) {
       emit(const SearchState());
       return;
     }
 
     emit(
       state.copyWith(
-        query: event.query,
+        query: query,
         isLoading: true,
         currentPage: 1,
         movies: [],
@@ -93,7 +103,8 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       ),
     );
 
-    final result = await _searchMovies(event.query, page: 1);
+    final result = await _searchMovies(query, page: 1);
+    if (isClosed || requestGeneration != _queryGeneration) return;
 
     result.fold(
       (failure) => emit(
@@ -122,7 +133,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     SearchLoadMore event,
     Emitter<SearchState> emit,
   ) async {
-    if (!state.hasMore || state.isLoading) return;
+    if (!state.hasMore || state.isLoading || state.query.isEmpty) return;
 
     // Memory Optimization: Limit total results to ~400 items (20 pages)
     if (state.rawMovies.length >= 400) {
@@ -130,10 +141,19 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       return;
     }
 
+    final requestGeneration = _queryGeneration;
+    final requestId = ++_loadMoreRequestId;
+    final queryAtRequest = state.query;
     final nextPage = state.currentPage + 1;
     emit(state.copyWith(isLoading: true));
 
-    final result = await _searchMovies(state.query, page: nextPage);
+    final result = await _searchMovies(queryAtRequest, page: nextPage);
+    if (isClosed ||
+        requestGeneration != _queryGeneration ||
+        requestId != _loadMoreRequestId ||
+        state.query != queryAtRequest) {
+      return;
+    }
 
     result.fold(
       (failure) => emit(
@@ -161,6 +181,8 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   }
 
   void _onSearchCleared(SearchCleared event, Emitter<SearchState> emit) {
+    _queryGeneration++;
+    _loadMoreRequestId++;
     emit(const SearchState());
   }
 
@@ -196,6 +218,6 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   }
 }
 
-EventTransformer<T> debounce<T>(Duration duration) {
-  return (events, mapper) => events.debounceTime(duration).flatMap(mapper);
+EventTransformer<T> debounceRestartable<T>(Duration duration) {
+  return (events, mapper) => events.debounceTime(duration).switchMap(mapper);
 }

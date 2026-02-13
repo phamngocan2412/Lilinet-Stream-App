@@ -194,6 +194,11 @@ Follow [Conventional Commits](https://www.conventionalcommits.org/):
 - `test:` Adding tests
 - `chore:` Maintenance tasks
 
+
+## Vietnamese Recommendations
+
+For a prioritized Vietnamese roadmap focused on performance, UI/UX, and maintainability, see [Đề xuất cải tiến (VI)](./RECOMMENDATIONS_VI.md).
+
 ## UI/UX Analysis
 
 For detailed UI/UX review and improvement roadmap, see [UI/UX Analysis Report](./docs/UI_UX_Analysis_Report.md).

@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:rxdart/rxdart.dart';
 import '../../../../../core/services/anime_detection_service.dart';
 import '../../../domain/repositories/movie_repository.dart';
 import '../../../domain/usecases/get_movie_details.dart';
@@ -23,7 +24,10 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
     this._settingsRepository,
     this._animeDetectionService,
   ) : super(MovieDetailsInitial()) {
-    on<LoadMovieDetails>(_onLoadMovieDetails);
+    on<LoadMovieDetails>(
+      _onLoadMovieDetails,
+      transformer: restartableTransformer(),
+    );
     on<SetMovieDetails>(_onSetMovieDetails);
     on<SelectSeason>(_onSelectSeason);
   }
@@ -67,6 +71,7 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
     if (cachedMovie != null) {
       final initialSeason = _determineInitialSeason(cachedMovie);
       final episodes = _filterEpisodes(cachedMovie, initialSeason);
+      if (emit.isDone || isClosed) return;
       emit(
         MovieDetailsLoaded(
           cachedMovie,
@@ -75,6 +80,7 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
         ),
       );
     } else {
+      if (emit.isDone || isClosed) return;
       emit(MovieDetailsLoading());
     }
 
@@ -88,9 +94,11 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
         fastMode: true,
       ),
     );
+    if (emit.isDone || isClosed) return;
 
     fastResult.fold(
       (failure) {
+        if (emit.isDone || isClosed) return;
         if (cachedMovie == null) emit(MovieDetailsError(failure.message));
       },
       (movie) {
@@ -98,6 +106,7 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
         // If we emitted cache, this might update/refine metadata
         final initialSeason = _determineInitialSeason(movie);
         final episodes = _filterEpisodes(movie, initialSeason);
+        if (emit.isDone || isClosed) return;
         emit(
           MovieDetailsLoaded(
             movie,
@@ -112,6 +121,7 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
     // Determine provider from settings
     String? provider;
     final settingsResult = await _settingsRepository.getSettings();
+    if (emit.isDone || isClosed) return;
     settingsResult.fold(
       (l) => null, // Use default if settings fail
       (settings) {
@@ -179,9 +189,11 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
         fastMode: false,
       ),
     );
+    if (emit.isDone || isClosed) return;
 
     fullResult.fold(
       (failure) {
+        if (emit.isDone || isClosed) return;
         // If fast mode succeeded but full failed, we technically still have data.
         // But the episodes might be missing/incomplete.
         // We can just silently fail or show error if we had nothing.
@@ -192,6 +204,7 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
       (movie) {
         final initialSeason = _determineInitialSeason(movie);
         final episodes = _filterEpisodes(movie, initialSeason);
+        if (emit.isDone || isClosed) return;
         emit(
           MovieDetailsLoaded(
             movie,
@@ -221,19 +234,21 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
     }
 
     // For TV Series, filter by season
-    final filtered = movie.episodes!
-        .where((e) => (e.season ?? 1) == season)
-        .where((e) {
-          if (e.releaseDate != null && e.releaseDate!.isAfter(DateTime.now())) {
-            return false;
-          }
-          return true;
-        })
-        .toList();
+    final filtered =
+        movie.episodes!.where((e) => (e.season ?? 1) == season).where((e) {
+      if (e.releaseDate != null && e.releaseDate!.isAfter(DateTime.now())) {
+        return false;
+      }
+      return true;
+    }).toList();
 
     // Sort episodes by number
     filtered.sort((a, b) => a.number.compareTo(b.number));
 
     return filtered;
   }
+}
+
+EventTransformer<T> restartableTransformer<T>() {
+  return (events, mapper) => events.switchMap(mapper);
 }

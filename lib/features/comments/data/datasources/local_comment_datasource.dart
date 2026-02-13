@@ -18,83 +18,99 @@ abstract class LocalCommentDataSource {
 @LazySingleton(as: LocalCommentDataSource)
 class LocalCommentDataSourceImpl implements LocalCommentDataSource {
   static const String _boxName = 'local_comments';
-  late Box<LocalCommentModel> _box;
+  Box<LocalCommentModel>? _box;
+  Future<Box<LocalCommentModel>>? _boxFuture;
 
   LocalCommentDataSourceImpl() {
-    _initBox();
+    _boxFuture = _initBox();
   }
 
-  Future<void> _initBox() async {
-    _box = await Hive.openBox<LocalCommentModel>(_boxName);
+  Future<Box<LocalCommentModel>> _initBox() async {
+    if (Hive.isBoxOpen(_boxName)) {
+      return Hive.box<LocalCommentModel>(_boxName);
+    }
+    return Hive.openBox<LocalCommentModel>(_boxName);
   }
 
   @override
   Future<List<LocalCommentModel>> getCommentsForVideo(String videoId) async {
-    await _ensureBoxOpen();
-    return _box.values.where((comment) => comment.videoId == videoId).toList();
+    final box = await _ensureBoxOpen();
+    return box.values.where((comment) => comment.videoId == videoId).toList();
   }
 
   @override
   Future<List<LocalCommentModel>> getAllPendingComments() async {
-    await _ensureBoxOpen();
-    return _box.values
+    final box = await _ensureBoxOpen();
+    return box.values
         .where((comment) => !comment.isSynced && !comment.isGuest)
         .toList();
   }
 
   @override
   Future<List<LocalCommentModel>> getAllGuestComments() async {
-    await _ensureBoxOpen();
-    return _box.values.where((comment) => comment.isGuest).toList();
+    final box = await _ensureBoxOpen();
+    return box.values.where((comment) => comment.isGuest).toList();
   }
 
   @override
   Future<void> saveComment(LocalCommentModel comment) async {
-    await _ensureBoxOpen();
-    await _box.put(comment.localId, comment);
+    final box = await _ensureBoxOpen();
+    await box.put(comment.localId, comment);
   }
 
   @override
   Future<void> updateComment(LocalCommentModel comment) async {
-    await _ensureBoxOpen();
-    await _box.put(comment.localId, comment);
+    final box = await _ensureBoxOpen();
+    await box.put(comment.localId, comment);
   }
 
   @override
   Future<void> deleteComment(String localId) async {
-    await _ensureBoxOpen();
-    await _box.delete(localId);
+    final box = await _ensureBoxOpen();
+    await box.delete(localId);
   }
 
   @override
   Future<void> markAsSynced(String localId, String serverId) async {
-    await _ensureBoxOpen();
-    final comment = _box.get(localId);
+    final box = await _ensureBoxOpen();
+    final comment = box.get(localId);
     if (comment != null) {
       final updated = comment.markAsSynced(serverId);
-      await _box.put(localId, updated);
+      await box.put(localId, updated);
     }
   }
 
   @override
   Future<void> clearSyncedComments() async {
-    await _ensureBoxOpen();
-    final syncedComments = _box.values.where((c) => c.isSynced).toList();
+    final box = await _ensureBoxOpen();
+    final syncedComments = box.values.where((c) => c.isSynced).toList();
     for (final comment in syncedComments) {
-      await _box.delete(comment.localId);
+      await box.delete(comment.localId);
     }
   }
 
   @override
   Future<LocalCommentModel?> getCommentById(String localId) async {
-    await _ensureBoxOpen();
-    return _box.get(localId);
+    final box = await _ensureBoxOpen();
+    return box.get(localId);
   }
 
-  Future<void> _ensureBoxOpen() async {
-    if (!_box.isOpen) {
-      await _initBox();
+  Future<Box<LocalCommentModel>> _ensureBoxOpen() async {
+    final currentBox = _box;
+    if (currentBox != null && currentBox.isOpen) {
+      return currentBox;
     }
+
+    _boxFuture ??= _initBox();
+    final opened = await _boxFuture!;
+    _box = opened;
+
+    if (!opened.isOpen) {
+      _boxFuture = _initBox();
+      _box = await _boxFuture!;
+    }
+
+    return _box!;
   }
 
   // Helper to generate unique local ID

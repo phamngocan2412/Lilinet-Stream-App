@@ -28,28 +28,36 @@ class SupabaseCommentDataSource implements CommentRemoteDataSource {
   @override
   Stream<List<Map<String, dynamic>>> getCommentStream(String videoId) {
     final controller = StreamController<List<Map<String, dynamic>>>();
+    final channel =
+        _supabase.channel('public:comments:$videoId').onPostgresChanges(
+              event: PostgresChangeEvent.all,
+              schema: 'public',
+              table: 'comments',
+              filter: PostgresChangeFilter(
+                type: PostgresChangeFilterType.eq,
+                column: 'video_id',
+                value: videoId,
+              ),
+              callback: (payload) {
+                if (controller.isClosed) return;
+                final record = payload.newRecord.isNotEmpty
+                    ? payload.newRecord
+                    : (payload.oldRecord.isNotEmpty
+                        ? payload.oldRecord
+                        : <String, dynamic>{});
+                controller.add([record]);
+              },
+            );
 
-    _supabase
-        .channel('public:comments:$videoId')
-        .onPostgresChanges(
-          event: PostgresChangeEvent.all,
-          schema: 'public',
-          table: 'comments',
-          filter: PostgresChangeFilter(
-            type: PostgresChangeFilterType.eq,
-            column: 'video_id',
-            value: videoId,
-          ),
-          callback: (payload) {
-            final record = payload.newRecord.isNotEmpty
-                ? payload.newRecord
-                : (payload.oldRecord.isNotEmpty
-                    ? payload.oldRecord
-                    : <String, dynamic>{});
-            controller.add([record]);
-          },
-        )
-        .subscribe();
+    controller.onListen = () {
+      channel.subscribe();
+    };
+    controller.onCancel = () async {
+      await _supabase.removeChannel(channel);
+      if (!controller.isClosed) {
+        await controller.close();
+      }
+    };
 
     return controller.stream;
   }

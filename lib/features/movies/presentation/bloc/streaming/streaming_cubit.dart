@@ -27,6 +27,7 @@ class StreamingCubit extends Cubit<StreamingState> {
   // Cancel token for active requests
   bool _isCancelled = false;
   int _activeRequestCount = 0;
+  int _currentRequestId = 0;
 
   StreamingCubit(this._getStreamingLinks, this._getAvailableServers)
       : super(StreamingInitial());
@@ -37,6 +38,7 @@ class StreamingCubit extends Cubit<StreamingState> {
   /// Cancel all pending requests
   void cancelPendingRequests() {
     _isCancelled = true;
+    _currentRequestId++;
     if (kDebugMode) {
       debugPrint(
         '🛑 StreamingCubit: Cancelling $_activeRequestCount pending requests',
@@ -46,6 +48,10 @@ class StreamingCubit extends Cubit<StreamingState> {
 
   /// Check if request was cancelled
   bool get isCancelled => _isCancelled;
+
+  bool _isRequestStale(int requestId) {
+    return isClosed || _isCancelled || requestId != _currentRequestId;
+  }
 
   /// Get servers list with preferred server first
   List<String> _getServersWithPreferred(PreferredServer? preferred) {
@@ -99,14 +105,15 @@ class StreamingCubit extends Cubit<StreamingState> {
     _currentEpisodeId = episodeId;
     _currentMediaId = mediaId;
 
-    // Reset cancellation flag for new load
+    // Reset cancellation flag for new load and rotate request token
     _isCancelled = false;
+    final requestId = ++_currentRequestId;
     _activeRequestCount++;
 
     // Singleton instance - we cache episode state to avoid duplicate requests.
     // Only load if episode/media/provider changed or specific server requested.
 
-    if (isClosed || _isCancelled) {
+    if (_isRequestStale(requestId)) {
       _activeRequestCount--;
       return;
     }
@@ -116,7 +123,12 @@ class StreamingCubit extends Cubit<StreamingState> {
     final effectiveProvider = provider ?? StreamingConfig.defaultProvider;
 
     // Fetch available servers in background (don't wait)
-    _fetchAvailableServers(episodeId, mediaId, effectiveProvider);
+    _fetchAvailableServers(
+      episodeId,
+      mediaId,
+      effectiveProvider,
+      requestId: requestId,
+    );
 
     // Get ordered servers list based on preference
     final servers = _getServersWithPreferred(preferredServer);
@@ -135,15 +147,16 @@ class StreamingCubit extends Cubit<StreamingState> {
       mediaId,
       server,
       servers,
+      requestId: requestId,
     );
-    if (success || _isCancelled) {
+    if (success || _isRequestStale(requestId)) {
       _activeRequestCount--;
       return;
     }
 
     // 2. If specific server was requested, don't try fallbacks
     if (server != null) {
-      if (!isClosed && state is! StreamingLoaded && !_isCancelled) {
+      if (!_isRequestStale(requestId) && state is! StreamingLoaded) {
         emit(
           const StreamingError(
             'Selected server is not available after retries. Please try a different server.',
@@ -167,21 +180,22 @@ class StreamingCubit extends Cubit<StreamingState> {
       isAnime,
     );
 
-    if (fallbackProviders.isNotEmpty && !_isCancelled) {
+    if (fallbackProviders.isNotEmpty && !_isRequestStale(requestId)) {
       success = await _tryFallbackProviders(
         fallbackProviders,
         episodeId,
         mediaId,
         servers,
+        requestId: requestId,
       );
-      if (success) {
+      if (success || _isRequestStale(requestId)) {
         _activeRequestCount--;
         return;
       }
     }
 
     // 4. If all fail
-    if (!isClosed && state is! StreamingLoaded && !_isCancelled) {
+    if (!_isRequestStale(requestId) && state is! StreamingLoaded) {
       emit(
         const StreamingError(
           'No streaming links available. Please try a different provider in Settings or try again later.',
@@ -229,11 +243,12 @@ class StreamingCubit extends Cubit<StreamingState> {
     required String mediaId,
     required String server,
     required String provider,
+    required int requestId,
     int maxRetries = 2,
   }) async {
     int attempts = 0;
     while (true) {
-      if (isClosed || _isCancelled) {
+      if (_isRequestStale(requestId)) {
         return const Left(ServerFailure('Request cancelled'));
       }
 
@@ -248,7 +263,7 @@ class StreamingCubit extends Cubit<StreamingState> {
         if (result.isRight()) return result;
 
         attempts++;
-        if (attempts > maxRetries || _isCancelled) return result;
+        if (attempts > maxRetries || _isRequestStale(requestId)) return result;
 
         // Exponential backoff with jitter to prevent thundering herd
         final baseDelay = pow(2, attempts - 1).toInt();
@@ -263,10 +278,12 @@ class StreamingCubit extends Cubit<StreamingState> {
 
         // Check cancellation during delay
         await Future.delayed(delay);
-        if (_isCancelled) return const Left(ServerFailure('Request cancelled'));
+        if (_isRequestStale(requestId)) {
+          return const Left(ServerFailure('Request cancelled'));
+        }
       } catch (e) {
         attempts++;
-        if (attempts > maxRetries || _isCancelled) {
+        if (attempts > maxRetries || _isRequestStale(requestId)) {
           return Left(ServerFailure(e.toString()));
         }
         await Future.delayed(Duration(seconds: pow(2, attempts - 1).toInt()));
@@ -274,15 +291,12 @@ class StreamingCubit extends Cubit<StreamingState> {
     }
   }
 
-  Future<bool> _tryFallbackProviders(
-    List<String> providers,
-    String episodeId,
-    String mediaId,
-    List<String> servers,
-  ) async {
+  Future<bool> _tryFallbackProviders(List<String> providers, String episodeId,
+      String mediaId, List<String> servers,
+      {required int requestId}) async {
     // Try providers sequentially to avoid 429 Rate Limits
     for (final provider in providers) {
-      if (isClosed) return false;
+      if (_isRequestStale(requestId)) return false;
 
       if (kDebugMode) {
         debugPrint('🔄 Trying fallback provider: $provider');
@@ -294,12 +308,13 @@ class StreamingCubit extends Cubit<StreamingState> {
           episodeId,
           mediaId,
           servers,
+          requestId: requestId,
         );
 
         if (success) return true;
 
         // Small delay between providers to be nice to the API
-        if (!isClosed) {
+        if (!_isRequestStale(requestId)) {
           await Future.delayed(const Duration(milliseconds: 500));
         }
       } catch (e) {
@@ -313,12 +328,16 @@ class StreamingCubit extends Cubit<StreamingState> {
   }
 
   Future<bool> _tryProviderWithServers(
-    String provider,
-    String episodeId,
-    String mediaId,
-    List<String> servers,
-  ) async {
-    return await _tryProvider(provider, episodeId, mediaId, null, servers);
+      String provider, String episodeId, String mediaId, List<String> servers,
+      {required int requestId}) async {
+    return await _tryProvider(
+      provider,
+      episodeId,
+      mediaId,
+      null,
+      servers,
+      requestId: requestId,
+    );
   }
 
   Future<bool> _tryProvider(
@@ -327,6 +346,7 @@ class StreamingCubit extends Cubit<StreamingState> {
     String mediaId,
     String? specificServer,
     List<String> servers, {
+    required int requestId,
     bool emitState = true, // New parameter to control state emission
   }) async {
     // If specific server requested
@@ -336,18 +356,25 @@ class StreamingCubit extends Cubit<StreamingState> {
         mediaId: mediaId,
         server: specificServer,
         provider: provider,
+        requestId: requestId,
       );
 
       bool found = false;
-      if (isClosed) return false;
+      if (_isRequestStale(requestId)) return false;
 
       result.fold(
         (failure) {
           // Don't emit error here, just return false to try next server/provider
         },
         (response) {
-          if (emitState) {
-            _emitLoaded(response, provider, specificServer, episodeId);
+          if (emitState && !_isRequestStale(requestId)) {
+            _emitLoaded(
+              response,
+              provider,
+              specificServer,
+              episodeId,
+              requestId: requestId,
+            );
           }
           found = true;
         },
@@ -357,24 +384,31 @@ class StreamingCubit extends Cubit<StreamingState> {
 
     // Loop through servers in preferred order
     for (final s in servers) {
-      if (isClosed) return false;
+      if (_isRequestStale(requestId)) return false;
 
       final result = await _getLinksWithRetry(
         episodeId: episodeId,
         mediaId: mediaId,
         server: s,
         provider: provider,
+        requestId: requestId,
       );
 
-      if (isClosed) return false;
+      if (_isRequestStale(requestId)) return false;
 
       bool found = false;
       result.fold(
         (_) {}, // Ignore individual server errors during auto-scan
         (response) {
           if (response.links.isNotEmpty) {
-            if (emitState) {
-              _emitLoaded(response, provider, s, episodeId);
+            if (emitState && !_isRequestStale(requestId)) {
+              _emitLoaded(
+                response,
+                provider,
+                s,
+                episodeId,
+                requestId: requestId,
+              );
             }
             found = true;
           }
@@ -389,10 +423,8 @@ class StreamingCubit extends Cubit<StreamingState> {
 
   /// Fetch available servers from API (async, updates cache)
   Future<void> _fetchAvailableServers(
-    String episodeId,
-    String mediaId,
-    String provider,
-  ) async {
+      String episodeId, String mediaId, String provider,
+      {required int requestId}) async {
     final defaultServers = StreamingConfig.defaultServers;
 
     try {
@@ -401,13 +433,16 @@ class StreamingCubit extends Cubit<StreamingState> {
         mediaId: mediaId,
         provider: provider,
       );
+      if (_isRequestStale(requestId)) return;
 
       result.fold(
         (_) {
+          if (_isRequestStale(requestId)) return;
           // On error, use default servers
           _cachedAvailableServers = defaultServers;
         },
         (servers) {
+          if (_isRequestStale(requestId)) return;
           _cachedAvailableServers =
               servers.isNotEmpty ? servers : defaultServers;
           if (kDebugMode) {
@@ -420,13 +455,10 @@ class StreamingCubit extends Cubit<StreamingState> {
     }
   }
 
-  void _emitLoaded(
-    StreamingResponse response,
-    String provider,
-    String server,
-    String episodeId,
-  ) {
-    if (!isClosed) {
+  void _emitLoaded(StreamingResponse response, String provider, String server,
+      String episodeId,
+      {required int requestId}) {
+    if (!_isRequestStale(requestId)) {
       if (kDebugMode) {
         debugPrint('✅ Streaming links loaded successfully:');
         debugPrint('  Provider: $provider');
@@ -475,6 +507,7 @@ class StreamingCubit extends Cubit<StreamingState> {
         mediaId,
         server,
         servers,
+        requestId: _currentRequestId,
         emitState: false, // Don't emit state during preload
       );
     } catch (e) {

@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../injection_container.dart';
 import '../../../../core/services/miniplayer_height_notifier.dart';
-import '../../../../core/widgets/loading_indicator.dart';
+import '../../../../core/widgets/app_state_widgets.dart';
 import '../../../../core/constants/app_spacing.dart';
 // import '../../../../core/constants/app_border_radius.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -37,7 +37,10 @@ class SettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
+    if (l10n == null) {
+      return const SizedBox.shrink();
+    }
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
@@ -51,11 +54,11 @@ class SettingsView extends StatelessWidget {
       body: BlocBuilder<SettingsBloc, SettingsState>(
         builder: (context, settingsState) {
           if (settingsState is SettingsLoading) {
-            return const Center(child: LoadingIndicator());
+            return const AppLoadingState();
           }
 
           if (settingsState is SettingsError) {
-            return Center(child: Text(settingsState.message));
+            return AppErrorState(message: settingsState.message);
           }
 
           if (settingsState is SettingsLoaded ||
@@ -144,7 +147,7 @@ class SettingsView extends StatelessWidget {
                       ),
                       child: OutlinedButton.icon(
                         onPressed: () {
-                          _showResetDialog(context);
+                          _showResetDialog(context, l10n);
                         },
                         icon: const Icon(Icons.restore),
                         label: Text(l10n.resetAllSettings),
@@ -173,94 +176,108 @@ class SettingsView extends StatelessWidget {
   }
 
   void _showClearCacheDialog(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    if (l10n == null) {
+      return;
+    }
+
     // Minimize player before showing dialog
     getIt<VideoPlayerBloc>().add(MinimizeVideo());
 
-    showDialog(
+    _showConfirmationDialog(
       context: context,
-      useRootNavigator: true, // Show above miniplayer
-      builder: (dialogContext) => AlertDialog(
-        title: const Text('Clear Cache'),
-        content: const Text(
-          'This will remove all cached images to free up space. Your settings and login will not be affected. Are you sure?',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext),
-            child: const Text('Cancel'),
-          ),
-          FilledButton(
-            onPressed: () {
-              context.read<SettingsBloc>().add(ClearCache());
-              Navigator.pop(dialogContext);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Cache cleared successfully')),
-              );
-            },
-            child: const Text('Clear'),
-          ),
-        ],
-      ),
+      title: 'Clear Cache',
+      content:
+          'This will remove all cached images to free up space. Your settings '
+          'and login will not be affected. Are you sure?',
+      confirmLabel: 'Clear',
+      onConfirm: () {
+        context.read<SettingsBloc>().add(ClearCache());
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Cache cleared successfully')),
+        );
+      },
+      cancelLabel: l10n.cancel,
     );
   }
 
-  void _showResetDialog(BuildContext context) {
+  void _showResetDialog(BuildContext context, AppLocalizations l10n) {
     // Minimize player before showing dialog
     getIt<VideoPlayerBloc>().add(MinimizeVideo());
 
-    showDialog(
+    _showConfirmationDialog(
       context: context,
-      useRootNavigator: true, // Show above miniplayer
-      builder: (dialogContext) => AlertDialog(
-        title: const Text('Reset Settings'),
-        content: const Text(
-          'This will reset your preferences (Theme, Quality, etc) to default. Your account will remain logged in. Are you sure?',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext),
-            child: const Text('Cancel'),
-          ),
-          FilledButton(
-            onPressed: () {
-              context.read<SettingsBloc>().add(ResetSettings());
-              Navigator.pop(dialogContext);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Settings reset successfully')),
-              );
-            },
-            style: FilledButton.styleFrom(backgroundColor: Colors.red),
-            child: const Text('Reset'),
-          ),
-        ],
-      ),
+      title: l10n.resetSettings,
+      content:
+          'This will reset your preferences (Theme, Quality, etc) to default. '
+          'Your account will remain logged in. Are you sure?',
+      confirmLabel: l10n.reset,
+      onConfirm: () {
+        context.read<SettingsBloc>().add(ResetSettings());
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Settings reset successfully')),
+        );
+      },
+      cancelLabel: l10n.cancel,
+      isDestructive: true,
     );
   }
 
   void _showDeleteAccountDialog(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    if (l10n == null) {
+      return;
+    }
+
     // Minimize player before showing dialog
     getIt<VideoPlayerBloc>().add(MinimizeVideo());
 
-    showDialog(
+    _showConfirmationDialog(
       context: context,
-      useRootNavigator: true, // Show above miniplayer
+      title: l10n.deleteAccount,
+      content:
+          'Are you sure you want to delete your account? This action cannot '
+          'be undone and you will lose all your favorites and history.',
+      confirmLabel: l10n.delete,
+      onConfirm: () {
+        context.read<AuthBloc>().add(const DeleteAccountRequested());
+      },
+      cancelLabel: l10n.cancel,
+      isDestructive: true,
+    );
+  }
+
+  Future<void> _showConfirmationDialog({
+    required BuildContext context,
+    required String title,
+    required String content,
+    required String confirmLabel,
+    required VoidCallback onConfirm,
+    required String cancelLabel,
+    bool isDestructive = false,
+  }) async {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    await showDialog<void>(
+      context: context,
+      useRootNavigator: true,
       builder: (dialogContext) => AlertDialog(
-        title: const Text('Delete Account'),
-        content: const Text(
-          'Are you sure you want to delete your account? This action cannot be undone and you will lose all your favorites and history.',
-        ),
+        title: Text(title),
+        content: Text(content),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext),
-            child: const Text('Cancel'),
+            child: Text(cancelLabel),
           ),
           FilledButton(
             onPressed: () {
-              context.read<AuthBloc>().add(const DeleteAccountRequested());
               Navigator.pop(dialogContext);
+              onConfirm();
             },
-            style: FilledButton.styleFrom(backgroundColor: Colors.red),
-            child: const Text('Delete'),
+            style: isDestructive
+                ? FilledButton.styleFrom(backgroundColor: colorScheme.error)
+                : null,
+            child: Text(confirmLabel),
           ),
         ],
       ),
@@ -269,8 +286,10 @@ class SettingsView extends StatelessWidget {
 
   Future<void> _launchURL(String url) async {
     final uri = Uri.parse(url);
-    if (!await launchUrl(uri)) {
-      throw Exception('Could not launch $url');
+    final launched = await launchUrl(uri);
+    if (!launched && uri.scheme.isNotEmpty) {
+      // Ignore silently to prevent unexpected crash from platform intent issues.
+      return;
     }
   }
 }

@@ -3,10 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../core/constants/streaming_config.dart';
 import '../../../../core/services/video_player_service.dart';
+import '../../../../core/services/network_monitor_service.dart';
 import '../../../../core/services/cast_service.dart';
 import '../../../../core/services/download_service.dart';
 import '../../../movies/domain/usecases/get_streaming_links.dart';
 import '../../../movies/domain/usecases/get_available_servers.dart';
+import '../../../settings/domain/entities/app_settings.dart';
 import 'video_player_event.dart';
 import 'video_player_state.dart';
 import 'streaming_state.dart';
@@ -18,6 +20,7 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
   final DownloadService _downloadService;
   final GetStreamingLinks _getStreamingLinks;
   final GetAvailableServers _getAvailableServers;
+  int _activeLoadRequestId = 0;
 
   VideoPlayerBloc(
     this._videoPlayerService,
@@ -49,6 +52,15 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
 
   VideoPlayerService get videoService => _videoPlayerService;
 
+  int _startLoadRequest() {
+    _activeLoadRequestId += 1;
+    return _activeLoadRequestId;
+  }
+
+  bool _isStaleLoad(int requestId) {
+    return isClosed || requestId != _activeLoadRequestId;
+  }
+
   Future<void> _onPlayVideo(
     PlayVideo event,
     Emitter<VideoPlayerState> emit,
@@ -70,8 +82,10 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
       streamingState: const StreamingState.loading(),
     ));
 
+    final requestId = _startLoadRequest();
     await _loadStreamingLinks(
       emit,
+      requestId: requestId,
       episodeId: event.episodeId,
       mediaId: event.mediaId,
       provider: event.movie?.provider ?? 'flixhq',
@@ -81,6 +95,7 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
 
   Future<void> _loadStreamingLinks(
     Emitter<VideoPlayerState> emit, {
+    required int requestId,
     required String episodeId,
     required String mediaId,
     required String provider,
@@ -94,7 +109,7 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
     final servers = _getServerOrder(server);
 
     for (final tryServer in servers) {
-      if (isClosed) return;
+      if (_isStaleLoad(requestId)) return;
 
       debugPrint('🔄 Trying server: $tryServer');
 
@@ -105,8 +120,12 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
         server: tryServer,
       );
 
+      if (_isStaleLoad(requestId)) return;
+
+      var loadedOnThisAttempt = false;
       await result.fold(
         (failure) async {
+          if (_isStaleLoad(requestId)) return;
           debugPrint('❌ Server $tryServer failed: ${failure.message}');
           if (tryServer == servers.last) {
             emit(state.copyWith(
@@ -117,14 +136,31 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
           }
         },
         (response) async {
+          if (_isStaleLoad(requestId)) return;
           debugPrint('✅ Server $tryServer succeeded');
 
-          if (isClosed) return;
+          await _loadAvailableServers(
+            emit,
+            requestId: requestId,
+            episodeId: episodeId,
+            mediaId: mediaId,
+            provider: provider,
+          );
 
-          await _loadAvailableServers(emit, episodeId, mediaId, provider);
+          if (_isStaleLoad(requestId)) return;
 
-          final selectedLink = response.links.firstOrNull;
-          if (selectedLink != null) {
+          if (response.links.isNotEmpty) {
+            final networkMonitor = NetworkMonitorService();
+            final measuredBandwidth = networkMonitor.averageBandwidth;
+            final isLowBandwidth = !networkMonitor.isConnected ||
+                (measuredBandwidth > 0 && measuredBandwidth < 500 * 1024);
+
+            final selectedLink = VideoPlayerService.selectAdaptiveQuality(
+              response.links,
+              VideoQuality.auto,
+              isLowBandwidth,
+            );
+
             try {
               await _videoPlayerService.playVideo(
                 url: selectedLink.url,
@@ -138,6 +174,8 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
                 headers: selectedLink.headers,
               );
 
+              if (_isStaleLoad(requestId)) return;
+
               emit(state.copyWith(
                 streamingState: StreamingState.loaded(
                   links: response.links,
@@ -147,7 +185,9 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
                 currentServer: tryServer,
                 currentQuality: selectedLink.quality,
               ));
+              loadedOnThisAttempt = true;
             } catch (e) {
+              if (_isStaleLoad(requestId)) return;
               debugPrint('❌ Error playing video: $e');
               emit(state.copyWith(
                 streamingState: StreamingState.error('Error playing video: $e'),
@@ -163,7 +203,9 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
         },
       );
 
-      if (state.isStreamingLoaded) break;
+      if (loadedOnThisAttempt) {
+        break;
+      }
     }
   }
 
@@ -179,11 +221,12 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
   }
 
   Future<void> _loadAvailableServers(
-    Emitter<VideoPlayerState> emit,
-    String episodeId,
-    String mediaId,
-    String provider,
-  ) async {
+    Emitter<VideoPlayerState> emit, {
+    required int requestId,
+    required String episodeId,
+    required String mediaId,
+    required String provider,
+  }) async {
     try {
       final result = await _getAvailableServers(
         episodeId: episodeId,
@@ -191,11 +234,14 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
         provider: provider,
       );
 
+      if (_isStaleLoad(requestId)) return;
+
       await result.fold(
         (failure) async {
           debugPrint('⚠️ Failed to load servers: ${failure.message}');
         },
         (servers) async {
+          if (_isStaleLoad(requestId)) return;
           emit(state.copyWith(availableServers: servers));
           debugPrint('📡 Available servers: $servers');
         },
@@ -223,8 +269,10 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
       streamingState: const StreamingState.loading(),
     ));
 
+    final requestId = _startLoadRequest();
     await _loadStreamingLinks(
       emit,
+      requestId: requestId,
       episodeId: state.episodeId!,
       mediaId: state.mediaId!,
       provider: provider,
@@ -250,8 +298,10 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
       streamingState: const StreamingState.loading(),
     ));
 
+    final requestId = _startLoadRequest();
     await _loadStreamingLinks(
       emit,
+      requestId: requestId,
       episodeId: state.episodeId!,
       mediaId: state.mediaId!,
       provider: provider,
@@ -296,8 +346,9 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
       );
 
       emit(state.copyWith(
-        currentQuality: event.quality,
-        streamingState: loadedState.copyWith(selectedQuality: event.quality),
+        currentQuality: targetLink.quality,
+        streamingState:
+            loadedState.copyWith(selectedQuality: targetLink.quality),
       ));
     } catch (e) {
       debugPrint('❌ Error switching quality: $e');
@@ -384,6 +435,7 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
     Emitter<VideoPlayerState> emit,
   ) async {
     debugPrint('🛑 VideoPlayerBloc: Closing video');
+    _startLoadRequest(); // invalidate in-flight streaming requests
     await _videoPlayerService.stop();
     emit(const VideoPlayerState(status: VideoPlayerStatus.closed));
   }

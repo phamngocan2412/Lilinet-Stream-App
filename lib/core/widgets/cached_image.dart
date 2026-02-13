@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import '../cache/app_image_cache_manager.dart';
 import 'loading_indicator.dart';
 
 class AppCachedImage extends StatelessWidget {
@@ -113,6 +114,7 @@ class AppCachedImage extends StatelessWidget {
     int? optimalMemCacheHeight,
   ) {
     final image = CachedNetworkImage(
+      cacheManager: AppImageCacheManager.instance,
       imageUrl: imageUrl,
       width: width,
       height: height,
