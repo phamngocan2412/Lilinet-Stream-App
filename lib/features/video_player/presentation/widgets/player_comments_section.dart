@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -11,63 +13,13 @@ import '../../../comments/presentation/widgets/comment_item.dart';
 import '../../../comments/presentation/widgets/comment_sort_tabs.dart';
 import '../../../../core/widgets/loading_indicator.dart';
 
-class PlayerCommentsSection extends StatefulWidget {
-  final String mediaId;
+// Optimized Player Comments Section using Slivers
+// This avoids nesting ListView(shrinkWrap: true) inside another ScrollView
 
-  const PlayerCommentsSection({super.key, required this.mediaId});
+class PlayerCommentsHeaderSliver extends StatelessWidget {
+  const PlayerCommentsHeaderSliver({super.key});
 
-  @override
-  State<PlayerCommentsSection> createState() => _PlayerCommentsSectionState();
-}
-
-class _PlayerCommentsSectionState extends State<PlayerCommentsSection> {
-  late final CommentCubit _commentCubit;
-
-  @override
-  void initState() {
-    super.initState();
-    _commentCubit = GetIt.I<CommentCubit>();
-    _commentCubit.loadComments(widget.mediaId);
-  }
-
-  @override
-  void didUpdateWidget(PlayerCommentsSection oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.mediaId != widget.mediaId) {
-      _commentCubit.loadComments(widget.mediaId);
-    }
-  }
-
-  @override
-  void dispose() {
-    _commentCubit.close();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: _commentCubit,
-      child: const PlayerCommentsView(),
-    );
-  }
-}
-
-class PlayerCommentsView extends StatefulWidget {
-  const PlayerCommentsView({super.key});
-
-  @override
-  State<PlayerCommentsView> createState() => _PlayerCommentsViewState();
-}
-
-class _PlayerCommentsViewState extends State<PlayerCommentsView>
-    with AutomaticKeepAliveClientMixin {
   bool get _isLoggedIn => Supabase.instance.client.auth.currentUser != null;
-  final ScrollController _scrollController = ScrollController();
-  String? _lastAddedCommentId;
-
-  @override
-  bool get wantKeepAlive => true;
 
   String? get _userName {
     final user = Supabase.instance.client.auth.currentUser;
@@ -75,78 +27,33 @@ class _PlayerCommentsViewState extends State<PlayerCommentsView>
         user?.email?.split('@').first;
   }
 
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  void _scrollToTop() {
-    if (_scrollController.hasClients) {
-      _scrollController.animateTo(
-        0,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeOut,
-      );
-    }
+  void _scrollToTop(BuildContext context) {
+    // Scroll to top of the CustomScrollView
+    PrimaryScrollController.of(context).animateTo(
+      0,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeOut,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    super.build(context); // Required for AutomaticKeepAliveClientMixin
-    return BlocConsumer<CommentCubit, CommentState>(
-      listener: (context, state) {
-        state.mapOrNull(
-          loaded: (loadedState) {
-            // Track newly added comment for animation
-            if (loadedState.comments.isNotEmpty &&
-                loadedState.comments.first.id != _lastAddedCommentId) {
-              setState(() {
-                _lastAddedCommentId = loadedState.comments.first.id;
-              });
-            }
-          },
-        );
-      },
-      builder: (context, state) {
-        return state.maybeMap(
-          loading: (_) => const Center(
-            child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: LoadingIndicator(size: 30),
-            ),
-          ),
-          error: (errorState) => Center(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                AppLocalizations.of(context)!.commentLoadError(
-                  GetIt.I<ErrorHandlerService>().getUserFriendlyMessage(
-                    errorState.message,
-                    AppLocalizations.of(context)!,
-                  ),
-                ),
-                style: const TextStyle(color: Colors.grey),
-              ),
-            ),
-          ),
-          loaded: (loadedState) {
-            final comments = loadedState.comments;
-            final sortType = loadedState.sortType;
-            final expandedReplies = loadedState.expandedReplies;
-            final likedCommentIds = loadedState.likedCommentIds;
-
-            return SingleChildScrollView(
-              controller: _scrollController,
-              child: Column(
+    return SliverToBoxAdapter(
+      child: BlocBuilder<CommentCubit, CommentState>(
+        builder: (context, state) {
+          return state.maybeMap(
+            loaded: (loadedState) {
+              return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        AppLocalizations.of(context)!
-                            .commentsCount(comments.length),
+                        AppLocalizations.of(
+                          context,
+                        )!
+                            .commentsCount(loadedState.comments.length),
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 18,
@@ -154,7 +61,7 @@ class _PlayerCommentsViewState extends State<PlayerCommentsView>
                         ),
                       ),
                       CommentSortTabs(
-                        currentSort: sortType,
+                        currentSort: loadedState.sortType,
                         onSortChanged: (type) {
                           context.read<CommentCubit>().changeSortType(type);
                         },
@@ -171,108 +78,31 @@ class _PlayerCommentsViewState extends State<PlayerCommentsView>
                     isSending: loadedState.isAddingComment,
                     onSend: (text) {
                       context.read<CommentCubit>().addComment(text);
-                      _scrollToTop();
+                      _scrollToTop(context);
                     },
                   ),
                   const SizedBox(height: 12),
-                  if (comments.isEmpty)
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(24.0),
-                        child: Text(
-                          AppLocalizations.of(context)!.noCommentsYet,
-                          style: const TextStyle(color: Colors.grey),
-                        ),
-                      ),
-                    )
-                  else
-                    ListView.separated(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: comments.length,
-                      separatorBuilder: (_, i) =>
-                          const Divider(height: 1, color: Colors.white12),
-                      itemBuilder: (context, index) {
-                        final comment = comments[index];
-                        final isExpanded = expandedReplies.containsKey(
-                          comment.id,
-                        );
-                        // Check if this is a newly added comment
-                        final isNewComment = _lastAddedCommentId == comment.id;
-                        return AnimatedOpacity(
-                          opacity: 1.0,
-                          duration:
-                              Duration(milliseconds: isNewComment ? 500 : 0),
-                          curve:
-                              isNewComment ? Curves.easeOutBack : Curves.linear,
-                          child: AnimatedSlide(
-                            offset:
-                                isNewComment ? Offset.zero : const Offset(0, 0),
-                            duration: const Duration(milliseconds: 400),
-                            curve: Curves.easeOutBack,
-                            child: Container(
-                              decoration: isNewComment
-                                  ? BoxDecoration(
-                                      color: Colors.blue.withValues(alpha: 0.1),
-                                      borderRadius: BorderRadius.circular(8),
-                                    )
-                                  : null,
-                              child: CommentItem(
-                                comment: comment.copyWith(
-                                  replies: isExpanded
-                                      ? (expandedReplies[comment.id] ?? [])
-                                      : [],
-                                ),
-                                onLike: () {
-                                  context.read<CommentCubit>().likeComment(
-                                        comment.id,
-                                      );
-                                },
-                                onDislike: () {},
-                                onReply: () {
-                                  _showReplyDialog(
-                                    context,
-                                    comment.id,
-                                    comment.userName,
-                                  );
-                                },
-                                onToggleReplies: () {
-                                  context.read<CommentCubit>().toggleReplies(
-                                        comment.id,
-                                      );
-                                },
-                                isRepliesExpanded: isExpanded,
-                                isLiked: likedCommentIds.contains(comment.id),
-                                onReplyLike: (replyId) {
-                                  context
-                                      .read<CommentCubit>()
-                                      .likeComment(replyId);
-                                },
-                                onReplyReply: (replyId, userName) {
-                                  _showReplyDialog(context, replyId, userName);
-                                },
-                                onLoadMoreReplies: () {
-                                  context.read<CommentCubit>().toggleReplies(
-                                        comment.id,
-                                      );
-                                },
-                                likedReplyIds: likedCommentIds,
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  const SizedBox(height: 100), // Bottom padding for scrolling
                 ],
-              ),
-            );
-          },
-          orElse: () => const SizedBox.shrink(),
-        );
-      },
+              );
+            },
+            orElse: () => const SizedBox.shrink(),
+          );
+        },
+      ),
     );
   }
+}
+
+class PlayerCommentsListSliver extends StatefulWidget {
+  const PlayerCommentsListSliver({super.key});
+
+  @override
+  State<PlayerCommentsListSliver> createState() =>
+      _PlayerCommentsListSliverState();
+}
+
+class _PlayerCommentsListSliverState extends State<PlayerCommentsListSliver> {
+  String? _lastAddedCommentId;
 
   void _showReplyDialog(
     BuildContext context,
@@ -315,6 +145,152 @@ class _PlayerCommentsViewState extends State<PlayerCommentsView>
           ),
         ],
       ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<CommentCubit, CommentState>(
+      listener: (context, state) {
+        state.mapOrNull(
+          loaded: (loadedState) {
+            // Track newly added comment for animation
+            if (loadedState.comments.isNotEmpty &&
+                loadedState.comments.first.id != _lastAddedCommentId) {
+              setState(() {
+                _lastAddedCommentId = loadedState.comments.first.id;
+              });
+            }
+          },
+        );
+      },
+      builder: (context, state) {
+        return state.maybeMap(
+          loading: (_) => const SliverToBoxAdapter(
+            child: Center(
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: LoadingIndicator(size: 30),
+              ),
+            ),
+          ),
+          error: (errorState) => SliverToBoxAdapter(
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  AppLocalizations.of(context)!.commentLoadError(
+                    GetIt.I<ErrorHandlerService>().getUserFriendlyMessage(
+                      errorState.message,
+                      AppLocalizations.of(context)!,
+                    ),
+                  ),
+                  style: const TextStyle(color: Colors.grey),
+                ),
+              ),
+            ),
+          ),
+          loaded: (loadedState) {
+            final comments = loadedState.comments;
+            final expandedReplies = loadedState.expandedReplies;
+            final likedCommentIds = loadedState.likedCommentIds;
+
+            if (comments.isEmpty) {
+              return SliverToBoxAdapter(
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(24.0),
+                    child: Text(
+                      AppLocalizations.of(context)!.noCommentsYet,
+                      style: const TextStyle(color: Colors.grey),
+                    ),
+                  ),
+                ),
+              );
+            }
+
+            return SliverList(
+              delegate: SliverChildBuilderDelegate((context, index) {
+                // Add separator logic: if index is odd, return divider?
+                // SliverList doesn't support separators easily like ListView.separated.
+                // We can double the count and return divider for odd indices, or just include divider in item.
+                // Or use SliverMainAxisGroup... but let's just add divider to the item bottom.
+
+                final commentIndex = index;
+                final comment = comments[commentIndex];
+                final isExpanded = expandedReplies.containsKey(comment.id);
+                // Check if this is a newly added comment
+                final isNewComment = _lastAddedCommentId == comment.id;
+
+                return Column(
+                  children: [
+                    AnimatedOpacity(
+                      opacity: 1.0,
+                      duration: Duration(milliseconds: isNewComment ? 500 : 0),
+                      curve: isNewComment ? Curves.easeOutBack : Curves.linear,
+                      child: AnimatedSlide(
+                        offset: isNewComment ? Offset.zero : const Offset(0, 0),
+                        duration: const Duration(milliseconds: 400),
+                        curve: Curves.easeOutBack,
+                        child: Container(
+                          decoration: isNewComment
+                              ? BoxDecoration(
+                                  color: Colors.blue.withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(8),
+                                )
+                              : null,
+                          child: CommentItem(
+                            comment: comment.copyWith(
+                              replies: isExpanded
+                                  ? (expandedReplies[comment.id] ?? [])
+                                  : [],
+                            ),
+                            onLike: () {
+                              context.read<CommentCubit>().likeComment(
+                                    comment.id,
+                                  );
+                            },
+                            onDislike: () {},
+                            onReply: () {
+                              _showReplyDialog(
+                                context,
+                                comment.id,
+                                comment.userName,
+                              );
+                            },
+                            onToggleReplies: () {
+                              context.read<CommentCubit>().toggleReplies(
+                                    comment.id,
+                                  );
+                            },
+                            isRepliesExpanded: isExpanded,
+                            isLiked: likedCommentIds.contains(comment.id),
+                            onReplyLike: (replyId) {
+                              context.read<CommentCubit>().likeComment(replyId);
+                            },
+                            onReplyReply: (replyId, userName) {
+                              _showReplyDialog(context, replyId, userName);
+                            },
+                            onLoadMoreReplies: () {
+                              context.read<CommentCubit>().toggleReplies(
+                                    comment.id,
+                                  );
+                            },
+                            likedReplyIds: likedCommentIds,
+                          ),
+                        ),
+                      ),
+                    ),
+                    if (index < comments.length - 1)
+                      const Divider(height: 1, color: Colors.white12),
+                  ],
+                );
+              }, childCount: comments.length),
+            );
+          },
+          orElse: () => const SliverToBoxAdapter(child: SizedBox.shrink()),
+        );
+      },
     );
   }
 }

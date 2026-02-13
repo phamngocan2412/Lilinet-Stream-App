@@ -65,11 +65,7 @@ class AppCachedImage extends StatelessWidget {
 
       int? optimalMemCacheHeight = _calculateOptimalHeight(devicePixelRatio);
 
-      return _buildImage(
-        context,
-        optimalMemCacheWidth,
-        optimalMemCacheHeight,
-      );
+      return _buildImage(context, optimalMemCacheWidth, optimalMemCacheHeight);
     }
 
     return LayoutBuilder(

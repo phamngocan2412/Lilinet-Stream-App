@@ -61,10 +61,8 @@ abstract class StreamingResponseModel with _$StreamingResponseModel {
 /// Model for available server from /servers endpoint
 @freezed
 abstract class ServerInfoModel with _$ServerInfoModel {
-  const factory ServerInfoModel({
-    required String name,
-    required String url,
-  }) = _ServerInfoModel;
+  const factory ServerInfoModel({required String name, required String url}) =
+      _ServerInfoModel;
 
   factory ServerInfoModel.fromJson(Map<String, dynamic> json) =>
       _$ServerInfoModelFromJson(json);

@@ -57,10 +57,7 @@ class MentionText extends StatelessWidget {
       spans.add(
         TextSpan(
           text: match.group(0),
-          style: TextStyle(
-            color: mentionColor,
-            fontWeight: FontWeight.w600,
-          ),
+          style: TextStyle(color: mentionColor, fontWeight: FontWeight.w600),
         ),
       );
       lastEnd = match.end;

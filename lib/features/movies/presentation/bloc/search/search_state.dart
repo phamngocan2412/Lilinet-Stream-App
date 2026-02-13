@@ -11,7 +11,8 @@ class SearchState extends Equatable {
   final String errorMessage;
   final int currentPage;
   final bool hasMore;
-  final String activeFilter; // 'All', 'TV Series', 'Movie' (Legacy simple filter)
+  final String
+      activeFilter; // 'All', 'TV Series', 'Movie' (Legacy simple filter)
   final FilterOptions filterOptions;
 
   const SearchState({

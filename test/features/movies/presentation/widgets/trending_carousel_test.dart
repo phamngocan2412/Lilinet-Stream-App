@@ -5,8 +5,9 @@ import 'package:lilinet_app/features/movies/domain/entities/movie.dart';
 import 'package:lilinet_app/features/movies/presentation/widgets/trending_carousel.dart';
 
 void main() {
-  testWidgets('TrendingCarousel passes memCacheWidth to AppCachedImage',
-      (WidgetTester tester) async {
+  testWidgets('TrendingCarousel passes memCacheWidth to AppCachedImage', (
+    WidgetTester tester,
+  ) async {
     // Arrange
     final movies = [
       const Movie(

@@ -45,10 +45,7 @@ class TrendingMoviesBloc
     );
 
     List<Movie> trendingMovies = [];
-    trendingResult.fold(
-      (failure) {},
-      (movies) => trendingMovies = movies,
-    );
+    trendingResult.fold((failure) {}, (movies) => trendingMovies = movies);
 
     // Show trending immediately
     if (trendingMovies.isNotEmpty) {
@@ -92,10 +89,7 @@ class TrendingMoviesBloc
     Map<String, List<Movie>> categories,
   ) async {
     final result = await _getMoviesByGenre(genreId: genreId, page: 1);
-    result.fold(
-      (_) {},
-      (movies) => categories[name] = movies,
-    );
+    result.fold((_) {}, (movies) => categories[name] = movies);
   }
 
   Future<void> _onRefresh(

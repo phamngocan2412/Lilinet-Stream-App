@@ -44,19 +44,17 @@ class StreamingConfig {
   ];
 
   /// All providers combined
-  static List<String> get allProviders =>
-      [...animeProviders, ...movieProviders];
+  static List<String> get allProviders => [
+        ...animeProviders,
+        ...movieProviders,
+      ];
 
   // ============================================
   // Server Lists
   // ============================================
 
   /// Default servers to try in order
-  static const List<String> defaultServers = [
-    'vidcloud',
-    'upcloud',
-    'megaup',
-  ];
+  static const List<String> defaultServers = ['vidcloud', 'upcloud', 'megaup'];
 
   /// Anime-specific servers
   static const List<String> animeServers = [
@@ -67,11 +65,7 @@ class StreamingConfig {
   ];
 
   /// Movie-specific servers
-  static const List<String> movieServers = [
-    'upcloud',
-    'vidcloud',
-    'mixdrop',
-  ];
+  static const List<String> movieServers = ['upcloud', 'vidcloud', 'mixdrop'];
 
   // ============================================
   // Provider Metadata
@@ -169,7 +163,9 @@ class StreamingConfig {
 
   /// Get fallback providers (excluding the primary one)
   static List<String> getFallbackProviders(
-      String primaryProvider, bool isAnime) {
+    String primaryProvider,
+    bool isAnime,
+  ) {
     final allList = isAnime ? animeProviders : movieProviders;
     // Try providers of the same type first, then others
     final otherList = isAnime ? movieProviders : animeProviders;
@@ -195,14 +191,12 @@ class StreamingConfig {
     }
 
     // Check for anime content in genres (case insensitive, including partial matches)
-    final isAnime = genres.any(
-      (g) {
-        final lowerGenre = g.toLowerCase();
-        return lowerGenre.contains('anime') ||
-            lowerGenre.contains('animation') ||
-            lowerGenre.contains('japan'); // Japanese anime detection
-      },
-    );
+    final isAnime = genres.any((g) {
+      final lowerGenre = g.toLowerCase();
+      return lowerGenre.contains('anime') ||
+          lowerGenre.contains('animation') ||
+          lowerGenre.contains('japan'); // Japanese anime detection
+    });
 
     if (isAnime) {
       return animeProviderPref ?? defaultAnimeProvider;

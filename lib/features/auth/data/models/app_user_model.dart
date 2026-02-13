@@ -22,9 +22,8 @@ class AppUserModel {
       email: user.email ?? '',
       displayName: (user.userMetadata?['display_name'] as String?),
       avatarUrl: (user.userMetadata?['avatar_url'] as String?),
-      createdAt: user.createdAt.isNotEmpty
-          ? DateTime.tryParse(user.createdAt)
-          : null,
+      createdAt:
+          user.createdAt.isNotEmpty ? DateTime.tryParse(user.createdAt) : null,
     );
   }
 

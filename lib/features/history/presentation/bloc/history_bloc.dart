@@ -44,11 +44,13 @@ class HistoryCubit extends Cubit<HistoryState> {
         for (var item in history) {
           totalTime += item.positionSeconds;
         }
-        emit(HistoryLoaded(
-          history: history,
-          totalVideos: history.length,
-          totalTimeSeconds: totalTime,
-        ));
+        emit(
+          HistoryLoaded(
+            history: history,
+            totalVideos: history.length,
+            totalTimeSeconds: totalTime,
+          ),
+        );
       }
     } catch (e) {
       emit(HistoryError(message: e.toString()));
@@ -65,9 +67,11 @@ class HistoryCubit extends Cubit<HistoryState> {
         var currentList = List<WatchProgress>.from(currentState.history);
 
         // Find existing index
-        final index = currentList.indexWhere((item) =>
-            item.mediaId == progress.mediaId &&
-            item.episodeId == progress.episodeId);
+        final index = currentList.indexWhere(
+          (item) =>
+              item.mediaId == progress.mediaId &&
+              item.episodeId == progress.episodeId,
+        );
 
         if (index != -1) {
           // Update existing
@@ -92,11 +96,13 @@ class HistoryCubit extends Cubit<HistoryState> {
         }
 
         if (isClosed) return;
-        emit(currentState.copyWith(
-          history: currentList,
-          totalVideos: currentList.length,
-          totalTimeSeconds: totalTime,
-        ));
+        emit(
+          currentState.copyWith(
+            history: currentList,
+            totalVideos: currentList.length,
+            totalTimeSeconds: totalTime,
+          ),
+        );
       } else {
         // If not loaded, then we might need to load
         await loadHistory();
@@ -129,11 +135,13 @@ class HistoryCubit extends Cubit<HistoryState> {
         }
 
         if (isClosed) return;
-        emit(currentState.copyWith(
-          history: currentList,
-          totalVideos: currentList.length,
-          totalTimeSeconds: totalTime,
-        ));
+        emit(
+          currentState.copyWith(
+            history: currentList,
+            totalVideos: currentList.length,
+            totalTimeSeconds: totalTime,
+          ),
+        );
       } else {
         await loadHistory();
       }

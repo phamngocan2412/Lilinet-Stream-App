@@ -41,7 +41,8 @@ class VideoPlayerService {
     }
     if (_player == null) {
       throw StateError(
-          'VideoPlayerService not initialized or already disposed');
+        'VideoPlayerService not initialized or already disposed',
+      );
     }
     return _player!;
   }
@@ -53,7 +54,8 @@ class VideoPlayerService {
     }
     if (_controller == null) {
       throw StateError(
-          'VideoPlayerService not initialized or already disposed');
+        'VideoPlayerService not initialized or already disposed',
+      );
     }
     return _controller!;
   }

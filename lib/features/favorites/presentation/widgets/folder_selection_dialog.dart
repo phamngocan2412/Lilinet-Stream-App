@@ -55,14 +55,16 @@ class _FolderSelectionDialogState extends State<FolderSelectionDialog> {
                       ),
                       ...widget.existingFolders
                           .where((f) => f != 'Default')
-                          .map((folder) => ListTile(
-                                leading: const Icon(Icons.folder_open),
-                                title: Text(folder),
-                                onTap: () {
-                                  widget.onFolderSelected(folder);
-                                  Navigator.pop(context);
-                                },
-                              )),
+                          .map(
+                            (folder) => ListTile(
+                              leading: const Icon(Icons.folder_open),
+                              title: Text(folder),
+                              onTap: () {
+                                widget.onFolderSelected(folder);
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ),
                     ],
                   ),
                 ),

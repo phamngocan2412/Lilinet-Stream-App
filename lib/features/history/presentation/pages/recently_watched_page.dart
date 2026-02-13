@@ -69,8 +69,9 @@ class RecentlyWatchedPage extends StatelessWidget {
                           margin: const EdgeInsets.only(bottom: 16),
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color:
-                                Theme.of(context).colorScheme.surfaceContainer,
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.surfaceContainer,
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: Row(
@@ -84,9 +85,9 @@ class RecentlyWatchedPage extends StatelessWidget {
                               Container(
                                 height: 40,
                                 width: 1,
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .outlineVariant,
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.outlineVariant,
                               ),
                               StatItemWidget(
                                 icon: Icons.timer_outlined,

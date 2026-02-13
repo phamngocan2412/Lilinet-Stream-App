@@ -42,16 +42,19 @@ class EpisodeItem extends StatelessWidget {
     final isMovie = totalEpisodesCount == 1;
     final String titleText = isMovie
         ? 'Full Movie'
-        : (episode.title.isNotEmpty ? episode.title : 'Episode ${episode.number}');
+        : (episode.title.isNotEmpty
+            ? episode.title
+            : 'Episode ${episode.number}');
 
     final Widget? subtitleWidget = isMovie
         ? null
-        : (episode.title.isNotEmpty && episode.title != 'Episode ${episode.number}'
+        : (episode.title.isNotEmpty &&
+                episode.title != 'Episode ${episode.number}'
             ? Text('Episode ${episode.number}')
             : null);
 
     return Container(
-      color: isSelected ? colorScheme.primary.withValues(alpha: 0.15) : null,
+      color: isSelected ? colorScheme.primary.withOpacity(0.15) : null,
       child: ListTile(
         selected: isSelected,
         minVerticalPadding: 12,

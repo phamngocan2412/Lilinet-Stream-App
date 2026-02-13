@@ -124,7 +124,7 @@ class _FavoritesViewState extends State<FavoritesView> {
                   final folders = {
                     'All',
                     ...state.favorites.map((f) => f.folder).toSet().toList()
-                      ..sort()
+                      ..sort(),
                   };
 
                   // Filter favorites based on selected folder
@@ -170,9 +170,9 @@ class _FavoritesViewState extends State<FavoritesView> {
                               )
                             : RefreshIndicator(
                                 onRefresh: () async {
-                                  context
-                                      .read<FavoritesBloc>()
-                                      .add(const LoadFavorites());
+                                  context.read<FavoritesBloc>().add(
+                                        const LoadFavorites(),
+                                      );
                                 },
                                 child: ListenableBuilder(
                                   listenable: getIt<MiniplayerHeightNotifier>(),

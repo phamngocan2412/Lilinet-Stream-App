@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../errors/failures.dart';
+import '../utils/security_utils.dart';
 
 extension RepositoryHelper on Object {
   Future<Either<Failure, T>> safeCall<T>(Future<T> Function() call) async {
@@ -20,14 +21,15 @@ extension RepositoryHelper on Object {
       if (message.contains('JWT') ||
           message.contains('auth') ||
           e.code == '42501') {
-        return const Left(
-          Failure.server('Authentication required'),
-        );
+        return const Left(Failure.server('Authentication required'));
       }
       // PostgrestException messages are usually safe from Supabase (e.g. "User not found")
       // but logging it is good practice.
-      developer.log('Supabase error: $message',
-          error: e, name: 'RepositoryHelper');
+      developer.log(
+        'Supabase error: $message',
+        error: e,
+        name: 'RepositoryHelper',
+      );
       return Left(Failure.server(message));
     } on SocketException {
       return const Left(Failure.network('No internet connection'));
@@ -35,8 +37,9 @@ extension RepositoryHelper on Object {
       return const Left(Failure.server('Invalid response format'));
     } catch (e, stackTrace) {
       // Log the full error securely
+      final sanitizedError = SecurityUtils.sanitizeUrlInString(e.toString());
       developer.log(
-        'Unexpected error in safeCall',
+        'Unexpected error in safeCall: $sanitizedError',
         error: e,
         stackTrace: stackTrace,
         name: 'RepositoryHelper',
@@ -48,21 +51,23 @@ extension RepositoryHelper on Object {
           errorStr.contains('permission') ||
           errorStr.contains('jwt') ||
           errorStr.contains('auth')) {
-        return const Left(
-          Failure.server('Authentication required'),
-        );
+        return const Left(Failure.server('Authentication required'));
       }
 
       // Return generic message instead of raw exception string
-      return const Left(Failure.server(
-          'An unexpected error occurred. Please try again later.'));
+      return const Left(
+        Failure.server('An unexpected error occurred. Please try again later.'),
+      );
     }
   }
 
   Failure _mapDioErrorToFailure(DioException error) {
     // Log the details securely
+    final sanitizedMessage = SecurityUtils.sanitizeUrlInString(
+      error.message ?? 'Unknown error',
+    );
     developer.log(
-      'Dio error: ${error.message}',
+      'Dio error: $sanitizedMessage',
       error: error,
       name: 'RepositoryHelper',
     );
@@ -126,9 +131,9 @@ extension RepositoryHelper on Object {
           return const Failure.server('Service unavailable');
         }
 
-        return Failure.server(error.message ?? 'Unknown error');
+        return Failure.server(sanitizedMessage);
       default:
-        return Failure.server(error.message ?? 'Unknown connection error');
+        return Failure.server(sanitizedMessage);
     }
   }
 }

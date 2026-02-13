@@ -66,7 +66,7 @@ class _CommentInputState extends State<CommentInput> {
         color: Theme.of(context).scaffoldBackgroundColor,
         border: Border(
           top: BorderSide(
-            color: Theme.of(context).dividerColor.withValues(alpha: 0.1),
+            color: Theme.of(context).dividerColor.withOpacity(0.1),
           ),
         ),
       ),
@@ -78,11 +78,13 @@ class _CommentInputState extends State<CommentInput> {
                 ? TextField(
                     controller: _controller,
                     maxLines: null,
+                    maxLength: 1000,
                     decoration: InputDecoration(
                       hintText: _hintText,
                       border: InputBorder.none,
                       isDense: true,
                       contentPadding: const EdgeInsets.symmetric(vertical: 8),
+                      counterText: "",
                     ),
                   )
                 : GestureDetector(

@@ -14,9 +14,6 @@ class SignInWithEmail {
     required String email,
     required String password,
   }) async {
-    return await repository.signInWithEmail(
-      email: email,
-      password: password,
-    );
+    return await repository.signInWithEmail(email: email, password: password);
   }
 }

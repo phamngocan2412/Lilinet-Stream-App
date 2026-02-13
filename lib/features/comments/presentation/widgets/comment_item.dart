@@ -131,8 +131,8 @@ class _CommentContentState extends State<_CommentContent> {
                       vertical: 8,
                     ),
                     decoration: BoxDecoration(
-                      color: colorScheme.surfaceContainerHighest.withValues(
-                        alpha: 0.5,
+                      color: colorScheme.surfaceContainerHighest.withOpacity(
+                        0.5,
                       ),
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -168,12 +168,7 @@ class _CommentContentState extends State<_CommentContent> {
                               )
                             else
                               Text(
-                                '• ${TimeFormatter.formatDisplayTimeAgo(
-                                  context: context,
-                                  createdAt: widget.comment.createdAt,
-                                  isEdited: widget.comment.isEdited,
-                                  updatedAt: widget.comment.updatedAt,
-                                )}',
+                                '• ${TimeFormatter.formatDisplayTimeAgo(context: context, createdAt: widget.comment.createdAt, isEdited: widget.comment.isEdited, updatedAt: widget.comment.updatedAt)}',
                                 style: TextStyle(
                                   fontSize: widget.isReply ? 10 : 11,
                                   color: theme.hintColor,
@@ -264,11 +259,7 @@ class _Avatar extends StatelessWidget {
       return CircleAvatar(
         radius: radius,
         backgroundColor: bgColor,
-        child: Icon(
-          Icons.person,
-          size: radius,
-          color: iconColor,
-        ),
+        child: Icon(Icons.person, size: radius, color: iconColor),
       );
     }
 
@@ -322,10 +313,7 @@ class _CommentText extends StatelessWidget {
     );
 
     if (content.length <= 120) {
-      return MentionText(
-        text: content,
-        style: textStyle,
-      );
+      return MentionText(text: content, style: textStyle);
     }
 
     final displayText = showFull ? content : '${content.substring(0, 120)}... ';
@@ -336,10 +324,7 @@ class _CommentText extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          MentionText(
-            text: displayText,
-            style: textStyle,
-          ),
+          MentionText(text: displayText, style: textStyle),
           Text(
             showFull ? l10n.collapse : l10n.seeMore,
             style: TextStyle(
@@ -460,14 +445,16 @@ class _ActionButtons extends StatelessWidget {
             child: ConstrainedBox(
               constraints: const BoxConstraints(minHeight: 48),
               child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: isRepliesExpanded
-                      ? theme.colorScheme.primary.withValues(alpha: 0.1)
-                      : theme.colorScheme.surfaceContainerHighest.withValues(
-                          alpha: 0.5,
+                      ? theme.colorScheme.primary.withOpacity(0.1)
+                      : theme.colorScheme.surfaceContainerHighest.withOpacity(
+                          0.5,
                         ),
                   borderRadius: BorderRadius.circular(12),
                 ),

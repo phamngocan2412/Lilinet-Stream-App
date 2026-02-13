@@ -83,22 +83,22 @@ class _DownloadsPageState extends State<DownloadsPage> {
 
   void _playDownload(DownloadedFile file) {
     context.read<VideoPlayerBloc>().add(
-      PlayVideo(
-        episodeId: file.movieId ?? file.id,
-        mediaId: file.movieId ?? file.id,
-        title: file.displayTitle,
-        posterUrl: file.posterUrl,
-        episodeTitle: file.displaySubtitle,
-        mediaType: 'Movie',
-      ),
-    );
+          PlayVideo(
+            episodeId: file.movieId ?? file.id,
+            mediaId: file.movieId ?? file.id,
+            title: file.displayTitle,
+            posterUrl: file.posterUrl,
+            episodeTitle: file.displaySubtitle,
+            mediaType: 'Movie',
+          ),
+        );
 
     // After playing, we need to load the local file
     Future.delayed(const Duration(milliseconds: 500), () {
       if (mounted) {
         context.read<VideoPlayerBloc>().add(
-          LoadVideo(url: 'file://${file.filePath}', headers: const {}),
-        );
+              LoadVideo(url: 'file://${file.filePath}', headers: const {}),
+            );
       }
     });
   }
@@ -208,7 +208,9 @@ class _DownloadItem extends StatelessWidget {
                     : Container(
                         width: 80,
                         height: 120,
-                        color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.surfaceContainerHighest,
                         child: Icon(
                           Icons.movie,
                           size: 40,
@@ -256,7 +258,9 @@ class _DownloadItem extends StatelessWidget {
                           file.formattedSize,
                           style: TextStyle(
                             fontSize: 12,
-                            color: Theme.of(context).colorScheme.onSurfaceVariant,
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.onSurfaceVariant,
                           ),
                         ),
                         const SizedBox(width: AppSpacing.lg),
@@ -270,7 +274,9 @@ class _DownloadItem extends StatelessWidget {
                           _formatDate(file.downloadedAt),
                           style: TextStyle(
                             fontSize: 12,
-                            color: Theme.of(context).colorScheme.onSurfaceVariant,
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.onSurfaceVariant,
                           ),
                         ),
                       ],

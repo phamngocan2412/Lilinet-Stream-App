@@ -64,7 +64,8 @@ class _MiniplayerWidgetState extends State<MiniplayerWidget> {
   void didUpdateWidget(MiniplayerWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
     debugPrint(
-        'MiniplayerWidget didUpdateWidget: height changed=${oldWidget.miniplayerHeight != widget.miniplayerHeight}');
+      'MiniplayerWidget didUpdateWidget: height changed=${oldWidget.miniplayerHeight != widget.miniplayerHeight}',
+    );
     // Update miniplayer height when it changes (e.g., when switching between tabs with/without nav bar)
     if (oldWidget.miniplayerHeight != widget.miniplayerHeight) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -101,7 +102,8 @@ class _MiniplayerWidgetState extends State<MiniplayerWidget> {
         if (state.status == VideoPlayerStatus.expanded) {
           if (_isNavigationBlocked) {
             debugPrint(
-                'MiniplayerWidget: Status expanded but navigation blocked - ignoring');
+              'MiniplayerWidget: Status expanded but navigation blocked - ignoring',
+            );
             return;
           }
           debugPrint('MiniplayerWidget: Status expanded - animating to MAX');

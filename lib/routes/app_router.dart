@@ -47,8 +47,11 @@ class AppRouter {
             path: '/genre/:id',
             name: 'genreMovies',
             builder: (context, state) {
-              final id = state.pathParameters['id']!;
+              final id = state.pathParameters['id'];
               final name = state.uri.queryParameters['name'] ?? 'Movies';
+              if (id == null || id.isEmpty) {
+                return const MainScreen();
+              }
               return GenreMoviesPage(genreId: id, genreName: name);
             },
           ),
@@ -56,7 +59,10 @@ class AppRouter {
             path: '/movie/:id',
             name: 'movieDetails',
             builder: (context, state) {
-              final id = state.pathParameters['id']!;
+              final id = state.pathParameters['id'];
+              if (id == null || id.isEmpty) {
+                return const MainScreen();
+              }
               final type = state.uri.queryParameters['type'] ?? 'TV Series';
               final episodeId = state.uri.queryParameters['episode'];
               final timestampStr = state.uri.queryParameters['time'];

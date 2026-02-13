@@ -3,7 +3,10 @@ import '../../../../core/errors/failures.dart';
 import '../entities/favorite.dart';
 
 abstract class FavoritesRepository {
-  Future<Either<Failure, List<Favorite>>> getFavorites({int page = 1, int limit = 20});
+  Future<Either<Failure, List<Favorite>>> getFavorites({
+    int page = 1,
+    int limit = 20,
+  });
 
   Future<Either<Failure, Favorite>> addFavorite({
     required String movieId,

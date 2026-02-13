@@ -114,8 +114,9 @@ class _HomePageViewState extends State<HomePageView>
               loaded: (trending, categories) {
                 final trendingMovies = trending.toSet().toList();
                 // Optimization: Pre-calculate cache width for horizontal lists
-                final devicePixelRatio =
-                    MediaQuery.of(context).devicePixelRatio;
+                final devicePixelRatio = MediaQuery.of(
+                  context,
+                ).devicePixelRatio;
                 // final horizontalListMemCacheWidth =
                 //     (130 * devicePixelRatio).toInt();
 

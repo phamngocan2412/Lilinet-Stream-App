@@ -97,7 +97,8 @@ class StreamingCubit extends Cubit<StreamingState> {
         server == null) {
       if (kDebugMode) {
         debugPrint(
-            '✅ StreamingCubit: Reusing cached links for episode $episodeId');
+          '✅ StreamingCubit: Reusing cached links for episode $episodeId',
+        );
       }
       return;
     }

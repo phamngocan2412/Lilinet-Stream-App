@@ -149,9 +149,7 @@ class _CustomVideoControlsState extends State<CustomVideoControls> {
             GestureDetector(
               onTap: _toggleControls,
               behavior: HitTestBehavior.translucent,
-              child: Container(
-                color: Colors.transparent,
-              ),
+              child: Container(color: Colors.transparent),
             ),
             if (_controlsVisible) ...[
               // Top Bar (Minimize Button)
@@ -344,7 +342,7 @@ class _CustomVideoControlsState extends State<CustomVideoControls> {
                 width: 40,
                 height: 4,
                 decoration: BoxDecoration(
-                  color: colorScheme.onSurfaceVariant.withValues(alpha: 0.4),
+                  color: colorScheme.onSurfaceVariant.withOpacity(0.4),
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),

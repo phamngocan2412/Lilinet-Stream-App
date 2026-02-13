@@ -34,10 +34,7 @@ class MiniplayerAwarePadding extends StatelessWidget {
           bottomPadding = bottomPadding.add(additionalPadding!) as EdgeInsets;
         }
 
-        return Padding(
-          padding: bottomPadding,
-          child: child,
-        );
+        return Padding(padding: bottomPadding, child: child);
       },
     );
   }

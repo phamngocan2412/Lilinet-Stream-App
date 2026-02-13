@@ -50,10 +50,9 @@ class MovieInfoSection extends StatelessWidget {
               Text(
                 movie.description!,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .onSurface
-                          .withValues(alpha: 0.8),
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withOpacity(0.8),
                       height: 1.6,
                     ),
               ),
@@ -69,8 +68,9 @@ class MovieInfoSection extends StatelessWidget {
 
                   return ActionChip(
                     label: Text(genre),
-                    backgroundColor:
-                        Theme.of(context).colorScheme.surfaceContainerHighest,
+                    backgroundColor: Theme.of(
+                      context,
+                    ).colorScheme.surfaceContainerHighest,
                     labelStyle: TextStyle(
                       color: Theme.of(context).colorScheme.onSurfaceVariant,
                       fontSize: 12,
@@ -138,19 +138,19 @@ class SkeletonTextWidget extends StatelessWidget {
         Container(
           height: 16,
           width: 300,
-          color: colorScheme.onSurface.withValues(alpha: 0.1),
+          color: colorScheme.onSurface.withOpacity(0.1),
         ),
         const SizedBox(height: 8),
         Container(
           height: 16,
           width: 250,
-          color: colorScheme.onSurface.withValues(alpha: 0.1),
+          color: colorScheme.onSurface.withOpacity(0.1),
         ),
         const SizedBox(height: 8),
         Container(
           height: 16,
           width: 280,
-          color: colorScheme.onSurface.withValues(alpha: 0.1),
+          color: colorScheme.onSurface.withOpacity(0.1),
         ),
       ],
     );
@@ -180,7 +180,7 @@ class InfoItemWidget extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: iconColor.withValues(alpha: 0.1),
+            color: iconColor.withOpacity(0.1),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Icon(icon, color: iconColor, size: 20),
@@ -194,7 +194,7 @@ class InfoItemWidget extends StatelessWidget {
               Text(
                 label,
                 style: TextStyle(
-                  color: colorScheme.onSurface.withValues(alpha: 0.6),
+                  color: colorScheme.onSurface.withOpacity(0.6),
                   fontSize: 12,
                 ),
               ),

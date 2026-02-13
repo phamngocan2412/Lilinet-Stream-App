@@ -51,7 +51,8 @@ class CommentModel {
 /// mock data only. For production, use PlayerCommentsSection which
 /// integrates with the real Supabase-backed comment system.
 @Deprecated(
-    'Use PlayerCommentsSection instead. This mock implementation will be removed.')
+  'Use PlayerCommentsSection instead. This mock implementation will be removed.',
+)
 class CommentSection extends StatelessWidget {
   final String videoId;
 
@@ -286,7 +287,10 @@ class _CommentSectionViewState extends State<_CommentSectionView> {
   }
 
   Widget _buildInputArea(
-      BuildContext context, ColorScheme colorScheme, AppLocalizations l10n) {
+    BuildContext context,
+    ColorScheme colorScheme,
+    AppLocalizations l10n,
+  ) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: const BoxDecoration(
@@ -307,11 +311,13 @@ class _CommentSectionViewState extends State<_CommentSectionView> {
             child: TextField(
               controller: _controller,
               style: const TextStyle(color: Colors.white),
+              maxLength: 1000,
               decoration: InputDecoration(
                 hintText: l10n.addCommentHint,
                 hintStyle: TextStyle(color: Colors.grey[600]),
                 border: InputBorder.none,
                 isDense: true,
+                counterText: "",
               ),
               minLines: 1,
               maxLines: 3,

@@ -1,17 +1,8 @@
 import 'package:equatable/equatable.dart';
 
-enum SortBy {
-  popularity,
-  releaseDate,
-  rating,
-  title,
-}
+enum SortBy { popularity, releaseDate, rating, title }
 
-enum MediaType {
-  all,
-  movie,
-  tvSeries,
-}
+enum MediaType { all, movie, tvSeries }
 
 class FilterOptions extends Equatable {
   final MediaType mediaType;
@@ -53,6 +44,13 @@ class FilterOptions extends Equatable {
   }
 
   @override
-  List<Object?> get props =>
-      [mediaType, genres, yearFrom, yearTo, minRating, sortBy, country];
+  List<Object?> get props => [
+        mediaType,
+        genres,
+        yearFrom,
+        yearTo,
+        minRating,
+        sortBy,
+        country,
+      ];
 }

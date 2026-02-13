@@ -43,10 +43,13 @@ abstract class MovieModel with _$MovieModel {
   Movie toEntity() {
     // Flatten seasons into episodes if seasons exist
     final flattenedEpisodes = <EpisodeModel>[];
-    if (episodes != null) {
-      flattenedEpisodes.addAll(episodes!);
-    } else if (seasons != null) {
-      for (final season in seasons!) {
+    final directEpisodes = episodes;
+    final seasonList = seasons;
+
+    if (directEpisodes != null) {
+      flattenedEpisodes.addAll(directEpisodes);
+    } else if (seasonList != null) {
+      for (final season in seasonList) {
         flattenedEpisodes.addAll(season.episodes);
       }
     }

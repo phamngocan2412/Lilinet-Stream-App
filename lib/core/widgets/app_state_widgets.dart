@@ -7,16 +7,11 @@ import 'loading_indicator.dart';
 class AppLoadingState extends StatelessWidget {
   final double size;
 
-  const AppLoadingState({
-    super.key,
-    this.size = 50,
-  });
+  const AppLoadingState({super.key, this.size = 50});
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: LoadingIndicator(size: size),
-    );
+    return Center(child: LoadingIndicator(size: size));
   }
 }
 

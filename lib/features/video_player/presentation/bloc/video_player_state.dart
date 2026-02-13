@@ -30,8 +30,6 @@ extension VideoPlayerStateX on VideoPlayerState {
   bool get isStreamingLoaded => streamingState is StreamingLoaded;
   bool get hasStreamingError => streamingState is StreamingError;
 
-  String? get streamingErrorMessage => streamingState.maybeWhen(
-        error: (message) => message,
-        orElse: () => null,
-      );
+  String? get streamingErrorMessage =>
+      streamingState.maybeWhen(error: (message) => message, orElse: () => null);
 }

@@ -23,10 +23,11 @@ class NetworkCubit extends Cubit<bool> {
 
   void _updateStatus(List<ConnectivityResult> results) {
     // connectivity_plus now returns a List<ConnectivityResult>
-    final isConnected = results.any((result) =>
-      result == ConnectivityResult.mobile ||
-      result == ConnectivityResult.wifi ||
-      result == ConnectivityResult.ethernet
+    final isConnected = results.any(
+      (result) =>
+          result == ConnectivityResult.mobile ||
+          result == ConnectivityResult.wifi ||
+          result == ConnectivityResult.ethernet,
     );
 
     if (state != isConnected) {

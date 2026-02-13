@@ -3,14 +3,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:lilinet_app/core/widgets/error_widget.dart';
 
 void main() {
-  testWidgets('AppErrorWidget shows raw message in debug mode', (WidgetTester tester) async {
+  testWidgets('AppErrorWidget shows raw message in debug mode', (
+    WidgetTester tester,
+  ) async {
     const rawMessage = 'Critical Database Failure: Stack Trace...';
 
     await tester.pumpWidget(
       const MaterialApp(
-        home: Scaffold(
-          body: AppErrorWidget(message: rawMessage),
-        ),
+        home: Scaffold(body: AppErrorWidget(message: rawMessage)),
       ),
     );
 

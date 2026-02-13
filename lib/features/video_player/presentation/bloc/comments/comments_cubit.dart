@@ -8,7 +8,8 @@ import 'comments_state.dart';
 /// This is a mock implementation that should not be used in production.
 /// The real comment system uses Supabase with full features (likes, replies, etc.)
 @Deprecated(
-    'Use CommentCubit from features/comments/ instead. This mock implementation will be removed.')
+  'Use CommentCubit from features/comments/ instead. This mock implementation will be removed.',
+)
 @singleton
 class CommentsCubit extends Cubit<CommentsState> {
   // Simple in-memory cache: videoId -> List<CommentModel>

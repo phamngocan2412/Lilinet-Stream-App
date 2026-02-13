@@ -56,16 +56,14 @@ class _FavoriteButtonState extends State<FavoriteButton> {
       builder: (context, isFavorite) {
         return Container(
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.5),
+            color: Theme.of(context).colorScheme.surface.withOpacity(0.5),
             shape: BoxShape.circle,
           ),
           child: IconButton(
             icon: Icon(
               isFavorite ? Icons.favorite : Icons.favorite_border,
               color: isFavorite
-                  ? Theme.of(context)
-                      .colorScheme
-                      .error // Red
+                  ? Theme.of(context).colorScheme.error // Red
                   : Theme.of(context).colorScheme.onSurface,
               size: widget.size,
             ),

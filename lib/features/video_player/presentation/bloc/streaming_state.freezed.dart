@@ -12,7 +12,8 @@ part of 'streaming_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$StreamingState {
@@ -20,9 +21,11 @@ mixin _$StreamingState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<StreamingLink> links, String selectedServer,
-            String? selectedQuality)
-        loaded,
+    required TResult Function(
+      List<StreamingLink> links,
+      String selectedServer,
+      String? selectedQuality,
+    ) loaded,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -30,9 +33,11 @@ mixin _$StreamingState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<StreamingLink> links, String selectedServer,
-            String? selectedQuality)?
-        loaded,
+    TResult? Function(
+      List<StreamingLink> links,
+      String selectedServer,
+      String? selectedQuality,
+    )? loaded,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -40,9 +45,11 @@ mixin _$StreamingState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<StreamingLink> links, String selectedServer,
-            String? selectedQuality)?
-        loaded,
+    TResult Function(
+      List<StreamingLink> links,
+      String selectedServer,
+      String? selectedQuality,
+    )? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -77,8 +84,9 @@ mixin _$StreamingState {
 /// @nodoc
 abstract class $StreamingStateCopyWith<$Res> {
   factory $StreamingStateCopyWith(
-          StreamingState value, $Res Function(StreamingState) then) =
-      _$StreamingStateCopyWithImpl<$Res, StreamingState>;
+    StreamingState value,
+    $Res Function(StreamingState) then,
+  ) = _$StreamingStateCopyWithImpl<$Res, StreamingState>;
 }
 
 /// @nodoc
@@ -97,18 +105,20 @@ class _$StreamingStateCopyWithImpl<$Res, $Val extends StreamingState>
 
 /// @nodoc
 abstract class _$$StreamingInitialImplCopyWith<$Res> {
-  factory _$$StreamingInitialImplCopyWith(_$StreamingInitialImpl value,
-          $Res Function(_$StreamingInitialImpl) then) =
-      __$$StreamingInitialImplCopyWithImpl<$Res>;
+  factory _$$StreamingInitialImplCopyWith(
+    _$StreamingInitialImpl value,
+    $Res Function(_$StreamingInitialImpl) then,
+  ) = __$$StreamingInitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
 class __$$StreamingInitialImplCopyWithImpl<$Res>
     extends _$StreamingStateCopyWithImpl<$Res, _$StreamingInitialImpl>
     implements _$$StreamingInitialImplCopyWith<$Res> {
-  __$$StreamingInitialImplCopyWithImpl(_$StreamingInitialImpl _value,
-      $Res Function(_$StreamingInitialImpl) _then)
-      : super(_value, _then);
+  __$$StreamingInitialImplCopyWithImpl(
+    _$StreamingInitialImpl _value,
+    $Res Function(_$StreamingInitialImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of StreamingState
   /// with the given fields replaced by the non-null parameter values.
@@ -138,9 +148,11 @@ class _$StreamingInitialImpl implements StreamingInitial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<StreamingLink> links, String selectedServer,
-            String? selectedQuality)
-        loaded,
+    required TResult Function(
+      List<StreamingLink> links,
+      String selectedServer,
+      String? selectedQuality,
+    ) loaded,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -151,9 +163,11 @@ class _$StreamingInitialImpl implements StreamingInitial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<StreamingLink> links, String selectedServer,
-            String? selectedQuality)?
-        loaded,
+    TResult? Function(
+      List<StreamingLink> links,
+      String selectedServer,
+      String? selectedQuality,
+    )? loaded,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -164,9 +178,11 @@ class _$StreamingInitialImpl implements StreamingInitial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<StreamingLink> links, String selectedServer,
-            String? selectedQuality)?
-        loaded,
+    TResult Function(
+      List<StreamingLink> links,
+      String selectedServer,
+      String? selectedQuality,
+    )? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -220,18 +236,20 @@ abstract class StreamingInitial implements StreamingState {
 
 /// @nodoc
 abstract class _$$StreamingLoadingImplCopyWith<$Res> {
-  factory _$$StreamingLoadingImplCopyWith(_$StreamingLoadingImpl value,
-          $Res Function(_$StreamingLoadingImpl) then) =
-      __$$StreamingLoadingImplCopyWithImpl<$Res>;
+  factory _$$StreamingLoadingImplCopyWith(
+    _$StreamingLoadingImpl value,
+    $Res Function(_$StreamingLoadingImpl) then,
+  ) = __$$StreamingLoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
 class __$$StreamingLoadingImplCopyWithImpl<$Res>
     extends _$StreamingStateCopyWithImpl<$Res, _$StreamingLoadingImpl>
     implements _$$StreamingLoadingImplCopyWith<$Res> {
-  __$$StreamingLoadingImplCopyWithImpl(_$StreamingLoadingImpl _value,
-      $Res Function(_$StreamingLoadingImpl) _then)
-      : super(_value, _then);
+  __$$StreamingLoadingImplCopyWithImpl(
+    _$StreamingLoadingImpl _value,
+    $Res Function(_$StreamingLoadingImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of StreamingState
   /// with the given fields replaced by the non-null parameter values.
@@ -261,9 +279,11 @@ class _$StreamingLoadingImpl implements StreamingLoading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<StreamingLink> links, String selectedServer,
-            String? selectedQuality)
-        loaded,
+    required TResult Function(
+      List<StreamingLink> links,
+      String selectedServer,
+      String? selectedQuality,
+    ) loaded,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -274,9 +294,11 @@ class _$StreamingLoadingImpl implements StreamingLoading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<StreamingLink> links, String selectedServer,
-            String? selectedQuality)?
-        loaded,
+    TResult? Function(
+      List<StreamingLink> links,
+      String selectedServer,
+      String? selectedQuality,
+    )? loaded,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -287,9 +309,11 @@ class _$StreamingLoadingImpl implements StreamingLoading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<StreamingLink> links, String selectedServer,
-            String? selectedQuality)?
-        loaded,
+    TResult Function(
+      List<StreamingLink> links,
+      String selectedServer,
+      String? selectedQuality,
+    )? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -343,14 +367,16 @@ abstract class StreamingLoading implements StreamingState {
 
 /// @nodoc
 abstract class _$$StreamingLoadedImplCopyWith<$Res> {
-  factory _$$StreamingLoadedImplCopyWith(_$StreamingLoadedImpl value,
-          $Res Function(_$StreamingLoadedImpl) then) =
-      __$$StreamingLoadedImplCopyWithImpl<$Res>;
+  factory _$$StreamingLoadedImplCopyWith(
+    _$StreamingLoadedImpl value,
+    $Res Function(_$StreamingLoadedImpl) then,
+  ) = __$$StreamingLoadedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call(
-      {List<StreamingLink> links,
-      String selectedServer,
-      String? selectedQuality});
+  $Res call({
+    List<StreamingLink> links,
+    String selectedServer,
+    String? selectedQuality,
+  });
 }
 
 /// @nodoc
@@ -358,8 +384,9 @@ class __$$StreamingLoadedImplCopyWithImpl<$Res>
     extends _$StreamingStateCopyWithImpl<$Res, _$StreamingLoadedImpl>
     implements _$$StreamingLoadedImplCopyWith<$Res> {
   __$$StreamingLoadedImplCopyWithImpl(
-      _$StreamingLoadedImpl _value, $Res Function(_$StreamingLoadedImpl) _then)
-      : super(_value, _then);
+    _$StreamingLoadedImpl _value,
+    $Res Function(_$StreamingLoadedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of StreamingState
   /// with the given fields replaced by the non-null parameter values.
@@ -370,31 +397,33 @@ class __$$StreamingLoadedImplCopyWithImpl<$Res>
     Object? selectedServer = null,
     Object? selectedQuality = freezed,
   }) {
-    return _then(_$StreamingLoadedImpl(
-      links: null == links
-          ? _value._links
-          : links // ignore: cast_nullable_to_non_nullable
-              as List<StreamingLink>,
-      selectedServer: null == selectedServer
-          ? _value.selectedServer
-          : selectedServer // ignore: cast_nullable_to_non_nullable
-              as String,
-      selectedQuality: freezed == selectedQuality
-          ? _value.selectedQuality
-          : selectedQuality // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
+    return _then(
+      _$StreamingLoadedImpl(
+        links: null == links
+            ? _value._links
+            : links // ignore: cast_nullable_to_non_nullable
+                as List<StreamingLink>,
+        selectedServer: null == selectedServer
+            ? _value.selectedServer
+            : selectedServer // ignore: cast_nullable_to_non_nullable
+                as String,
+        selectedQuality: freezed == selectedQuality
+            ? _value.selectedQuality
+            : selectedQuality // ignore: cast_nullable_to_non_nullable
+                as String?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$StreamingLoadedImpl implements StreamingLoaded {
-  const _$StreamingLoadedImpl(
-      {required final List<StreamingLink> links,
-      required this.selectedServer,
-      this.selectedQuality})
-      : _links = links;
+  const _$StreamingLoadedImpl({
+    required final List<StreamingLink> links,
+    required this.selectedServer,
+    this.selectedQuality,
+  }) : _links = links;
 
   final List<StreamingLink> _links;
   @override
@@ -428,10 +457,11 @@ class _$StreamingLoadedImpl implements StreamingLoaded {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_links),
-      selectedServer,
-      selectedQuality);
+        runtimeType,
+        const DeepCollectionEquality().hash(_links),
+        selectedServer,
+        selectedQuality,
+      );
 
   /// Create a copy of StreamingState
   /// with the given fields replaced by the non-null parameter values.
@@ -440,16 +470,20 @@ class _$StreamingLoadedImpl implements StreamingLoaded {
   @pragma('vm:prefer-inline')
   _$$StreamingLoadedImplCopyWith<_$StreamingLoadedImpl> get copyWith =>
       __$$StreamingLoadedImplCopyWithImpl<_$StreamingLoadedImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<StreamingLink> links, String selectedServer,
-            String? selectedQuality)
-        loaded,
+    required TResult Function(
+      List<StreamingLink> links,
+      String selectedServer,
+      String? selectedQuality,
+    ) loaded,
     required TResult Function(String message) error,
   }) {
     return loaded(links, selectedServer, selectedQuality);
@@ -460,9 +494,11 @@ class _$StreamingLoadedImpl implements StreamingLoaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<StreamingLink> links, String selectedServer,
-            String? selectedQuality)?
-        loaded,
+    TResult? Function(
+      List<StreamingLink> links,
+      String selectedServer,
+      String? selectedQuality,
+    )? loaded,
     TResult? Function(String message)? error,
   }) {
     return loaded?.call(links, selectedServer, selectedQuality);
@@ -473,9 +509,11 @@ class _$StreamingLoadedImpl implements StreamingLoaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<StreamingLink> links, String selectedServer,
-            String? selectedQuality)?
-        loaded,
+    TResult Function(
+      List<StreamingLink> links,
+      String selectedServer,
+      String? selectedQuality,
+    )? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -524,10 +562,11 @@ class _$StreamingLoadedImpl implements StreamingLoaded {
 }
 
 abstract class StreamingLoaded implements StreamingState {
-  const factory StreamingLoaded(
-      {required final List<StreamingLink> links,
-      required final String selectedServer,
-      final String? selectedQuality}) = _$StreamingLoadedImpl;
+  const factory StreamingLoaded({
+    required final List<StreamingLink> links,
+    required final String selectedServer,
+    final String? selectedQuality,
+  }) = _$StreamingLoadedImpl;
 
   List<StreamingLink> get links;
   String get selectedServer;
@@ -542,9 +581,10 @@ abstract class StreamingLoaded implements StreamingState {
 
 /// @nodoc
 abstract class _$$StreamingErrorImplCopyWith<$Res> {
-  factory _$$StreamingErrorImplCopyWith(_$StreamingErrorImpl value,
-          $Res Function(_$StreamingErrorImpl) then) =
-      __$$StreamingErrorImplCopyWithImpl<$Res>;
+  factory _$$StreamingErrorImplCopyWith(
+    _$StreamingErrorImpl value,
+    $Res Function(_$StreamingErrorImpl) then,
+  ) = __$$StreamingErrorImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String message});
 }
@@ -554,22 +594,23 @@ class __$$StreamingErrorImplCopyWithImpl<$Res>
     extends _$StreamingStateCopyWithImpl<$Res, _$StreamingErrorImpl>
     implements _$$StreamingErrorImplCopyWith<$Res> {
   __$$StreamingErrorImplCopyWithImpl(
-      _$StreamingErrorImpl _value, $Res Function(_$StreamingErrorImpl) _then)
-      : super(_value, _then);
+    _$StreamingErrorImpl _value,
+    $Res Function(_$StreamingErrorImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of StreamingState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? message = null,
-  }) {
-    return _then(_$StreamingErrorImpl(
-      null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
+  $Res call({Object? message = null}) {
+    return _then(
+      _$StreamingErrorImpl(
+        null == message
+            ? _value.message
+            : message // ignore: cast_nullable_to_non_nullable
+                as String,
+      ),
+    );
   }
 }
 
@@ -604,16 +645,20 @@ class _$StreamingErrorImpl implements StreamingError {
   @pragma('vm:prefer-inline')
   _$$StreamingErrorImplCopyWith<_$StreamingErrorImpl> get copyWith =>
       __$$StreamingErrorImplCopyWithImpl<_$StreamingErrorImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<StreamingLink> links, String selectedServer,
-            String? selectedQuality)
-        loaded,
+    required TResult Function(
+      List<StreamingLink> links,
+      String selectedServer,
+      String? selectedQuality,
+    ) loaded,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -624,9 +669,11 @@ class _$StreamingErrorImpl implements StreamingError {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<StreamingLink> links, String selectedServer,
-            String? selectedQuality)?
-        loaded,
+    TResult? Function(
+      List<StreamingLink> links,
+      String selectedServer,
+      String? selectedQuality,
+    )? loaded,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -637,9 +684,11 @@ class _$StreamingErrorImpl implements StreamingError {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<StreamingLink> links, String selectedServer,
-            String? selectedQuality)?
-        loaded,
+    TResult Function(
+      List<StreamingLink> links,
+      String selectedServer,
+      String? selectedQuality,
+    )? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
