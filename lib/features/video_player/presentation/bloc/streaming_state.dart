@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../../../features/movies/domain/entities/streaming_link.dart';
+import '../../../../features/movies/domain/entities/subtitle.dart';
 
 part 'streaming_state.freezed.dart';
 
@@ -13,6 +14,7 @@ class StreamingState with _$StreamingState {
     required List<StreamingLink> links,
     required String selectedServer,
     String? selectedQuality,
+    List<Subtitle>? subtitles,
   }) = StreamingLoaded;
 
   const factory StreamingState.error(String message) = StreamingError;
@@ -25,7 +27,7 @@ extension StreamingStateX on StreamingState {
 
   StreamingLink? get currentLink {
     return maybeWhen(
-      loaded: (links, server, quality) => links.firstOrNull,
+      loaded: (links, server, quality, subtitles) => links.firstOrNull,
       orElse: () => null,
     );
   }

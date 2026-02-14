@@ -12,8 +12,7 @@ part of 'favorites_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$FavoritesState {
@@ -22,10 +21,8 @@ mixin _$FavoritesState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(
-      List<Favorite> favorites,
-      int currentPage,
-      bool hasMore,
-    ) loaded,
+            List<Favorite> favorites, int currentPage, bool hasMore)
+        loaded,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -78,9 +75,8 @@ mixin _$FavoritesState {
 /// @nodoc
 abstract class $FavoritesStateCopyWith<$Res> {
   factory $FavoritesStateCopyWith(
-    FavoritesState value,
-    $Res Function(FavoritesState) then,
-  ) = _$FavoritesStateCopyWithImpl<$Res, FavoritesState>;
+          FavoritesState value, $Res Function(FavoritesState) then) =
+      _$FavoritesStateCopyWithImpl<$Res, FavoritesState>;
 }
 
 /// @nodoc
@@ -99,20 +95,18 @@ class _$FavoritesStateCopyWithImpl<$Res, $Val extends FavoritesState>
 
 /// @nodoc
 abstract class _$$FavoritesInitialImplCopyWith<$Res> {
-  factory _$$FavoritesInitialImplCopyWith(
-    _$FavoritesInitialImpl value,
-    $Res Function(_$FavoritesInitialImpl) then,
-  ) = __$$FavoritesInitialImplCopyWithImpl<$Res>;
+  factory _$$FavoritesInitialImplCopyWith(_$FavoritesInitialImpl value,
+          $Res Function(_$FavoritesInitialImpl) then) =
+      __$$FavoritesInitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
 class __$$FavoritesInitialImplCopyWithImpl<$Res>
     extends _$FavoritesStateCopyWithImpl<$Res, _$FavoritesInitialImpl>
     implements _$$FavoritesInitialImplCopyWith<$Res> {
-  __$$FavoritesInitialImplCopyWithImpl(
-    _$FavoritesInitialImpl _value,
-    $Res Function(_$FavoritesInitialImpl) _then,
-  ) : super(_value, _then);
+  __$$FavoritesInitialImplCopyWithImpl(_$FavoritesInitialImpl _value,
+      $Res Function(_$FavoritesInitialImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of FavoritesState
   /// with the given fields replaced by the non-null parameter values.
@@ -143,10 +137,8 @@ class _$FavoritesInitialImpl implements FavoritesInitial {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(
-      List<Favorite> favorites,
-      int currentPage,
-      bool hasMore,
-    ) loaded,
+            List<Favorite> favorites, int currentPage, bool hasMore)
+        loaded,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -224,20 +216,18 @@ abstract class FavoritesInitial implements FavoritesState {
 
 /// @nodoc
 abstract class _$$FavoritesLoadingImplCopyWith<$Res> {
-  factory _$$FavoritesLoadingImplCopyWith(
-    _$FavoritesLoadingImpl value,
-    $Res Function(_$FavoritesLoadingImpl) then,
-  ) = __$$FavoritesLoadingImplCopyWithImpl<$Res>;
+  factory _$$FavoritesLoadingImplCopyWith(_$FavoritesLoadingImpl value,
+          $Res Function(_$FavoritesLoadingImpl) then) =
+      __$$FavoritesLoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
 class __$$FavoritesLoadingImplCopyWithImpl<$Res>
     extends _$FavoritesStateCopyWithImpl<$Res, _$FavoritesLoadingImpl>
     implements _$$FavoritesLoadingImplCopyWith<$Res> {
-  __$$FavoritesLoadingImplCopyWithImpl(
-    _$FavoritesLoadingImpl _value,
-    $Res Function(_$FavoritesLoadingImpl) _then,
-  ) : super(_value, _then);
+  __$$FavoritesLoadingImplCopyWithImpl(_$FavoritesLoadingImpl _value,
+      $Res Function(_$FavoritesLoadingImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of FavoritesState
   /// with the given fields replaced by the non-null parameter values.
@@ -268,10 +258,8 @@ class _$FavoritesLoadingImpl implements FavoritesLoading {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(
-      List<Favorite> favorites,
-      int currentPage,
-      bool hasMore,
-    ) loaded,
+            List<Favorite> favorites, int currentPage, bool hasMore)
+        loaded,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -349,10 +337,9 @@ abstract class FavoritesLoading implements FavoritesState {
 
 /// @nodoc
 abstract class _$$FavoritesLoadedImplCopyWith<$Res> {
-  factory _$$FavoritesLoadedImplCopyWith(
-    _$FavoritesLoadedImpl value,
-    $Res Function(_$FavoritesLoadedImpl) then,
-  ) = __$$FavoritesLoadedImplCopyWithImpl<$Res>;
+  factory _$$FavoritesLoadedImplCopyWith(_$FavoritesLoadedImpl value,
+          $Res Function(_$FavoritesLoadedImpl) then) =
+      __$$FavoritesLoadedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({List<Favorite> favorites, int currentPage, bool hasMore});
 }
@@ -362,9 +349,8 @@ class __$$FavoritesLoadedImplCopyWithImpl<$Res>
     extends _$FavoritesStateCopyWithImpl<$Res, _$FavoritesLoadedImpl>
     implements _$$FavoritesLoadedImplCopyWith<$Res> {
   __$$FavoritesLoadedImplCopyWithImpl(
-    _$FavoritesLoadedImpl _value,
-    $Res Function(_$FavoritesLoadedImpl) _then,
-  ) : super(_value, _then);
+      _$FavoritesLoadedImpl _value, $Res Function(_$FavoritesLoadedImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of FavoritesState
   /// with the given fields replaced by the non-null parameter values.
@@ -375,33 +361,31 @@ class __$$FavoritesLoadedImplCopyWithImpl<$Res>
     Object? currentPage = null,
     Object? hasMore = null,
   }) {
-    return _then(
-      _$FavoritesLoadedImpl(
-        favorites: null == favorites
-            ? _value._favorites
-            : favorites // ignore: cast_nullable_to_non_nullable
-                as List<Favorite>,
-        currentPage: null == currentPage
-            ? _value.currentPage
-            : currentPage // ignore: cast_nullable_to_non_nullable
-                as int,
-        hasMore: null == hasMore
-            ? _value.hasMore
-            : hasMore // ignore: cast_nullable_to_non_nullable
-                as bool,
-      ),
-    );
+    return _then(_$FavoritesLoadedImpl(
+      favorites: null == favorites
+          ? _value._favorites
+          : favorites // ignore: cast_nullable_to_non_nullable
+              as List<Favorite>,
+      currentPage: null == currentPage
+          ? _value.currentPage
+          : currentPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      hasMore: null == hasMore
+          ? _value.hasMore
+          : hasMore // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
   }
 }
 
 /// @nodoc
 
 class _$FavoritesLoadedImpl implements FavoritesLoaded {
-  const _$FavoritesLoadedImpl({
-    required final List<Favorite> favorites,
-    this.currentPage = 1,
-    this.hasMore = true,
-  }) : _favorites = favorites;
+  const _$FavoritesLoadedImpl(
+      {required final List<Favorite> favorites,
+      this.currentPage = 1,
+      this.hasMore = true})
+      : _favorites = favorites;
 
   final List<Favorite> _favorites;
   @override
@@ -428,22 +412,16 @@ class _$FavoritesLoadedImpl implements FavoritesLoaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FavoritesLoadedImpl &&
-            const DeepCollectionEquality().equals(
-              other._favorites,
-              _favorites,
-            ) &&
+            const DeepCollectionEquality()
+                .equals(other._favorites, _favorites) &&
             (identical(other.currentPage, currentPage) ||
                 other.currentPage == currentPage) &&
             (identical(other.hasMore, hasMore) || other.hasMore == hasMore));
   }
 
   @override
-  int get hashCode => Object.hash(
-        runtimeType,
-        const DeepCollectionEquality().hash(_favorites),
-        currentPage,
-        hasMore,
-      );
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_favorites), currentPage, hasMore);
 
   /// Create a copy of FavoritesState
   /// with the given fields replaced by the non-null parameter values.
@@ -452,9 +430,7 @@ class _$FavoritesLoadedImpl implements FavoritesLoaded {
   @pragma('vm:prefer-inline')
   _$$FavoritesLoadedImplCopyWith<_$FavoritesLoadedImpl> get copyWith =>
       __$$FavoritesLoadedImplCopyWithImpl<_$FavoritesLoadedImpl>(
-        this,
-        _$identity,
-      );
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -462,10 +438,8 @@ class _$FavoritesLoadedImpl implements FavoritesLoaded {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(
-      List<Favorite> favorites,
-      int currentPage,
-      bool hasMore,
-    ) loaded,
+            List<Favorite> favorites, int currentPage, bool hasMore)
+        loaded,
     required TResult Function(String message) error,
   }) {
     return loaded(favorites, currentPage, hasMore);
@@ -538,11 +512,10 @@ class _$FavoritesLoadedImpl implements FavoritesLoaded {
 }
 
 abstract class FavoritesLoaded implements FavoritesState {
-  const factory FavoritesLoaded({
-    required final List<Favorite> favorites,
-    final int currentPage,
-    final bool hasMore,
-  }) = _$FavoritesLoadedImpl;
+  const factory FavoritesLoaded(
+      {required final List<Favorite> favorites,
+      final int currentPage,
+      final bool hasMore}) = _$FavoritesLoadedImpl;
 
   List<Favorite> get favorites;
   int get currentPage;
@@ -557,10 +530,9 @@ abstract class FavoritesLoaded implements FavoritesState {
 
 /// @nodoc
 abstract class _$$FavoritesErrorImplCopyWith<$Res> {
-  factory _$$FavoritesErrorImplCopyWith(
-    _$FavoritesErrorImpl value,
-    $Res Function(_$FavoritesErrorImpl) then,
-  ) = __$$FavoritesErrorImplCopyWithImpl<$Res>;
+  factory _$$FavoritesErrorImplCopyWith(_$FavoritesErrorImpl value,
+          $Res Function(_$FavoritesErrorImpl) then) =
+      __$$FavoritesErrorImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String message});
 }
@@ -570,23 +542,22 @@ class __$$FavoritesErrorImplCopyWithImpl<$Res>
     extends _$FavoritesStateCopyWithImpl<$Res, _$FavoritesErrorImpl>
     implements _$$FavoritesErrorImplCopyWith<$Res> {
   __$$FavoritesErrorImplCopyWithImpl(
-    _$FavoritesErrorImpl _value,
-    $Res Function(_$FavoritesErrorImpl) _then,
-  ) : super(_value, _then);
+      _$FavoritesErrorImpl _value, $Res Function(_$FavoritesErrorImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of FavoritesState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? message = null}) {
-    return _then(
-      _$FavoritesErrorImpl(
-        message: null == message
-            ? _value.message
-            : message // ignore: cast_nullable_to_non_nullable
-                as String,
-      ),
-    );
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$FavoritesErrorImpl(
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
   }
 }
 
@@ -621,9 +592,7 @@ class _$FavoritesErrorImpl implements FavoritesError {
   @pragma('vm:prefer-inline')
   _$$FavoritesErrorImplCopyWith<_$FavoritesErrorImpl> get copyWith =>
       __$$FavoritesErrorImplCopyWithImpl<_$FavoritesErrorImpl>(
-        this,
-        _$identity,
-      );
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -631,10 +600,8 @@ class _$FavoritesErrorImpl implements FavoritesError {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(
-      List<Favorite> favorites,
-      int currentPage,
-      bool hasMore,
-    ) loaded,
+            List<Favorite> favorites, int currentPage, bool hasMore)
+        loaded,
     required TResult Function(String message) error,
   }) {
     return error(message);

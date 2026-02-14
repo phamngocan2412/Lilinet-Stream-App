@@ -59,7 +59,10 @@ class SubtitleModelAdapter extends TypeAdapter<SubtitleModel> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return SubtitleModel(url: fields[0] as String, lang: fields[1] as String);
+    return SubtitleModel(
+      url: fields[0] as String,
+      lang: fields[1] as String,
+    );
   }
 
   @override
@@ -129,8 +132,7 @@ class StreamingResponseModelAdapter
 // **************************************************************************
 
 _$StreamingLinkModelImpl _$$StreamingLinkModelImplFromJson(
-  Map<String, dynamic> json,
-) =>
+        Map<String, dynamic> json) =>
     _$StreamingLinkModelImpl(
       url: const AnyToStringConverter().fromJson(json['url']),
       quality: const AnyToStringConverter().fromJson(json['quality']),
@@ -141,8 +143,7 @@ _$StreamingLinkModelImpl _$$StreamingLinkModelImplFromJson(
     );
 
 Map<String, dynamic> _$$StreamingLinkModelImplToJson(
-  _$StreamingLinkModelImpl instance,
-) =>
+        _$StreamingLinkModelImpl instance) =>
     <String, dynamic>{
       'url': const AnyToStringConverter().toJson(instance.url),
       'quality': const AnyToStringConverter().toJson(instance.quality),
@@ -163,8 +164,7 @@ Map<String, dynamic> _$$SubtitleModelImplToJson(_$SubtitleModelImpl instance) =>
     };
 
 _$StreamingResponseModelImpl _$$StreamingResponseModelImplFromJson(
-  Map<String, dynamic> json,
-) =>
+        Map<String, dynamic> json) =>
     _$StreamingResponseModelImpl(
       sources: (json['sources'] as List<dynamic>)
           .map((e) => StreamingLinkModel.fromJson(e as Map<String, dynamic>))
@@ -178,8 +178,7 @@ _$StreamingResponseModelImpl _$$StreamingResponseModelImplFromJson(
     );
 
 Map<String, dynamic> _$$StreamingResponseModelImplToJson(
-  _$StreamingResponseModelImpl instance,
-) =>
+        _$StreamingResponseModelImpl instance) =>
     <String, dynamic>{
       'sources': instance.sources,
       'headers': instance.headers,
@@ -187,14 +186,15 @@ Map<String, dynamic> _$$StreamingResponseModelImplToJson(
     };
 
 _$ServerInfoModelImpl _$$ServerInfoModelImplFromJson(
-  Map<String, dynamic> json,
-) =>
+        Map<String, dynamic> json) =>
     _$ServerInfoModelImpl(
       name: json['name'] as String,
       url: json['url'] as String,
     );
 
 Map<String, dynamic> _$$ServerInfoModelImplToJson(
-  _$ServerInfoModelImpl instance,
-) =>
-    <String, dynamic>{'name': instance.name, 'url': instance.url};
+        _$ServerInfoModelImpl instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'url': instance.url,
+    };

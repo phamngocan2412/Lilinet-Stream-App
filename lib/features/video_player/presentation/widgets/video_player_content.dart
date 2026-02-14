@@ -22,12 +22,11 @@ import '../../../history/domain/entities/watch_progress.dart';
 import '../../../history/presentation/bloc/history_bloc.dart';
 import '../../../settings/domain/repositories/settings_repository.dart';
 import '../../../settings/domain/entities/app_settings.dart';
-import '../../../movies/presentation/bloc/streaming/streaming_cubit.dart';
-import '../../../movies/presentation/bloc/streaming/streaming_state.dart';
 
 import '../bloc/video_player_bloc.dart';
 import '../bloc/video_player_event.dart';
 import '../bloc/video_player_state.dart';
+import '../bloc/streaming_state.dart';
 
 import 'mini_player_content.dart';
 import 'full_player_content.dart';
@@ -82,8 +81,6 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
   String? currentServer = 'vidcloud';
   String? _playbackError;
 
-  // Streaming Cubit instance managed here to reset on new video
-  late StreamingCubit _streamingCubit;
   String? _movieProvider;
   String? _animeProvider;
   VideoQuality _defaultQuality = VideoQuality.auto;
@@ -116,8 +113,7 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
     _videoSessionRepository = getIt<VideoSessionRepository>();
 
     _initPlayer();
-    _streamingCubit = getIt<StreamingCubit>();
-    _loadSettingsAndVideo();
+    _loadSettings();
 
     // H-003: If movie details are missing (restored session), fetch them
     if (widget.state.movie == null && widget.state.mediaId != null) {
@@ -178,16 +174,14 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
     // Reload if episode changed
     if (widget.state.episodeId != oldWidget.state.episodeId ||
         widget.state.mediaId != oldWidget.state.mediaId) {
-      // Close old cubit and get a new one for the new video
-      _streamingCubit.close();
-      _streamingCubit = getIt<StreamingCubit>();
 
       // Reset error state
       setState(() {
         _playbackError = null;
       });
 
-      _loadSettingsAndVideo();
+      // Settings are reloaded but video loading is handled by Bloc
+      _loadSettings();
     }
   }
 
@@ -223,14 +217,13 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
 
   bool _autoPlayEnabled = false;
 
-  Future<void> _loadSettingsAndVideo() async {
+  Future<void> _loadSettings() async {
     final result = await getIt<SettingsRepository>().getSettings();
     result.fold(
       (l) {
         // If fails, use defaults (Fastest)
         _movieProvider = 'flixhq';
         _animeProvider = 'animepahe';
-        _loadVideo();
       },
       (settings) {
         if (mounted) {
@@ -241,49 +234,13 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
             _defaultQuality = settings.defaultQuality;
             _preferredServer = settings.preferredServer;
           });
-          _loadVideo();
         }
       },
     );
   }
 
   void _loadVideo() {
-    // Check if we have required data to load video
-    if (widget.state.episodeId == null || widget.state.mediaId == null) {
-      debugPrint('⚠️ Cannot load video: episodeId or mediaId is null');
-      return;
-    }
-
-    // Determine provider based on media type and genres, prioritizing accurate detection
-    // Even if movie.provider is set, re-check based on genres to prevent misclassification
-    String provider;
-
-    // First, try to determine provider based on genres
-    provider = StreamingConfig.determineProvider(
-      genres: widget.state.movie?.genres,
-      movieProviderPref: _movieProvider,
-      animeProviderPref: _animeProvider,
-    );
-
-    // If that doesn't give us a provider, fall back to movie's stored provider or type-based default
-    if (provider.isEmpty) {
-      if (widget.state.movie != null &&
-          widget.state.movie!.provider != null &&
-          widget.state.movie!.provider!.isNotEmpty) {
-        provider = widget.state.movie!.provider!;
-      } else {
-        provider = (MediaTypeHelper.isAnime(widget.state.mediaType)
-            ? (_animeProvider ?? StreamingConfig.defaultAnimeProvider)
-            : (_movieProvider ?? StreamingConfig.defaultMovieProvider));
-      }
-    }
-
-    _streamingCubit.loadLinks(
-      episodeId: widget.state.episodeId!,
-      mediaId: widget.state.mediaId!,
-      provider: provider,
-      preferredServer: _preferredServer,
-    );
+    context.read<VideoPlayerBloc>().add(RetryStreaming());
   }
 
   void switchServer(String server) {
@@ -297,36 +254,7 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
       currentServer = server;
     });
 
-    // Determine provider based on media type and genres, prioritizing accurate detection
-    String provider;
-
-    // First, try to determine provider based on genres
-    provider = StreamingConfig.determineProvider(
-      genres: widget.state.movie?.genres,
-      movieProviderPref: _movieProvider,
-      animeProviderPref: _animeProvider,
-    );
-
-    // If that doesn't give us a provider, fall back to movie's stored provider or type-based default
-    if (provider.isEmpty) {
-      if (widget.state.movie != null &&
-          widget.state.movie!.provider != null &&
-          widget.state.movie!.provider!.isNotEmpty) {
-        provider = widget.state.movie!.provider!;
-      } else {
-        provider = (MediaTypeHelper.isAnime(widget.state.mediaType)
-            ? (_animeProvider ?? StreamingConfig.defaultAnimeProvider)
-            : (_movieProvider ?? StreamingConfig.defaultMovieProvider));
-      }
-    }
-
-    _streamingCubit.loadLinks(
-      episodeId: widget.state.episodeId!,
-      mediaId: widget.state.mediaId!,
-      server: server,
-      provider: provider,
-      preferredServer: _preferredServer,
-    );
+    context.read<VideoPlayerBloc>().add(SwitchServer(server));
   }
 
   @override
@@ -354,14 +282,7 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
     _videoService.detachCallbacks();
 
     // Cancel any pending network requests before closing
-    _streamingCubit.cancelPendingRequests();
-
-    // Add a small delay before closing the cubit to prevent race conditions
-    Future.microtask(() {
-      if (!_streamingCubit.isClosed) {
-        _streamingCubit.close();
-      }
-    });
+    context.read<VideoPlayerBloc>().cancelPendingRequests();
 
     super.dispose();
   }
@@ -416,12 +337,14 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
           if (currentIndex != -1 && currentIndex < episodes.length - 1) {
             final nextEpisode = episodes[currentIndex + 1];
             // Trigger preload without playing
-            _streamingCubit.preloadLinks(
-              episodeId: nextEpisode.id,
-              mediaId: widget.state.mediaId!,
-              provider: movie.provider ?? _movieProvider,
-              preferredServer: _preferredServer,
-            );
+            context.read<VideoPlayerBloc>().add(
+                  PreloadNextEpisode(
+                    episodeId: nextEpisode.id,
+                    mediaId: widget.state.mediaId!,
+                    provider: movie.provider ?? _movieProvider,
+                    preferredServer: _preferredServer,
+                  ),
+                );
           }
         }
       }
@@ -590,16 +513,14 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
       },
       builder: (context, isConnected) {
         final isOffline = !isConnected;
-        return BlocProvider.value(
-          value: _streamingCubit,
-          child: Material(
-            color: kBgColor,
-            child: SizedBox(
-              height: widget.height,
-              width: MediaQuery.of(context).size.width,
-              child: Column(
-                children: [
-                  // Video Area
+        return Material(
+          color: kBgColor,
+          child: SizedBox(
+            height: widget.height,
+            width: MediaQuery.of(context).size.width,
+            child: Column(
+              children: [
+                // Video Area
                   if (widget.isMini)
                     Expanded(child: _buildVideoPlayer())
                   else
@@ -702,8 +623,7 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
                 ],
               ),
             ),
-          ),
-        );
+          );
       },
     );
   }
@@ -792,26 +712,32 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
   }
 
   Widget _buildVideoPlayer() {
-    return BlocConsumer<StreamingCubit, StreamingState>(
+    return BlocConsumer<VideoPlayerBloc, VideoPlayerState>(
       buildWhen: (previous, current) {
-        // Optimize rebuilds
-        if (previous.runtimeType != current.runtimeType) return true;
-        if (previous is StreamingLoaded && current is StreamingLoaded) {
-          // Only rebuild if links or server changed, not just subtitles or internal flags
-          return previous.selectedServer != current.selectedServer ||
-              previous.links != current.links;
+        // Optimize rebuilds - check streamingState
+        final prevStreaming = previous.streamingState;
+        final currStreaming = current.streamingState;
+        if (prevStreaming.runtimeType != currStreaming.runtimeType) return true;
+        if (prevStreaming is StreamingLoaded &&
+            currStreaming is StreamingLoaded) {
+          return prevStreaming.selectedServer != currStreaming.selectedServer ||
+              prevStreaming.links != currStreaming.links;
         }
         return true;
       },
+      listenWhen: (previous, current) {
+        return previous.streamingState != current.streamingState;
+      },
       listener: (context, state) async {
-        // Error is now handled in the builder, no need for SnackBar
-        // if (state is StreamingError && context.mounted) { ... }
-
-        if (state is StreamingLoaded && state.links.isNotEmpty) {
-          _onStreamingLoaded(state);
+        final streamingState = state.streamingState;
+        if (streamingState is StreamingLoaded &&
+            streamingState.links.isNotEmpty) {
+          _onStreamingLoaded(streamingState);
         }
       },
       builder: (context, state) {
+        final streamingState = state.streamingState;
+
         // H-002: Playback Error UI
         if (_playbackError != null) {
           return Stack(
@@ -830,9 +756,9 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
           );
         }
 
-        if (state is StreamingLoading ||
-            state is StreamingInitial ||
-            state is StreamingError) {
+        if (streamingState is StreamingLoading ||
+            streamingState is StreamingInitial ||
+            streamingState is StreamingError) {
           return Stack(
             children: [
               if (widget.state.posterUrl != null)
@@ -843,17 +769,17 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
                   height: double.infinity,
                 ),
               Container(color: Colors.black54),
-              if (state is StreamingLoading)
+              if (streamingState is StreamingLoading)
                 VideoPlayerShimmer(isMini: widget.isMini),
-              if (state is StreamingError)
+              if (streamingState is StreamingError)
                 VideoErrorWidget(
-                  message: state.message,
+                  message: streamingState.message,
                   onRetry: _loadVideo,
                   onClose: () =>
                       context.read<VideoPlayerBloc>().add(CloseVideo()),
                 ),
               // Close button for loading state (mini player mode)
-              if (state is StreamingLoading && widget.isMini)
+              if (streamingState is StreamingLoading && widget.isMini)
                 Positioned(
                   top: 8,
                   right: 8,
@@ -881,7 +807,8 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
         }
 
         // Full Player with Custom Controls
-        final streamingState = state is StreamingLoaded ? state : null;
+        final loadedState =
+            streamingState is StreamingLoaded ? streamingState : null;
 
         return FullPlayerContent(
           state: widget.state,
@@ -890,29 +817,17 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
           miniplayerController: widget.miniplayerController,
           showCountdown: _showCountdown,
           nextEpisodeTitle: _nextEpisodeTitle,
-          availableServers: streamingState?.availableServers ?? [],
-          currentServer: streamingState?.selectedServer,
-          availableQualities: streamingState?.links ?? [],
+          availableServers: state.availableServers ??
+              (loadedState?.availableServers ?? []),
+          currentServer: loadedState?.selectedServer,
+          availableQualities: loadedState?.links ?? [],
           currentQuality: _videoService.player.state.playlist.medias.firstOrNull
               ?.uri, // This might need a better way to track current quality
           onServerSelected: (server) {
-            _streamingCubit.selectServer(
-              episodeId: widget.state.episodeId!,
-              mediaId: widget.state.mediaId!,
-              server: server,
-              provider: MediaTypeHelper.isAnime(widget.state.mediaType)
-                  ? _animeProvider
-                  : _movieProvider,
-              preferredServer: _preferredServer,
-            );
+            context.read<VideoPlayerBloc>().add(SwitchServer(server));
           },
           onQualitySelected: (link) {
-            _streamingCubit.changeQuality(link);
-            _videoService.playVideo(
-              url: link.url,
-              headers: link.headers,
-              isQualitySwitch: true,
-            );
+            context.read<VideoPlayerBloc>().add(SwitchQuality(link.quality));
           },
           onDownload: () {
             // Implement download logic or pass it from parent

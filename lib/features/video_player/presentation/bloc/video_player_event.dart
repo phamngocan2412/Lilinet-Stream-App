@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import '../../../../features/movies/domain/entities/movie.dart';
+import '../../../../features/settings/domain/entities/app_settings.dart';
 
 abstract class VideoPlayerEvent extends Equatable {
   const VideoPlayerEvent();
@@ -162,4 +163,21 @@ class SwitchQuality extends VideoPlayerEvent {
 
   @override
   List<Object?> get props => [quality];
+}
+
+class PreloadNextEpisode extends VideoPlayerEvent {
+  final String episodeId;
+  final String mediaId;
+  final String? provider;
+  final PreferredServer? preferredServer;
+
+  const PreloadNextEpisode({
+    required this.episodeId,
+    required this.mediaId,
+    this.provider,
+    this.preferredServer,
+  });
+
+  @override
+  List<Object?> get props => [episodeId, mediaId, provider, preferredServer];
 }
