@@ -6,6 +6,7 @@ import '../../domain/repositories/history_repository.dart';
 @LazySingleton(as: HistoryRepository)
 class HistoryRepositoryImpl implements HistoryRepository {
   final HistoryLocalDataSource _localDataSource;
+  bool _hasCleanedUp = false;
 
   HistoryRepositoryImpl(this._localDataSource);
 
@@ -28,8 +29,13 @@ class HistoryRepositoryImpl implements HistoryRepository {
       await _localDataSource.saveProgress(progress);
     }
 
-    // Also perform cleanup of old entries
-    await _localDataSource.cleanupOldEntries();
+    // Optimization: Only perform cleanup once per session to reduce DB overhead.
+    // Cleanup involves iterating through all entries which is expensive (O(N)).
+    // Doing this on every progress save (every 5s) causes unnecessary CPU/IO usage.
+    if (!_hasCleanedUp) {
+      _hasCleanedUp = true;
+      await _localDataSource.cleanupOldEntries();
+    }
   }
 
   @override
