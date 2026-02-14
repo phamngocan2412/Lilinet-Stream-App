@@ -109,8 +109,6 @@ import 'features/settings/domain/repositories/settings_repository.dart'
 import 'features/settings/domain/usecases/get_settings.dart' as _i709;
 import 'features/settings/domain/usecases/save_settings.dart' as _i156;
 import 'features/settings/presentation/bloc/settings_bloc.dart' as _i421;
-import 'features/video_player/presentation/bloc/comments/comments_cubit.dart'
-    as _i148;
 import 'features/video_player/presentation/bloc/video_player_bloc.dart'
     as _i692;
 import 'injection_container.dart' as _i809;
@@ -150,7 +148,6 @@ extension GetItInjectableX on _i174.GetIt {
       () => registerModule.cacheTimestampBox,
       preResolve: true,
     );
-    gh.singleton<_i148.CommentsCubit>(() => _i148.CommentsCubit());
     gh.lazySingleton<_i488.ErrorHandlerService>(
         () => _i488.ErrorHandlerService());
     gh.lazySingleton<_i1035.VideoSessionRepository>(
