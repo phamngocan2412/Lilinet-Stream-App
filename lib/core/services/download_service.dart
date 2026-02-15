@@ -32,6 +32,14 @@ class DownloadService {
     return true;
   }
 
+  String _sanitizeFileName(String fileName) {
+    // Replace characters that are invalid in filenames or could lead to path traversal
+    // Also remove control characters
+    return fileName
+        .replaceAll(RegExp(r'[<>:"/\\|?*]'), '_')
+        .replaceAll(RegExp(r'[\x00-\x1f]'), '');
+  }
+
   Future<void> downloadVideo({
     required String url,
     required String fileName,
@@ -51,8 +59,9 @@ class DownloadService {
     final notificationId = url.hashCode;
 
     try {
+      final sanitizedFileName = _sanitizeFileName(fileName);
       final dir = await getApplicationDocumentsDirectory();
-      final savePath = '${dir.path}/downloads/$fileName';
+      final savePath = '${dir.path}/downloads/$sanitizedFileName';
 
       // Create directory if not exists
       final saveDir = Directory('${dir.path}/downloads');
@@ -244,8 +253,9 @@ class DownloadService {
 
   Future<bool> isFileDownloaded(String fileName) async {
     try {
+      final sanitizedFileName = _sanitizeFileName(fileName);
       final dir = await getApplicationDocumentsDirectory();
-      final file = File('${dir.path}/downloads/$fileName');
+      final file = File('${dir.path}/downloads/$sanitizedFileName');
       return await file.exists();
     } catch (e) {
       return false;
@@ -254,8 +264,9 @@ class DownloadService {
 
   Future<String?> getDownloadedFilePath(String fileName) async {
     try {
+      final sanitizedFileName = _sanitizeFileName(fileName);
       final dir = await getApplicationDocumentsDirectory();
-      final path = '${dir.path}/downloads/$fileName';
+      final path = '${dir.path}/downloads/$sanitizedFileName';
       if (await File(path).exists()) {
         return path;
       }
