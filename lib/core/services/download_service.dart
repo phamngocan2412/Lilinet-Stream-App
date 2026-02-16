@@ -22,6 +22,14 @@ class DownloadService {
 
   ValueNotifier<double>? getProgressNotifier(String url) => _progressMap[url];
 
+  /// Sanitize filename to prevent path traversal attacks
+  String _sanitizeFileName(String fileName) {
+    // Replace dangerous characters with underscore
+    return fileName
+        .replaceAll(RegExp(r'[\\/|:*?"<>]'), '_')
+        .replaceAll('..', '__');
+  }
+
   Future<bool> _requestPermission() async {
     if (Platform.isAndroid) {
       // For Android 13+, notifications permission is enough for foreground service
@@ -52,7 +60,8 @@ class DownloadService {
 
     try {
       final dir = await getApplicationDocumentsDirectory();
-      final savePath = '${dir.path}/downloads/$fileName';
+      final safeFileName = _sanitizeFileName(fileName);
+      final savePath = '${dir.path}/downloads/$safeFileName';
 
       // Create directory if not exists
       final saveDir = Directory('${dir.path}/downloads');
@@ -71,7 +80,7 @@ class DownloadService {
       // Show initial notification
       await _notificationService.showDownloadProgress(
         notificationId: notificationId,
-        title: movieTitle ?? fileName,
+        title: movieTitle ?? safeFileName,
         progress: 0,
         maxProgress: 100,
       );
@@ -88,7 +97,7 @@ class DownloadService {
             if ((progress * 100).toInt() % 5 == 0) {
               _notificationService.showDownloadProgress(
                 notificationId: notificationId,
-                title: movieTitle ?? fileName,
+                title: movieTitle ?? safeFileName,
                 progress: (progress * 100).toInt(),
                 maxProgress: 100,
               );
@@ -107,7 +116,7 @@ class DownloadService {
       await _addToRegistry(
         DownloadedFile(
           id: url.hashCode.toString(),
-          fileName: fileName,
+          fileName: safeFileName,
           filePath: savePath,
           movieId: movieId,
           movieTitle: movieTitle,
@@ -125,7 +134,7 @@ class DownloadService {
       // Show completion notification
       await _notificationService.showDownloadComplete(
         title: movieTitle ?? 'Video',
-        fileName: fileName,
+        fileName: safeFileName,
         movieId: movieId,
       );
 
@@ -245,7 +254,8 @@ class DownloadService {
   Future<bool> isFileDownloaded(String fileName) async {
     try {
       final dir = await getApplicationDocumentsDirectory();
-      final file = File('${dir.path}/downloads/$fileName');
+      final safeFileName = _sanitizeFileName(fileName);
+      final file = File('${dir.path}/downloads/$safeFileName');
       return await file.exists();
     } catch (e) {
       return false;
@@ -255,7 +265,8 @@ class DownloadService {
   Future<String?> getDownloadedFilePath(String fileName) async {
     try {
       final dir = await getApplicationDocumentsDirectory();
-      final path = '${dir.path}/downloads/$fileName';
+      final safeFileName = _sanitizeFileName(fileName);
+      final path = '${dir.path}/downloads/$safeFileName';
       if (await File(path).exists()) {
         return path;
       }
