@@ -32,6 +32,13 @@ class DownloadService {
     return true;
   }
 
+  String _sanitizeFileName(String fileName) {
+    // Replace potentially dangerous characters with underscores
+    // This removes slashes, backslashes, and other special characters
+    // preserving only alphanumeric, spaces, dots, and hyphens.
+    return fileName.replaceAll(RegExp(r'[^\w\s\.-]'), '_');
+  }
+
   Future<void> downloadVideo({
     required String url,
     required String fileName,
@@ -52,7 +59,8 @@ class DownloadService {
 
     try {
       final dir = await getApplicationDocumentsDirectory();
-      final savePath = '${dir.path}/downloads/$fileName';
+      final safeFileName = _sanitizeFileName(fileName);
+      final savePath = '${dir.path}/downloads/$safeFileName';
 
       // Create directory if not exists
       final saveDir = Directory('${dir.path}/downloads');
@@ -245,7 +253,8 @@ class DownloadService {
   Future<bool> isFileDownloaded(String fileName) async {
     try {
       final dir = await getApplicationDocumentsDirectory();
-      final file = File('${dir.path}/downloads/$fileName');
+      final safeFileName = _sanitizeFileName(fileName);
+      final file = File('${dir.path}/downloads/$safeFileName');
       return await file.exists();
     } catch (e) {
       return false;
@@ -255,7 +264,8 @@ class DownloadService {
   Future<String?> getDownloadedFilePath(String fileName) async {
     try {
       final dir = await getApplicationDocumentsDirectory();
-      final path = '${dir.path}/downloads/$fileName';
+      final safeFileName = _sanitizeFileName(fileName);
+      final path = '${dir.path}/downloads/$safeFileName';
       if (await File(path).exists()) {
         return path;
       }
