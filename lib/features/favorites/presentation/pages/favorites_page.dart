@@ -125,7 +125,7 @@ class _FavoritesViewState extends State<FavoritesView> {
                     'All',
                     ...state.favorites.map((f) => f.folder).toSet().toList()
                       ..sort(),
-                  };
+                  }.toList();
 
                   // Filter favorites based on selected folder
                   final filteredFavorites = _selectedFolder == 'All'
