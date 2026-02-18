@@ -117,15 +117,11 @@ class _HomePageViewState extends State<HomePageView>
                 final devicePixelRatio = MediaQuery.of(
                   context,
                 ).devicePixelRatio;
-                // final horizontalListMemCacheWidth =
-                //     (130 * devicePixelRatio).toInt();
+                final categoryMemCacheWidth = (130 * devicePixelRatio).toInt();
 
                 final genres = AppConstants.genres;
-                // Optimization: Convert Iterables to Lists to avoid O(N) access in loops
                 final genreEntries = genres.entries.toList();
-                final categoryKeys = categories.keys.toList();
-                final categoryItemMemCacheWidth =
-                    (130 * devicePixelRatio).toInt();
+                final categoryEntries = categories.entries.toList();
 
                 if (trendingMovies.isEmpty && categories.isEmpty) {
                   return const Center(child: Text('No anime found'));
@@ -134,6 +130,9 @@ class _HomePageViewState extends State<HomePageView>
                 // Optimization: Calculate explicit cache width to avoid LayoutBuilder overhead
                 final trendingCacheWidth =
                     ((screenWidth - 32) * devicePixelRatio).toInt();
+
+                // Optimization: Pre-calculate category entries to avoid O(N) lookup in builder
+                final categoryEntries = categories.entries.toList();
 
                 return CustomScrollView(
                   slivers: [
@@ -199,14 +198,18 @@ class _HomePageViewState extends State<HomePageView>
                     const SliverToBoxAdapter(child: HomeTrendingSection()),
 
                     // Dynamic Categories
-                    if (categories.isNotEmpty)
+                    if (categoryEntries.isNotEmpty)
                       SliverList(
                         delegate: SliverChildBuilderDelegate((context, index) {
-                          final categoryName = categoryKeys[index];
-                          final categoryMovies = categories[categoryName]!;
+                          final entry = categoryEntries[index];
+                          final categoryName = entry.key;
+                          final categoryMovies = entry.value;
 
-                          // Optimization: Use pre-calculated cache width to avoid expensive context lookups in loop
-                          final memCacheWidth = categoryItemMemCacheWidth;
+                          // Optimization: Calculate explicit cache width (130px * pixelRatio)
+                          // to avoid LayoutBuilder overhead in MovieCard -> AppCachedImage
+                          // Uses devicePixelRatio from parent scope to avoid repetitive MediaQuery lookups
+                          final memCacheWidth =
+                              (130 * devicePixelRatio).toInt();
 
                           if (categoryMovies.isEmpty) {
                             return const SizedBox.shrink();
@@ -273,7 +276,7 @@ class _HomePageViewState extends State<HomePageView>
                                       margin: const EdgeInsets.only(right: 12),
                                       child: MovieCard(
                                         movie: movie,
-                                        memCacheWidth: memCacheWidth,
+                                        memCacheWidth: categoryMemCacheWidth,
                                         onTap: () => context.push(
                                           '/movie/${movie.id}?type=${movie.type}',
                                           extra: movie,
@@ -286,7 +289,7 @@ class _HomePageViewState extends State<HomePageView>
                               const SizedBox(height: 24),
                             ],
                           );
-                        }, childCount: categories.length),
+                        }, childCount: categoryEntries.length),
                       ),
 
                     // Dynamic bottom padding for miniplayer
