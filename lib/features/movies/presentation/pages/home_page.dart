@@ -117,10 +117,11 @@ class _HomePageViewState extends State<HomePageView>
                 final devicePixelRatio = MediaQuery.of(
                   context,
                 ).devicePixelRatio;
-                // final horizontalListMemCacheWidth =
-                //     (130 * devicePixelRatio).toInt();
+                final categoryMemCacheWidth = (130 * devicePixelRatio).toInt();
 
                 final genres = AppConstants.genres;
+                final genreEntries = genres.entries.toList();
+                final categoryEntries = categories.entries.toList();
 
                 if (trendingMovies.isEmpty && categories.isEmpty) {
                   return const Center(child: Text('No anime found'));
@@ -147,7 +148,7 @@ class _HomePageViewState extends State<HomePageView>
                           itemCount: genres.length,
                           separatorBuilder: (_, __) => const SizedBox(width: 8),
                           itemBuilder: (context, index) {
-                            final entry = genres.entries.elementAt(index);
+                            final entry = genreEntries[index];
                             return Center(
                               child: CategoryChip(
                                 label: entry.key,
@@ -197,7 +198,7 @@ class _HomePageViewState extends State<HomePageView>
                     const SliverToBoxAdapter(child: HomeTrendingSection()),
 
                     // Dynamic Categories
-                    if (categories.isNotEmpty)
+                    if (categoryEntries.isNotEmpty)
                       SliverList(
                         delegate: SliverChildBuilderDelegate((context, index) {
                           final entry = categoryEntries[index];
@@ -275,7 +276,7 @@ class _HomePageViewState extends State<HomePageView>
                                       margin: const EdgeInsets.only(right: 12),
                                       child: MovieCard(
                                         movie: movie,
-                                        memCacheWidth: memCacheWidth,
+                                        memCacheWidth: categoryMemCacheWidth,
                                         onTap: () => context.push(
                                           '/movie/${movie.id}?type=${movie.type}',
                                           extra: movie,
@@ -288,7 +289,7 @@ class _HomePageViewState extends State<HomePageView>
                               const SizedBox(height: 24),
                             ],
                           );
-                        }, childCount: categories.length),
+                        }, childCount: categoryEntries.length),
                       ),
 
                     // Dynamic bottom padding for miniplayer
