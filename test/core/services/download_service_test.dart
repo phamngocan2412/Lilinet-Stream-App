@@ -1,10 +1,9 @@
 import 'dart:io';
-
-import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:dio/dio.dart';
 import 'package:lilinet_app/core/services/download_service.dart';
 import 'package:lilinet_app/core/services/local_notification_service.dart';
-import 'package:mocktail/mocktail.dart';
 import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
@@ -13,12 +12,49 @@ class MockDio extends Mock implements Dio {}
 class MockLocalNotificationService extends Mock
     implements LocalNotificationService {}
 
-class MockPathProviderPlatform extends Fake
+class MockPathProviderPlatform extends Mock
     with MockPlatformInterfaceMixin
     implements PathProviderPlatform {
   @override
   Future<String?> getApplicationDocumentsPath() async {
-    return Directory.systemTemp.path;
+    return '/tmp/lilinet_test';
+  }
+
+  @override
+  Future<String?> getApplicationSupportPath() async {
+    return '/tmp/lilinet_test';
+  }
+
+  @override
+  Future<String?> getLibraryPath() async {
+    return '/tmp/lilinet_test';
+  }
+
+  @override
+  Future<String?> getTemporaryPath() async {
+    return '/tmp/lilinet_test';
+  }
+
+  @override
+  Future<String?> getExternalStoragePath() async {
+    return '/tmp/lilinet_test';
+  }
+
+  @override
+  Future<List<String>?> getExternalCachePaths() async {
+    return ['/tmp/lilinet_test'];
+  }
+
+  @override
+  Future<List<String>?> getExternalStoragePaths({
+    StorageDirectory? type,
+  }) async {
+    return ['/tmp/lilinet_test'];
+  }
+
+  @override
+  Future<String?> getDownloadsPath() async {
+    return '/tmp/lilinet_test';
   }
 }
 
@@ -30,16 +66,14 @@ void main() {
   setUp(() {
     mockDio = MockDio();
     mockNotificationService = MockLocalNotificationService();
+
     PathProviderPlatform.instance = MockPathProviderPlatform();
-    downloadService = DownloadService(mockDio, mockNotificationService);
 
-    // Mock successful download
-    when(() => mockDio.download(any(), any(),
-        onReceiveProgress:
-            any(named: 'onReceiveProgress'))).thenAnswer((_) async =>
-        Response(requestOptions: RequestOptions(path: ''), statusCode: 200));
+    // Create temp directory
+    Directory('/tmp/lilinet_test').createSync(recursive: true);
+    Directory('/tmp/lilinet_test/downloads').createSync(recursive: true);
 
-    // Mock notification service
+    // Setup default mocks
     when(() => mockNotificationService.requestPermissions())
         .thenAnswer((_) async => true);
     when(() => mockNotificationService.showDownloadProgress(
@@ -48,53 +82,71 @@ void main() {
           progress: any(named: 'progress'),
           maxProgress: any(named: 'maxProgress'),
         )).thenAnswer((_) async {});
+
+    when(() => mockNotificationService.cancelDownloadProgress(any()))
+        .thenAnswer((_) async {});
+
     when(() => mockNotificationService.showDownloadComplete(
           title: any(named: 'title'),
           fileName: any(named: 'fileName'),
           movieId: any(named: 'movieId'),
         )).thenAnswer((_) async {});
-    when(() => mockNotificationService.cancelDownloadProgress(any()))
-        .thenAnswer((_) async {});
+
+    downloadService = DownloadService(mockDio, mockNotificationService);
+  });
+
+  tearDown(() {
+    if (Directory('/tmp/lilinet_test').existsSync()) {
+      Directory('/tmp/lilinet_test').deleteSync(recursive: true);
+    }
   });
 
   test('downloadVideo sanitizes filename to prevent path traversal', () async {
-    const maliciousFileName = '../../evil.sh';
-    // We expect sanitization to replace '..' and '/' with '_'
-    // The exact replacement depends on implementation, but assuming typical replacement:
-    // ../../evil.sh -> .._.._evil.sh or ____evil.sh
-    // Let's assume we implement replacing / and \ with _ and .. with __
-    // For now, let's just check that it DOESN'T contain '..' or '/'
+    final fileName = '../../../etc/passwd';
+    final url = 'http://example.com/video.mp4';
 
-    // Actually, to make verify precise, let's define the expected sanitized name.
-    // If I replace / and \ with _, it becomes '.._.._evil.sh'.
-    // If I also replace '..', it might be different.
-    // A simple safe filename sanitization is replacing all non-alphanumeric (except . - _) with _.
-
-    // Let's assume the fix will sanitize `../../evil.sh` to `.._.._evil.sh` (just replacing slashes).
-    // Or better, `____evil.sh`.
-
-    // Sanitization replaces `/` with `_`. `..` remains but is no longer a path segment.
-    const expectedPathSuffix = '.._.._evil.sh';
+    // Capture the savePath passed to dio.download
+    String? capturedPath;
+    when(() => mockDio.download(any(), any(),
+            onReceiveProgress: any(named: 'onReceiveProgress')))
+        .thenAnswer((invocation) async {
+      capturedPath = invocation.positionalArguments[1] as String;
+      // create a dummy file so file size check works
+      File(capturedPath!).createSync(recursive: true);
+      return Response(
+          requestOptions: RequestOptions(path: ''), statusCode: 200);
+    });
 
     await downloadService.downloadVideo(
-      url: 'http://example.com/video.mp4',
-      fileName: maliciousFileName,
+      url: url,
+      fileName: fileName,
+      movieTitle: 'Test Movie',
     );
 
-    // Verify that Dio.download was called with a path that ends with the sanitized filename
-    // and definitely NOT with ../../
-    final captured = verify(() => mockDio.download(
-          any(),
-          captureAny(),
-          onReceiveProgress: any(named: 'onReceiveProgress'),
-        )).captured;
+    // Verify that the path is sanitized and does NOT contain traversal
+    expect(capturedPath, isNot(contains('/downloads/../../../etc/passwd')));
+    expect(capturedPath, contains('.._.._.._etc_passwd'));
+  });
 
-    final savedPath = captured.last as String;
+  test('isFileDownloaded sanitizes filename', () async {
+    // We create a file outside the downloads directory to simulate what a traversal would try to access
+    final outsideFile = File('/tmp/lilinet_test/outside.txt');
+    outsideFile.writeAsStringSync('secret');
 
-    // Ensure path traversal is mitigated
-    expect(savedPath.contains('../../'), isFalse,
-        reason: 'Path traversal detected!');
-    expect(savedPath.endsWith('/downloads/$expectedPathSuffix'), isTrue,
-        reason: 'Filename was not sanitized as expected');
+    // Attempt to access it via traversal
+    final result = await downloadService.isFileDownloaded('../outside.txt');
+
+    // Should be false because it should look for '.._outside.txt' in downloads
+    expect(result, isFalse);
+
+    // Verify it looks for sanitized path
+    // We can't verify what file.exists() was called on without mocking File, but we can verify behaviour.
+
+    // Create the sanitized file inside downloads
+    final sanitizedFile = File('/tmp/lilinet_test/downloads/.._outside.txt');
+    sanitizedFile.writeAsStringSync('safe');
+
+    final result2 = await downloadService.isFileDownloaded('../outside.txt');
+    expect(result2, isTrue);
   });
 }
