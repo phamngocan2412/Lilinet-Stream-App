@@ -18,18 +18,23 @@ void main() {
   setUp(() {
     mockSharedPreferences = MockSharedPreferences();
     mockSecureStorage = MockFlutterSecureStorage();
-    dataSource = SettingsLocalDataSource(mockSharedPreferences, mockSecureStorage);
+    dataSource =
+        SettingsLocalDataSource(mockSharedPreferences, mockSecureStorage);
   });
 
   const tPinCode = '1234';
-  final tAppSettings = const AppSettings().copyWith(pinCode: tPinCode, language: 'vi');
+  final tAppSettings =
+      const AppSettings().copyWith(pinCode: tPinCode, language: 'vi');
   final tAppSettingsNoPin = const AppSettings().copyWith(language: 'vi');
 
   group('saveSettings', () {
-    test('should save pinCode to SecureStorage and other settings to SharedPreferences', () async {
+    test(
+        'should save pinCode to SecureStorage and other settings to SharedPreferences',
+        () async {
       // Arrange
-      when(() => mockSecureStorage.write(key: any(named: 'key'), value: any(named: 'value')))
-          .thenAnswer((_) async {});
+      when(() => mockSecureStorage.write(
+          key: any(named: 'key'),
+          value: any(named: 'value'))).thenAnswer((_) async {});
       when(() => mockSharedPreferences.setString(any(), any()))
           .thenAnswer((_) async => true);
 
@@ -37,12 +42,17 @@ void main() {
       await dataSource.saveSettings(tAppSettings);
 
       // Assert
-      verify(() => mockSecureStorage.write(key: 'settings_pin_code', value: tPinCode)).called(1);
+      verify(() => mockSecureStorage.write(
+          key: 'settings_pin_code', value: tPinCode)).called(1);
 
-      final jsonCaptor = verify(() => mockSharedPreferences.setString('app_settings', captureAny())).captured.first as String;
+      final jsonCaptor = verify(() =>
+              mockSharedPreferences.setString('app_settings', captureAny()))
+          .captured
+          .first as String;
       final jsonMap = jsonDecode(jsonCaptor) as Map<String, dynamic>;
 
-      expect(jsonMap['pinCode'], isNull); // Verify PIN is NOT in SharedPreferences
+      expect(
+          jsonMap['pinCode'], isNull); // Verify PIN is NOT in SharedPreferences
       expect(jsonMap['language'], 'vi');
     });
 
@@ -57,7 +67,8 @@ void main() {
       await dataSource.saveSettings(tAppSettingsNoPin);
 
       // Assert
-      verify(() => mockSecureStorage.delete(key: 'settings_pin_code')).called(1);
+      verify(() => mockSecureStorage.delete(key: 'settings_pin_code'))
+          .called(1);
     });
   });
 
@@ -65,8 +76,10 @@ void main() {
     test('should return AppSettings with pinCode from SecureStorage', () async {
       // Arrange
       final jsonMap = tAppSettingsNoPin.toJson(); // No PIN in JSON
-      when(() => mockSharedPreferences.getString(any())).thenReturn(jsonEncode(jsonMap));
-      when(() => mockSecureStorage.read(key: any(named: 'key'))).thenAnswer((_) async => tPinCode);
+      when(() => mockSharedPreferences.getString(any()))
+          .thenReturn(jsonEncode(jsonMap));
+      when(() => mockSecureStorage.read(key: any(named: 'key')))
+          .thenAnswer((_) async => tPinCode);
 
       // Act
       final result = await dataSource.getSettings();
@@ -76,11 +89,14 @@ void main() {
       expect(result.language, 'vi');
     });
 
-    test('should return AppSettings without pinCode if not in SecureStorage', () async {
+    test('should return AppSettings without pinCode if not in SecureStorage',
+        () async {
       // Arrange
       final jsonMap = tAppSettingsNoPin.toJson();
-      when(() => mockSharedPreferences.getString(any())).thenReturn(jsonEncode(jsonMap));
-      when(() => mockSecureStorage.read(key: any(named: 'key'))).thenAnswer((_) async => null);
+      when(() => mockSharedPreferences.getString(any()))
+          .thenReturn(jsonEncode(jsonMap));
+      when(() => mockSecureStorage.read(key: any(named: 'key')))
+          .thenAnswer((_) async => null);
 
       // Act
       final result = await dataSource.getSettings();
