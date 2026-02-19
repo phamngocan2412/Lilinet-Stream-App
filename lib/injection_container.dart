@@ -2,6 +2,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -38,6 +39,17 @@ abstract class RegisterModule {
 
   @preResolve
   Future<SharedPreferences> get prefs => SharedPreferences.getInstance();
+
+  @lazySingleton
+  FlutterSecureStorage get secureStorage => const FlutterSecureStorage(
+        aOptions: AndroidOptions(
+          // ignore: deprecated_member_use
+          encryptedSharedPreferences: true,
+        ),
+        iOptions: IOSOptions(
+          accessibility: KeychainAccessibility.first_unlock,
+        ),
+      );
 
   @lazySingleton
   SupabaseClient get supabaseClient => SupabaseConfig.client;
