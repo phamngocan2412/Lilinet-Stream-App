@@ -1,6 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -64,4 +65,10 @@ abstract class RegisterModule {
   @lazySingleton
   MiniplayerHeightNotifier get miniplayerHeightNotifier =>
       MiniplayerHeightNotifier();
+
+  @lazySingleton
+  FlutterSecureStorage get secureStorage => const FlutterSecureStorage(
+        aOptions: AndroidOptions(),
+        iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
+      );
 }
