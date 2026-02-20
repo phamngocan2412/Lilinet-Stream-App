@@ -25,8 +25,10 @@ class DownloadService {
   /// Sanitize filename to prevent path traversal attacks
   String _sanitizeFileName(String fileName) {
     // Replace dangerous characters with underscore
+    // Also remove control characters
     return fileName
         .replaceAll(RegExp(r'[\\/|:*?"<>]'), '_')
+        .replaceAll(RegExp(r'[\x00-\x1f]'), '')
         .replaceAll('..', '__');
   }
 
@@ -38,14 +40,6 @@ class DownloadService {
       return await _notificationService.requestPermissions();
     }
     return true;
-  }
-
-  String _sanitizeFileName(String fileName) {
-    // Replace characters that are invalid in filenames or could lead to path traversal
-    // Also remove control characters
-    return fileName
-        .replaceAll(RegExp(r'[<>:"/\\|?*]'), '_')
-        .replaceAll(RegExp(r'[\x00-\x1f]'), '');
   }
 
   Future<void> downloadVideo({
@@ -65,9 +59,9 @@ class DownloadService {
 
     // Generate a stable ID for notification based on URL hash
     final notificationId = url.hashCode;
+    final sanitizedFileName = _sanitizeFileName(fileName);
 
     try {
-      final sanitizedFileName = _sanitizeFileName(fileName);
       final dir = await getApplicationDocumentsDirectory();
       final savePath = '${dir.path}/downloads/$sanitizedFileName';
 
@@ -88,7 +82,7 @@ class DownloadService {
       // Show initial notification
       await _notificationService.showDownloadProgress(
         notificationId: notificationId,
-        title: movieTitle ?? safeFileName,
+        title: movieTitle ?? sanitizedFileName,
         progress: 0,
         maxProgress: 100,
       );
@@ -105,7 +99,7 @@ class DownloadService {
             if ((progress * 100).toInt() % 5 == 0) {
               _notificationService.showDownloadProgress(
                 notificationId: notificationId,
-                title: movieTitle ?? safeFileName,
+                title: movieTitle ?? sanitizedFileName,
                 progress: (progress * 100).toInt(),
                 maxProgress: 100,
               );
@@ -124,7 +118,7 @@ class DownloadService {
       await _addToRegistry(
         DownloadedFile(
           id: url.hashCode.toString(),
-          fileName: safeFileName,
+          fileName: sanitizedFileName,
           filePath: savePath,
           movieId: movieId,
           movieTitle: movieTitle,
@@ -142,7 +136,7 @@ class DownloadService {
       // Show completion notification
       await _notificationService.showDownloadComplete(
         title: movieTitle ?? 'Video',
-        fileName: safeFileName,
+        fileName: sanitizedFileName,
         movieId: movieId,
       );
 

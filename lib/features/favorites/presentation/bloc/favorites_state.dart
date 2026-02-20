@@ -13,6 +13,7 @@ class FavoritesState with _$FavoritesState {
     required List<Favorite> favorites,
     @Default(1) int currentPage,
     @Default(true) bool hasMore,
+    @Default({}) Set<String> favoriteIds,
   }) = FavoritesLoaded;
 
   const factory FavoritesState.error({required String message}) =
@@ -21,6 +22,6 @@ class FavoritesState with _$FavoritesState {
 
 extension FavoritesLoadedX on FavoritesLoaded {
   bool isFavorite(String movieId) {
-    return favorites.any((f) => f.movieId == movieId);
+    return favoriteIds.contains(movieId);
   }
 }
