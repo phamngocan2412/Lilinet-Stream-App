@@ -9,3 +9,11 @@
 ## 2026-02-15 - Optimized Map Iteration in Builders
 **Learning:** Using `keys.elementAt(index)` inside a `ListView.builder` or `SliverChildBuilderDelegate` results in O(N^2) complexity because `elementAt` iterates from the start of the map for every item.
 **Action:** Convert map entries to a `List` before the builder (O(N)) and access by index (O(1)). Also hoist repeated `MediaQuery.of(context)` calls out of loops.
+
+## 2026-02-16 - Fixed-Extent List Optimization
+**Learning:** `ListView.builder` without `itemExtent` forces the layout of all items (or dynamic calculation) to determine scroll metrics, which is inefficient for fixed-size lists.
+**Action:** Always use `itemExtent` (or `prototypeItem` for variable content but fixed size) when list items have a known fixed main-axis size.
+
+## 2026-02-16 - Memory-Efficient Avatars
+**Learning:** `NetworkImage` loads and caches images at full resolution, wasting MBs of memory for small avatars.
+**Action:** Use `AppCachedImage` (wrapping `CachedNetworkImage`) with explicit `memCacheWidth`/`height` to decode and cache only the display size.
