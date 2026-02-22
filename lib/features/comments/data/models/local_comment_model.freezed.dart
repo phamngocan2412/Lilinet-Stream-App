@@ -12,7 +12,8 @@ part of 'local_comment_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 LocalCommentModel _$LocalCommentModelFromJson(Map<String, dynamic> json) {
   return _LocalCommentModel.fromJson(json);
@@ -66,26 +67,28 @@ mixin _$LocalCommentModel {
 /// @nodoc
 abstract class $LocalCommentModelCopyWith<$Res> {
   factory $LocalCommentModelCopyWith(
-          LocalCommentModel value, $Res Function(LocalCommentModel) then) =
-      _$LocalCommentModelCopyWithImpl<$Res, LocalCommentModel>;
+    LocalCommentModel value,
+    $Res Function(LocalCommentModel) then,
+  ) = _$LocalCommentModelCopyWithImpl<$Res, LocalCommentModel>;
   @useResult
-  $Res call(
-      {@HiveField(0) String localId,
-      @HiveField(1) String? serverId,
-      @HiveField(2) String videoId,
-      @HiveField(3) String content,
-      @HiveField(4) DateTime createdAt,
-      @HiveField(5) bool isSynced,
-      @HiveField(6) bool isGuest,
-      @HiveField(7) String? tempUserName,
-      @HiveField(8) String? tempAvatarUrl,
-      @HiveField(9) String? userId,
-      @HiveField(10) int likes,
-      @HiveField(11) int dislikes,
-      @HiveField(12) int repliesCount,
-      @HiveField(13) String? parentId,
-      @HiveField(14) List<DateTime> likeTimestamps,
-      @HiveField(15) String? mediaType});
+  $Res call({
+    @HiveField(0) String localId,
+    @HiveField(1) String? serverId,
+    @HiveField(2) String videoId,
+    @HiveField(3) String content,
+    @HiveField(4) DateTime createdAt,
+    @HiveField(5) bool isSynced,
+    @HiveField(6) bool isGuest,
+    @HiveField(7) String? tempUserName,
+    @HiveField(8) String? tempAvatarUrl,
+    @HiveField(9) String? userId,
+    @HiveField(10) int likes,
+    @HiveField(11) int dislikes,
+    @HiveField(12) int repliesCount,
+    @HiveField(13) String? parentId,
+    @HiveField(14) List<DateTime> likeTimestamps,
+    @HiveField(15) String? mediaType,
+  });
 }
 
 /// @nodoc
@@ -120,109 +123,114 @@ class _$LocalCommentModelCopyWithImpl<$Res, $Val extends LocalCommentModel>
     Object? likeTimestamps = null,
     Object? mediaType = freezed,
   }) {
-    return _then(_value.copyWith(
-      localId: null == localId
-          ? _value.localId
-          : localId // ignore: cast_nullable_to_non_nullable
-              as String,
-      serverId: freezed == serverId
-          ? _value.serverId
-          : serverId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      videoId: null == videoId
-          ? _value.videoId
-          : videoId // ignore: cast_nullable_to_non_nullable
-              as String,
-      content: null == content
-          ? _value.content
-          : content // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      isSynced: null == isSynced
-          ? _value.isSynced
-          : isSynced // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isGuest: null == isGuest
-          ? _value.isGuest
-          : isGuest // ignore: cast_nullable_to_non_nullable
-              as bool,
-      tempUserName: freezed == tempUserName
-          ? _value.tempUserName
-          : tempUserName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      tempAvatarUrl: freezed == tempAvatarUrl
-          ? _value.tempAvatarUrl
-          : tempAvatarUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      likes: null == likes
-          ? _value.likes
-          : likes // ignore: cast_nullable_to_non_nullable
-              as int,
-      dislikes: null == dislikes
-          ? _value.dislikes
-          : dislikes // ignore: cast_nullable_to_non_nullable
-              as int,
-      repliesCount: null == repliesCount
-          ? _value.repliesCount
-          : repliesCount // ignore: cast_nullable_to_non_nullable
-              as int,
-      parentId: freezed == parentId
-          ? _value.parentId
-          : parentId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      likeTimestamps: null == likeTimestamps
-          ? _value.likeTimestamps
-          : likeTimestamps // ignore: cast_nullable_to_non_nullable
-              as List<DateTime>,
-      mediaType: freezed == mediaType
-          ? _value.mediaType
-          : mediaType // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+        localId: null == localId
+            ? _value.localId
+            : localId // ignore: cast_nullable_to_non_nullable
+                as String,
+        serverId: freezed == serverId
+            ? _value.serverId
+            : serverId // ignore: cast_nullable_to_non_nullable
+                as String?,
+        videoId: null == videoId
+            ? _value.videoId
+            : videoId // ignore: cast_nullable_to_non_nullable
+                as String,
+        content: null == content
+            ? _value.content
+            : content // ignore: cast_nullable_to_non_nullable
+                as String,
+        createdAt: null == createdAt
+            ? _value.createdAt
+            : createdAt // ignore: cast_nullable_to_non_nullable
+                as DateTime,
+        isSynced: null == isSynced
+            ? _value.isSynced
+            : isSynced // ignore: cast_nullable_to_non_nullable
+                as bool,
+        isGuest: null == isGuest
+            ? _value.isGuest
+            : isGuest // ignore: cast_nullable_to_non_nullable
+                as bool,
+        tempUserName: freezed == tempUserName
+            ? _value.tempUserName
+            : tempUserName // ignore: cast_nullable_to_non_nullable
+                as String?,
+        tempAvatarUrl: freezed == tempAvatarUrl
+            ? _value.tempAvatarUrl
+            : tempAvatarUrl // ignore: cast_nullable_to_non_nullable
+                as String?,
+        userId: freezed == userId
+            ? _value.userId
+            : userId // ignore: cast_nullable_to_non_nullable
+                as String?,
+        likes: null == likes
+            ? _value.likes
+            : likes // ignore: cast_nullable_to_non_nullable
+                as int,
+        dislikes: null == dislikes
+            ? _value.dislikes
+            : dislikes // ignore: cast_nullable_to_non_nullable
+                as int,
+        repliesCount: null == repliesCount
+            ? _value.repliesCount
+            : repliesCount // ignore: cast_nullable_to_non_nullable
+                as int,
+        parentId: freezed == parentId
+            ? _value.parentId
+            : parentId // ignore: cast_nullable_to_non_nullable
+                as String?,
+        likeTimestamps: null == likeTimestamps
+            ? _value.likeTimestamps
+            : likeTimestamps // ignore: cast_nullable_to_non_nullable
+                as List<DateTime>,
+        mediaType: freezed == mediaType
+            ? _value.mediaType
+            : mediaType // ignore: cast_nullable_to_non_nullable
+                as String?,
+      ) as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$LocalCommentModelImplCopyWith<$Res>
     implements $LocalCommentModelCopyWith<$Res> {
-  factory _$$LocalCommentModelImplCopyWith(_$LocalCommentModelImpl value,
-          $Res Function(_$LocalCommentModelImpl) then) =
-      __$$LocalCommentModelImplCopyWithImpl<$Res>;
+  factory _$$LocalCommentModelImplCopyWith(
+    _$LocalCommentModelImpl value,
+    $Res Function(_$LocalCommentModelImpl) then,
+  ) = __$$LocalCommentModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {@HiveField(0) String localId,
-      @HiveField(1) String? serverId,
-      @HiveField(2) String videoId,
-      @HiveField(3) String content,
-      @HiveField(4) DateTime createdAt,
-      @HiveField(5) bool isSynced,
-      @HiveField(6) bool isGuest,
-      @HiveField(7) String? tempUserName,
-      @HiveField(8) String? tempAvatarUrl,
-      @HiveField(9) String? userId,
-      @HiveField(10) int likes,
-      @HiveField(11) int dislikes,
-      @HiveField(12) int repliesCount,
-      @HiveField(13) String? parentId,
-      @HiveField(14) List<DateTime> likeTimestamps,
-      @HiveField(15) String? mediaType});
+  $Res call({
+    @HiveField(0) String localId,
+    @HiveField(1) String? serverId,
+    @HiveField(2) String videoId,
+    @HiveField(3) String content,
+    @HiveField(4) DateTime createdAt,
+    @HiveField(5) bool isSynced,
+    @HiveField(6) bool isGuest,
+    @HiveField(7) String? tempUserName,
+    @HiveField(8) String? tempAvatarUrl,
+    @HiveField(9) String? userId,
+    @HiveField(10) int likes,
+    @HiveField(11) int dislikes,
+    @HiveField(12) int repliesCount,
+    @HiveField(13) String? parentId,
+    @HiveField(14) List<DateTime> likeTimestamps,
+    @HiveField(15) String? mediaType,
+  });
 }
 
 /// @nodoc
 class __$$LocalCommentModelImplCopyWithImpl<$Res>
     extends _$LocalCommentModelCopyWithImpl<$Res, _$LocalCommentModelImpl>
     implements _$$LocalCommentModelImplCopyWith<$Res> {
-  __$$LocalCommentModelImplCopyWithImpl(_$LocalCommentModelImpl _value,
-      $Res Function(_$LocalCommentModelImpl) _then)
-      : super(_value, _then);
+  __$$LocalCommentModelImplCopyWithImpl(
+    _$LocalCommentModelImpl _value,
+    $Res Function(_$LocalCommentModelImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of LocalCommentModel
   /// with the given fields replaced by the non-null parameter values.
@@ -246,96 +254,98 @@ class __$$LocalCommentModelImplCopyWithImpl<$Res>
     Object? likeTimestamps = null,
     Object? mediaType = freezed,
   }) {
-    return _then(_$LocalCommentModelImpl(
-      localId: null == localId
-          ? _value.localId
-          : localId // ignore: cast_nullable_to_non_nullable
-              as String,
-      serverId: freezed == serverId
-          ? _value.serverId
-          : serverId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      videoId: null == videoId
-          ? _value.videoId
-          : videoId // ignore: cast_nullable_to_non_nullable
-              as String,
-      content: null == content
-          ? _value.content
-          : content // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      isSynced: null == isSynced
-          ? _value.isSynced
-          : isSynced // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isGuest: null == isGuest
-          ? _value.isGuest
-          : isGuest // ignore: cast_nullable_to_non_nullable
-              as bool,
-      tempUserName: freezed == tempUserName
-          ? _value.tempUserName
-          : tempUserName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      tempAvatarUrl: freezed == tempAvatarUrl
-          ? _value.tempAvatarUrl
-          : tempAvatarUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      likes: null == likes
-          ? _value.likes
-          : likes // ignore: cast_nullable_to_non_nullable
-              as int,
-      dislikes: null == dislikes
-          ? _value.dislikes
-          : dislikes // ignore: cast_nullable_to_non_nullable
-              as int,
-      repliesCount: null == repliesCount
-          ? _value.repliesCount
-          : repliesCount // ignore: cast_nullable_to_non_nullable
-              as int,
-      parentId: freezed == parentId
-          ? _value.parentId
-          : parentId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      likeTimestamps: null == likeTimestamps
-          ? _value._likeTimestamps
-          : likeTimestamps // ignore: cast_nullable_to_non_nullable
-              as List<DateTime>,
-      mediaType: freezed == mediaType
-          ? _value.mediaType
-          : mediaType // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
+    return _then(
+      _$LocalCommentModelImpl(
+        localId: null == localId
+            ? _value.localId
+            : localId // ignore: cast_nullable_to_non_nullable
+                as String,
+        serverId: freezed == serverId
+            ? _value.serverId
+            : serverId // ignore: cast_nullable_to_non_nullable
+                as String?,
+        videoId: null == videoId
+            ? _value.videoId
+            : videoId // ignore: cast_nullable_to_non_nullable
+                as String,
+        content: null == content
+            ? _value.content
+            : content // ignore: cast_nullable_to_non_nullable
+                as String,
+        createdAt: null == createdAt
+            ? _value.createdAt
+            : createdAt // ignore: cast_nullable_to_non_nullable
+                as DateTime,
+        isSynced: null == isSynced
+            ? _value.isSynced
+            : isSynced // ignore: cast_nullable_to_non_nullable
+                as bool,
+        isGuest: null == isGuest
+            ? _value.isGuest
+            : isGuest // ignore: cast_nullable_to_non_nullable
+                as bool,
+        tempUserName: freezed == tempUserName
+            ? _value.tempUserName
+            : tempUserName // ignore: cast_nullable_to_non_nullable
+                as String?,
+        tempAvatarUrl: freezed == tempAvatarUrl
+            ? _value.tempAvatarUrl
+            : tempAvatarUrl // ignore: cast_nullable_to_non_nullable
+                as String?,
+        userId: freezed == userId
+            ? _value.userId
+            : userId // ignore: cast_nullable_to_non_nullable
+                as String?,
+        likes: null == likes
+            ? _value.likes
+            : likes // ignore: cast_nullable_to_non_nullable
+                as int,
+        dislikes: null == dislikes
+            ? _value.dislikes
+            : dislikes // ignore: cast_nullable_to_non_nullable
+                as int,
+        repliesCount: null == repliesCount
+            ? _value.repliesCount
+            : repliesCount // ignore: cast_nullable_to_non_nullable
+                as int,
+        parentId: freezed == parentId
+            ? _value.parentId
+            : parentId // ignore: cast_nullable_to_non_nullable
+                as String?,
+        likeTimestamps: null == likeTimestamps
+            ? _value._likeTimestamps
+            : likeTimestamps // ignore: cast_nullable_to_non_nullable
+                as List<DateTime>,
+        mediaType: freezed == mediaType
+            ? _value.mediaType
+            : mediaType // ignore: cast_nullable_to_non_nullable
+                as String?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$LocalCommentModelImpl extends _LocalCommentModel {
-  const _$LocalCommentModelImpl(
-      {@HiveField(0) required this.localId,
-      @HiveField(1) this.serverId,
-      @HiveField(2) required this.videoId,
-      @HiveField(3) required this.content,
-      @HiveField(4) required this.createdAt,
-      @HiveField(5) this.isSynced = false,
-      @HiveField(6) this.isGuest = false,
-      @HiveField(7) this.tempUserName,
-      @HiveField(8) this.tempAvatarUrl,
-      @HiveField(9) this.userId,
-      @HiveField(10) this.likes = 0,
-      @HiveField(11) this.dislikes = 0,
-      @HiveField(12) this.repliesCount = 0,
-      @HiveField(13) this.parentId,
-      @HiveField(14) final List<DateTime> likeTimestamps = const [],
-      @HiveField(15) this.mediaType})
-      : _likeTimestamps = likeTimestamps,
+  const _$LocalCommentModelImpl({
+    @HiveField(0) required this.localId,
+    @HiveField(1) this.serverId,
+    @HiveField(2) required this.videoId,
+    @HiveField(3) required this.content,
+    @HiveField(4) required this.createdAt,
+    @HiveField(5) this.isSynced = false,
+    @HiveField(6) this.isGuest = false,
+    @HiveField(7) this.tempUserName,
+    @HiveField(8) this.tempAvatarUrl,
+    @HiveField(9) this.userId,
+    @HiveField(10) this.likes = 0,
+    @HiveField(11) this.dislikes = 0,
+    @HiveField(12) this.repliesCount = 0,
+    @HiveField(13) this.parentId,
+    @HiveField(14) final List<DateTime> likeTimestamps = const [],
+    @HiveField(15) this.mediaType,
+  })  : _likeTimestamps = likeTimestamps,
         super._();
 
   factory _$LocalCommentModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -434,8 +444,10 @@ class _$LocalCommentModelImpl extends _LocalCommentModel {
                 other.repliesCount == repliesCount) &&
             (identical(other.parentId, parentId) ||
                 other.parentId == parentId) &&
-            const DeepCollectionEquality()
-                .equals(other._likeTimestamps, _likeTimestamps) &&
+            const DeepCollectionEquality().equals(
+              other._likeTimestamps,
+              _likeTimestamps,
+            ) &&
             (identical(other.mediaType, mediaType) ||
                 other.mediaType == mediaType));
   }
@@ -443,23 +455,24 @@ class _$LocalCommentModelImpl extends _LocalCommentModel {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      localId,
-      serverId,
-      videoId,
-      content,
-      createdAt,
-      isSynced,
-      isGuest,
-      tempUserName,
-      tempAvatarUrl,
-      userId,
-      likes,
-      dislikes,
-      repliesCount,
-      parentId,
-      const DeepCollectionEquality().hash(_likeTimestamps),
-      mediaType);
+        runtimeType,
+        localId,
+        serverId,
+        videoId,
+        content,
+        createdAt,
+        isSynced,
+        isGuest,
+        tempUserName,
+        tempAvatarUrl,
+        userId,
+        likes,
+        dislikes,
+        repliesCount,
+        parentId,
+        const DeepCollectionEquality().hash(_likeTimestamps),
+        mediaType,
+      );
 
   /// Create a copy of LocalCommentModel
   /// with the given fields replaced by the non-null parameter values.
@@ -468,34 +481,35 @@ class _$LocalCommentModelImpl extends _LocalCommentModel {
   @pragma('vm:prefer-inline')
   _$$LocalCommentModelImplCopyWith<_$LocalCommentModelImpl> get copyWith =>
       __$$LocalCommentModelImplCopyWithImpl<_$LocalCommentModelImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$LocalCommentModelImplToJson(
-      this,
-    );
+    return _$$LocalCommentModelImplToJson(this);
   }
 }
 
 abstract class _LocalCommentModel extends LocalCommentModel {
-  const factory _LocalCommentModel(
-      {@HiveField(0) required final String localId,
-      @HiveField(1) final String? serverId,
-      @HiveField(2) required final String videoId,
-      @HiveField(3) required final String content,
-      @HiveField(4) required final DateTime createdAt,
-      @HiveField(5) final bool isSynced,
-      @HiveField(6) final bool isGuest,
-      @HiveField(7) final String? tempUserName,
-      @HiveField(8) final String? tempAvatarUrl,
-      @HiveField(9) final String? userId,
-      @HiveField(10) final int likes,
-      @HiveField(11) final int dislikes,
-      @HiveField(12) final int repliesCount,
-      @HiveField(13) final String? parentId,
-      @HiveField(14) final List<DateTime> likeTimestamps,
-      @HiveField(15) final String? mediaType}) = _$LocalCommentModelImpl;
+  const factory _LocalCommentModel({
+    @HiveField(0) required final String localId,
+    @HiveField(1) final String? serverId,
+    @HiveField(2) required final String videoId,
+    @HiveField(3) required final String content,
+    @HiveField(4) required final DateTime createdAt,
+    @HiveField(5) final bool isSynced,
+    @HiveField(6) final bool isGuest,
+    @HiveField(7) final String? tempUserName,
+    @HiveField(8) final String? tempAvatarUrl,
+    @HiveField(9) final String? userId,
+    @HiveField(10) final int likes,
+    @HiveField(11) final int dislikes,
+    @HiveField(12) final int repliesCount,
+    @HiveField(13) final String? parentId,
+    @HiveField(14) final List<DateTime> likeTimestamps,
+    @HiveField(15) final String? mediaType,
+  }) = _$LocalCommentModelImpl;
   const _LocalCommentModel._() : super._();
 
   factory _LocalCommentModel.fromJson(Map<String, dynamic> json) =

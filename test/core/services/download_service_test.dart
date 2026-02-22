@@ -74,23 +74,29 @@ void main() {
     Directory('/tmp/lilinet_test/downloads').createSync(recursive: true);
 
     // Setup default mocks
-    when(() => mockNotificationService.requestPermissions())
-        .thenAnswer((_) async => true);
-    when(() => mockNotificationService.showDownloadProgress(
-          notificationId: any(named: 'notificationId'),
-          title: any(named: 'title'),
-          progress: any(named: 'progress'),
-          maxProgress: any(named: 'maxProgress'),
-        )).thenAnswer((_) async {});
+    when(
+      () => mockNotificationService.requestPermissions(),
+    ).thenAnswer((_) async => true);
+    when(
+      () => mockNotificationService.showDownloadProgress(
+        notificationId: any(named: 'notificationId'),
+        title: any(named: 'title'),
+        progress: any(named: 'progress'),
+        maxProgress: any(named: 'maxProgress'),
+      ),
+    ).thenAnswer((_) async {});
 
-    when(() => mockNotificationService.cancelDownloadProgress(any()))
-        .thenAnswer((_) async {});
+    when(
+      () => mockNotificationService.cancelDownloadProgress(any()),
+    ).thenAnswer((_) async {});
 
-    when(() => mockNotificationService.showDownloadComplete(
-          title: any(named: 'title'),
-          fileName: any(named: 'fileName'),
-          movieId: any(named: 'movieId'),
-        )).thenAnswer((_) async {});
+    when(
+      () => mockNotificationService.showDownloadComplete(
+        title: any(named: 'title'),
+        fileName: any(named: 'fileName'),
+        movieId: any(named: 'movieId'),
+      ),
+    ).thenAnswer((_) async {});
 
     downloadService = DownloadService(mockDio, mockNotificationService);
   });
@@ -107,14 +113,20 @@ void main() {
 
     // Capture the savePath passed to dio.download
     String? capturedPath;
-    when(() => mockDio.download(any(), any(),
-            onReceiveProgress: any(named: 'onReceiveProgress')))
-        .thenAnswer((invocation) async {
+    when(
+      () => mockDio.download(
+        any(),
+        any(),
+        onReceiveProgress: any(named: 'onReceiveProgress'),
+      ),
+    ).thenAnswer((invocation) async {
       capturedPath = invocation.positionalArguments[1] as String;
       // create a dummy file so file size check works
       File(capturedPath!).createSync(recursive: true);
       return Response(
-          requestOptions: RequestOptions(path: ''), statusCode: 200);
+        requestOptions: RequestOptions(path: ''),
+        statusCode: 200,
+      );
     });
 
     await downloadService.downloadVideo(

@@ -376,10 +376,16 @@ void main() {
 
         final errorLog = logs.firstWhere((log) => log.contains('Error:'));
 
-        expect(errorLog, isNot(contains('secret_token_123')),
-            reason: 'Should NOT leak token');
-        expect(errorLog, contains('REDACTED'),
-            reason: 'Should contain REDACTED');
+        expect(
+          errorLog,
+          isNot(contains('secret_token_123')),
+          reason: 'Should NOT leak token',
+        );
+        expect(
+          errorLog,
+          contains('REDACTED'),
+          reason: 'Should contain REDACTED',
+        );
 
         verify(() => handler.next(error)).called(1);
       });

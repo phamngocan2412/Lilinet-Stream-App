@@ -156,12 +156,16 @@ void main() {
       final movieCard = tester.widget<MovieCard>(movieCardFinder.first);
       final dpr = tester.view.devicePixelRatio;
       final expectedWidth = (130 * dpr).toInt();
-      expect(movieCard.memCacheWidth, expectedWidth,
-          reason: 'memCacheWidth should be optimized for 130 logical width');
+      expect(
+        movieCard.memCacheWidth,
+        expectedWidth,
+        reason: 'memCacheWidth should be optimized for 130 logical width',
+      );
     } else {
       // Mark as skipped/passed with warning if we can't verify the optimization due to test env issues
       debugPrint(
-          'WARNING: Could not find MovieCard to verify optimization. Skipping assertion.');
+        'WARNING: Could not find MovieCard to verify optimization. Skipping assertion.',
+      );
     }
 
     addTearDown(() {

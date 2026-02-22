@@ -214,17 +214,14 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
 
   Future<void> _loadSettings() async {
     final result = await getIt<SettingsRepository>().getSettings();
-    result.fold(
-      (l) {},
-      (settings) {
-        if (mounted) {
-          setState(() {
-            _autoPlayEnabled = settings.autoPlay;
-            _defaultQuality = settings.defaultQuality;
-          });
-        }
-      },
-    );
+    result.fold((l) {}, (settings) {
+      if (mounted) {
+        setState(() {
+          _autoPlayEnabled = settings.autoPlay;
+          _defaultQuality = settings.defaultQuality;
+        });
+      }
+    });
   }
 
   void _loadVideo() {
@@ -568,9 +565,7 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
                           widget.miniplayerController.animateToHeight(
                             state: PanelState.MIN,
                           );
-                          context.read<VideoPlayerBloc>().add(
-                                MinimizeVideo(),
-                              );
+                          context.read<VideoPlayerBloc>().add(MinimizeVideo());
                         },
                         onDownload: () {
                           final url = _videoService

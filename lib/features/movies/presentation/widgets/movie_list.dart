@@ -15,8 +15,8 @@ class MovieList extends StatelessWidget {
 
     // Calculate optimal cache width for grid items
     // (Screen Width - Padding) / Columns * Pixel Density
-    final screenWidth = MediaQuery.of(context).size.width;
-    final devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final devicePixelRatio = MediaQuery.devicePixelRatioOf(context);
     // Assuming 32px horizontal padding (16*2) and 12px spacing.
     // Being slightly generous to be safe.
     final cacheWidth =
