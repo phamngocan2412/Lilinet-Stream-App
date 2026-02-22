@@ -39,7 +39,8 @@ abstract class Comment with _$Comment {
       return now.difference(t).inHours <= 3;
     }).length;
 
-    final score = (likes * 1.5) +
+    final score =
+        (likes * 1.5) +
         (repliesCount * 2.5) +
         (recentLikesCount * 3) -
         (log(hoursSinceCreated + 1) * 2);

@@ -51,7 +51,7 @@ class AppCachedImage extends StatelessWidget {
 
     // Optimization: Skip LayoutBuilder if we already have explicit dimensions.
     // This reduces the widget tree depth and RenderObject overhead.
-    final devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
+    final devicePixelRatio = MediaQuery.devicePixelRatioOf(context);
 
     if (memCacheWidth != null || (width != null && width!.isFinite)) {
       int? optimalMemCacheWidth = memCacheWidth;
@@ -74,8 +74,8 @@ class AppCachedImage extends StatelessWidget {
         int? optimalMemCacheWidth;
 
         if (constraints.hasBoundedWidth) {
-          optimalMemCacheWidth =
-              (constraints.maxWidth * devicePixelRatio).toInt();
+          optimalMemCacheWidth = (constraints.maxWidth * devicePixelRatio)
+              .toInt();
         } else {
           optimalMemCacheWidth = 700; // Fallback
         }

@@ -80,8 +80,8 @@ class ContentSettingsSection extends StatelessWidget {
 
                 if (newPin != null) {
                   context.read<SettingsBloc>().add(
-                        UpdateSettings(settings.copyWith(pinCode: newPin)),
-                      );
+                    UpdateSettings(settings.copyWith(pinCode: newPin)),
+                  );
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('PIN updated successfully')),
                   );

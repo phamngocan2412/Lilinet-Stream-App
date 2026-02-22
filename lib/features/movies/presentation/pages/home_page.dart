@@ -106,8 +106,8 @@ class _HomePageViewState extends State<HomePageView>
                   message: message,
                   onRetry: () {
                     context.read<TrendingMoviesBloc>().add(
-                          const TrendingMoviesEvent.load(),
-                        );
+                      const TrendingMoviesEvent.load(),
+                    );
                   },
                 ),
               ),
@@ -130,9 +130,6 @@ class _HomePageViewState extends State<HomePageView>
                 // Optimization: Calculate explicit cache width to avoid LayoutBuilder overhead
                 final trendingCacheWidth =
                     ((screenWidth - 32) * devicePixelRatio).toInt();
-
-                // Optimization: Pre-calculate category entries to avoid O(N) lookup in builder
-                final categoryEntries = categories.entries.toList();
 
                 return CustomScrollView(
                   slivers: [
@@ -208,8 +205,8 @@ class _HomePageViewState extends State<HomePageView>
                           // Optimization: Calculate explicit cache width (130px * pixelRatio)
                           // to avoid LayoutBuilder overhead in MovieCard -> AppCachedImage
                           // Uses devicePixelRatio from parent scope to avoid repetitive MediaQuery lookups
-                          final memCacheWidth =
-                              (130 * devicePixelRatio).toInt();
+                          final memCacheWidth = (130 * devicePixelRatio)
+                              .toInt();
 
                           if (categoryMovies.isEmpty) {
                             return const SizedBox.shrink();
@@ -243,7 +240,8 @@ class _HomePageViewState extends State<HomePageView>
                                           lookupKey = 'Action';
                                         }
 
-                                        final genreId = genres[lookupKey] ??
+                                        final genreId =
+                                            genres[lookupKey] ??
                                             genres[categoryName
                                                 .replaceAll('Movies', '')
                                                 .trim()];

@@ -118,17 +118,17 @@ class RecentlyWatchedPage extends StatelessWidget {
                         child: InkWell(
                           onTap: () {
                             context.read<VideoPlayerBloc>().add(
-                                  PlayVideo(
-                                    episodeId: item.episodeId ?? item.mediaId,
-                                    mediaId: item.mediaId,
-                                    title: item.title,
-                                    posterUrl: item.posterUrl,
-                                    episodeTitle: item.episodeTitle,
-                                    startPosition: Duration(
-                                      seconds: item.positionSeconds,
-                                    ),
-                                  ),
-                                );
+                              PlayVideo(
+                                episodeId: item.episodeId ?? item.mediaId,
+                                mediaId: item.mediaId,
+                                title: item.title,
+                                posterUrl: item.posterUrl,
+                                episodeTitle: item.episodeTitle,
+                                startPosition: Duration(
+                                  seconds: item.positionSeconds,
+                                ),
+                              ),
+                            );
                           },
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -162,8 +162,8 @@ class RecentlyWatchedPage extends StatelessWidget {
                                         backgroundColor: Colors.transparent,
                                         valueColor:
                                             AlwaysStoppedAnimation<Color>(
-                                          theme.colorScheme.primary,
-                                        ),
+                                              theme.colorScheme.primary,
+                                            ),
                                       ),
                                     ),
                                   ],
@@ -182,8 +182,8 @@ class RecentlyWatchedPage extends StatelessWidget {
                                         overflow: TextOverflow.ellipsis,
                                         style: theme.textTheme.titleMedium
                                             ?.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                       ),
                                       if (item.episodeTitle != null) ...[
                                         const SizedBox(height: 4),
@@ -193,19 +193,21 @@ class RecentlyWatchedPage extends StatelessWidget {
                                           overflow: TextOverflow.ellipsis,
                                           style: theme.textTheme.bodyMedium
                                               ?.copyWith(
-                                            color: theme
-                                                .colorScheme.onSurfaceVariant,
-                                          ),
+                                                color: theme
+                                                    .colorScheme
+                                                    .onSurfaceVariant,
+                                              ),
                                         ),
                                       ],
                                       const SizedBox(height: 8),
                                       Text(
                                         'Stopped at $percentage%',
-                                        style:
-                                            theme.textTheme.bodySmall?.copyWith(
-                                          color: theme
-                                              .colorScheme.onSurfaceVariant,
-                                        ),
+                                        style: theme.textTheme.bodySmall
+                                            ?.copyWith(
+                                              color: theme
+                                                  .colorScheme
+                                                  .onSurfaceVariant,
+                                            ),
                                       ),
                                     ],
                                   ),
@@ -219,9 +221,9 @@ class RecentlyWatchedPage extends StatelessWidget {
                                 ),
                                 onPressed: () {
                                   context.read<HistoryBloc>().deleteProgress(
-                                        item.mediaId,
-                                        episodeId: item.episodeId,
-                                      );
+                                    item.mediaId,
+                                    episodeId: item.episodeId,
+                                  );
                                 },
                                 tooltip: AppLocalizations.of(context)!.delete,
                               ),

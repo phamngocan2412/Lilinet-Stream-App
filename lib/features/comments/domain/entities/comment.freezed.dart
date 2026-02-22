@@ -12,7 +12,8 @@ part of 'comment.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$Comment {
@@ -48,25 +49,26 @@ abstract class $CommentCopyWith<$Res> {
   factory $CommentCopyWith(Comment value, $Res Function(Comment) then) =
       _$CommentCopyWithImpl<$Res, Comment>;
   @useResult
-  $Res call(
-      {String id,
-      String videoId,
-      String userName,
-      String avatarUrl,
-      String content,
-      int likes,
-      int dislikes,
-      int repliesCount,
-      DateTime createdAt,
-      DateTime? updatedAt,
-      List<DateTime> likeTimestamps,
-      List<Comment> replies,
-      String? parentId,
-      String? mediaType,
-      bool isEdited,
-      bool isDeleted,
-      bool isPinned,
-      bool isSending});
+  $Res call({
+    String id,
+    String videoId,
+    String userName,
+    String avatarUrl,
+    String content,
+    int likes,
+    int dislikes,
+    int repliesCount,
+    DateTime createdAt,
+    DateTime? updatedAt,
+    List<DateTime> likeTimestamps,
+    List<Comment> replies,
+    String? parentId,
+    String? mediaType,
+    bool isEdited,
+    bool isDeleted,
+    bool isPinned,
+    bool isSending,
+  });
 }
 
 /// @nodoc
@@ -103,109 +105,114 @@ class _$CommentCopyWithImpl<$Res, $Val extends Comment>
     Object? isPinned = null,
     Object? isSending = null,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      videoId: null == videoId
-          ? _value.videoId
-          : videoId // ignore: cast_nullable_to_non_nullable
-              as String,
-      userName: null == userName
-          ? _value.userName
-          : userName // ignore: cast_nullable_to_non_nullable
-              as String,
-      avatarUrl: null == avatarUrl
-          ? _value.avatarUrl
-          : avatarUrl // ignore: cast_nullable_to_non_nullable
-              as String,
-      content: null == content
-          ? _value.content
-          : content // ignore: cast_nullable_to_non_nullable
-              as String,
-      likes: null == likes
-          ? _value.likes
-          : likes // ignore: cast_nullable_to_non_nullable
-              as int,
-      dislikes: null == dislikes
-          ? _value.dislikes
-          : dislikes // ignore: cast_nullable_to_non_nullable
-              as int,
-      repliesCount: null == repliesCount
-          ? _value.repliesCount
-          : repliesCount // ignore: cast_nullable_to_non_nullable
-              as int,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      updatedAt: freezed == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      likeTimestamps: null == likeTimestamps
-          ? _value.likeTimestamps
-          : likeTimestamps // ignore: cast_nullable_to_non_nullable
-              as List<DateTime>,
-      replies: null == replies
-          ? _value.replies
-          : replies // ignore: cast_nullable_to_non_nullable
-              as List<Comment>,
-      parentId: freezed == parentId
-          ? _value.parentId
-          : parentId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      mediaType: freezed == mediaType
-          ? _value.mediaType
-          : mediaType // ignore: cast_nullable_to_non_nullable
-              as String?,
-      isEdited: null == isEdited
-          ? _value.isEdited
-          : isEdited // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isDeleted: null == isDeleted
-          ? _value.isDeleted
-          : isDeleted // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isPinned: null == isPinned
-          ? _value.isPinned
-          : isPinned // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isSending: null == isSending
-          ? _value.isSending
-          : isSending // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            videoId: null == videoId
+                ? _value.videoId
+                : videoId // ignore: cast_nullable_to_non_nullable
+                      as String,
+            userName: null == userName
+                ? _value.userName
+                : userName // ignore: cast_nullable_to_non_nullable
+                      as String,
+            avatarUrl: null == avatarUrl
+                ? _value.avatarUrl
+                : avatarUrl // ignore: cast_nullable_to_non_nullable
+                      as String,
+            content: null == content
+                ? _value.content
+                : content // ignore: cast_nullable_to_non_nullable
+                      as String,
+            likes: null == likes
+                ? _value.likes
+                : likes // ignore: cast_nullable_to_non_nullable
+                      as int,
+            dislikes: null == dislikes
+                ? _value.dislikes
+                : dislikes // ignore: cast_nullable_to_non_nullable
+                      as int,
+            repliesCount: null == repliesCount
+                ? _value.repliesCount
+                : repliesCount // ignore: cast_nullable_to_non_nullable
+                      as int,
+            createdAt: null == createdAt
+                ? _value.createdAt
+                : createdAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            updatedAt: freezed == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+            likeTimestamps: null == likeTimestamps
+                ? _value.likeTimestamps
+                : likeTimestamps // ignore: cast_nullable_to_non_nullable
+                      as List<DateTime>,
+            replies: null == replies
+                ? _value.replies
+                : replies // ignore: cast_nullable_to_non_nullable
+                      as List<Comment>,
+            parentId: freezed == parentId
+                ? _value.parentId
+                : parentId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            mediaType: freezed == mediaType
+                ? _value.mediaType
+                : mediaType // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            isEdited: null == isEdited
+                ? _value.isEdited
+                : isEdited // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            isDeleted: null == isDeleted
+                ? _value.isDeleted
+                : isDeleted // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            isPinned: null == isPinned
+                ? _value.isPinned
+                : isPinned // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            isSending: null == isSending
+                ? _value.isSending
+                : isSending // ignore: cast_nullable_to_non_nullable
+                      as bool,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$CommentImplCopyWith<$Res> implements $CommentCopyWith<$Res> {
   factory _$$CommentImplCopyWith(
-          _$CommentImpl value, $Res Function(_$CommentImpl) then) =
-      __$$CommentImplCopyWithImpl<$Res>;
+    _$CommentImpl value,
+    $Res Function(_$CommentImpl) then,
+  ) = __$$CommentImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String id,
-      String videoId,
-      String userName,
-      String avatarUrl,
-      String content,
-      int likes,
-      int dislikes,
-      int repliesCount,
-      DateTime createdAt,
-      DateTime? updatedAt,
-      List<DateTime> likeTimestamps,
-      List<Comment> replies,
-      String? parentId,
-      String? mediaType,
-      bool isEdited,
-      bool isDeleted,
-      bool isPinned,
-      bool isSending});
+  $Res call({
+    String id,
+    String videoId,
+    String userName,
+    String avatarUrl,
+    String content,
+    int likes,
+    int dislikes,
+    int repliesCount,
+    DateTime createdAt,
+    DateTime? updatedAt,
+    List<DateTime> likeTimestamps,
+    List<Comment> replies,
+    String? parentId,
+    String? mediaType,
+    bool isEdited,
+    bool isDeleted,
+    bool isPinned,
+    bool isSending,
+  });
 }
 
 /// @nodoc
@@ -213,8 +220,9 @@ class __$$CommentImplCopyWithImpl<$Res>
     extends _$CommentCopyWithImpl<$Res, _$CommentImpl>
     implements _$$CommentImplCopyWith<$Res> {
   __$$CommentImplCopyWithImpl(
-      _$CommentImpl _value, $Res Function(_$CommentImpl) _then)
-      : super(_value, _then);
+    _$CommentImpl _value,
+    $Res Function(_$CommentImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of Comment
   /// with the given fields replaced by the non-null parameter values.
@@ -240,108 +248,110 @@ class __$$CommentImplCopyWithImpl<$Res>
     Object? isPinned = null,
     Object? isSending = null,
   }) {
-    return _then(_$CommentImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      videoId: null == videoId
-          ? _value.videoId
-          : videoId // ignore: cast_nullable_to_non_nullable
-              as String,
-      userName: null == userName
-          ? _value.userName
-          : userName // ignore: cast_nullable_to_non_nullable
-              as String,
-      avatarUrl: null == avatarUrl
-          ? _value.avatarUrl
-          : avatarUrl // ignore: cast_nullable_to_non_nullable
-              as String,
-      content: null == content
-          ? _value.content
-          : content // ignore: cast_nullable_to_non_nullable
-              as String,
-      likes: null == likes
-          ? _value.likes
-          : likes // ignore: cast_nullable_to_non_nullable
-              as int,
-      dislikes: null == dislikes
-          ? _value.dislikes
-          : dislikes // ignore: cast_nullable_to_non_nullable
-              as int,
-      repliesCount: null == repliesCount
-          ? _value.repliesCount
-          : repliesCount // ignore: cast_nullable_to_non_nullable
-              as int,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      updatedAt: freezed == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      likeTimestamps: null == likeTimestamps
-          ? _value._likeTimestamps
-          : likeTimestamps // ignore: cast_nullable_to_non_nullable
-              as List<DateTime>,
-      replies: null == replies
-          ? _value._replies
-          : replies // ignore: cast_nullable_to_non_nullable
-              as List<Comment>,
-      parentId: freezed == parentId
-          ? _value.parentId
-          : parentId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      mediaType: freezed == mediaType
-          ? _value.mediaType
-          : mediaType // ignore: cast_nullable_to_non_nullable
-              as String?,
-      isEdited: null == isEdited
-          ? _value.isEdited
-          : isEdited // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isDeleted: null == isDeleted
-          ? _value.isDeleted
-          : isDeleted // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isPinned: null == isPinned
-          ? _value.isPinned
-          : isPinned // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isSending: null == isSending
-          ? _value.isSending
-          : isSending // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
+    return _then(
+      _$CommentImpl(
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        videoId: null == videoId
+            ? _value.videoId
+            : videoId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        userName: null == userName
+            ? _value.userName
+            : userName // ignore: cast_nullable_to_non_nullable
+                  as String,
+        avatarUrl: null == avatarUrl
+            ? _value.avatarUrl
+            : avatarUrl // ignore: cast_nullable_to_non_nullable
+                  as String,
+        content: null == content
+            ? _value.content
+            : content // ignore: cast_nullable_to_non_nullable
+                  as String,
+        likes: null == likes
+            ? _value.likes
+            : likes // ignore: cast_nullable_to_non_nullable
+                  as int,
+        dislikes: null == dislikes
+            ? _value.dislikes
+            : dislikes // ignore: cast_nullable_to_non_nullable
+                  as int,
+        repliesCount: null == repliesCount
+            ? _value.repliesCount
+            : repliesCount // ignore: cast_nullable_to_non_nullable
+                  as int,
+        createdAt: null == createdAt
+            ? _value.createdAt
+            : createdAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        updatedAt: freezed == updatedAt
+            ? _value.updatedAt
+            : updatedAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        likeTimestamps: null == likeTimestamps
+            ? _value._likeTimestamps
+            : likeTimestamps // ignore: cast_nullable_to_non_nullable
+                  as List<DateTime>,
+        replies: null == replies
+            ? _value._replies
+            : replies // ignore: cast_nullable_to_non_nullable
+                  as List<Comment>,
+        parentId: freezed == parentId
+            ? _value.parentId
+            : parentId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        mediaType: freezed == mediaType
+            ? _value.mediaType
+            : mediaType // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        isEdited: null == isEdited
+            ? _value.isEdited
+            : isEdited // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        isDeleted: null == isDeleted
+            ? _value.isDeleted
+            : isDeleted // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        isPinned: null == isPinned
+            ? _value.isPinned
+            : isPinned // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        isSending: null == isSending
+            ? _value.isSending
+            : isSending // ignore: cast_nullable_to_non_nullable
+                  as bool,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$CommentImpl extends _Comment {
-  const _$CommentImpl(
-      {required this.id,
-      required this.videoId,
-      required this.userName,
-      required this.avatarUrl,
-      required this.content,
-      this.likes = 0,
-      this.dislikes = 0,
-      this.repliesCount = 0,
-      required this.createdAt,
-      this.updatedAt,
-      final List<DateTime> likeTimestamps = const [],
-      final List<Comment> replies = const [],
-      this.parentId,
-      this.mediaType,
-      this.isEdited = false,
-      this.isDeleted = false,
-      this.isPinned = false,
-      this.isSending = false})
-      : _likeTimestamps = likeTimestamps,
-        _replies = replies,
-        super._();
+  const _$CommentImpl({
+    required this.id,
+    required this.videoId,
+    required this.userName,
+    required this.avatarUrl,
+    required this.content,
+    this.likes = 0,
+    this.dislikes = 0,
+    this.repliesCount = 0,
+    required this.createdAt,
+    this.updatedAt,
+    final List<DateTime> likeTimestamps = const [],
+    final List<Comment> replies = const [],
+    this.parentId,
+    this.mediaType,
+    this.isEdited = false,
+    this.isDeleted = false,
+    this.isPinned = false,
+    this.isSending = false,
+  }) : _likeTimestamps = likeTimestamps,
+       _replies = replies,
+       super._();
 
   @override
   final String id;
@@ -375,9 +385,9 @@ class _$CommentImpl extends _Comment {
     return EqualUnmodifiableListView(_likeTimestamps);
   }
 
-// For calculating recent likes
+  // For calculating recent likes
   final List<Comment> _replies;
-// For calculating recent likes
+  // For calculating recent likes
   @override
   @JsonKey()
   List<Comment> get replies {
@@ -390,7 +400,7 @@ class _$CommentImpl extends _Comment {
   final String? parentId;
   @override
   final String? mediaType;
-// 'Movie' or 'TV Series' for navigation
+  // 'Movie' or 'TV Series' for navigation
   @override
   @JsonKey()
   final bool isEdited;
@@ -430,8 +440,10 @@ class _$CommentImpl extends _Comment {
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
-            const DeepCollectionEquality()
-                .equals(other._likeTimestamps, _likeTimestamps) &&
+            const DeepCollectionEquality().equals(
+              other._likeTimestamps,
+              _likeTimestamps,
+            ) &&
             const DeepCollectionEquality().equals(other._replies, _replies) &&
             (identical(other.parentId, parentId) ||
                 other.parentId == parentId) &&
@@ -449,25 +461,26 @@ class _$CommentImpl extends _Comment {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      videoId,
-      userName,
-      avatarUrl,
-      content,
-      likes,
-      dislikes,
-      repliesCount,
-      createdAt,
-      updatedAt,
-      const DeepCollectionEquality().hash(_likeTimestamps),
-      const DeepCollectionEquality().hash(_replies),
-      parentId,
-      mediaType,
-      isEdited,
-      isDeleted,
-      isPinned,
-      isSending);
+    runtimeType,
+    id,
+    videoId,
+    userName,
+    avatarUrl,
+    content,
+    likes,
+    dislikes,
+    repliesCount,
+    createdAt,
+    updatedAt,
+    const DeepCollectionEquality().hash(_likeTimestamps),
+    const DeepCollectionEquality().hash(_replies),
+    parentId,
+    mediaType,
+    isEdited,
+    isDeleted,
+    isPinned,
+    isSending,
+  );
 
   /// Create a copy of Comment
   /// with the given fields replaced by the non-null parameter values.
@@ -479,25 +492,26 @@ class _$CommentImpl extends _Comment {
 }
 
 abstract class _Comment extends Comment {
-  const factory _Comment(
-      {required final String id,
-      required final String videoId,
-      required final String userName,
-      required final String avatarUrl,
-      required final String content,
-      final int likes,
-      final int dislikes,
-      final int repliesCount,
-      required final DateTime createdAt,
-      final DateTime? updatedAt,
-      final List<DateTime> likeTimestamps,
-      final List<Comment> replies,
-      final String? parentId,
-      final String? mediaType,
-      final bool isEdited,
-      final bool isDeleted,
-      final bool isPinned,
-      final bool isSending}) = _$CommentImpl;
+  const factory _Comment({
+    required final String id,
+    required final String videoId,
+    required final String userName,
+    required final String avatarUrl,
+    required final String content,
+    final int likes,
+    final int dislikes,
+    final int repliesCount,
+    required final DateTime createdAt,
+    final DateTime? updatedAt,
+    final List<DateTime> likeTimestamps,
+    final List<Comment> replies,
+    final String? parentId,
+    final String? mediaType,
+    final bool isEdited,
+    final bool isDeleted,
+    final bool isPinned,
+    final bool isSending,
+  }) = _$CommentImpl;
   const _Comment._() : super._();
 
   @override

@@ -214,17 +214,14 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
 
   Future<void> _loadSettings() async {
     final result = await getIt<SettingsRepository>().getSettings();
-    result.fold(
-      (l) {},
-      (settings) {
-        if (mounted) {
-          setState(() {
-            _autoPlayEnabled = settings.autoPlay;
-            _defaultQuality = settings.defaultQuality;
-          });
-        }
-      },
-    );
+    result.fold((l) {}, (settings) {
+      if (mounted) {
+        setState(() {
+          _autoPlayEnabled = settings.autoPlay;
+          _defaultQuality = settings.defaultQuality;
+        });
+      }
+    });
   }
 
   void _loadVideo() {
@@ -326,12 +323,12 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
             final nextEpisode = episodes[currentIndex + 1];
             // Trigger preload without playing
             context.read<VideoPlayerBloc>().add(
-                  PreloadNextEpisode(
-                    episodeId: nextEpisode.id,
-                    mediaId: widget.state.mediaId!,
-                    provider: movie.provider,
-                  ),
-                );
+              PreloadNextEpisode(
+                episodeId: nextEpisode.id,
+                mediaId: widget.state.mediaId!,
+                provider: movie.provider,
+              ),
+            );
           }
         }
       }
@@ -351,16 +348,16 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
       if (currentIndex > 0) {
         final prevEpisode = episodes[currentIndex - 1];
         context.read<VideoPlayerBloc>().add(
-              PlayVideo(
-                episodeId: prevEpisode.id,
-                mediaId: widget.state.mediaId!,
-                title: widget.state.title!,
-                posterUrl: widget.state.posterUrl,
-                episodeTitle: prevEpisode.title,
-                mediaType: widget.state.mediaType,
-                movie: movie,
-              ),
-            );
+          PlayVideo(
+            episodeId: prevEpisode.id,
+            mediaId: widget.state.mediaId!,
+            title: widget.state.title!,
+            posterUrl: widget.state.posterUrl,
+            episodeTitle: prevEpisode.title,
+            mediaType: widget.state.mediaType,
+            movie: movie,
+          ),
+        );
       }
     }
   }
@@ -378,16 +375,16 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
       if (currentIndex != -1 && currentIndex < episodes.length - 1) {
         final nextEpisode = episodes[currentIndex + 1];
         context.read<VideoPlayerBloc>().add(
-              PlayVideo(
-                episodeId: nextEpisode.id,
-                mediaId: widget.state.mediaId!,
-                title: widget.state.title!,
-                posterUrl: widget.state.posterUrl,
-                episodeTitle: nextEpisode.title,
-                mediaType: widget.state.mediaType,
-                movie: movie,
-              ),
-            );
+          PlayVideo(
+            episodeId: nextEpisode.id,
+            mediaId: widget.state.mediaId!,
+            title: widget.state.title!,
+            posterUrl: widget.state.posterUrl,
+            episodeTitle: nextEpisode.title,
+            mediaType: widget.state.mediaType,
+            movie: movie,
+          ),
+        );
       }
     }
   }
@@ -452,14 +449,14 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
       return;
     }
     context.read<VideoPlayerBloc>().add(
-          LoadVideo(
-            url: url,
-            subtitleUrl: subtitleUrl,
-            subtitleLang: subtitleLang,
-            headers: headers,
-            isQualitySwitch: isQualitySwitch,
-          ),
-        );
+      LoadVideo(
+        url: url,
+        subtitleUrl: subtitleUrl,
+        subtitleLang: subtitleLang,
+        headers: headers,
+        isQualitySwitch: isQualitySwitch,
+      ),
+    );
   }
 
   @override
@@ -568,13 +565,16 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
                           widget.miniplayerController.animateToHeight(
                             state: PanelState.MIN,
                           );
-                          context.read<VideoPlayerBloc>().add(
-                                MinimizeVideo(),
-                              );
+                          context.read<VideoPlayerBloc>().add(MinimizeVideo());
                         },
                         onDownload: () {
                           final url = _videoService
-                              .player.state.playlist.medias.firstOrNull?.uri;
+                              .player
+                              .state
+                              .playlist
+                              .medias
+                              .firstOrNull
+                              ?.uri;
                           if (url != null) {
                             final fileName =
                                 '${widget.state.title ?? "video"}_${widget.state.episodeTitle ?? "episode"}.mp4'
@@ -582,15 +582,15 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
                                     .replaceAll(' ', '_');
 
                             context.read<VideoPlayerBloc>().add(
-                                  DownloadCurrentVideo(
-                                    url: url,
-                                    fileName: fileName,
-                                    movieId: widget.state.mediaId,
-                                    movieTitle: widget.state.title,
-                                    episodeTitle: widget.state.episodeTitle,
-                                    posterUrl: widget.state.posterUrl,
-                                  ),
-                                );
+                              DownloadCurrentVideo(
+                                url: url,
+                                fileName: fileName,
+                                movieId: widget.state.mediaId,
+                                movieTitle: widget.state.title,
+                                episodeTitle: widget.state.episodeTitle,
+                                posterUrl: widget.state.posterUrl,
+                              ),
+                            );
 
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
@@ -647,7 +647,8 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
 
     // Check if we're on a slow connection (mobile data with poor signal)
     final networkMonitor = NetworkMonitorService();
-    final isLowBandwidth = !networkMonitor.isConnected ||
+    final isLowBandwidth =
+        !networkMonitor.isConnected ||
         networkMonitor.connectionType == ConnectivityResult.mobile ||
         networkMonitor.averageBandwidth < 500 * 1024; // < 500 KB/s
 
@@ -793,8 +794,9 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
         }
 
         // Full Player with Custom Controls
-        final loadedState =
-            streamingState is StreamingLoaded ? streamingState : null;
+        final loadedState = streamingState is StreamingLoaded
+            ? streamingState
+            : null;
 
         return FullPlayerContent(
           state: widget.state,
@@ -806,7 +808,12 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
           availableServers: state.availableServers ?? [],
           currentServer: loadedState?.selectedServer,
           availableQualities: loadedState?.links ?? [],
-          currentQuality: _videoService.player.state.playlist.medias.firstOrNull
+          currentQuality: _videoService
+              .player
+              .state
+              .playlist
+              .medias
+              .firstOrNull
               ?.uri, // This might need a better way to track current quality
           onServerSelected: (server) {
             context.read<VideoPlayerBloc>().add(SwitchServer(server));

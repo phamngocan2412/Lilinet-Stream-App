@@ -31,9 +31,9 @@ class CommentHeader extends StatelessWidget {
           Text(
             count.toString(),
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.w400,
-                  color: Colors.grey,
-                ),
+              fontWeight: FontWeight.w400,
+              color: Colors.grey,
+            ),
           ),
           const Spacer(),
           IconButton(

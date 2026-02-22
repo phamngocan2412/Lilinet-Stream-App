@@ -10,8 +10,9 @@ class SecureInterceptor extends Interceptor {
   final LogCallback _log;
 
   SecureInterceptor({LogCallback? logCallback})
-      : _log = logCallback ??
-            ((message, {name = ''}) => developer.log(message, name: name));
+    : _log =
+          logCallback ??
+          ((message, {name = ''}) => developer.log(message, name: name));
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
@@ -36,8 +37,9 @@ class SecureInterceptor extends Interceptor {
             final sanitized = SecurityUtils.sanitizeData(data);
             if (sanitized is Map || sanitized is List) {
               try {
-                final prettyJson =
-                    const JsonEncoder.withIndent('  ').convert(sanitized);
+                final prettyJson = const JsonEncoder.withIndent(
+                  '  ',
+                ).convert(sanitized);
                 _log('Request Body:\n$prettyJson', name: 'SecureLogger');
               } catch (e) {
                 _log('Request Body: $sanitized', name: 'SecureLogger');
@@ -58,10 +60,13 @@ class SecureInterceptor extends Interceptor {
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     if (kDebugMode) {
       try {
-        final sanitizedUri =
-            SecurityUtils.sanitizeUri(response.requestOptions.uri);
-        _log('Response: ${response.statusCode} $sanitizedUri',
-            name: 'SecureLogger');
+        final sanitizedUri = SecurityUtils.sanitizeUri(
+          response.requestOptions.uri,
+        );
+        _log(
+          'Response: ${response.statusCode} $sanitizedUri',
+          name: 'SecureLogger',
+        );
 
         // Log Headers (sanitized)
         final headers = response.headers.map;
@@ -85,17 +90,16 @@ class SecureInterceptor extends Interceptor {
   void onError(DioException err, ErrorInterceptorHandler handler) {
     if (kDebugMode) {
       try {
-        final sanitizedMessage =
-            SecurityUtils.sanitizeUrlInString(err.message ?? '');
-        _log(
-          'Error: ${err.error} $sanitizedMessage',
-          name: 'SecureLogger',
+        final sanitizedMessage = SecurityUtils.sanitizeUrlInString(
+          err.message ?? '',
         );
+        _log('Error: ${err.error} $sanitizedMessage', name: 'SecureLogger');
 
         final response = err.response;
         if (response != null) {
-          final sanitizedUri =
-              SecurityUtils.sanitizeUri(response.requestOptions.uri);
+          final sanitizedUri = SecurityUtils.sanitizeUri(
+            response.requestOptions.uri,
+          );
           _log(
             'Error Response: ${response.statusCode} $sanitizedUri',
             name: 'SecureLogger',

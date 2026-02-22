@@ -12,7 +12,8 @@ part of 'season_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 SeasonModel _$SeasonModelFromJson(Map<String, dynamic> json) {
   return _SeasonModel.fromJson(json);
@@ -39,12 +40,14 @@ mixin _$SeasonModel {
 /// @nodoc
 abstract class $SeasonModelCopyWith<$Res> {
   factory $SeasonModelCopyWith(
-          SeasonModel value, $Res Function(SeasonModel) then) =
-      _$SeasonModelCopyWithImpl<$Res, SeasonModel>;
+    SeasonModel value,
+    $Res Function(SeasonModel) then,
+  ) = _$SeasonModelCopyWithImpl<$Res, SeasonModel>;
   @useResult
-  $Res call(
-      {@HiveField(0) @StringToIntConverterRequired() int season,
-      @HiveField(1) List<EpisodeModel> episodes});
+  $Res call({
+    @HiveField(0) @StringToIntConverterRequired() int season,
+    @HiveField(1) List<EpisodeModel> episodes,
+  });
 }
 
 /// @nodoc
@@ -61,20 +64,20 @@ class _$SeasonModelCopyWithImpl<$Res, $Val extends SeasonModel>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? season = null,
-    Object? episodes = null,
-  }) {
-    return _then(_value.copyWith(
-      season: null == season
-          ? _value.season
-          : season // ignore: cast_nullable_to_non_nullable
-              as int,
-      episodes: null == episodes
-          ? _value.episodes
-          : episodes // ignore: cast_nullable_to_non_nullable
-              as List<EpisodeModel>,
-    ) as $Val);
+  $Res call({Object? season = null, Object? episodes = null}) {
+    return _then(
+      _value.copyWith(
+            season: null == season
+                ? _value.season
+                : season // ignore: cast_nullable_to_non_nullable
+                      as int,
+            episodes: null == episodes
+                ? _value.episodes
+                : episodes // ignore: cast_nullable_to_non_nullable
+                      as List<EpisodeModel>,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -82,13 +85,15 @@ class _$SeasonModelCopyWithImpl<$Res, $Val extends SeasonModel>
 abstract class _$$SeasonModelImplCopyWith<$Res>
     implements $SeasonModelCopyWith<$Res> {
   factory _$$SeasonModelImplCopyWith(
-          _$SeasonModelImpl value, $Res Function(_$SeasonModelImpl) then) =
-      __$$SeasonModelImplCopyWithImpl<$Res>;
+    _$SeasonModelImpl value,
+    $Res Function(_$SeasonModelImpl) then,
+  ) = __$$SeasonModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {@HiveField(0) @StringToIntConverterRequired() int season,
-      @HiveField(1) List<EpisodeModel> episodes});
+  $Res call({
+    @HiveField(0) @StringToIntConverterRequired() int season,
+    @HiveField(1) List<EpisodeModel> episodes,
+  });
 }
 
 /// @nodoc
@@ -96,37 +101,37 @@ class __$$SeasonModelImplCopyWithImpl<$Res>
     extends _$SeasonModelCopyWithImpl<$Res, _$SeasonModelImpl>
     implements _$$SeasonModelImplCopyWith<$Res> {
   __$$SeasonModelImplCopyWithImpl(
-      _$SeasonModelImpl _value, $Res Function(_$SeasonModelImpl) _then)
-      : super(_value, _then);
+    _$SeasonModelImpl _value,
+    $Res Function(_$SeasonModelImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of SeasonModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? season = null,
-    Object? episodes = null,
-  }) {
-    return _then(_$SeasonModelImpl(
-      season: null == season
-          ? _value.season
-          : season // ignore: cast_nullable_to_non_nullable
-              as int,
-      episodes: null == episodes
-          ? _value._episodes
-          : episodes // ignore: cast_nullable_to_non_nullable
-              as List<EpisodeModel>,
-    ));
+  $Res call({Object? season = null, Object? episodes = null}) {
+    return _then(
+      _$SeasonModelImpl(
+        season: null == season
+            ? _value.season
+            : season // ignore: cast_nullable_to_non_nullable
+                  as int,
+        episodes: null == episodes
+            ? _value._episodes
+            : episodes // ignore: cast_nullable_to_non_nullable
+                  as List<EpisodeModel>,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$SeasonModelImpl implements _SeasonModel {
-  const _$SeasonModelImpl(
-      {@HiveField(0) @StringToIntConverterRequired() required this.season,
-      @HiveField(1) final List<EpisodeModel> episodes = const []})
-      : _episodes = episodes;
+  const _$SeasonModelImpl({
+    @HiveField(0) @StringToIntConverterRequired() required this.season,
+    @HiveField(1) final List<EpisodeModel> episodes = const [],
+  }) : _episodes = episodes;
 
   factory _$SeasonModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$SeasonModelImplFromJson(json);
@@ -162,7 +167,10 @@ class _$SeasonModelImpl implements _SeasonModel {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType, season, const DeepCollectionEquality().hash(_episodes));
+    runtimeType,
+    season,
+    const DeepCollectionEquality().hash(_episodes),
+  );
 
   /// Create a copy of SeasonModel
   /// with the given fields replaced by the non-null parameter values.
@@ -174,16 +182,15 @@ class _$SeasonModelImpl implements _SeasonModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$SeasonModelImplToJson(
-      this,
-    );
+    return _$$SeasonModelImplToJson(this);
   }
 }
 
 abstract class _SeasonModel implements SeasonModel {
-  const factory _SeasonModel(
-      {@HiveField(0) @StringToIntConverterRequired() required final int season,
-      @HiveField(1) final List<EpisodeModel> episodes}) = _$SeasonModelImpl;
+  const factory _SeasonModel({
+    @HiveField(0) @StringToIntConverterRequired() required final int season,
+    @HiveField(1) final List<EpisodeModel> episodes,
+  }) = _$SeasonModelImpl;
 
   factory _SeasonModel.fromJson(Map<String, dynamic> json) =
       _$SeasonModelImpl.fromJson;

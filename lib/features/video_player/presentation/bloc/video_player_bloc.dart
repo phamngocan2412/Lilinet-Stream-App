@@ -119,7 +119,8 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
     Emitter<VideoPlayerState> emit,
   ) async {
     debugPrint(
-        '📦 VideoPlayerBloc: Preloading next episode ${event.episodeId}');
+      '📦 VideoPlayerBloc: Preloading next episode ${event.episodeId}',
+    );
 
     // Use default provider if not specified
     final provider = event.provider ?? StreamingConfig.defaultProvider;
@@ -233,12 +234,7 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
     emit(state.copyWith(streamingState: const StreamingState.loading()));
 
     // Fetch available servers in background (don't wait)
-    _fetchAvailableServers(
-      episodeId,
-      mediaId,
-      provider,
-      requestId: requestId,
-    );
+    _fetchAvailableServers(episodeId, mediaId, provider, requestId: requestId);
 
     // Get ordered servers list based on preference
     final servers = _getServersWithPreferred(preferredServer);
@@ -548,8 +544,9 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
         },
         (servers) {
           if (_isRequestStale(requestId)) return;
-          _cachedAvailableServers =
-              servers.isNotEmpty ? servers : defaultServers;
+          _cachedAvailableServers = servers.isNotEmpty
+              ? servers
+              : defaultServers;
           if (kDebugMode) {
             debugPrint('📡 Available servers: $_cachedAvailableServers');
           }
@@ -611,9 +608,7 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
           debugPrint('❌ Error playing video: $e');
           emit(
             state.copyWith(
-              streamingState: StreamingState.error(
-                'Error playing video: $e',
-              ),
+              streamingState: StreamingState.error('Error playing video: $e'),
             ),
           );
         }

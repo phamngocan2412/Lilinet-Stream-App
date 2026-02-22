@@ -36,9 +36,8 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
   void _handleSubmit() {
     if (_formKey.currentState!.validate()) {
       context.read<AuthBloc>().add(
-            ChangePasswordRequested(
-                newPassword: _passwordController.text.trim()),
-          );
+        ChangePasswordRequested(newPassword: _passwordController.text.trim()),
+      );
     }
   }
 
@@ -141,8 +140,9 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       TextButton(
-                        onPressed:
-                            isLoading ? null : () => Navigator.pop(context),
+                        onPressed: isLoading
+                            ? null
+                            : () => Navigator.pop(context),
                         child: Text(l10n.cancel),
                       ),
                       const SizedBox(width: 8),

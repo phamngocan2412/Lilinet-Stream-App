@@ -166,9 +166,9 @@ class _CommentBottomSheetViewState extends State<_CommentBottomSheetView> {
     if (_replyingToCommentId == null) return;
 
     context.read<CommentCubit>().addComment(
-          _replyController.text,
-          parentId: _replyingToCommentId,
-        );
+      _replyController.text,
+      parentId: _replyingToCommentId,
+    );
     _cancelReply();
   }
 
@@ -353,90 +353,96 @@ class _CommentBottomSheetViewState extends State<_CommentBottomSheetView> {
                           ],
                         ),
                       ),
-                      loaded: (
-                        comments,
-                        sortType,
-                        expandedReplies,
-                        isAdding,
-                        totalComments, // totalComments
-                        likedCommentIds,
-                        totalLikes, // totalLikes
-                      ) {
-                        if (comments.isEmpty) {
-                          return Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.all(24),
-                                  decoration: BoxDecoration(
-                                    color: theme.colorScheme.primary
-                                        .withOpacity(0.1),
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Icon(
-                                    Icons.chat_bubble_outline,
-                                    size: 48,
-                                    color: theme.colorScheme.primary,
-                                  ),
+                      loaded:
+                          (
+                            comments,
+                            sortType,
+                            expandedReplies,
+                            isAdding,
+                            totalComments, // totalComments
+                            likedCommentIds,
+                            totalLikes, // totalLikes
+                          ) {
+                            if (comments.isEmpty) {
+                              return Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.all(24),
+                                      decoration: BoxDecoration(
+                                        color: theme.colorScheme.primary
+                                            .withOpacity(0.1),
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Icon(
+                                        Icons.chat_bubble_outline,
+                                        size: 48,
+                                        color: theme.colorScheme.primary,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 24),
+                                    Text(
+                                      l10n.noComments,
+                                      style: theme.textTheme.titleLarge
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      l10n.beFirstToComment,
+                                      style: theme.textTheme.bodyMedium
+                                          ?.copyWith(
+                                            color: theme
+                                                .textTheme
+                                                .bodySmall
+                                                ?.color,
+                                          ),
+                                    ),
+                                  ],
                                 ),
-                                const SizedBox(height: 24),
-                                Text(
-                                  l10n.noComments,
-                                  style: theme.textTheme.titleLarge?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  l10n.beFirstToComment,
-                                  style: theme.textTheme.bodyMedium?.copyWith(
-                                    color: theme.textTheme.bodySmall?.color,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        }
+                              );
+                            }
 
-                        return ListView.builder(
-                          cacheExtent: 300,
-                          controller: scrollController,
-                          itemCount: comments.length,
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          itemBuilder: (context, index) {
-                            final comment = comments[index];
-                            final isExpanded = expandedReplies.containsKey(
-                              comment.id,
-                            );
+                            return ListView.builder(
+                              cacheExtent: 300,
+                              controller: scrollController,
+                              itemCount: comments.length,
+                              padding: const EdgeInsets.symmetric(vertical: 8),
+                              itemBuilder: (context, index) {
+                                final comment = comments[index];
+                                final isExpanded = expandedReplies.containsKey(
+                                  comment.id,
+                                );
 
-                            return CommentItem(
-                              comment: comment.copyWith(
-                                replies: isExpanded
-                                    ? (expandedReplies[comment.id] ?? [])
-                                    : [],
-                              ),
-                              onLike: () => _handleLike(comment.id),
-                              onDislike: () => _handleDislike(comment.id),
-                              onReply: () => _handleReply(
-                                comment.id,
-                                comment.userName,
-                              ),
-                              onToggleReplies: () => context
-                                  .read<CommentCubit>()
-                                  .toggleReplies(comment.id),
-                              isRepliesExpanded: isExpanded,
-                              isLiked: likedCommentIds.contains(comment.id),
-                              onReplyLike: _handleLike,
-                              onReplyReply: _handleReply,
-                              onLoadMoreReplies: () => context
-                                  .read<CommentCubit>()
-                                  .toggleReplies(comment.id),
-                              likedReplyIds: likedCommentIds,
+                                return CommentItem(
+                                  comment: comment.copyWith(
+                                    replies: isExpanded
+                                        ? (expandedReplies[comment.id] ?? [])
+                                        : [],
+                                  ),
+                                  onLike: () => _handleLike(comment.id),
+                                  onDislike: () => _handleDislike(comment.id),
+                                  onReply: () => _handleReply(
+                                    comment.id,
+                                    comment.userName,
+                                  ),
+                                  onToggleReplies: () => context
+                                      .read<CommentCubit>()
+                                      .toggleReplies(comment.id),
+                                  isRepliesExpanded: isExpanded,
+                                  isLiked: likedCommentIds.contains(comment.id),
+                                  onReplyLike: _handleLike,
+                                  onReplyReply: _handleReply,
+                                  onLoadMoreReplies: () => context
+                                      .read<CommentCubit>()
+                                      .toggleReplies(comment.id),
+                                  likedReplyIds: likedCommentIds,
+                                );
+                              },
                             );
                           },
-                        );
-                      },
                     );
                   },
                 ),
@@ -474,11 +480,13 @@ class _CommentBottomSheetViewState extends State<_CommentBottomSheetView> {
   /// Builds the avatar for the reply input using [AppCachedImage] with shimmer.
   Widget _buildReplyAvatar() {
     final user = Supabase.instance.client.auth.currentUser;
-    final userName = user?.userMetadata?['display_name'] as String? ??
+    final userName =
+        user?.userMetadata?['display_name'] as String? ??
         user?.userMetadata?['name'] as String? ??
         user?.email?.split('@').first ??
         'Anonymous';
-    final avatarUrl = user?.userMetadata?['avatar_url'] as String? ??
+    final avatarUrl =
+        user?.userMetadata?['avatar_url'] as String? ??
         'https://ui-avatars.com/api/?name=${Uri.encodeComponent(userName)}';
 
     final shimmerBase = Theme.of(context).brightness == Brightness.dark

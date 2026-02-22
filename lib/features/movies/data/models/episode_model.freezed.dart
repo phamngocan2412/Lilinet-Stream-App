@@ -12,7 +12,8 @@ part of 'episode_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 EpisodeModel _$EpisodeModelFromJson(Map<String, dynamic> json) {
   return _EpisodeModel.fromJson(json);
@@ -57,21 +58,23 @@ mixin _$EpisodeModel {
 /// @nodoc
 abstract class $EpisodeModelCopyWith<$Res> {
   factory $EpisodeModelCopyWith(
-          EpisodeModel value, $Res Function(EpisodeModel) then) =
-      _$EpisodeModelCopyWithImpl<$Res, EpisodeModel>;
+    EpisodeModel value,
+    $Res Function(EpisodeModel) then,
+  ) = _$EpisodeModelCopyWithImpl<$Res, EpisodeModel>;
   @useResult
-  $Res call(
-      {@HiveField(0) @AnyToStringConverter() String id,
-      @HiveField(1) String title,
-      @HiveField(2) @AnyToStringNullableConverter() String? description,
-      @HiveField(3)
-      @JsonKey(name: 'episode')
-      @StringToIntConverterRequired()
-      int number,
-      @HiveField(4) @StringToIntConverter() int? season,
-      @HiveField(5) @EpisodeImageConverter() String? image,
-      @HiveField(6) @AnyToStringNullableConverter() String? url,
-      @HiveField(7) DateTime? releaseDate});
+  $Res call({
+    @HiveField(0) @AnyToStringConverter() String id,
+    @HiveField(1) String title,
+    @HiveField(2) @AnyToStringNullableConverter() String? description,
+    @HiveField(3)
+    @JsonKey(name: 'episode')
+    @StringToIntConverterRequired()
+    int number,
+    @HiveField(4) @StringToIntConverter() int? season,
+    @HiveField(5) @EpisodeImageConverter() String? image,
+    @HiveField(6) @AnyToStringNullableConverter() String? url,
+    @HiveField(7) DateTime? releaseDate,
+  });
 }
 
 /// @nodoc
@@ -98,40 +101,43 @@ class _$EpisodeModelCopyWithImpl<$Res, $Val extends EpisodeModel>
     Object? url = freezed,
     Object? releaseDate = freezed,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      number: null == number
-          ? _value.number
-          : number // ignore: cast_nullable_to_non_nullable
-              as int,
-      season: freezed == season
-          ? _value.season
-          : season // ignore: cast_nullable_to_non_nullable
-              as int?,
-      image: freezed == image
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
-              as String?,
-      url: freezed == url
-          ? _value.url
-          : url // ignore: cast_nullable_to_non_nullable
-              as String?,
-      releaseDate: freezed == releaseDate
-          ? _value.releaseDate
-          : releaseDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            title: null == title
+                ? _value.title
+                : title // ignore: cast_nullable_to_non_nullable
+                      as String,
+            description: freezed == description
+                ? _value.description
+                : description // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            number: null == number
+                ? _value.number
+                : number // ignore: cast_nullable_to_non_nullable
+                      as int,
+            season: freezed == season
+                ? _value.season
+                : season // ignore: cast_nullable_to_non_nullable
+                      as int?,
+            image: freezed == image
+                ? _value.image
+                : image // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            url: freezed == url
+                ? _value.url
+                : url // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            releaseDate: freezed == releaseDate
+                ? _value.releaseDate
+                : releaseDate // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -139,22 +145,24 @@ class _$EpisodeModelCopyWithImpl<$Res, $Val extends EpisodeModel>
 abstract class _$$EpisodeModelImplCopyWith<$Res>
     implements $EpisodeModelCopyWith<$Res> {
   factory _$$EpisodeModelImplCopyWith(
-          _$EpisodeModelImpl value, $Res Function(_$EpisodeModelImpl) then) =
-      __$$EpisodeModelImplCopyWithImpl<$Res>;
+    _$EpisodeModelImpl value,
+    $Res Function(_$EpisodeModelImpl) then,
+  ) = __$$EpisodeModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {@HiveField(0) @AnyToStringConverter() String id,
-      @HiveField(1) String title,
-      @HiveField(2) @AnyToStringNullableConverter() String? description,
-      @HiveField(3)
-      @JsonKey(name: 'episode')
-      @StringToIntConverterRequired()
-      int number,
-      @HiveField(4) @StringToIntConverter() int? season,
-      @HiveField(5) @EpisodeImageConverter() String? image,
-      @HiveField(6) @AnyToStringNullableConverter() String? url,
-      @HiveField(7) DateTime? releaseDate});
+  $Res call({
+    @HiveField(0) @AnyToStringConverter() String id,
+    @HiveField(1) String title,
+    @HiveField(2) @AnyToStringNullableConverter() String? description,
+    @HiveField(3)
+    @JsonKey(name: 'episode')
+    @StringToIntConverterRequired()
+    int number,
+    @HiveField(4) @StringToIntConverter() int? season,
+    @HiveField(5) @EpisodeImageConverter() String? image,
+    @HiveField(6) @AnyToStringNullableConverter() String? url,
+    @HiveField(7) DateTime? releaseDate,
+  });
 }
 
 /// @nodoc
@@ -162,8 +170,9 @@ class __$$EpisodeModelImplCopyWithImpl<$Res>
     extends _$EpisodeModelCopyWithImpl<$Res, _$EpisodeModelImpl>
     implements _$$EpisodeModelImplCopyWith<$Res> {
   __$$EpisodeModelImplCopyWithImpl(
-      _$EpisodeModelImpl _value, $Res Function(_$EpisodeModelImpl) _then)
-      : super(_value, _then);
+    _$EpisodeModelImpl _value,
+    $Res Function(_$EpisodeModelImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of EpisodeModel
   /// with the given fields replaced by the non-null parameter values.
@@ -179,59 +188,61 @@ class __$$EpisodeModelImplCopyWithImpl<$Res>
     Object? url = freezed,
     Object? releaseDate = freezed,
   }) {
-    return _then(_$EpisodeModelImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      number: null == number
-          ? _value.number
-          : number // ignore: cast_nullable_to_non_nullable
-              as int,
-      season: freezed == season
-          ? _value.season
-          : season // ignore: cast_nullable_to_non_nullable
-              as int?,
-      image: freezed == image
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
-              as String?,
-      url: freezed == url
-          ? _value.url
-          : url // ignore: cast_nullable_to_non_nullable
-              as String?,
-      releaseDate: freezed == releaseDate
-          ? _value.releaseDate
-          : releaseDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-    ));
+    return _then(
+      _$EpisodeModelImpl(
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        title: null == title
+            ? _value.title
+            : title // ignore: cast_nullable_to_non_nullable
+                  as String,
+        description: freezed == description
+            ? _value.description
+            : description // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        number: null == number
+            ? _value.number
+            : number // ignore: cast_nullable_to_non_nullable
+                  as int,
+        season: freezed == season
+            ? _value.season
+            : season // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        image: freezed == image
+            ? _value.image
+            : image // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        url: freezed == url
+            ? _value.url
+            : url // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        releaseDate: freezed == releaseDate
+            ? _value.releaseDate
+            : releaseDate // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$EpisodeModelImpl extends _EpisodeModel {
-  const _$EpisodeModelImpl(
-      {@HiveField(0) @AnyToStringConverter() required this.id,
-      @HiveField(1) required this.title,
-      @HiveField(2) @AnyToStringNullableConverter() this.description,
-      @HiveField(3)
-      @JsonKey(name: 'episode')
-      @StringToIntConverterRequired()
-      required this.number,
-      @HiveField(4) @StringToIntConverter() this.season,
-      @HiveField(5) @EpisodeImageConverter() this.image,
-      @HiveField(6) @AnyToStringNullableConverter() this.url,
-      @HiveField(7) this.releaseDate})
-      : super._();
+  const _$EpisodeModelImpl({
+    @HiveField(0) @AnyToStringConverter() required this.id,
+    @HiveField(1) required this.title,
+    @HiveField(2) @AnyToStringNullableConverter() this.description,
+    @HiveField(3)
+    @JsonKey(name: 'episode')
+    @StringToIntConverterRequired()
+    required this.number,
+    @HiveField(4) @StringToIntConverter() this.season,
+    @HiveField(5) @EpisodeImageConverter() this.image,
+    @HiveField(6) @AnyToStringNullableConverter() this.url,
+    @HiveField(7) this.releaseDate,
+  }) : super._();
 
   factory _$EpisodeModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$EpisodeModelImplFromJson(json);
@@ -292,8 +303,17 @@ class _$EpisodeModelImpl extends _EpisodeModel {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, description, number,
-      season, image, url, releaseDate);
+  int get hashCode => Object.hash(
+    runtimeType,
+    id,
+    title,
+    description,
+    number,
+    season,
+    image,
+    url,
+    releaseDate,
+  );
 
   /// Create a copy of EpisodeModel
   /// with the given fields replaced by the non-null parameter values.
@@ -305,25 +325,24 @@ class _$EpisodeModelImpl extends _EpisodeModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$EpisodeModelImplToJson(
-      this,
-    );
+    return _$$EpisodeModelImplToJson(this);
   }
 }
 
 abstract class _EpisodeModel extends EpisodeModel {
-  const factory _EpisodeModel(
-      {@HiveField(0) @AnyToStringConverter() required final String id,
-      @HiveField(1) required final String title,
-      @HiveField(2) @AnyToStringNullableConverter() final String? description,
-      @HiveField(3)
-      @JsonKey(name: 'episode')
-      @StringToIntConverterRequired()
-      required final int number,
-      @HiveField(4) @StringToIntConverter() final int? season,
-      @HiveField(5) @EpisodeImageConverter() final String? image,
-      @HiveField(6) @AnyToStringNullableConverter() final String? url,
-      @HiveField(7) final DateTime? releaseDate}) = _$EpisodeModelImpl;
+  const factory _EpisodeModel({
+    @HiveField(0) @AnyToStringConverter() required final String id,
+    @HiveField(1) required final String title,
+    @HiveField(2) @AnyToStringNullableConverter() final String? description,
+    @HiveField(3)
+    @JsonKey(name: 'episode')
+    @StringToIntConverterRequired()
+    required final int number,
+    @HiveField(4) @StringToIntConverter() final int? season,
+    @HiveField(5) @EpisodeImageConverter() final String? image,
+    @HiveField(6) @AnyToStringNullableConverter() final String? url,
+    @HiveField(7) final DateTime? releaseDate,
+  }) = _$EpisodeModelImpl;
   const _EpisodeModel._() : super._();
 
   factory _EpisodeModel.fromJson(Map<String, dynamic> json) =

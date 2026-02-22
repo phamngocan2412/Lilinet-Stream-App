@@ -12,7 +12,8 @@ part of 'episode.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$Episode {
@@ -36,15 +37,16 @@ abstract class $EpisodeCopyWith<$Res> {
   factory $EpisodeCopyWith(Episode value, $Res Function(Episode) then) =
       _$EpisodeCopyWithImpl<$Res, Episode>;
   @useResult
-  $Res call(
-      {String id,
-      String title,
-      String? description,
-      int number,
-      int? season,
-      String? image,
-      String? url,
-      DateTime? releaseDate});
+  $Res call({
+    String id,
+    String title,
+    String? description,
+    int number,
+    int? season,
+    String? image,
+    String? url,
+    DateTime? releaseDate,
+  });
 }
 
 /// @nodoc
@@ -71,59 +73,64 @@ class _$EpisodeCopyWithImpl<$Res, $Val extends Episode>
     Object? url = freezed,
     Object? releaseDate = freezed,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      number: null == number
-          ? _value.number
-          : number // ignore: cast_nullable_to_non_nullable
-              as int,
-      season: freezed == season
-          ? _value.season
-          : season // ignore: cast_nullable_to_non_nullable
-              as int?,
-      image: freezed == image
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
-              as String?,
-      url: freezed == url
-          ? _value.url
-          : url // ignore: cast_nullable_to_non_nullable
-              as String?,
-      releaseDate: freezed == releaseDate
-          ? _value.releaseDate
-          : releaseDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            title: null == title
+                ? _value.title
+                : title // ignore: cast_nullable_to_non_nullable
+                      as String,
+            description: freezed == description
+                ? _value.description
+                : description // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            number: null == number
+                ? _value.number
+                : number // ignore: cast_nullable_to_non_nullable
+                      as int,
+            season: freezed == season
+                ? _value.season
+                : season // ignore: cast_nullable_to_non_nullable
+                      as int?,
+            image: freezed == image
+                ? _value.image
+                : image // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            url: freezed == url
+                ? _value.url
+                : url // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            releaseDate: freezed == releaseDate
+                ? _value.releaseDate
+                : releaseDate // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$EpisodeImplCopyWith<$Res> implements $EpisodeCopyWith<$Res> {
   factory _$$EpisodeImplCopyWith(
-          _$EpisodeImpl value, $Res Function(_$EpisodeImpl) then) =
-      __$$EpisodeImplCopyWithImpl<$Res>;
+    _$EpisodeImpl value,
+    $Res Function(_$EpisodeImpl) then,
+  ) = __$$EpisodeImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String id,
-      String title,
-      String? description,
-      int number,
-      int? season,
-      String? image,
-      String? url,
-      DateTime? releaseDate});
+  $Res call({
+    String id,
+    String title,
+    String? description,
+    int number,
+    int? season,
+    String? image,
+    String? url,
+    DateTime? releaseDate,
+  });
 }
 
 /// @nodoc
@@ -131,8 +138,9 @@ class __$$EpisodeImplCopyWithImpl<$Res>
     extends _$EpisodeCopyWithImpl<$Res, _$EpisodeImpl>
     implements _$$EpisodeImplCopyWith<$Res> {
   __$$EpisodeImplCopyWithImpl(
-      _$EpisodeImpl _value, $Res Function(_$EpisodeImpl) _then)
-      : super(_value, _then);
+    _$EpisodeImpl _value,
+    $Res Function(_$EpisodeImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of Episode
   /// with the given fields replaced by the non-null parameter values.
@@ -148,55 +156,58 @@ class __$$EpisodeImplCopyWithImpl<$Res>
     Object? url = freezed,
     Object? releaseDate = freezed,
   }) {
-    return _then(_$EpisodeImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      number: null == number
-          ? _value.number
-          : number // ignore: cast_nullable_to_non_nullable
-              as int,
-      season: freezed == season
-          ? _value.season
-          : season // ignore: cast_nullable_to_non_nullable
-              as int?,
-      image: freezed == image
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
-              as String?,
-      url: freezed == url
-          ? _value.url
-          : url // ignore: cast_nullable_to_non_nullable
-              as String?,
-      releaseDate: freezed == releaseDate
-          ? _value.releaseDate
-          : releaseDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-    ));
+    return _then(
+      _$EpisodeImpl(
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        title: null == title
+            ? _value.title
+            : title // ignore: cast_nullable_to_non_nullable
+                  as String,
+        description: freezed == description
+            ? _value.description
+            : description // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        number: null == number
+            ? _value.number
+            : number // ignore: cast_nullable_to_non_nullable
+                  as int,
+        season: freezed == season
+            ? _value.season
+            : season // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        image: freezed == image
+            ? _value.image
+            : image // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        url: freezed == url
+            ? _value.url
+            : url // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        releaseDate: freezed == releaseDate
+            ? _value.releaseDate
+            : releaseDate // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$EpisodeImpl implements _Episode {
-  const _$EpisodeImpl(
-      {required this.id,
-      required this.title,
-      this.description,
-      required this.number,
-      this.season,
-      this.image,
-      this.url,
-      this.releaseDate});
+  const _$EpisodeImpl({
+    required this.id,
+    required this.title,
+    this.description,
+    required this.number,
+    this.season,
+    this.image,
+    this.url,
+    this.releaseDate,
+  });
 
   @override
   final String id;
@@ -238,8 +249,17 @@ class _$EpisodeImpl implements _Episode {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, description, number,
-      season, image, url, releaseDate);
+  int get hashCode => Object.hash(
+    runtimeType,
+    id,
+    title,
+    description,
+    number,
+    season,
+    image,
+    url,
+    releaseDate,
+  );
 
   /// Create a copy of Episode
   /// with the given fields replaced by the non-null parameter values.
@@ -251,15 +271,16 @@ class _$EpisodeImpl implements _Episode {
 }
 
 abstract class _Episode implements Episode {
-  const factory _Episode(
-      {required final String id,
-      required final String title,
-      final String? description,
-      required final int number,
-      final int? season,
-      final String? image,
-      final String? url,
-      final DateTime? releaseDate}) = _$EpisodeImpl;
+  const factory _Episode({
+    required final String id,
+    required final String title,
+    final String? description,
+    required final int number,
+    final int? season,
+    final String? image,
+    final String? url,
+    final DateTime? releaseDate,
+  }) = _$EpisodeImpl;
 
   @override
   String get id;

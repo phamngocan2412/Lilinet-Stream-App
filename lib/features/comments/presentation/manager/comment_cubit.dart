@@ -122,8 +122,9 @@ class CommentCubit extends Cubit<CommentState> {
           (l) {}, // Silent fail - keep existing comments
           (newComments) {
             // Filter out replies - only show root comments (parentId is null)
-            final rootComments =
-                newComments.where((c) => c.parentId == null).toList();
+            final rootComments = newComments
+                .where((c) => c.parentId == null)
+                .toList();
             final sorted = _sortComments(rootComments, currentState.sortType);
 
             // Only emit if the comments are actually different
@@ -142,52 +143,56 @@ class CommentCubit extends Cubit<CommentState> {
   }
 
   void _subscribeToRealtime(String videoId) {
-    _realtimeSubscription = _repository.getCommentStream(videoId).listen(
-      (events) async {
-        debugPrint('🔔 Realtime comment update received, debouncing...');
+    _realtimeSubscription = _repository
+        .getCommentStream(videoId)
+        .listen(
+          (events) async {
+            debugPrint('🔔 Realtime comment update received, debouncing...');
 
-        // Cancel existing debounce timer
-        _realtimeDebounceTimer?.cancel();
+            // Cancel existing debounce timer
+            _realtimeDebounceTimer?.cancel();
 
-        // Debounce to prevent too many refreshes
-        _realtimeDebounceTimer = Timer(_realtimeDebounceDuration, () async {
-          debugPrint('🔔 Executing debounced refresh...');
+            // Debounce to prevent too many refreshes
+            _realtimeDebounceTimer = Timer(_realtimeDebounceDuration, () async {
+              debugPrint('🔔 Executing debounced refresh...');
 
-          // Only refresh if we still have the same videoId
-          if (_currentVideoId != videoId) return;
+              // Only refresh if we still have the same videoId
+              if (_currentVideoId != videoId) return;
 
-          final results = await Future.wait([
-            _getComments(videoId),
-            _repository.getLikedCommentIds(videoId),
-          ]);
+              final results = await Future.wait([
+                _getComments(videoId),
+                _repository.getLikedCommentIds(videoId),
+              ]);
 
-          if (isClosed) return;
+              if (isClosed) return;
 
-          final commentsResult = results[0] as Either<Failure, List<Comment>>;
+              final commentsResult =
+                  results[0] as Either<Failure, List<Comment>>;
 
-          state.mapOrNull(
-            loaded: (loadedState) {
-              commentsResult.fold((l) => null, (newComments) {
-                // Filter out replies - only show root comments (parentId is null)
-                final rootComments =
-                    newComments.where((c) => c.parentId == null).toList();
-                final sorted = _sortComments(
-                  rootComments,
-                  loadedState.sortType,
-                );
-                // Only emit if the comments are actually different
-                if (_commentsChanged(loadedState.comments, sorted)) {
-                  emit(loadedState.copyWith(comments: sorted));
-                }
-              });
-            },
-          );
-        });
-      },
-      onError: (error) {
-        debugPrint('Realtime subscription error: $error');
-      },
-    );
+              state.mapOrNull(
+                loaded: (loadedState) {
+                  commentsResult.fold((l) => null, (newComments) {
+                    // Filter out replies - only show root comments (parentId is null)
+                    final rootComments = newComments
+                        .where((c) => c.parentId == null)
+                        .toList();
+                    final sorted = _sortComments(
+                      rootComments,
+                      loadedState.sortType,
+                    );
+                    // Only emit if the comments are actually different
+                    if (_commentsChanged(loadedState.comments, sorted)) {
+                      emit(loadedState.copyWith(comments: sorted));
+                    }
+                  });
+                },
+              );
+            });
+          },
+          onError: (error) {
+            debugPrint('Realtime subscription error: $error');
+          },
+        );
   }
 
   bool _commentsChanged(List<Comment> old, List<Comment> newComments) {
@@ -327,8 +332,9 @@ class CommentCubit extends Cubit<CommentState> {
               currentState.expandedReplies,
             );
             cleanedReplies.forEach((key, replies) {
-              cleanedReplies[key] =
-                  replies.where((r) => r.id != tempId).toList();
+              cleanedReplies[key] = replies
+                  .where((r) => r.id != tempId)
+                  .toList();
             });
             emit(
               currentState.copyWith(
@@ -351,8 +357,9 @@ class CommentCubit extends Cubit<CommentState> {
               currentState.expandedReplies,
             );
             replacedReplies.forEach((key, replies) {
-              replacedReplies[key] =
-                  replies.map((r) => r.id == tempId ? newComment : r).toList();
+              replacedReplies[key] = replies
+                  .map((r) => r.id == tempId ? newComment : r)
+                  .toList();
             });
             emit(
               currentState.copyWith(
@@ -377,11 +384,13 @@ class CommentCubit extends Cubit<CommentState> {
     try {
       // Import would create circular dependency, use dynamic access
       final supabase = (Supabase.instance.client).auth.currentUser;
-      final name = supabase?.userMetadata?['display_name'] as String? ??
+      final name =
+          supabase?.userMetadata?['display_name'] as String? ??
           supabase?.userMetadata?['name'] as String? ??
           supabase?.email?.split('@').first ??
           'Anonymous';
-      final avatar = supabase?.userMetadata?['avatar_url'] as String? ??
+      final avatar =
+          supabase?.userMetadata?['avatar_url'] as String? ??
           'https://ui-avatars.com/api/?name=${Uri.encodeComponent(name)}';
       return {'userName': name, 'avatarUrl': avatar};
     } catch (_) {
@@ -394,18 +403,21 @@ class CommentCubit extends Cubit<CommentState> {
 
   /// Removes a comment by ID from the list (including nested replies).
   List<Comment> _removeCommentById(List<Comment> comments, String id) {
-    return comments.where((c) {
-      if (c.id == id) return false;
-      return true;
-    }).map((c) {
-      if (c.replies.any((r) => r.id == id)) {
-        return c.copyWith(
-          replies: c.replies.where((r) => r.id != id).toList(),
-          repliesCount: (c.repliesCount - 1).clamp(0, c.repliesCount),
-        );
-      }
-      return c;
-    }).toList();
+    return comments
+        .where((c) {
+          if (c.id == id) return false;
+          return true;
+        })
+        .map((c) {
+          if (c.replies.any((r) => r.id == id)) {
+            return c.copyWith(
+              replies: c.replies.where((r) => r.id != id).toList(),
+              repliesCount: (c.repliesCount - 1).clamp(0, c.repliesCount),
+            );
+          }
+          return c;
+        })
+        .toList();
   }
 
   /// Replaces a temp comment with the real server comment.
@@ -418,8 +430,9 @@ class CommentCubit extends Cubit<CommentState> {
       if (c.id == tempId) return replacement;
       if (c.replies.any((r) => r.id == tempId)) {
         return c.copyWith(
-          replies:
-              c.replies.map((r) => r.id == tempId ? replacement : r).toList(),
+          replies: c.replies
+              .map((r) => r.id == tempId ? replacement : r)
+              .toList(),
         );
       }
       return c;

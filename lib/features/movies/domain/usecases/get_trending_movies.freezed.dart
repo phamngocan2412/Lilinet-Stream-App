@@ -12,7 +12,8 @@ part of 'get_trending_movies.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$TrendingParams {
@@ -29,8 +30,9 @@ mixin _$TrendingParams {
 /// @nodoc
 abstract class $TrendingParamsCopyWith<$Res> {
   factory $TrendingParamsCopyWith(
-          TrendingParams value, $Res Function(TrendingParams) then) =
-      _$TrendingParamsCopyWithImpl<$Res, TrendingParams>;
+    TrendingParams value,
+    $Res Function(TrendingParams) then,
+  ) = _$TrendingParamsCopyWithImpl<$Res, TrendingParams>;
   @useResult
   $Res call({String type, int page});
 }
@@ -49,29 +51,30 @@ class _$TrendingParamsCopyWithImpl<$Res, $Val extends TrendingParams>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? type = null,
-    Object? page = null,
-  }) {
-    return _then(_value.copyWith(
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String,
-      page: null == page
-          ? _value.page
-          : page // ignore: cast_nullable_to_non_nullable
-              as int,
-    ) as $Val);
+  $Res call({Object? type = null, Object? page = null}) {
+    return _then(
+      _value.copyWith(
+            type: null == type
+                ? _value.type
+                : type // ignore: cast_nullable_to_non_nullable
+                      as String,
+            page: null == page
+                ? _value.page
+                : page // ignore: cast_nullable_to_non_nullable
+                      as int,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$TrendingParamsImplCopyWith<$Res>
     implements $TrendingParamsCopyWith<$Res> {
-  factory _$$TrendingParamsImplCopyWith(_$TrendingParamsImpl value,
-          $Res Function(_$TrendingParamsImpl) then) =
-      __$$TrendingParamsImplCopyWithImpl<$Res>;
+  factory _$$TrendingParamsImplCopyWith(
+    _$TrendingParamsImpl value,
+    $Res Function(_$TrendingParamsImpl) then,
+  ) = __$$TrendingParamsImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String type, int page});
@@ -82,27 +85,27 @@ class __$$TrendingParamsImplCopyWithImpl<$Res>
     extends _$TrendingParamsCopyWithImpl<$Res, _$TrendingParamsImpl>
     implements _$$TrendingParamsImplCopyWith<$Res> {
   __$$TrendingParamsImplCopyWithImpl(
-      _$TrendingParamsImpl _value, $Res Function(_$TrendingParamsImpl) _then)
-      : super(_value, _then);
+    _$TrendingParamsImpl _value,
+    $Res Function(_$TrendingParamsImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of TrendingParams
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? type = null,
-    Object? page = null,
-  }) {
-    return _then(_$TrendingParamsImpl(
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String,
-      page: null == page
-          ? _value.page
-          : page // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
+  $Res call({Object? type = null, Object? page = null}) {
+    return _then(
+      _$TrendingParamsImpl(
+        type: null == type
+            ? _value.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as String,
+        page: null == page
+            ? _value.page
+            : page // ignore: cast_nullable_to_non_nullable
+                  as int,
+      ),
+    );
   }
 }
 
@@ -142,7 +145,9 @@ class _$TrendingParamsImpl implements _TrendingParams {
   @pragma('vm:prefer-inline')
   _$$TrendingParamsImplCopyWith<_$TrendingParamsImpl> get copyWith =>
       __$$TrendingParamsImplCopyWithImpl<_$TrendingParamsImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 }
 
 abstract class _TrendingParams implements TrendingParams {

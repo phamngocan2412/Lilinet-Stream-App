@@ -12,7 +12,8 @@ part of 'auth_event.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$AuthEvent {
@@ -21,54 +22,54 @@ mixin _$AuthEvent {
     required TResult Function() checkAuthStatus,
     required TResult Function(String email, String password) signInRequested,
     required TResult Function(String username, String password, bool isLogin)
-        authSubmitted,
+    authSubmitted,
     required TResult Function(
-            String email, String password, String? displayName)
-        signUpRequested,
+      String email,
+      String password,
+      String? displayName,
+    )
+    signUpRequested,
     required TResult Function() signOutRequested,
     required TResult Function(bool isAuthenticated) authStateChanged,
     required TResult Function(String email) passwordResetRequested,
     required TResult Function(String? displayName, String? avatarUrl)
-        updateProfileRequested,
+    updateProfileRequested,
     required TResult Function(String newPassword) changePasswordRequested,
     required TResult Function() deleteAccountRequested,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? checkAuthStatus,
     TResult? Function(String email, String password)? signInRequested,
     TResult? Function(String username, String password, bool isLogin)?
-        authSubmitted,
+    authSubmitted,
     TResult? Function(String email, String password, String? displayName)?
-        signUpRequested,
+    signUpRequested,
     TResult? Function()? signOutRequested,
     TResult? Function(bool isAuthenticated)? authStateChanged,
     TResult? Function(String email)? passwordResetRequested,
     TResult? Function(String? displayName, String? avatarUrl)?
-        updateProfileRequested,
+    updateProfileRequested,
     TResult? Function(String newPassword)? changePasswordRequested,
     TResult? Function()? deleteAccountRequested,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? checkAuthStatus,
     TResult Function(String email, String password)? signInRequested,
     TResult Function(String username, String password, bool isLogin)?
-        authSubmitted,
+    authSubmitted,
     TResult Function(String email, String password, String? displayName)?
-        signUpRequested,
+    signUpRequested,
     TResult Function()? signOutRequested,
     TResult Function(bool isAuthenticated)? authStateChanged,
     TResult Function(String email)? passwordResetRequested,
     TResult Function(String? displayName, String? avatarUrl)?
-        updateProfileRequested,
+    updateProfileRequested,
     TResult Function(String newPassword)? changePasswordRequested,
     TResult Function()? deleteAccountRequested,
     required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(CheckAuthStatus value) checkAuthStatus,
@@ -78,15 +79,14 @@ mixin _$AuthEvent {
     required TResult Function(SignOutRequested value) signOutRequested,
     required TResult Function(AuthStateChanged value) authStateChanged,
     required TResult Function(PasswordResetRequested value)
-        passwordResetRequested,
+    passwordResetRequested,
     required TResult Function(UpdateProfileRequested value)
-        updateProfileRequested,
+    updateProfileRequested,
     required TResult Function(ChangePasswordRequested value)
-        changePasswordRequested,
+    changePasswordRequested,
     required TResult Function(DeleteAccountRequested value)
-        deleteAccountRequested,
-  }) =>
-      throw _privateConstructorUsedError;
+    deleteAccountRequested,
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(CheckAuthStatus value)? checkAuthStatus,
@@ -99,8 +99,7 @@ mixin _$AuthEvent {
     TResult? Function(UpdateProfileRequested value)? updateProfileRequested,
     TResult? Function(ChangePasswordRequested value)? changePasswordRequested,
     TResult? Function(DeleteAccountRequested value)? deleteAccountRequested,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(CheckAuthStatus value)? checkAuthStatus,
@@ -114,8 +113,7 @@ mixin _$AuthEvent {
     TResult Function(ChangePasswordRequested value)? changePasswordRequested,
     TResult Function(DeleteAccountRequested value)? deleteAccountRequested,
     required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -140,9 +138,10 @@ class _$AuthEventCopyWithImpl<$Res, $Val extends AuthEvent>
 
 /// @nodoc
 abstract class _$$CheckAuthStatusImplCopyWith<$Res> {
-  factory _$$CheckAuthStatusImplCopyWith(_$CheckAuthStatusImpl value,
-          $Res Function(_$CheckAuthStatusImpl) then) =
-      __$$CheckAuthStatusImplCopyWithImpl<$Res>;
+  factory _$$CheckAuthStatusImplCopyWith(
+    _$CheckAuthStatusImpl value,
+    $Res Function(_$CheckAuthStatusImpl) then,
+  ) = __$$CheckAuthStatusImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
@@ -150,8 +149,9 @@ class __$$CheckAuthStatusImplCopyWithImpl<$Res>
     extends _$AuthEventCopyWithImpl<$Res, _$CheckAuthStatusImpl>
     implements _$$CheckAuthStatusImplCopyWith<$Res> {
   __$$CheckAuthStatusImplCopyWithImpl(
-      _$CheckAuthStatusImpl _value, $Res Function(_$CheckAuthStatusImpl) _then)
-      : super(_value, _then);
+    _$CheckAuthStatusImpl _value,
+    $Res Function(_$CheckAuthStatusImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of AuthEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -182,15 +182,18 @@ class _$CheckAuthStatusImpl implements CheckAuthStatus {
     required TResult Function() checkAuthStatus,
     required TResult Function(String email, String password) signInRequested,
     required TResult Function(String username, String password, bool isLogin)
-        authSubmitted,
+    authSubmitted,
     required TResult Function(
-            String email, String password, String? displayName)
-        signUpRequested,
+      String email,
+      String password,
+      String? displayName,
+    )
+    signUpRequested,
     required TResult Function() signOutRequested,
     required TResult Function(bool isAuthenticated) authStateChanged,
     required TResult Function(String email) passwordResetRequested,
     required TResult Function(String? displayName, String? avatarUrl)
-        updateProfileRequested,
+    updateProfileRequested,
     required TResult Function(String newPassword) changePasswordRequested,
     required TResult Function() deleteAccountRequested,
   }) {
@@ -203,14 +206,14 @@ class _$CheckAuthStatusImpl implements CheckAuthStatus {
     TResult? Function()? checkAuthStatus,
     TResult? Function(String email, String password)? signInRequested,
     TResult? Function(String username, String password, bool isLogin)?
-        authSubmitted,
+    authSubmitted,
     TResult? Function(String email, String password, String? displayName)?
-        signUpRequested,
+    signUpRequested,
     TResult? Function()? signOutRequested,
     TResult? Function(bool isAuthenticated)? authStateChanged,
     TResult? Function(String email)? passwordResetRequested,
     TResult? Function(String? displayName, String? avatarUrl)?
-        updateProfileRequested,
+    updateProfileRequested,
     TResult? Function(String newPassword)? changePasswordRequested,
     TResult? Function()? deleteAccountRequested,
   }) {
@@ -223,14 +226,14 @@ class _$CheckAuthStatusImpl implements CheckAuthStatus {
     TResult Function()? checkAuthStatus,
     TResult Function(String email, String password)? signInRequested,
     TResult Function(String username, String password, bool isLogin)?
-        authSubmitted,
+    authSubmitted,
     TResult Function(String email, String password, String? displayName)?
-        signUpRequested,
+    signUpRequested,
     TResult Function()? signOutRequested,
     TResult Function(bool isAuthenticated)? authStateChanged,
     TResult Function(String email)? passwordResetRequested,
     TResult Function(String? displayName, String? avatarUrl)?
-        updateProfileRequested,
+    updateProfileRequested,
     TResult Function(String newPassword)? changePasswordRequested,
     TResult Function()? deleteAccountRequested,
     required TResult orElse(),
@@ -251,13 +254,13 @@ class _$CheckAuthStatusImpl implements CheckAuthStatus {
     required TResult Function(SignOutRequested value) signOutRequested,
     required TResult Function(AuthStateChanged value) authStateChanged,
     required TResult Function(PasswordResetRequested value)
-        passwordResetRequested,
+    passwordResetRequested,
     required TResult Function(UpdateProfileRequested value)
-        updateProfileRequested,
+    updateProfileRequested,
     required TResult Function(ChangePasswordRequested value)
-        changePasswordRequested,
+    changePasswordRequested,
     required TResult Function(DeleteAccountRequested value)
-        deleteAccountRequested,
+    deleteAccountRequested,
   }) {
     return checkAuthStatus(this);
   }
@@ -307,9 +310,10 @@ abstract class CheckAuthStatus implements AuthEvent {
 
 /// @nodoc
 abstract class _$$SignInRequestedImplCopyWith<$Res> {
-  factory _$$SignInRequestedImplCopyWith(_$SignInRequestedImpl value,
-          $Res Function(_$SignInRequestedImpl) then) =
-      __$$SignInRequestedImplCopyWithImpl<$Res>;
+  factory _$$SignInRequestedImplCopyWith(
+    _$SignInRequestedImpl value,
+    $Res Function(_$SignInRequestedImpl) then,
+  ) = __$$SignInRequestedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String email, String password});
 }
@@ -319,27 +323,27 @@ class __$$SignInRequestedImplCopyWithImpl<$Res>
     extends _$AuthEventCopyWithImpl<$Res, _$SignInRequestedImpl>
     implements _$$SignInRequestedImplCopyWith<$Res> {
   __$$SignInRequestedImplCopyWithImpl(
-      _$SignInRequestedImpl _value, $Res Function(_$SignInRequestedImpl) _then)
-      : super(_value, _then);
+    _$SignInRequestedImpl _value,
+    $Res Function(_$SignInRequestedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of AuthEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? email = null,
-    Object? password = null,
-  }) {
-    return _then(_$SignInRequestedImpl(
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
+  $Res call({Object? email = null, Object? password = null}) {
+    return _then(
+      _$SignInRequestedImpl(
+        email: null == email
+            ? _value.email
+            : email // ignore: cast_nullable_to_non_nullable
+                  as String,
+        password: null == password
+            ? _value.password
+            : password // ignore: cast_nullable_to_non_nullable
+                  as String,
+      ),
+    );
   }
 }
 
@@ -378,7 +382,9 @@ class _$SignInRequestedImpl implements SignInRequested {
   @pragma('vm:prefer-inline')
   _$$SignInRequestedImplCopyWith<_$SignInRequestedImpl> get copyWith =>
       __$$SignInRequestedImplCopyWithImpl<_$SignInRequestedImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 
   @override
   @optionalTypeArgs
@@ -386,15 +392,18 @@ class _$SignInRequestedImpl implements SignInRequested {
     required TResult Function() checkAuthStatus,
     required TResult Function(String email, String password) signInRequested,
     required TResult Function(String username, String password, bool isLogin)
-        authSubmitted,
+    authSubmitted,
     required TResult Function(
-            String email, String password, String? displayName)
-        signUpRequested,
+      String email,
+      String password,
+      String? displayName,
+    )
+    signUpRequested,
     required TResult Function() signOutRequested,
     required TResult Function(bool isAuthenticated) authStateChanged,
     required TResult Function(String email) passwordResetRequested,
     required TResult Function(String? displayName, String? avatarUrl)
-        updateProfileRequested,
+    updateProfileRequested,
     required TResult Function(String newPassword) changePasswordRequested,
     required TResult Function() deleteAccountRequested,
   }) {
@@ -407,14 +416,14 @@ class _$SignInRequestedImpl implements SignInRequested {
     TResult? Function()? checkAuthStatus,
     TResult? Function(String email, String password)? signInRequested,
     TResult? Function(String username, String password, bool isLogin)?
-        authSubmitted,
+    authSubmitted,
     TResult? Function(String email, String password, String? displayName)?
-        signUpRequested,
+    signUpRequested,
     TResult? Function()? signOutRequested,
     TResult? Function(bool isAuthenticated)? authStateChanged,
     TResult? Function(String email)? passwordResetRequested,
     TResult? Function(String? displayName, String? avatarUrl)?
-        updateProfileRequested,
+    updateProfileRequested,
     TResult? Function(String newPassword)? changePasswordRequested,
     TResult? Function()? deleteAccountRequested,
   }) {
@@ -427,14 +436,14 @@ class _$SignInRequestedImpl implements SignInRequested {
     TResult Function()? checkAuthStatus,
     TResult Function(String email, String password)? signInRequested,
     TResult Function(String username, String password, bool isLogin)?
-        authSubmitted,
+    authSubmitted,
     TResult Function(String email, String password, String? displayName)?
-        signUpRequested,
+    signUpRequested,
     TResult Function()? signOutRequested,
     TResult Function(bool isAuthenticated)? authStateChanged,
     TResult Function(String email)? passwordResetRequested,
     TResult Function(String? displayName, String? avatarUrl)?
-        updateProfileRequested,
+    updateProfileRequested,
     TResult Function(String newPassword)? changePasswordRequested,
     TResult Function()? deleteAccountRequested,
     required TResult orElse(),
@@ -455,13 +464,13 @@ class _$SignInRequestedImpl implements SignInRequested {
     required TResult Function(SignOutRequested value) signOutRequested,
     required TResult Function(AuthStateChanged value) authStateChanged,
     required TResult Function(PasswordResetRequested value)
-        passwordResetRequested,
+    passwordResetRequested,
     required TResult Function(UpdateProfileRequested value)
-        updateProfileRequested,
+    updateProfileRequested,
     required TResult Function(ChangePasswordRequested value)
-        changePasswordRequested,
+    changePasswordRequested,
     required TResult Function(DeleteAccountRequested value)
-        deleteAccountRequested,
+    deleteAccountRequested,
   }) {
     return signInRequested(this);
   }
@@ -506,9 +515,10 @@ class _$SignInRequestedImpl implements SignInRequested {
 }
 
 abstract class SignInRequested implements AuthEvent {
-  const factory SignInRequested(
-      {required final String email,
-      required final String password}) = _$SignInRequestedImpl;
+  const factory SignInRequested({
+    required final String email,
+    required final String password,
+  }) = _$SignInRequestedImpl;
 
   String get email;
   String get password;
@@ -523,8 +533,9 @@ abstract class SignInRequested implements AuthEvent {
 /// @nodoc
 abstract class _$$AuthSubmittedImplCopyWith<$Res> {
   factory _$$AuthSubmittedImplCopyWith(
-          _$AuthSubmittedImpl value, $Res Function(_$AuthSubmittedImpl) then) =
-      __$$AuthSubmittedImplCopyWithImpl<$Res>;
+    _$AuthSubmittedImpl value,
+    $Res Function(_$AuthSubmittedImpl) then,
+  ) = __$$AuthSubmittedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String username, String password, bool isLogin});
 }
@@ -534,8 +545,9 @@ class __$$AuthSubmittedImplCopyWithImpl<$Res>
     extends _$AuthEventCopyWithImpl<$Res, _$AuthSubmittedImpl>
     implements _$$AuthSubmittedImplCopyWith<$Res> {
   __$$AuthSubmittedImplCopyWithImpl(
-      _$AuthSubmittedImpl _value, $Res Function(_$AuthSubmittedImpl) _then)
-      : super(_value, _then);
+    _$AuthSubmittedImpl _value,
+    $Res Function(_$AuthSubmittedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of AuthEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -546,28 +558,33 @@ class __$$AuthSubmittedImplCopyWithImpl<$Res>
     Object? password = null,
     Object? isLogin = null,
   }) {
-    return _then(_$AuthSubmittedImpl(
-      username: null == username
-          ? _value.username
-          : username // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
-      isLogin: null == isLogin
-          ? _value.isLogin
-          : isLogin // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
+    return _then(
+      _$AuthSubmittedImpl(
+        username: null == username
+            ? _value.username
+            : username // ignore: cast_nullable_to_non_nullable
+                  as String,
+        password: null == password
+            ? _value.password
+            : password // ignore: cast_nullable_to_non_nullable
+                  as String,
+        isLogin: null == isLogin
+            ? _value.isLogin
+            : isLogin // ignore: cast_nullable_to_non_nullable
+                  as bool,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$AuthSubmittedImpl implements AuthSubmitted {
-  const _$AuthSubmittedImpl(
-      {required this.username, required this.password, required this.isLogin});
+  const _$AuthSubmittedImpl({
+    required this.username,
+    required this.password,
+    required this.isLogin,
+  });
 
   @override
   final String username;
@@ -610,15 +627,18 @@ class _$AuthSubmittedImpl implements AuthSubmitted {
     required TResult Function() checkAuthStatus,
     required TResult Function(String email, String password) signInRequested,
     required TResult Function(String username, String password, bool isLogin)
-        authSubmitted,
+    authSubmitted,
     required TResult Function(
-            String email, String password, String? displayName)
-        signUpRequested,
+      String email,
+      String password,
+      String? displayName,
+    )
+    signUpRequested,
     required TResult Function() signOutRequested,
     required TResult Function(bool isAuthenticated) authStateChanged,
     required TResult Function(String email) passwordResetRequested,
     required TResult Function(String? displayName, String? avatarUrl)
-        updateProfileRequested,
+    updateProfileRequested,
     required TResult Function(String newPassword) changePasswordRequested,
     required TResult Function() deleteAccountRequested,
   }) {
@@ -631,14 +651,14 @@ class _$AuthSubmittedImpl implements AuthSubmitted {
     TResult? Function()? checkAuthStatus,
     TResult? Function(String email, String password)? signInRequested,
     TResult? Function(String username, String password, bool isLogin)?
-        authSubmitted,
+    authSubmitted,
     TResult? Function(String email, String password, String? displayName)?
-        signUpRequested,
+    signUpRequested,
     TResult? Function()? signOutRequested,
     TResult? Function(bool isAuthenticated)? authStateChanged,
     TResult? Function(String email)? passwordResetRequested,
     TResult? Function(String? displayName, String? avatarUrl)?
-        updateProfileRequested,
+    updateProfileRequested,
     TResult? Function(String newPassword)? changePasswordRequested,
     TResult? Function()? deleteAccountRequested,
   }) {
@@ -651,14 +671,14 @@ class _$AuthSubmittedImpl implements AuthSubmitted {
     TResult Function()? checkAuthStatus,
     TResult Function(String email, String password)? signInRequested,
     TResult Function(String username, String password, bool isLogin)?
-        authSubmitted,
+    authSubmitted,
     TResult Function(String email, String password, String? displayName)?
-        signUpRequested,
+    signUpRequested,
     TResult Function()? signOutRequested,
     TResult Function(bool isAuthenticated)? authStateChanged,
     TResult Function(String email)? passwordResetRequested,
     TResult Function(String? displayName, String? avatarUrl)?
-        updateProfileRequested,
+    updateProfileRequested,
     TResult Function(String newPassword)? changePasswordRequested,
     TResult Function()? deleteAccountRequested,
     required TResult orElse(),
@@ -679,13 +699,13 @@ class _$AuthSubmittedImpl implements AuthSubmitted {
     required TResult Function(SignOutRequested value) signOutRequested,
     required TResult Function(AuthStateChanged value) authStateChanged,
     required TResult Function(PasswordResetRequested value)
-        passwordResetRequested,
+    passwordResetRequested,
     required TResult Function(UpdateProfileRequested value)
-        updateProfileRequested,
+    updateProfileRequested,
     required TResult Function(ChangePasswordRequested value)
-        changePasswordRequested,
+    changePasswordRequested,
     required TResult Function(DeleteAccountRequested value)
-        deleteAccountRequested,
+    deleteAccountRequested,
   }) {
     return authSubmitted(this);
   }
@@ -730,10 +750,11 @@ class _$AuthSubmittedImpl implements AuthSubmitted {
 }
 
 abstract class AuthSubmitted implements AuthEvent {
-  const factory AuthSubmitted(
-      {required final String username,
-      required final String password,
-      required final bool isLogin}) = _$AuthSubmittedImpl;
+  const factory AuthSubmitted({
+    required final String username,
+    required final String password,
+    required final bool isLogin,
+  }) = _$AuthSubmittedImpl;
 
   String get username;
   String get password;
@@ -748,9 +769,10 @@ abstract class AuthSubmitted implements AuthEvent {
 
 /// @nodoc
 abstract class _$$SignUpRequestedImplCopyWith<$Res> {
-  factory _$$SignUpRequestedImplCopyWith(_$SignUpRequestedImpl value,
-          $Res Function(_$SignUpRequestedImpl) then) =
-      __$$SignUpRequestedImplCopyWithImpl<$Res>;
+  factory _$$SignUpRequestedImplCopyWith(
+    _$SignUpRequestedImpl value,
+    $Res Function(_$SignUpRequestedImpl) then,
+  ) = __$$SignUpRequestedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String email, String password, String? displayName});
 }
@@ -760,8 +782,9 @@ class __$$SignUpRequestedImplCopyWithImpl<$Res>
     extends _$AuthEventCopyWithImpl<$Res, _$SignUpRequestedImpl>
     implements _$$SignUpRequestedImplCopyWith<$Res> {
   __$$SignUpRequestedImplCopyWithImpl(
-      _$SignUpRequestedImpl _value, $Res Function(_$SignUpRequestedImpl) _then)
-      : super(_value, _then);
+    _$SignUpRequestedImpl _value,
+    $Res Function(_$SignUpRequestedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of AuthEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -772,28 +795,33 @@ class __$$SignUpRequestedImplCopyWithImpl<$Res>
     Object? password = null,
     Object? displayName = freezed,
   }) {
-    return _then(_$SignUpRequestedImpl(
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
-      displayName: freezed == displayName
-          ? _value.displayName
-          : displayName // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
+    return _then(
+      _$SignUpRequestedImpl(
+        email: null == email
+            ? _value.email
+            : email // ignore: cast_nullable_to_non_nullable
+                  as String,
+        password: null == password
+            ? _value.password
+            : password // ignore: cast_nullable_to_non_nullable
+                  as String,
+        displayName: freezed == displayName
+            ? _value.displayName
+            : displayName // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$SignUpRequestedImpl implements SignUpRequested {
-  const _$SignUpRequestedImpl(
-      {required this.email, required this.password, this.displayName});
+  const _$SignUpRequestedImpl({
+    required this.email,
+    required this.password,
+    this.displayName,
+  });
 
   @override
   final String email;
@@ -829,7 +857,9 @@ class _$SignUpRequestedImpl implements SignUpRequested {
   @pragma('vm:prefer-inline')
   _$$SignUpRequestedImplCopyWith<_$SignUpRequestedImpl> get copyWith =>
       __$$SignUpRequestedImplCopyWithImpl<_$SignUpRequestedImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 
   @override
   @optionalTypeArgs
@@ -837,15 +867,18 @@ class _$SignUpRequestedImpl implements SignUpRequested {
     required TResult Function() checkAuthStatus,
     required TResult Function(String email, String password) signInRequested,
     required TResult Function(String username, String password, bool isLogin)
-        authSubmitted,
+    authSubmitted,
     required TResult Function(
-            String email, String password, String? displayName)
-        signUpRequested,
+      String email,
+      String password,
+      String? displayName,
+    )
+    signUpRequested,
     required TResult Function() signOutRequested,
     required TResult Function(bool isAuthenticated) authStateChanged,
     required TResult Function(String email) passwordResetRequested,
     required TResult Function(String? displayName, String? avatarUrl)
-        updateProfileRequested,
+    updateProfileRequested,
     required TResult Function(String newPassword) changePasswordRequested,
     required TResult Function() deleteAccountRequested,
   }) {
@@ -858,14 +891,14 @@ class _$SignUpRequestedImpl implements SignUpRequested {
     TResult? Function()? checkAuthStatus,
     TResult? Function(String email, String password)? signInRequested,
     TResult? Function(String username, String password, bool isLogin)?
-        authSubmitted,
+    authSubmitted,
     TResult? Function(String email, String password, String? displayName)?
-        signUpRequested,
+    signUpRequested,
     TResult? Function()? signOutRequested,
     TResult? Function(bool isAuthenticated)? authStateChanged,
     TResult? Function(String email)? passwordResetRequested,
     TResult? Function(String? displayName, String? avatarUrl)?
-        updateProfileRequested,
+    updateProfileRequested,
     TResult? Function(String newPassword)? changePasswordRequested,
     TResult? Function()? deleteAccountRequested,
   }) {
@@ -878,14 +911,14 @@ class _$SignUpRequestedImpl implements SignUpRequested {
     TResult Function()? checkAuthStatus,
     TResult Function(String email, String password)? signInRequested,
     TResult Function(String username, String password, bool isLogin)?
-        authSubmitted,
+    authSubmitted,
     TResult Function(String email, String password, String? displayName)?
-        signUpRequested,
+    signUpRequested,
     TResult Function()? signOutRequested,
     TResult Function(bool isAuthenticated)? authStateChanged,
     TResult Function(String email)? passwordResetRequested,
     TResult Function(String? displayName, String? avatarUrl)?
-        updateProfileRequested,
+    updateProfileRequested,
     TResult Function(String newPassword)? changePasswordRequested,
     TResult Function()? deleteAccountRequested,
     required TResult orElse(),
@@ -906,13 +939,13 @@ class _$SignUpRequestedImpl implements SignUpRequested {
     required TResult Function(SignOutRequested value) signOutRequested,
     required TResult Function(AuthStateChanged value) authStateChanged,
     required TResult Function(PasswordResetRequested value)
-        passwordResetRequested,
+    passwordResetRequested,
     required TResult Function(UpdateProfileRequested value)
-        updateProfileRequested,
+    updateProfileRequested,
     required TResult Function(ChangePasswordRequested value)
-        changePasswordRequested,
+    changePasswordRequested,
     required TResult Function(DeleteAccountRequested value)
-        deleteAccountRequested,
+    deleteAccountRequested,
   }) {
     return signUpRequested(this);
   }
@@ -957,10 +990,11 @@ class _$SignUpRequestedImpl implements SignUpRequested {
 }
 
 abstract class SignUpRequested implements AuthEvent {
-  const factory SignUpRequested(
-      {required final String email,
-      required final String password,
-      final String? displayName}) = _$SignUpRequestedImpl;
+  const factory SignUpRequested({
+    required final String email,
+    required final String password,
+    final String? displayName,
+  }) = _$SignUpRequestedImpl;
 
   String get email;
   String get password;
@@ -975,18 +1009,20 @@ abstract class SignUpRequested implements AuthEvent {
 
 /// @nodoc
 abstract class _$$SignOutRequestedImplCopyWith<$Res> {
-  factory _$$SignOutRequestedImplCopyWith(_$SignOutRequestedImpl value,
-          $Res Function(_$SignOutRequestedImpl) then) =
-      __$$SignOutRequestedImplCopyWithImpl<$Res>;
+  factory _$$SignOutRequestedImplCopyWith(
+    _$SignOutRequestedImpl value,
+    $Res Function(_$SignOutRequestedImpl) then,
+  ) = __$$SignOutRequestedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
 class __$$SignOutRequestedImplCopyWithImpl<$Res>
     extends _$AuthEventCopyWithImpl<$Res, _$SignOutRequestedImpl>
     implements _$$SignOutRequestedImplCopyWith<$Res> {
-  __$$SignOutRequestedImplCopyWithImpl(_$SignOutRequestedImpl _value,
-      $Res Function(_$SignOutRequestedImpl) _then)
-      : super(_value, _then);
+  __$$SignOutRequestedImplCopyWithImpl(
+    _$SignOutRequestedImpl _value,
+    $Res Function(_$SignOutRequestedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of AuthEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -1017,15 +1053,18 @@ class _$SignOutRequestedImpl implements SignOutRequested {
     required TResult Function() checkAuthStatus,
     required TResult Function(String email, String password) signInRequested,
     required TResult Function(String username, String password, bool isLogin)
-        authSubmitted,
+    authSubmitted,
     required TResult Function(
-            String email, String password, String? displayName)
-        signUpRequested,
+      String email,
+      String password,
+      String? displayName,
+    )
+    signUpRequested,
     required TResult Function() signOutRequested,
     required TResult Function(bool isAuthenticated) authStateChanged,
     required TResult Function(String email) passwordResetRequested,
     required TResult Function(String? displayName, String? avatarUrl)
-        updateProfileRequested,
+    updateProfileRequested,
     required TResult Function(String newPassword) changePasswordRequested,
     required TResult Function() deleteAccountRequested,
   }) {
@@ -1038,14 +1077,14 @@ class _$SignOutRequestedImpl implements SignOutRequested {
     TResult? Function()? checkAuthStatus,
     TResult? Function(String email, String password)? signInRequested,
     TResult? Function(String username, String password, bool isLogin)?
-        authSubmitted,
+    authSubmitted,
     TResult? Function(String email, String password, String? displayName)?
-        signUpRequested,
+    signUpRequested,
     TResult? Function()? signOutRequested,
     TResult? Function(bool isAuthenticated)? authStateChanged,
     TResult? Function(String email)? passwordResetRequested,
     TResult? Function(String? displayName, String? avatarUrl)?
-        updateProfileRequested,
+    updateProfileRequested,
     TResult? Function(String newPassword)? changePasswordRequested,
     TResult? Function()? deleteAccountRequested,
   }) {
@@ -1058,14 +1097,14 @@ class _$SignOutRequestedImpl implements SignOutRequested {
     TResult Function()? checkAuthStatus,
     TResult Function(String email, String password)? signInRequested,
     TResult Function(String username, String password, bool isLogin)?
-        authSubmitted,
+    authSubmitted,
     TResult Function(String email, String password, String? displayName)?
-        signUpRequested,
+    signUpRequested,
     TResult Function()? signOutRequested,
     TResult Function(bool isAuthenticated)? authStateChanged,
     TResult Function(String email)? passwordResetRequested,
     TResult Function(String? displayName, String? avatarUrl)?
-        updateProfileRequested,
+    updateProfileRequested,
     TResult Function(String newPassword)? changePasswordRequested,
     TResult Function()? deleteAccountRequested,
     required TResult orElse(),
@@ -1086,13 +1125,13 @@ class _$SignOutRequestedImpl implements SignOutRequested {
     required TResult Function(SignOutRequested value) signOutRequested,
     required TResult Function(AuthStateChanged value) authStateChanged,
     required TResult Function(PasswordResetRequested value)
-        passwordResetRequested,
+    passwordResetRequested,
     required TResult Function(UpdateProfileRequested value)
-        updateProfileRequested,
+    updateProfileRequested,
     required TResult Function(ChangePasswordRequested value)
-        changePasswordRequested,
+    changePasswordRequested,
     required TResult Function(DeleteAccountRequested value)
-        deleteAccountRequested,
+    deleteAccountRequested,
   }) {
     return signOutRequested(this);
   }
@@ -1142,9 +1181,10 @@ abstract class SignOutRequested implements AuthEvent {
 
 /// @nodoc
 abstract class _$$AuthStateChangedImplCopyWith<$Res> {
-  factory _$$AuthStateChangedImplCopyWith(_$AuthStateChangedImpl value,
-          $Res Function(_$AuthStateChangedImpl) then) =
-      __$$AuthStateChangedImplCopyWithImpl<$Res>;
+  factory _$$AuthStateChangedImplCopyWith(
+    _$AuthStateChangedImpl value,
+    $Res Function(_$AuthStateChangedImpl) then,
+  ) = __$$AuthStateChangedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({bool isAuthenticated});
 }
@@ -1153,23 +1193,24 @@ abstract class _$$AuthStateChangedImplCopyWith<$Res> {
 class __$$AuthStateChangedImplCopyWithImpl<$Res>
     extends _$AuthEventCopyWithImpl<$Res, _$AuthStateChangedImpl>
     implements _$$AuthStateChangedImplCopyWith<$Res> {
-  __$$AuthStateChangedImplCopyWithImpl(_$AuthStateChangedImpl _value,
-      $Res Function(_$AuthStateChangedImpl) _then)
-      : super(_value, _then);
+  __$$AuthStateChangedImplCopyWithImpl(
+    _$AuthStateChangedImpl _value,
+    $Res Function(_$AuthStateChangedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of AuthEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? isAuthenticated = null,
-  }) {
-    return _then(_$AuthStateChangedImpl(
-      isAuthenticated: null == isAuthenticated
-          ? _value.isAuthenticated
-          : isAuthenticated // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
+  $Res call({Object? isAuthenticated = null}) {
+    return _then(
+      _$AuthStateChangedImpl(
+        isAuthenticated: null == isAuthenticated
+            ? _value.isAuthenticated
+            : isAuthenticated // ignore: cast_nullable_to_non_nullable
+                  as bool,
+      ),
+    );
   }
 }
 
@@ -1205,7 +1246,9 @@ class _$AuthStateChangedImpl implements AuthStateChanged {
   @pragma('vm:prefer-inline')
   _$$AuthStateChangedImplCopyWith<_$AuthStateChangedImpl> get copyWith =>
       __$$AuthStateChangedImplCopyWithImpl<_$AuthStateChangedImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 
   @override
   @optionalTypeArgs
@@ -1213,15 +1256,18 @@ class _$AuthStateChangedImpl implements AuthStateChanged {
     required TResult Function() checkAuthStatus,
     required TResult Function(String email, String password) signInRequested,
     required TResult Function(String username, String password, bool isLogin)
-        authSubmitted,
+    authSubmitted,
     required TResult Function(
-            String email, String password, String? displayName)
-        signUpRequested,
+      String email,
+      String password,
+      String? displayName,
+    )
+    signUpRequested,
     required TResult Function() signOutRequested,
     required TResult Function(bool isAuthenticated) authStateChanged,
     required TResult Function(String email) passwordResetRequested,
     required TResult Function(String? displayName, String? avatarUrl)
-        updateProfileRequested,
+    updateProfileRequested,
     required TResult Function(String newPassword) changePasswordRequested,
     required TResult Function() deleteAccountRequested,
   }) {
@@ -1234,14 +1280,14 @@ class _$AuthStateChangedImpl implements AuthStateChanged {
     TResult? Function()? checkAuthStatus,
     TResult? Function(String email, String password)? signInRequested,
     TResult? Function(String username, String password, bool isLogin)?
-        authSubmitted,
+    authSubmitted,
     TResult? Function(String email, String password, String? displayName)?
-        signUpRequested,
+    signUpRequested,
     TResult? Function()? signOutRequested,
     TResult? Function(bool isAuthenticated)? authStateChanged,
     TResult? Function(String email)? passwordResetRequested,
     TResult? Function(String? displayName, String? avatarUrl)?
-        updateProfileRequested,
+    updateProfileRequested,
     TResult? Function(String newPassword)? changePasswordRequested,
     TResult? Function()? deleteAccountRequested,
   }) {
@@ -1254,14 +1300,14 @@ class _$AuthStateChangedImpl implements AuthStateChanged {
     TResult Function()? checkAuthStatus,
     TResult Function(String email, String password)? signInRequested,
     TResult Function(String username, String password, bool isLogin)?
-        authSubmitted,
+    authSubmitted,
     TResult Function(String email, String password, String? displayName)?
-        signUpRequested,
+    signUpRequested,
     TResult Function()? signOutRequested,
     TResult Function(bool isAuthenticated)? authStateChanged,
     TResult Function(String email)? passwordResetRequested,
     TResult Function(String? displayName, String? avatarUrl)?
-        updateProfileRequested,
+    updateProfileRequested,
     TResult Function(String newPassword)? changePasswordRequested,
     TResult Function()? deleteAccountRequested,
     required TResult orElse(),
@@ -1282,13 +1328,13 @@ class _$AuthStateChangedImpl implements AuthStateChanged {
     required TResult Function(SignOutRequested value) signOutRequested,
     required TResult Function(AuthStateChanged value) authStateChanged,
     required TResult Function(PasswordResetRequested value)
-        passwordResetRequested,
+    passwordResetRequested,
     required TResult Function(UpdateProfileRequested value)
-        updateProfileRequested,
+    updateProfileRequested,
     required TResult Function(ChangePasswordRequested value)
-        changePasswordRequested,
+    changePasswordRequested,
     required TResult Function(DeleteAccountRequested value)
-        deleteAccountRequested,
+    deleteAccountRequested,
   }) {
     return authStateChanged(this);
   }
@@ -1348,9 +1394,9 @@ abstract class AuthStateChanged implements AuthEvent {
 /// @nodoc
 abstract class _$$PasswordResetRequestedImplCopyWith<$Res> {
   factory _$$PasswordResetRequestedImplCopyWith(
-          _$PasswordResetRequestedImpl value,
-          $Res Function(_$PasswordResetRequestedImpl) then) =
-      __$$PasswordResetRequestedImplCopyWithImpl<$Res>;
+    _$PasswordResetRequestedImpl value,
+    $Res Function(_$PasswordResetRequestedImpl) then,
+  ) = __$$PasswordResetRequestedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String email});
 }
@@ -1360,23 +1406,23 @@ class __$$PasswordResetRequestedImplCopyWithImpl<$Res>
     extends _$AuthEventCopyWithImpl<$Res, _$PasswordResetRequestedImpl>
     implements _$$PasswordResetRequestedImplCopyWith<$Res> {
   __$$PasswordResetRequestedImplCopyWithImpl(
-      _$PasswordResetRequestedImpl _value,
-      $Res Function(_$PasswordResetRequestedImpl) _then)
-      : super(_value, _then);
+    _$PasswordResetRequestedImpl _value,
+    $Res Function(_$PasswordResetRequestedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of AuthEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? email = null,
-  }) {
-    return _then(_$PasswordResetRequestedImpl(
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
+  $Res call({Object? email = null}) {
+    return _then(
+      _$PasswordResetRequestedImpl(
+        email: null == email
+            ? _value.email
+            : email // ignore: cast_nullable_to_non_nullable
+                  as String,
+      ),
+    );
   }
 }
 
@@ -1410,8 +1456,11 @@ class _$PasswordResetRequestedImpl implements PasswordResetRequested {
   @override
   @pragma('vm:prefer-inline')
   _$$PasswordResetRequestedImplCopyWith<_$PasswordResetRequestedImpl>
-      get copyWith => __$$PasswordResetRequestedImplCopyWithImpl<
-          _$PasswordResetRequestedImpl>(this, _$identity);
+  get copyWith =>
+      __$$PasswordResetRequestedImplCopyWithImpl<_$PasswordResetRequestedImpl>(
+        this,
+        _$identity,
+      );
 
   @override
   @optionalTypeArgs
@@ -1419,15 +1468,18 @@ class _$PasswordResetRequestedImpl implements PasswordResetRequested {
     required TResult Function() checkAuthStatus,
     required TResult Function(String email, String password) signInRequested,
     required TResult Function(String username, String password, bool isLogin)
-        authSubmitted,
+    authSubmitted,
     required TResult Function(
-            String email, String password, String? displayName)
-        signUpRequested,
+      String email,
+      String password,
+      String? displayName,
+    )
+    signUpRequested,
     required TResult Function() signOutRequested,
     required TResult Function(bool isAuthenticated) authStateChanged,
     required TResult Function(String email) passwordResetRequested,
     required TResult Function(String? displayName, String? avatarUrl)
-        updateProfileRequested,
+    updateProfileRequested,
     required TResult Function(String newPassword) changePasswordRequested,
     required TResult Function() deleteAccountRequested,
   }) {
@@ -1440,14 +1492,14 @@ class _$PasswordResetRequestedImpl implements PasswordResetRequested {
     TResult? Function()? checkAuthStatus,
     TResult? Function(String email, String password)? signInRequested,
     TResult? Function(String username, String password, bool isLogin)?
-        authSubmitted,
+    authSubmitted,
     TResult? Function(String email, String password, String? displayName)?
-        signUpRequested,
+    signUpRequested,
     TResult? Function()? signOutRequested,
     TResult? Function(bool isAuthenticated)? authStateChanged,
     TResult? Function(String email)? passwordResetRequested,
     TResult? Function(String? displayName, String? avatarUrl)?
-        updateProfileRequested,
+    updateProfileRequested,
     TResult? Function(String newPassword)? changePasswordRequested,
     TResult? Function()? deleteAccountRequested,
   }) {
@@ -1460,14 +1512,14 @@ class _$PasswordResetRequestedImpl implements PasswordResetRequested {
     TResult Function()? checkAuthStatus,
     TResult Function(String email, String password)? signInRequested,
     TResult Function(String username, String password, bool isLogin)?
-        authSubmitted,
+    authSubmitted,
     TResult Function(String email, String password, String? displayName)?
-        signUpRequested,
+    signUpRequested,
     TResult Function()? signOutRequested,
     TResult Function(bool isAuthenticated)? authStateChanged,
     TResult Function(String email)? passwordResetRequested,
     TResult Function(String? displayName, String? avatarUrl)?
-        updateProfileRequested,
+    updateProfileRequested,
     TResult Function(String newPassword)? changePasswordRequested,
     TResult Function()? deleteAccountRequested,
     required TResult orElse(),
@@ -1488,13 +1540,13 @@ class _$PasswordResetRequestedImpl implements PasswordResetRequested {
     required TResult Function(SignOutRequested value) signOutRequested,
     required TResult Function(AuthStateChanged value) authStateChanged,
     required TResult Function(PasswordResetRequested value)
-        passwordResetRequested,
+    passwordResetRequested,
     required TResult Function(UpdateProfileRequested value)
-        updateProfileRequested,
+    updateProfileRequested,
     required TResult Function(ChangePasswordRequested value)
-        changePasswordRequested,
+    changePasswordRequested,
     required TResult Function(DeleteAccountRequested value)
-        deleteAccountRequested,
+    deleteAccountRequested,
   }) {
     return passwordResetRequested(this);
   }
@@ -1548,15 +1600,15 @@ abstract class PasswordResetRequested implements AuthEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PasswordResetRequestedImplCopyWith<_$PasswordResetRequestedImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$UpdateProfileRequestedImplCopyWith<$Res> {
   factory _$$UpdateProfileRequestedImplCopyWith(
-          _$UpdateProfileRequestedImpl value,
-          $Res Function(_$UpdateProfileRequestedImpl) then) =
-      __$$UpdateProfileRequestedImplCopyWithImpl<$Res>;
+    _$UpdateProfileRequestedImpl value,
+    $Res Function(_$UpdateProfileRequestedImpl) then,
+  ) = __$$UpdateProfileRequestedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String? displayName, String? avatarUrl});
 }
@@ -1566,28 +1618,27 @@ class __$$UpdateProfileRequestedImplCopyWithImpl<$Res>
     extends _$AuthEventCopyWithImpl<$Res, _$UpdateProfileRequestedImpl>
     implements _$$UpdateProfileRequestedImplCopyWith<$Res> {
   __$$UpdateProfileRequestedImplCopyWithImpl(
-      _$UpdateProfileRequestedImpl _value,
-      $Res Function(_$UpdateProfileRequestedImpl) _then)
-      : super(_value, _then);
+    _$UpdateProfileRequestedImpl _value,
+    $Res Function(_$UpdateProfileRequestedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of AuthEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? displayName = freezed,
-    Object? avatarUrl = freezed,
-  }) {
-    return _then(_$UpdateProfileRequestedImpl(
-      displayName: freezed == displayName
-          ? _value.displayName
-          : displayName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      avatarUrl: freezed == avatarUrl
-          ? _value.avatarUrl
-          : avatarUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
+  $Res call({Object? displayName = freezed, Object? avatarUrl = freezed}) {
+    return _then(
+      _$UpdateProfileRequestedImpl(
+        displayName: freezed == displayName
+            ? _value.displayName
+            : displayName // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        avatarUrl: freezed == avatarUrl
+            ? _value.avatarUrl
+            : avatarUrl // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
   }
 }
 
@@ -1626,8 +1677,11 @@ class _$UpdateProfileRequestedImpl implements UpdateProfileRequested {
   @override
   @pragma('vm:prefer-inline')
   _$$UpdateProfileRequestedImplCopyWith<_$UpdateProfileRequestedImpl>
-      get copyWith => __$$UpdateProfileRequestedImplCopyWithImpl<
-          _$UpdateProfileRequestedImpl>(this, _$identity);
+  get copyWith =>
+      __$$UpdateProfileRequestedImplCopyWithImpl<_$UpdateProfileRequestedImpl>(
+        this,
+        _$identity,
+      );
 
   @override
   @optionalTypeArgs
@@ -1635,15 +1689,18 @@ class _$UpdateProfileRequestedImpl implements UpdateProfileRequested {
     required TResult Function() checkAuthStatus,
     required TResult Function(String email, String password) signInRequested,
     required TResult Function(String username, String password, bool isLogin)
-        authSubmitted,
+    authSubmitted,
     required TResult Function(
-            String email, String password, String? displayName)
-        signUpRequested,
+      String email,
+      String password,
+      String? displayName,
+    )
+    signUpRequested,
     required TResult Function() signOutRequested,
     required TResult Function(bool isAuthenticated) authStateChanged,
     required TResult Function(String email) passwordResetRequested,
     required TResult Function(String? displayName, String? avatarUrl)
-        updateProfileRequested,
+    updateProfileRequested,
     required TResult Function(String newPassword) changePasswordRequested,
     required TResult Function() deleteAccountRequested,
   }) {
@@ -1656,14 +1713,14 @@ class _$UpdateProfileRequestedImpl implements UpdateProfileRequested {
     TResult? Function()? checkAuthStatus,
     TResult? Function(String email, String password)? signInRequested,
     TResult? Function(String username, String password, bool isLogin)?
-        authSubmitted,
+    authSubmitted,
     TResult? Function(String email, String password, String? displayName)?
-        signUpRequested,
+    signUpRequested,
     TResult? Function()? signOutRequested,
     TResult? Function(bool isAuthenticated)? authStateChanged,
     TResult? Function(String email)? passwordResetRequested,
     TResult? Function(String? displayName, String? avatarUrl)?
-        updateProfileRequested,
+    updateProfileRequested,
     TResult? Function(String newPassword)? changePasswordRequested,
     TResult? Function()? deleteAccountRequested,
   }) {
@@ -1676,14 +1733,14 @@ class _$UpdateProfileRequestedImpl implements UpdateProfileRequested {
     TResult Function()? checkAuthStatus,
     TResult Function(String email, String password)? signInRequested,
     TResult Function(String username, String password, bool isLogin)?
-        authSubmitted,
+    authSubmitted,
     TResult Function(String email, String password, String? displayName)?
-        signUpRequested,
+    signUpRequested,
     TResult Function()? signOutRequested,
     TResult Function(bool isAuthenticated)? authStateChanged,
     TResult Function(String email)? passwordResetRequested,
     TResult Function(String? displayName, String? avatarUrl)?
-        updateProfileRequested,
+    updateProfileRequested,
     TResult Function(String newPassword)? changePasswordRequested,
     TResult Function()? deleteAccountRequested,
     required TResult orElse(),
@@ -1704,13 +1761,13 @@ class _$UpdateProfileRequestedImpl implements UpdateProfileRequested {
     required TResult Function(SignOutRequested value) signOutRequested,
     required TResult Function(AuthStateChanged value) authStateChanged,
     required TResult Function(PasswordResetRequested value)
-        passwordResetRequested,
+    passwordResetRequested,
     required TResult Function(UpdateProfileRequested value)
-        updateProfileRequested,
+    updateProfileRequested,
     required TResult Function(ChangePasswordRequested value)
-        changePasswordRequested,
+    changePasswordRequested,
     required TResult Function(DeleteAccountRequested value)
-        deleteAccountRequested,
+    deleteAccountRequested,
   }) {
     return updateProfileRequested(this);
   }
@@ -1755,9 +1812,10 @@ class _$UpdateProfileRequestedImpl implements UpdateProfileRequested {
 }
 
 abstract class UpdateProfileRequested implements AuthEvent {
-  const factory UpdateProfileRequested(
-      {final String? displayName,
-      final String? avatarUrl}) = _$UpdateProfileRequestedImpl;
+  const factory UpdateProfileRequested({
+    final String? displayName,
+    final String? avatarUrl,
+  }) = _$UpdateProfileRequestedImpl;
 
   String? get displayName;
   String? get avatarUrl;
@@ -1766,15 +1824,15 @@ abstract class UpdateProfileRequested implements AuthEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UpdateProfileRequestedImplCopyWith<_$UpdateProfileRequestedImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$ChangePasswordRequestedImplCopyWith<$Res> {
   factory _$$ChangePasswordRequestedImplCopyWith(
-          _$ChangePasswordRequestedImpl value,
-          $Res Function(_$ChangePasswordRequestedImpl) then) =
-      __$$ChangePasswordRequestedImplCopyWithImpl<$Res>;
+    _$ChangePasswordRequestedImpl value,
+    $Res Function(_$ChangePasswordRequestedImpl) then,
+  ) = __$$ChangePasswordRequestedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String newPassword});
 }
@@ -1784,23 +1842,23 @@ class __$$ChangePasswordRequestedImplCopyWithImpl<$Res>
     extends _$AuthEventCopyWithImpl<$Res, _$ChangePasswordRequestedImpl>
     implements _$$ChangePasswordRequestedImplCopyWith<$Res> {
   __$$ChangePasswordRequestedImplCopyWithImpl(
-      _$ChangePasswordRequestedImpl _value,
-      $Res Function(_$ChangePasswordRequestedImpl) _then)
-      : super(_value, _then);
+    _$ChangePasswordRequestedImpl _value,
+    $Res Function(_$ChangePasswordRequestedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of AuthEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? newPassword = null,
-  }) {
-    return _then(_$ChangePasswordRequestedImpl(
-      newPassword: null == newPassword
-          ? _value.newPassword
-          : newPassword // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
+  $Res call({Object? newPassword = null}) {
+    return _then(
+      _$ChangePasswordRequestedImpl(
+        newPassword: null == newPassword
+            ? _value.newPassword
+            : newPassword // ignore: cast_nullable_to_non_nullable
+                  as String,
+      ),
+    );
   }
 }
 
@@ -1835,8 +1893,10 @@ class _$ChangePasswordRequestedImpl implements ChangePasswordRequested {
   @override
   @pragma('vm:prefer-inline')
   _$$ChangePasswordRequestedImplCopyWith<_$ChangePasswordRequestedImpl>
-      get copyWith => __$$ChangePasswordRequestedImplCopyWithImpl<
-          _$ChangePasswordRequestedImpl>(this, _$identity);
+  get copyWith =>
+      __$$ChangePasswordRequestedImplCopyWithImpl<
+        _$ChangePasswordRequestedImpl
+      >(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1844,15 +1904,18 @@ class _$ChangePasswordRequestedImpl implements ChangePasswordRequested {
     required TResult Function() checkAuthStatus,
     required TResult Function(String email, String password) signInRequested,
     required TResult Function(String username, String password, bool isLogin)
-        authSubmitted,
+    authSubmitted,
     required TResult Function(
-            String email, String password, String? displayName)
-        signUpRequested,
+      String email,
+      String password,
+      String? displayName,
+    )
+    signUpRequested,
     required TResult Function() signOutRequested,
     required TResult Function(bool isAuthenticated) authStateChanged,
     required TResult Function(String email) passwordResetRequested,
     required TResult Function(String? displayName, String? avatarUrl)
-        updateProfileRequested,
+    updateProfileRequested,
     required TResult Function(String newPassword) changePasswordRequested,
     required TResult Function() deleteAccountRequested,
   }) {
@@ -1865,14 +1928,14 @@ class _$ChangePasswordRequestedImpl implements ChangePasswordRequested {
     TResult? Function()? checkAuthStatus,
     TResult? Function(String email, String password)? signInRequested,
     TResult? Function(String username, String password, bool isLogin)?
-        authSubmitted,
+    authSubmitted,
     TResult? Function(String email, String password, String? displayName)?
-        signUpRequested,
+    signUpRequested,
     TResult? Function()? signOutRequested,
     TResult? Function(bool isAuthenticated)? authStateChanged,
     TResult? Function(String email)? passwordResetRequested,
     TResult? Function(String? displayName, String? avatarUrl)?
-        updateProfileRequested,
+    updateProfileRequested,
     TResult? Function(String newPassword)? changePasswordRequested,
     TResult? Function()? deleteAccountRequested,
   }) {
@@ -1885,14 +1948,14 @@ class _$ChangePasswordRequestedImpl implements ChangePasswordRequested {
     TResult Function()? checkAuthStatus,
     TResult Function(String email, String password)? signInRequested,
     TResult Function(String username, String password, bool isLogin)?
-        authSubmitted,
+    authSubmitted,
     TResult Function(String email, String password, String? displayName)?
-        signUpRequested,
+    signUpRequested,
     TResult Function()? signOutRequested,
     TResult Function(bool isAuthenticated)? authStateChanged,
     TResult Function(String email)? passwordResetRequested,
     TResult Function(String? displayName, String? avatarUrl)?
-        updateProfileRequested,
+    updateProfileRequested,
     TResult Function(String newPassword)? changePasswordRequested,
     TResult Function()? deleteAccountRequested,
     required TResult orElse(),
@@ -1913,13 +1976,13 @@ class _$ChangePasswordRequestedImpl implements ChangePasswordRequested {
     required TResult Function(SignOutRequested value) signOutRequested,
     required TResult Function(AuthStateChanged value) authStateChanged,
     required TResult Function(PasswordResetRequested value)
-        passwordResetRequested,
+    passwordResetRequested,
     required TResult Function(UpdateProfileRequested value)
-        updateProfileRequested,
+    updateProfileRequested,
     required TResult Function(ChangePasswordRequested value)
-        changePasswordRequested,
+    changePasswordRequested,
     required TResult Function(DeleteAccountRequested value)
-        deleteAccountRequested,
+    deleteAccountRequested,
   }) {
     return changePasswordRequested(this);
   }
@@ -1973,15 +2036,15 @@ abstract class ChangePasswordRequested implements AuthEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChangePasswordRequestedImplCopyWith<_$ChangePasswordRequestedImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$DeleteAccountRequestedImplCopyWith<$Res> {
   factory _$$DeleteAccountRequestedImplCopyWith(
-          _$DeleteAccountRequestedImpl value,
-          $Res Function(_$DeleteAccountRequestedImpl) then) =
-      __$$DeleteAccountRequestedImplCopyWithImpl<$Res>;
+    _$DeleteAccountRequestedImpl value,
+    $Res Function(_$DeleteAccountRequestedImpl) then,
+  ) = __$$DeleteAccountRequestedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
@@ -1989,9 +2052,9 @@ class __$$DeleteAccountRequestedImplCopyWithImpl<$Res>
     extends _$AuthEventCopyWithImpl<$Res, _$DeleteAccountRequestedImpl>
     implements _$$DeleteAccountRequestedImplCopyWith<$Res> {
   __$$DeleteAccountRequestedImplCopyWithImpl(
-      _$DeleteAccountRequestedImpl _value,
-      $Res Function(_$DeleteAccountRequestedImpl) _then)
-      : super(_value, _then);
+    _$DeleteAccountRequestedImpl _value,
+    $Res Function(_$DeleteAccountRequestedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of AuthEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -2023,15 +2086,18 @@ class _$DeleteAccountRequestedImpl implements DeleteAccountRequested {
     required TResult Function() checkAuthStatus,
     required TResult Function(String email, String password) signInRequested,
     required TResult Function(String username, String password, bool isLogin)
-        authSubmitted,
+    authSubmitted,
     required TResult Function(
-            String email, String password, String? displayName)
-        signUpRequested,
+      String email,
+      String password,
+      String? displayName,
+    )
+    signUpRequested,
     required TResult Function() signOutRequested,
     required TResult Function(bool isAuthenticated) authStateChanged,
     required TResult Function(String email) passwordResetRequested,
     required TResult Function(String? displayName, String? avatarUrl)
-        updateProfileRequested,
+    updateProfileRequested,
     required TResult Function(String newPassword) changePasswordRequested,
     required TResult Function() deleteAccountRequested,
   }) {
@@ -2044,14 +2110,14 @@ class _$DeleteAccountRequestedImpl implements DeleteAccountRequested {
     TResult? Function()? checkAuthStatus,
     TResult? Function(String email, String password)? signInRequested,
     TResult? Function(String username, String password, bool isLogin)?
-        authSubmitted,
+    authSubmitted,
     TResult? Function(String email, String password, String? displayName)?
-        signUpRequested,
+    signUpRequested,
     TResult? Function()? signOutRequested,
     TResult? Function(bool isAuthenticated)? authStateChanged,
     TResult? Function(String email)? passwordResetRequested,
     TResult? Function(String? displayName, String? avatarUrl)?
-        updateProfileRequested,
+    updateProfileRequested,
     TResult? Function(String newPassword)? changePasswordRequested,
     TResult? Function()? deleteAccountRequested,
   }) {
@@ -2064,14 +2130,14 @@ class _$DeleteAccountRequestedImpl implements DeleteAccountRequested {
     TResult Function()? checkAuthStatus,
     TResult Function(String email, String password)? signInRequested,
     TResult Function(String username, String password, bool isLogin)?
-        authSubmitted,
+    authSubmitted,
     TResult Function(String email, String password, String? displayName)?
-        signUpRequested,
+    signUpRequested,
     TResult Function()? signOutRequested,
     TResult Function(bool isAuthenticated)? authStateChanged,
     TResult Function(String email)? passwordResetRequested,
     TResult Function(String? displayName, String? avatarUrl)?
-        updateProfileRequested,
+    updateProfileRequested,
     TResult Function(String newPassword)? changePasswordRequested,
     TResult Function()? deleteAccountRequested,
     required TResult orElse(),
@@ -2092,13 +2158,13 @@ class _$DeleteAccountRequestedImpl implements DeleteAccountRequested {
     required TResult Function(SignOutRequested value) signOutRequested,
     required TResult Function(AuthStateChanged value) authStateChanged,
     required TResult Function(PasswordResetRequested value)
-        passwordResetRequested,
+    passwordResetRequested,
     required TResult Function(UpdateProfileRequested value)
-        updateProfileRequested,
+    updateProfileRequested,
     required TResult Function(ChangePasswordRequested value)
-        changePasswordRequested,
+    changePasswordRequested,
     required TResult Function(DeleteAccountRequested value)
-        deleteAccountRequested,
+    deleteAccountRequested,
   }) {
     return deleteAccountRequested(this);
   }
