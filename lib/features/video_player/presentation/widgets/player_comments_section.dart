@@ -52,7 +52,8 @@ class PlayerCommentsHeaderSliver extends StatelessWidget {
                       Text(
                         AppLocalizations.of(
                           context,
-                        )!.commentsCount(loadedState.comments.length),
+                        )!
+                            .commentsCount(loadedState.comments.length),
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 18,
@@ -134,9 +135,9 @@ class _PlayerCommentsListSliverState extends State<PlayerCommentsListSliver> {
             onPressed: () {
               if (controller.text.trim().isNotEmpty) {
                 context.read<CommentCubit>().addComment(
-                  controller.text,
-                  parentId: commentId,
-                );
+                      controller.text,
+                      parentId: commentId,
+                    );
                 Navigator.pop(dialogContext);
               }
             },
@@ -246,8 +247,8 @@ class _PlayerCommentsListSliverState extends State<PlayerCommentsListSliver> {
                             ),
                             onLike: () {
                               context.read<CommentCubit>().likeComment(
-                                comment.id,
-                              );
+                                    comment.id,
+                                  );
                             },
                             onDislike: () {},
                             onReply: () {
@@ -259,8 +260,8 @@ class _PlayerCommentsListSliverState extends State<PlayerCommentsListSliver> {
                             },
                             onToggleReplies: () {
                               context.read<CommentCubit>().toggleReplies(
-                                comment.id,
-                              );
+                                    comment.id,
+                                  );
                             },
                             isRepliesExpanded: isExpanded,
                             isLiked: likedCommentIds.contains(comment.id),
@@ -272,8 +273,8 @@ class _PlayerCommentsListSliverState extends State<PlayerCommentsListSliver> {
                             },
                             onLoadMoreReplies: () {
                               context.read<CommentCubit>().toggleReplies(
-                                comment.id,
-                              );
+                                    comment.id,
+                                  );
                             },
                             likedReplyIds: likedCommentIds,
                           ),

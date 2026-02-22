@@ -32,15 +32,15 @@ class PlayVideo extends VideoPlayerEvent {
 
   @override
   List<Object?> get props => [
-    episodeId,
-    mediaId,
-    title,
-    posterUrl,
-    episodeTitle,
-    startPosition,
-    mediaType,
-    movie,
-  ];
+        episodeId,
+        mediaId,
+        title,
+        posterUrl,
+        episodeTitle,
+        startPosition,
+        mediaType,
+        movie,
+      ];
 }
 
 class LoadVideo extends VideoPlayerEvent {
@@ -60,12 +60,12 @@ class LoadVideo extends VideoPlayerEvent {
 
   @override
   List<Object?> get props => [
-    url,
-    subtitleUrl,
-    subtitleLang,
-    headers,
-    isQualitySwitch,
-  ];
+        url,
+        subtitleUrl,
+        subtitleLang,
+        headers,
+        isQualitySwitch,
+      ];
 }
 
 class TogglePlayPause extends VideoPlayerEvent {}
@@ -125,13 +125,13 @@ class DownloadCurrentVideo extends VideoPlayerEvent {
 
   @override
   List<Object?> get props => [
-    url,
-    fileName,
-    movieId,
-    movieTitle,
-    episodeTitle,
-    posterUrl,
-  ];
+        url,
+        fileName,
+        movieId,
+        movieTitle,
+        episodeTitle,
+        posterUrl,
+      ];
 }
 
 class SwitchServer extends VideoPlayerEvent {

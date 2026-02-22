@@ -27,10 +27,10 @@ mixin _$ExploreState {
       String category,
       int currentPage,
       bool hasMore,
-    )
-    moviesLoaded,
+    ) moviesLoaded,
     required TResult Function(String message) error,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
@@ -41,10 +41,10 @@ mixin _$ExploreState {
       String category,
       int currentPage,
       bool hasMore,
-    )?
-    moviesLoaded,
+    )? moviesLoaded,
     TResult? Function(String message)? error,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
@@ -55,11 +55,11 @@ mixin _$ExploreState {
       String category,
       int currentPage,
       bool hasMore,
-    )?
-    moviesLoaded,
+    )? moviesLoaded,
     TResult Function(String message)? error,
     required TResult orElse(),
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(ExploreInitial value) initial,
@@ -67,7 +67,8 @@ mixin _$ExploreState {
     required TResult Function(GenresLoaded value) genresLoaded,
     required TResult Function(MoviesLoaded value) moviesLoaded,
     required TResult Function(ExploreError value) error,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(ExploreInitial value)? initial,
@@ -75,7 +76,8 @@ mixin _$ExploreState {
     TResult? Function(GenresLoaded value)? genresLoaded,
     TResult? Function(MoviesLoaded value)? moviesLoaded,
     TResult? Function(ExploreError value)? error,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ExploreInitial value)? initial,
@@ -84,7 +86,8 @@ mixin _$ExploreState {
     TResult Function(MoviesLoaded value)? moviesLoaded,
     TResult Function(ExploreError value)? error,
     required TResult orElse(),
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -160,8 +163,7 @@ class _$ExploreInitialImpl implements ExploreInitial {
       String category,
       int currentPage,
       bool hasMore,
-    )
-    moviesLoaded,
+    ) moviesLoaded,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -178,8 +180,7 @@ class _$ExploreInitialImpl implements ExploreInitial {
       String category,
       int currentPage,
       bool hasMore,
-    )?
-    moviesLoaded,
+    )? moviesLoaded,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -196,8 +197,7 @@ class _$ExploreInitialImpl implements ExploreInitial {
       String category,
       int currentPage,
       bool hasMore,
-    )?
-    moviesLoaded,
+    )? moviesLoaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -303,8 +303,7 @@ class _$ExploreLoadingImpl implements ExploreLoading {
       String category,
       int currentPage,
       bool hasMore,
-    )
-    moviesLoaded,
+    ) moviesLoaded,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -321,8 +320,7 @@ class _$ExploreLoadingImpl implements ExploreLoading {
       String category,
       int currentPage,
       bool hasMore,
-    )?
-    moviesLoaded,
+    )? moviesLoaded,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -339,8 +337,7 @@ class _$ExploreLoadingImpl implements ExploreLoading {
       String category,
       int currentPage,
       bool hasMore,
-    )?
-    moviesLoaded,
+    )? moviesLoaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -424,7 +421,7 @@ class __$$GenresLoadedImplCopyWithImpl<$Res>
         genres: null == genres
             ? _value._genres
             : genres // ignore: cast_nullable_to_non_nullable
-                  as List<Genre>,
+                as List<Genre>,
       ),
     );
   }
@@ -434,7 +431,7 @@ class __$$GenresLoadedImplCopyWithImpl<$Res>
 
 class _$GenresLoadedImpl implements GenresLoaded {
   const _$GenresLoadedImpl({required final List<Genre> genres})
-    : _genres = genres;
+      : _genres = genres;
 
   final List<Genre> _genres;
   @override
@@ -480,8 +477,7 @@ class _$GenresLoadedImpl implements GenresLoaded {
       String category,
       int currentPage,
       bool hasMore,
-    )
-    moviesLoaded,
+    ) moviesLoaded,
     required TResult Function(String message) error,
   }) {
     return genresLoaded(genres);
@@ -498,8 +494,7 @@ class _$GenresLoadedImpl implements GenresLoaded {
       String category,
       int currentPage,
       bool hasMore,
-    )?
-    moviesLoaded,
+    )? moviesLoaded,
     TResult? Function(String message)? error,
   }) {
     return genresLoaded?.call(genres);
@@ -516,8 +511,7 @@ class _$GenresLoadedImpl implements GenresLoaded {
       String category,
       int currentPage,
       bool hasMore,
-    )?
-    moviesLoaded,
+    )? moviesLoaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -620,19 +614,19 @@ class __$$MoviesLoadedImplCopyWithImpl<$Res>
         movies: null == movies
             ? _value._movies
             : movies // ignore: cast_nullable_to_non_nullable
-                  as List<Movie>,
+                as List<Movie>,
         category: null == category
             ? _value.category
             : category // ignore: cast_nullable_to_non_nullable
-                  as String,
+                as String,
         currentPage: null == currentPage
             ? _value.currentPage
             : currentPage // ignore: cast_nullable_to_non_nullable
-                  as int,
+                as int,
         hasMore: null == hasMore
             ? _value.hasMore
             : hasMore // ignore: cast_nullable_to_non_nullable
-                  as bool,
+                as bool,
       ),
     );
   }
@@ -685,12 +679,12 @@ class _$MoviesLoadedImpl implements MoviesLoaded {
 
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    const DeepCollectionEquality().hash(_movies),
-    category,
-    currentPage,
-    hasMore,
-  );
+        runtimeType,
+        const DeepCollectionEquality().hash(_movies),
+        category,
+        currentPage,
+        hasMore,
+      );
 
   /// Create a copy of ExploreState
   /// with the given fields replaced by the non-null parameter values.
@@ -711,8 +705,7 @@ class _$MoviesLoadedImpl implements MoviesLoaded {
       String category,
       int currentPage,
       bool hasMore,
-    )
-    moviesLoaded,
+    ) moviesLoaded,
     required TResult Function(String message) error,
   }) {
     return moviesLoaded(movies, category, currentPage, hasMore);
@@ -729,8 +722,7 @@ class _$MoviesLoadedImpl implements MoviesLoaded {
       String category,
       int currentPage,
       bool hasMore,
-    )?
-    moviesLoaded,
+    )? moviesLoaded,
     TResult? Function(String message)? error,
   }) {
     return moviesLoaded?.call(movies, category, currentPage, hasMore);
@@ -747,8 +739,7 @@ class _$MoviesLoadedImpl implements MoviesLoaded {
       String category,
       int currentPage,
       bool hasMore,
-    )?
-    moviesLoaded,
+    )? moviesLoaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -848,7 +839,7 @@ class __$$ExploreErrorImplCopyWithImpl<$Res>
         message: null == message
             ? _value.message
             : message // ignore: cast_nullable_to_non_nullable
-                  as String,
+                as String,
       ),
     );
   }
@@ -897,8 +888,7 @@ class _$ExploreErrorImpl implements ExploreError {
       String category,
       int currentPage,
       bool hasMore,
-    )
-    moviesLoaded,
+    ) moviesLoaded,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -915,8 +905,7 @@ class _$ExploreErrorImpl implements ExploreError {
       String category,
       int currentPage,
       bool hasMore,
-    )?
-    moviesLoaded,
+    )? moviesLoaded,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -933,8 +922,7 @@ class _$ExploreErrorImpl implements ExploreError {
       String category,
       int currentPage,
       bool hasMore,
-    )?
-    moviesLoaded,
+    )? moviesLoaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {

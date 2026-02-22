@@ -44,20 +44,19 @@ class _CollapsedCommentViewContent extends StatelessWidget {
           initial: () => _buildCompactCard(context, null, 0),
           loading: () => _buildCompactCard(context, null, 0),
           error: (msg) => _buildCompactCard(context, null, 0),
-          loaded:
-              (
-                comments,
-                sortType,
-                expandedReplies,
-                isAdding,
-                likedCommentIds,
-                likingInProgress,
-                errorMessage,
-              ) {
-                final count = comments.length;
-                final topComment = comments.isNotEmpty ? comments.first : null;
-                return _buildCompactCard(context, topComment, count);
-              },
+          loaded: (
+            comments,
+            sortType,
+            expandedReplies,
+            isAdding,
+            likedCommentIds,
+            likingInProgress,
+            errorMessage,
+          ) {
+            final count = comments.length;
+            final topComment = comments.isNotEmpty ? comments.first : null;
+            return _buildCompactCard(context, topComment, count);
+          },
         );
       },
     );

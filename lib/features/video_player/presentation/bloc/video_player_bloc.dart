@@ -544,9 +544,8 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
         },
         (servers) {
           if (_isRequestStale(requestId)) return;
-          _cachedAvailableServers = servers.isNotEmpty
-              ? servers
-              : defaultServers;
+          _cachedAvailableServers =
+              servers.isNotEmpty ? servers : defaultServers;
           if (kDebugMode) {
             debugPrint('📡 Available servers: $_cachedAvailableServers');
           }

@@ -25,7 +25,8 @@ mixin _$AuthState {
     required TResult Function() unauthenticated,
     required TResult Function(String message) error,
     required TResult Function(String email) passwordResetEmailSent,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
@@ -34,7 +35,8 @@ mixin _$AuthState {
     TResult? Function()? unauthenticated,
     TResult? Function(String message)? error,
     TResult? Function(String email)? passwordResetEmailSent,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
@@ -44,7 +46,8 @@ mixin _$AuthState {
     TResult Function(String message)? error,
     TResult Function(String email)? passwordResetEmailSent,
     required TResult orElse(),
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(AuthInitial value) initial,
@@ -53,8 +56,9 @@ mixin _$AuthState {
     required TResult Function(Unauthenticated value) unauthenticated,
     required TResult Function(AuthError value) error,
     required TResult Function(PasswordResetEmailSent value)
-    passwordResetEmailSent,
-  }) => throw _privateConstructorUsedError;
+        passwordResetEmailSent,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(AuthInitial value)? initial,
@@ -63,7 +67,8 @@ mixin _$AuthState {
     TResult? Function(Unauthenticated value)? unauthenticated,
     TResult? Function(AuthError value)? error,
     TResult? Function(PasswordResetEmailSent value)? passwordResetEmailSent,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(AuthInitial value)? initial,
@@ -73,7 +78,8 @@ mixin _$AuthState {
     TResult Function(AuthError value)? error,
     TResult Function(PasswordResetEmailSent value)? passwordResetEmailSent,
     required TResult orElse(),
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -188,7 +194,7 @@ class _$AuthInitialImpl implements AuthInitial {
     required TResult Function(Unauthenticated value) unauthenticated,
     required TResult Function(AuthError value) error,
     required TResult Function(PasswordResetEmailSent value)
-    passwordResetEmailSent,
+        passwordResetEmailSent,
   }) {
     return initial(this);
   }
@@ -320,7 +326,7 @@ class _$AuthLoadingImpl implements AuthLoading {
     required TResult Function(Unauthenticated value) unauthenticated,
     required TResult Function(AuthError value) error,
     required TResult Function(PasswordResetEmailSent value)
-    passwordResetEmailSent,
+        passwordResetEmailSent,
   }) {
     return loading(this);
   }
@@ -391,7 +397,7 @@ class __$$AuthenticatedImplCopyWithImpl<$Res>
         user: null == user
             ? _value.user
             : user // ignore: cast_nullable_to_non_nullable
-                  as AppUser,
+                as AppUser,
       ),
     );
   }
@@ -491,7 +497,7 @@ class _$AuthenticatedImpl implements Authenticated {
     required TResult Function(Unauthenticated value) unauthenticated,
     required TResult Function(AuthError value) error,
     required TResult Function(PasswordResetEmailSent value)
-    passwordResetEmailSent,
+        passwordResetEmailSent,
   }) {
     return authenticated(this);
   }
@@ -632,7 +638,7 @@ class _$UnauthenticatedImpl implements Unauthenticated {
     required TResult Function(Unauthenticated value) unauthenticated,
     required TResult Function(AuthError value) error,
     required TResult Function(PasswordResetEmailSent value)
-    passwordResetEmailSent,
+        passwordResetEmailSent,
   }) {
     return unauthenticated(this);
   }
@@ -701,7 +707,7 @@ class __$$AuthErrorImplCopyWithImpl<$Res>
         message: null == message
             ? _value.message
             : message // ignore: cast_nullable_to_non_nullable
-                  as String,
+                as String,
       ),
     );
   }
@@ -791,7 +797,7 @@ class _$AuthErrorImpl implements AuthError {
     required TResult Function(Unauthenticated value) unauthenticated,
     required TResult Function(AuthError value) error,
     required TResult Function(PasswordResetEmailSent value)
-    passwordResetEmailSent,
+        passwordResetEmailSent,
   }) {
     return error(this);
   }
@@ -868,7 +874,7 @@ class __$$PasswordResetEmailSentImplCopyWithImpl<$Res>
         email: null == email
             ? _value.email
             : email // ignore: cast_nullable_to_non_nullable
-                  as String,
+                as String,
       ),
     );
   }
@@ -904,11 +910,11 @@ class _$PasswordResetEmailSentImpl implements PasswordResetEmailSent {
   @override
   @pragma('vm:prefer-inline')
   _$$PasswordResetEmailSentImplCopyWith<_$PasswordResetEmailSentImpl>
-  get copyWith =>
-      __$$PasswordResetEmailSentImplCopyWithImpl<_$PasswordResetEmailSentImpl>(
-        this,
-        _$identity,
-      );
+      get copyWith => __$$PasswordResetEmailSentImplCopyWithImpl<
+              _$PasswordResetEmailSentImpl>(
+            this,
+            _$identity,
+          );
 
   @override
   @optionalTypeArgs
@@ -962,7 +968,7 @@ class _$PasswordResetEmailSentImpl implements PasswordResetEmailSent {
     required TResult Function(Unauthenticated value) unauthenticated,
     required TResult Function(AuthError value) error,
     required TResult Function(PasswordResetEmailSent value)
-    passwordResetEmailSent,
+        passwordResetEmailSent,
   }) {
     return passwordResetEmailSent(this);
   }
@@ -1008,5 +1014,5 @@ abstract class PasswordResetEmailSent implements AuthState {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PasswordResetEmailSentImplCopyWith<_$PasswordResetEmailSentImpl>
-  get copyWith => throw _privateConstructorUsedError;
+      get copyWith => throw _privateConstructorUsedError;
 }

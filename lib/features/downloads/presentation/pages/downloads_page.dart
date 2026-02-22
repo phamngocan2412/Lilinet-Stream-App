@@ -83,22 +83,22 @@ class _DownloadsPageState extends State<DownloadsPage> {
 
   void _playDownload(DownloadedFile file) {
     context.read<VideoPlayerBloc>().add(
-      PlayVideo(
-        episodeId: file.movieId ?? file.id,
-        mediaId: file.movieId ?? file.id,
-        title: file.displayTitle,
-        posterUrl: file.posterUrl,
-        episodeTitle: file.displaySubtitle,
-        mediaType: 'Movie',
-      ),
-    );
+          PlayVideo(
+            episodeId: file.movieId ?? file.id,
+            mediaId: file.movieId ?? file.id,
+            title: file.displayTitle,
+            posterUrl: file.posterUrl,
+            episodeTitle: file.displaySubtitle,
+            mediaType: 'Movie',
+          ),
+        );
 
     // After playing, we need to load the local file
     Future.delayed(const Duration(milliseconds: 500), () {
       if (mounted) {
         context.read<VideoPlayerBloc>().add(
-          LoadVideo(url: 'file://${file.filePath}', headers: const {}),
-        );
+              LoadVideo(url: 'file://${file.filePath}', headers: const {}),
+            );
       }
     });
   }

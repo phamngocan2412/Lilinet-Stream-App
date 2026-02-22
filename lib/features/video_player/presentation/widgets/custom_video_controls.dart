@@ -502,9 +502,8 @@ class _CustomVideoControlsState extends State<CustomVideoControls> {
                     color: isSelected ? errorColor : colorScheme.onSurface,
                   ),
                 ),
-                trailing: isSelected
-                    ? Icon(Icons.check, color: errorColor)
-                    : null,
+                trailing:
+                    isSelected ? Icon(Icons.check, color: errorColor) : null,
                 onTap: () {
                   widget.onSpeedChanged(speed);
                   Navigator.pop(context);

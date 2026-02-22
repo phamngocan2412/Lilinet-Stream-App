@@ -50,11 +50,11 @@ class MovieInfoSection extends StatelessWidget {
               Text(
                 movie.description!,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Theme.of(
-                    context,
-                  ).colorScheme.onSurface.withOpacity(0.8),
-                  height: 1.6,
-                ),
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withOpacity(0.8),
+                      height: 1.6,
+                    ),
               ),
               const SizedBox(height: 24),
             ],

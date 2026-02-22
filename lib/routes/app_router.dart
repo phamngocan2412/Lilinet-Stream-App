@@ -66,14 +66,12 @@ class AppRouter {
               final type = state.uri.queryParameters['type'] ?? 'TV Series';
               final episodeId = state.uri.queryParameters['episode'];
               final timestampStr = state.uri.queryParameters['time'];
-              final timestamp = timestampStr != null
-                  ? int.tryParse(timestampStr)
-                  : null;
+              final timestamp =
+                  timestampStr != null ? int.tryParse(timestampStr) : null;
 
               // Check if a Movie object was passed in 'extra'
-              final moviePreview = state.extra is Movie
-                  ? state.extra as Movie
-                  : null;
+              final moviePreview =
+                  state.extra is Movie ? state.extra as Movie : null;
               return MovieDetailsPage(
                 movieId: id,
                 mediaType: type,

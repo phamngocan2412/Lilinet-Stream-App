@@ -26,10 +26,10 @@ mixin _$StreamingState {
       String selectedServer,
       String? selectedQuality,
       List<Subtitle>? subtitles,
-    )
-    loaded,
+    ) loaded,
     required TResult Function(String message) error,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
@@ -39,10 +39,10 @@ mixin _$StreamingState {
       String selectedServer,
       String? selectedQuality,
       List<Subtitle>? subtitles,
-    )?
-    loaded,
+    )? loaded,
     TResult? Function(String message)? error,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
@@ -52,25 +52,27 @@ mixin _$StreamingState {
       String selectedServer,
       String? selectedQuality,
       List<Subtitle>? subtitles,
-    )?
-    loaded,
+    )? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(StreamingInitial value) initial,
     required TResult Function(StreamingLoading value) loading,
     required TResult Function(StreamingLoaded value) loaded,
     required TResult Function(StreamingError value) error,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(StreamingInitial value)? initial,
     TResult? Function(StreamingLoading value)? loading,
     TResult? Function(StreamingLoaded value)? loaded,
     TResult? Function(StreamingError value)? error,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(StreamingInitial value)? initial,
@@ -78,7 +80,8 @@ mixin _$StreamingState {
     TResult Function(StreamingLoaded value)? loaded,
     TResult Function(StreamingError value)? error,
     required TResult orElse(),
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -153,8 +156,7 @@ class _$StreamingInitialImpl implements StreamingInitial {
       String selectedServer,
       String? selectedQuality,
       List<Subtitle>? subtitles,
-    )
-    loaded,
+    ) loaded,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -170,8 +172,7 @@ class _$StreamingInitialImpl implements StreamingInitial {
       String selectedServer,
       String? selectedQuality,
       List<Subtitle>? subtitles,
-    )?
-    loaded,
+    )? loaded,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -187,8 +188,7 @@ class _$StreamingInitialImpl implements StreamingInitial {
       String selectedServer,
       String? selectedQuality,
       List<Subtitle>? subtitles,
-    )?
-    loaded,
+    )? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -290,8 +290,7 @@ class _$StreamingLoadingImpl implements StreamingLoading {
       String selectedServer,
       String? selectedQuality,
       List<Subtitle>? subtitles,
-    )
-    loaded,
+    ) loaded,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -307,8 +306,7 @@ class _$StreamingLoadingImpl implements StreamingLoading {
       String selectedServer,
       String? selectedQuality,
       List<Subtitle>? subtitles,
-    )?
-    loaded,
+    )? loaded,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -324,8 +322,7 @@ class _$StreamingLoadingImpl implements StreamingLoading {
       String selectedServer,
       String? selectedQuality,
       List<Subtitle>? subtitles,
-    )?
-    loaded,
+    )? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -416,19 +413,19 @@ class __$$StreamingLoadedImplCopyWithImpl<$Res>
         links: null == links
             ? _value._links
             : links // ignore: cast_nullable_to_non_nullable
-                  as List<StreamingLink>,
+                as List<StreamingLink>,
         selectedServer: null == selectedServer
             ? _value.selectedServer
             : selectedServer // ignore: cast_nullable_to_non_nullable
-                  as String,
+                as String,
         selectedQuality: freezed == selectedQuality
             ? _value.selectedQuality
             : selectedQuality // ignore: cast_nullable_to_non_nullable
-                  as String?,
+                as String?,
         subtitles: freezed == subtitles
             ? _value._subtitles
             : subtitles // ignore: cast_nullable_to_non_nullable
-                  as List<Subtitle>?,
+                as List<Subtitle>?,
       ),
     );
   }
@@ -442,8 +439,8 @@ class _$StreamingLoadedImpl implements StreamingLoaded {
     required this.selectedServer,
     this.selectedQuality,
     final List<Subtitle>? subtitles,
-  }) : _links = links,
-       _subtitles = subtitles;
+  })  : _links = links,
+        _subtitles = subtitles;
 
   final List<StreamingLink> _links;
   @override
@@ -490,12 +487,12 @@ class _$StreamingLoadedImpl implements StreamingLoaded {
 
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    const DeepCollectionEquality().hash(_links),
-    selectedServer,
-    selectedQuality,
-    const DeepCollectionEquality().hash(_subtitles),
-  );
+        runtimeType,
+        const DeepCollectionEquality().hash(_links),
+        selectedServer,
+        selectedQuality,
+        const DeepCollectionEquality().hash(_subtitles),
+      );
 
   /// Create a copy of StreamingState
   /// with the given fields replaced by the non-null parameter values.
@@ -518,8 +515,7 @@ class _$StreamingLoadedImpl implements StreamingLoaded {
       String selectedServer,
       String? selectedQuality,
       List<Subtitle>? subtitles,
-    )
-    loaded,
+    ) loaded,
     required TResult Function(String message) error,
   }) {
     return loaded(links, selectedServer, selectedQuality, subtitles);
@@ -535,8 +531,7 @@ class _$StreamingLoadedImpl implements StreamingLoaded {
       String selectedServer,
       String? selectedQuality,
       List<Subtitle>? subtitles,
-    )?
-    loaded,
+    )? loaded,
     TResult? Function(String message)? error,
   }) {
     return loaded?.call(links, selectedServer, selectedQuality, subtitles);
@@ -552,8 +547,7 @@ class _$StreamingLoadedImpl implements StreamingLoaded {
       String selectedServer,
       String? selectedQuality,
       List<Subtitle>? subtitles,
-    )?
-    loaded,
+    )? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -650,7 +644,7 @@ class __$$StreamingErrorImplCopyWithImpl<$Res>
         null == message
             ? _value.message
             : message // ignore: cast_nullable_to_non_nullable
-                  as String,
+                as String,
       ),
     );
   }
@@ -701,8 +695,7 @@ class _$StreamingErrorImpl implements StreamingError {
       String selectedServer,
       String? selectedQuality,
       List<Subtitle>? subtitles,
-    )
-    loaded,
+    ) loaded,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -718,8 +711,7 @@ class _$StreamingErrorImpl implements StreamingError {
       String selectedServer,
       String? selectedQuality,
       List<Subtitle>? subtitles,
-    )?
-    loaded,
+    )? loaded,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -735,8 +727,7 @@ class _$StreamingErrorImpl implements StreamingError {
       String selectedServer,
       String? selectedQuality,
       List<Subtitle>? subtitles,
-    )?
-    loaded,
+    )? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {

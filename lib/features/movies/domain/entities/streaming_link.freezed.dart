@@ -66,24 +66,23 @@ class _$StreamingLinkCopyWithImpl<$Res, $Val extends StreamingLink>
   }) {
     return _then(
       _value.copyWith(
-            url: null == url
-                ? _value.url
-                : url // ignore: cast_nullable_to_non_nullable
-                      as String,
-            quality: null == quality
-                ? _value.quality
-                : quality // ignore: cast_nullable_to_non_nullable
-                      as String,
-            isM3U8: null == isM3U8
-                ? _value.isM3U8
-                : isM3U8 // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            headers: freezed == headers
-                ? _value.headers
-                : headers // ignore: cast_nullable_to_non_nullable
-                      as Map<String, String>?,
-          )
-          as $Val,
+        url: null == url
+            ? _value.url
+            : url // ignore: cast_nullable_to_non_nullable
+                as String,
+        quality: null == quality
+            ? _value.quality
+            : quality // ignore: cast_nullable_to_non_nullable
+                as String,
+        isM3U8: null == isM3U8
+            ? _value.isM3U8
+            : isM3U8 // ignore: cast_nullable_to_non_nullable
+                as bool,
+        headers: freezed == headers
+            ? _value.headers
+            : headers // ignore: cast_nullable_to_non_nullable
+                as Map<String, String>?,
+      ) as $Val,
     );
   }
 }
@@ -129,19 +128,19 @@ class __$$StreamingLinkImplCopyWithImpl<$Res>
         url: null == url
             ? _value.url
             : url // ignore: cast_nullable_to_non_nullable
-                  as String,
+                as String,
         quality: null == quality
             ? _value.quality
             : quality // ignore: cast_nullable_to_non_nullable
-                  as String,
+                as String,
         isM3U8: null == isM3U8
             ? _value.isM3U8
             : isM3U8 // ignore: cast_nullable_to_non_nullable
-                  as bool,
+                as bool,
         headers: freezed == headers
             ? _value._headers
             : headers // ignore: cast_nullable_to_non_nullable
-                  as Map<String, String>?,
+                as Map<String, String>?,
       ),
     );
   }
@@ -191,12 +190,12 @@ class _$StreamingLinkImpl implements _StreamingLink {
 
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    url,
-    quality,
-    isM3U8,
-    const DeepCollectionEquality().hash(_headers),
-  );
+        runtimeType,
+        url,
+        quality,
+        isM3U8,
+        const DeepCollectionEquality().hash(_headers),
+      );
 
   /// Create a copy of StreamingLink
   /// with the given fields replaced by the non-null parameter values.

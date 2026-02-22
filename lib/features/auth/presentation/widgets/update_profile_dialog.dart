@@ -55,11 +55,11 @@ class _UpdateProfileDialogState extends State<UpdateProfileDialog> {
 
   void _handleSubmit() {
     context.read<AuthBloc>().add(
-      UpdateProfileRequested(
-        displayName: _nameController.text.trim(),
-        avatarUrl: _avatarController.text.trim(),
-      ),
-    );
+          UpdateProfileRequested(
+            displayName: _nameController.text.trim(),
+            avatarUrl: _avatarController.text.trim(),
+          ),
+        );
   }
 
   @override
@@ -131,9 +131,8 @@ class _UpdateProfileDialogState extends State<UpdateProfileDialog> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       TextButton(
-                        onPressed: isLoading
-                            ? null
-                            : () => Navigator.pop(context),
+                        onPressed:
+                            isLoading ? null : () => Navigator.pop(context),
                         child: Text(l10n.cancel),
                       ),
                       const SizedBox(width: 8),

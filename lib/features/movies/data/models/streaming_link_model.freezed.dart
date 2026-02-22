@@ -79,24 +79,23 @@ class _$StreamingLinkModelCopyWithImpl<$Res, $Val extends StreamingLinkModel>
   }) {
     return _then(
       _value.copyWith(
-            url: null == url
-                ? _value.url
-                : url // ignore: cast_nullable_to_non_nullable
-                      as String,
-            quality: null == quality
-                ? _value.quality
-                : quality // ignore: cast_nullable_to_non_nullable
-                      as String,
-            isM3U8: null == isM3U8
-                ? _value.isM3U8
-                : isM3U8 // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            headers: freezed == headers
-                ? _value.headers
-                : headers // ignore: cast_nullable_to_non_nullable
-                      as Map<String, String>?,
-          )
-          as $Val,
+        url: null == url
+            ? _value.url
+            : url // ignore: cast_nullable_to_non_nullable
+                as String,
+        quality: null == quality
+            ? _value.quality
+            : quality // ignore: cast_nullable_to_non_nullable
+                as String,
+        isM3U8: null == isM3U8
+            ? _value.isM3U8
+            : isM3U8 // ignore: cast_nullable_to_non_nullable
+                as bool,
+        headers: freezed == headers
+            ? _value.headers
+            : headers // ignore: cast_nullable_to_non_nullable
+                as Map<String, String>?,
+      ) as $Val,
     );
   }
 }
@@ -142,19 +141,19 @@ class __$$StreamingLinkModelImplCopyWithImpl<$Res>
         url: null == url
             ? _value.url
             : url // ignore: cast_nullable_to_non_nullable
-                  as String,
+                as String,
         quality: null == quality
             ? _value.quality
             : quality // ignore: cast_nullable_to_non_nullable
-                  as String,
+                as String,
         isM3U8: null == isM3U8
             ? _value.isM3U8
             : isM3U8 // ignore: cast_nullable_to_non_nullable
-                  as bool,
+                as bool,
         headers: freezed == headers
             ? _value._headers
             : headers // ignore: cast_nullable_to_non_nullable
-                  as Map<String, String>?,
+                as Map<String, String>?,
       ),
     );
   }
@@ -168,8 +167,8 @@ class _$StreamingLinkModelImpl extends _StreamingLinkModel {
     @HiveField(1) @AnyToStringConverter() required this.quality,
     @HiveField(2) required this.isM3U8,
     @HiveField(3) final Map<String, String>? headers,
-  }) : _headers = headers,
-       super._();
+  })  : _headers = headers,
+        super._();
 
   factory _$StreamingLinkModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$StreamingLinkModelImplFromJson(json);
@@ -215,12 +214,12 @@ class _$StreamingLinkModelImpl extends _StreamingLinkModel {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    url,
-    quality,
-    isM3U8,
-    const DeepCollectionEquality().hash(_headers),
-  );
+        runtimeType,
+        url,
+        quality,
+        isM3U8,
+        const DeepCollectionEquality().hash(_headers),
+      );
 
   /// Create a copy of StreamingLinkModel
   /// with the given fields replaced by the non-null parameter values.
@@ -327,16 +326,15 @@ class _$SubtitleModelCopyWithImpl<$Res, $Val extends SubtitleModel>
   $Res call({Object? url = null, Object? lang = null}) {
     return _then(
       _value.copyWith(
-            url: null == url
-                ? _value.url
-                : url // ignore: cast_nullable_to_non_nullable
-                      as String,
-            lang: null == lang
-                ? _value.lang
-                : lang // ignore: cast_nullable_to_non_nullable
-                      as String,
-          )
-          as $Val,
+        url: null == url
+            ? _value.url
+            : url // ignore: cast_nullable_to_non_nullable
+                as String,
+        lang: null == lang
+            ? _value.lang
+            : lang // ignore: cast_nullable_to_non_nullable
+                as String,
+      ) as $Val,
     );
   }
 }
@@ -375,11 +373,11 @@ class __$$SubtitleModelImplCopyWithImpl<$Res>
         url: null == url
             ? _value.url
             : url // ignore: cast_nullable_to_non_nullable
-                  as String,
+                as String,
         lang: null == lang
             ? _value.lang
             : lang // ignore: cast_nullable_to_non_nullable
-                  as String,
+                as String,
       ),
     );
   }
@@ -504,10 +502,8 @@ abstract class $StreamingResponseModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$StreamingResponseModelCopyWithImpl<
-  $Res,
-  $Val extends StreamingResponseModel
->
+class _$StreamingResponseModelCopyWithImpl<$Res,
+        $Val extends StreamingResponseModel>
     implements $StreamingResponseModelCopyWith<$Res> {
   _$StreamingResponseModelCopyWithImpl(this._value, this._then);
 
@@ -527,20 +523,19 @@ class _$StreamingResponseModelCopyWithImpl<
   }) {
     return _then(
       _value.copyWith(
-            sources: null == sources
-                ? _value.sources
-                : sources // ignore: cast_nullable_to_non_nullable
-                      as List<StreamingLinkModel>,
-            headers: freezed == headers
-                ? _value.headers
-                : headers // ignore: cast_nullable_to_non_nullable
-                      as Map<String, String>?,
-            subtitles: freezed == subtitles
-                ? _value.subtitles
-                : subtitles // ignore: cast_nullable_to_non_nullable
-                      as List<SubtitleModel>?,
-          )
-          as $Val,
+        sources: null == sources
+            ? _value.sources
+            : sources // ignore: cast_nullable_to_non_nullable
+                as List<StreamingLinkModel>,
+        headers: freezed == headers
+            ? _value.headers
+            : headers // ignore: cast_nullable_to_non_nullable
+                as Map<String, String>?,
+        subtitles: freezed == subtitles
+            ? _value.subtitles
+            : subtitles // ignore: cast_nullable_to_non_nullable
+                as List<SubtitleModel>?,
+      ) as $Val,
     );
   }
 }
@@ -563,8 +558,8 @@ abstract class _$$StreamingResponseModelImplCopyWith<$Res>
 
 /// @nodoc
 class __$$StreamingResponseModelImplCopyWithImpl<$Res>
-    extends
-        _$StreamingResponseModelCopyWithImpl<$Res, _$StreamingResponseModelImpl>
+    extends _$StreamingResponseModelCopyWithImpl<$Res,
+        _$StreamingResponseModelImpl>
     implements _$$StreamingResponseModelImplCopyWith<$Res> {
   __$$StreamingResponseModelImplCopyWithImpl(
     _$StreamingResponseModelImpl _value,
@@ -585,15 +580,15 @@ class __$$StreamingResponseModelImplCopyWithImpl<$Res>
         sources: null == sources
             ? _value._sources
             : sources // ignore: cast_nullable_to_non_nullable
-                  as List<StreamingLinkModel>,
+                as List<StreamingLinkModel>,
         headers: freezed == headers
             ? _value._headers
             : headers // ignore: cast_nullable_to_non_nullable
-                  as Map<String, String>?,
+                as Map<String, String>?,
         subtitles: freezed == subtitles
             ? _value._subtitles
             : subtitles // ignore: cast_nullable_to_non_nullable
-                  as List<SubtitleModel>?,
+                as List<SubtitleModel>?,
       ),
     );
   }
@@ -606,9 +601,9 @@ class _$StreamingResponseModelImpl implements _StreamingResponseModel {
     @HiveField(0) required final List<StreamingLinkModel> sources,
     @HiveField(1) final Map<String, String>? headers,
     @HiveField(2) final List<SubtitleModel>? subtitles,
-  }) : _sources = sources,
-       _headers = headers,
-       _subtitles = subtitles;
+  })  : _sources = sources,
+        _headers = headers,
+        _subtitles = subtitles;
 
   factory _$StreamingResponseModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$StreamingResponseModelImplFromJson(json);
@@ -665,11 +660,11 @@ class _$StreamingResponseModelImpl implements _StreamingResponseModel {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    const DeepCollectionEquality().hash(_sources),
-    const DeepCollectionEquality().hash(_headers),
-    const DeepCollectionEquality().hash(_subtitles),
-  );
+        runtimeType,
+        const DeepCollectionEquality().hash(_sources),
+        const DeepCollectionEquality().hash(_headers),
+        const DeepCollectionEquality().hash(_subtitles),
+      );
 
   /// Create a copy of StreamingResponseModel
   /// with the given fields replaced by the non-null parameter values.
@@ -677,11 +672,11 @@ class _$StreamingResponseModelImpl implements _StreamingResponseModel {
   @override
   @pragma('vm:prefer-inline')
   _$$StreamingResponseModelImplCopyWith<_$StreamingResponseModelImpl>
-  get copyWith =>
-      __$$StreamingResponseModelImplCopyWithImpl<_$StreamingResponseModelImpl>(
-        this,
-        _$identity,
-      );
+      get copyWith => __$$StreamingResponseModelImplCopyWithImpl<
+              _$StreamingResponseModelImpl>(
+            this,
+            _$identity,
+          );
 
   @override
   Map<String, dynamic> toJson() {
@@ -714,7 +709,7 @@ abstract class _StreamingResponseModel implements StreamingResponseModel {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$StreamingResponseModelImplCopyWith<_$StreamingResponseModelImpl>
-  get copyWith => throw _privateConstructorUsedError;
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 ServerInfoModel _$ServerInfoModelFromJson(Map<String, dynamic> json) {
@@ -763,16 +758,15 @@ class _$ServerInfoModelCopyWithImpl<$Res, $Val extends ServerInfoModel>
   $Res call({Object? name = null, Object? url = null}) {
     return _then(
       _value.copyWith(
-            name: null == name
-                ? _value.name
-                : name // ignore: cast_nullable_to_non_nullable
-                      as String,
-            url: null == url
-                ? _value.url
-                : url // ignore: cast_nullable_to_non_nullable
-                      as String,
-          )
-          as $Val,
+        name: null == name
+            ? _value.name
+            : name // ignore: cast_nullable_to_non_nullable
+                as String,
+        url: null == url
+            ? _value.url
+            : url // ignore: cast_nullable_to_non_nullable
+                as String,
+      ) as $Val,
     );
   }
 }
@@ -808,11 +802,11 @@ class __$$ServerInfoModelImplCopyWithImpl<$Res>
         name: null == name
             ? _value.name
             : name // ignore: cast_nullable_to_non_nullable
-                  as String,
+                as String,
         url: null == url
             ? _value.url
             : url // ignore: cast_nullable_to_non_nullable
-                  as String,
+                as String,
       ),
     );
   }

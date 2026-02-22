@@ -25,7 +25,8 @@ mixin _$SettingsState {
     required TResult Function() saving,
     required TResult Function(AppSettings settings) saved,
     required TResult Function(String message) error,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
@@ -34,7 +35,8 @@ mixin _$SettingsState {
     TResult? Function()? saving,
     TResult? Function(AppSettings settings)? saved,
     TResult? Function(String message)? error,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
@@ -44,7 +46,8 @@ mixin _$SettingsState {
     TResult Function(AppSettings settings)? saved,
     TResult Function(String message)? error,
     required TResult orElse(),
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(SettingsInitial value) initial,
@@ -53,7 +56,8 @@ mixin _$SettingsState {
     required TResult Function(SettingsSaving value) saving,
     required TResult Function(SettingsSaved value) saved,
     required TResult Function(SettingsError value) error,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(SettingsInitial value)? initial,
@@ -62,7 +66,8 @@ mixin _$SettingsState {
     TResult? Function(SettingsSaving value)? saving,
     TResult? Function(SettingsSaved value)? saved,
     TResult? Function(SettingsError value)? error,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(SettingsInitial value)? initial,
@@ -72,7 +77,8 @@ mixin _$SettingsState {
     TResult Function(SettingsSaved value)? saved,
     TResult Function(SettingsError value)? error,
     required TResult orElse(),
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -388,7 +394,7 @@ class __$$SettingsLoadedImplCopyWithImpl<$Res>
         settings: null == settings
             ? _value.settings
             : settings // ignore: cast_nullable_to_non_nullable
-                  as AppSettings,
+                as AppSettings,
       ),
     );
   }
@@ -690,7 +696,7 @@ class __$$SettingsSavedImplCopyWithImpl<$Res>
         settings: null == settings
             ? _value.settings
             : settings // ignore: cast_nullable_to_non_nullable
-                  as AppSettings,
+                as AppSettings,
       ),
     );
   }
@@ -858,7 +864,7 @@ class __$$SettingsErrorImplCopyWithImpl<$Res>
         message: null == message
             ? _value.message
             : message // ignore: cast_nullable_to_non_nullable
-                  as String,
+                as String,
       ),
     );
   }

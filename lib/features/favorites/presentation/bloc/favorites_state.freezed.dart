@@ -25,41 +25,45 @@ mixin _$FavoritesState {
       List<Favorite> favorites,
       int currentPage,
       bool hasMore,
-    )
-    loaded,
+    ) loaded,
     required TResult Function(String message) error,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<Favorite> favorites, int currentPage, bool hasMore)?
-    loaded,
+        loaded,
     TResult? Function(String message)? error,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<Favorite> favorites, int currentPage, bool hasMore)?
-    loaded,
+        loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(FavoritesInitial value) initial,
     required TResult Function(FavoritesLoading value) loading,
     required TResult Function(FavoritesLoaded value) loaded,
     required TResult Function(FavoritesError value) error,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(FavoritesInitial value)? initial,
     TResult? Function(FavoritesLoading value)? loading,
     TResult? Function(FavoritesLoaded value)? loaded,
     TResult? Function(FavoritesError value)? error,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(FavoritesInitial value)? initial,
@@ -67,7 +71,8 @@ mixin _$FavoritesState {
     TResult Function(FavoritesLoaded value)? loaded,
     TResult Function(FavoritesError value)? error,
     required TResult orElse(),
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -141,8 +146,7 @@ class _$FavoritesInitialImpl implements FavoritesInitial {
       List<Favorite> favorites,
       int currentPage,
       bool hasMore,
-    )
-    loaded,
+    ) loaded,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -154,7 +158,7 @@ class _$FavoritesInitialImpl implements FavoritesInitial {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<Favorite> favorites, int currentPage, bool hasMore)?
-    loaded,
+        loaded,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -166,7 +170,7 @@ class _$FavoritesInitialImpl implements FavoritesInitial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<Favorite> favorites, int currentPage, bool hasMore)?
-    loaded,
+        loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -267,8 +271,7 @@ class _$FavoritesLoadingImpl implements FavoritesLoading {
       List<Favorite> favorites,
       int currentPage,
       bool hasMore,
-    )
-    loaded,
+    ) loaded,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -280,7 +283,7 @@ class _$FavoritesLoadingImpl implements FavoritesLoading {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<Favorite> favorites, int currentPage, bool hasMore)?
-    loaded,
+        loaded,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -292,7 +295,7 @@ class _$FavoritesLoadingImpl implements FavoritesLoading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<Favorite> favorites, int currentPage, bool hasMore)?
-    loaded,
+        loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -377,15 +380,15 @@ class __$$FavoritesLoadedImplCopyWithImpl<$Res>
         favorites: null == favorites
             ? _value._favorites
             : favorites // ignore: cast_nullable_to_non_nullable
-                  as List<Favorite>,
+                as List<Favorite>,
         currentPage: null == currentPage
             ? _value.currentPage
             : currentPage // ignore: cast_nullable_to_non_nullable
-                  as int,
+                as int,
         hasMore: null == hasMore
             ? _value.hasMore
             : hasMore // ignore: cast_nullable_to_non_nullable
-                  as bool,
+                as bool,
       ),
     );
   }
@@ -436,11 +439,11 @@ class _$FavoritesLoadedImpl implements FavoritesLoaded {
 
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    const DeepCollectionEquality().hash(_favorites),
-    currentPage,
-    hasMore,
-  );
+        runtimeType,
+        const DeepCollectionEquality().hash(_favorites),
+        currentPage,
+        hasMore,
+      );
 
   /// Create a copy of FavoritesState
   /// with the given fields replaced by the non-null parameter values.
@@ -462,8 +465,7 @@ class _$FavoritesLoadedImpl implements FavoritesLoaded {
       List<Favorite> favorites,
       int currentPage,
       bool hasMore,
-    )
-    loaded,
+    ) loaded,
     required TResult Function(String message) error,
   }) {
     return loaded(favorites, currentPage, hasMore);
@@ -475,7 +477,7 @@ class _$FavoritesLoadedImpl implements FavoritesLoaded {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<Favorite> favorites, int currentPage, bool hasMore)?
-    loaded,
+        loaded,
     TResult? Function(String message)? error,
   }) {
     return loaded?.call(favorites, currentPage, hasMore);
@@ -487,7 +489,7 @@ class _$FavoritesLoadedImpl implements FavoritesLoaded {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<Favorite> favorites, int currentPage, bool hasMore)?
-    loaded,
+        loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -582,7 +584,7 @@ class __$$FavoritesErrorImplCopyWithImpl<$Res>
         message: null == message
             ? _value.message
             : message // ignore: cast_nullable_to_non_nullable
-                  as String,
+                as String,
       ),
     );
   }
@@ -632,8 +634,7 @@ class _$FavoritesErrorImpl implements FavoritesError {
       List<Favorite> favorites,
       int currentPage,
       bool hasMore,
-    )
-    loaded,
+    ) loaded,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -645,7 +646,7 @@ class _$FavoritesErrorImpl implements FavoritesError {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<Favorite> favorites, int currentPage, bool hasMore)?
-    loaded,
+        loaded,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -657,7 +658,7 @@ class _$FavoritesErrorImpl implements FavoritesError {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<Favorite> favorites, int currentPage, bool hasMore)?
-    loaded,
+        loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {

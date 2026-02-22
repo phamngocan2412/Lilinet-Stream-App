@@ -67,16 +67,15 @@ class _$SeasonModelCopyWithImpl<$Res, $Val extends SeasonModel>
   $Res call({Object? season = null, Object? episodes = null}) {
     return _then(
       _value.copyWith(
-            season: null == season
-                ? _value.season
-                : season // ignore: cast_nullable_to_non_nullable
-                      as int,
-            episodes: null == episodes
-                ? _value.episodes
-                : episodes // ignore: cast_nullable_to_non_nullable
-                      as List<EpisodeModel>,
-          )
-          as $Val,
+        season: null == season
+            ? _value.season
+            : season // ignore: cast_nullable_to_non_nullable
+                as int,
+        episodes: null == episodes
+            ? _value.episodes
+            : episodes // ignore: cast_nullable_to_non_nullable
+                as List<EpisodeModel>,
+      ) as $Val,
     );
   }
 }
@@ -115,11 +114,11 @@ class __$$SeasonModelImplCopyWithImpl<$Res>
         season: null == season
             ? _value.season
             : season // ignore: cast_nullable_to_non_nullable
-                  as int,
+                as int,
         episodes: null == episodes
             ? _value._episodes
             : episodes // ignore: cast_nullable_to_non_nullable
-                  as List<EpisodeModel>,
+                as List<EpisodeModel>,
       ),
     );
   }
@@ -167,10 +166,10 @@ class _$SeasonModelImpl implements _SeasonModel {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    season,
-    const DeepCollectionEquality().hash(_episodes),
-  );
+        runtimeType,
+        season,
+        const DeepCollectionEquality().hash(_episodes),
+      );
 
   /// Create a copy of SeasonModel
   /// with the given fields replaced by the non-null parameter values.

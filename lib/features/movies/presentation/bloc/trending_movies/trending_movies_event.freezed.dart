@@ -21,34 +21,40 @@ mixin _$TrendingMoviesEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(String type) load,
     required TResult Function() refresh,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String type)? load,
     TResult? Function()? refresh,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String type)? load,
     TResult Function()? refresh,
     required TResult orElse(),
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(LoadTrendingMovies value) load,
     required TResult Function(RefreshTrendingMovies value) refresh,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LoadTrendingMovies value)? load,
     TResult? Function(RefreshTrendingMovies value)? refresh,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoadTrendingMovies value)? load,
     TResult Function(RefreshTrendingMovies value)? refresh,
     required TResult orElse(),
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -102,7 +108,7 @@ class __$$LoadTrendingMoviesImplCopyWithImpl<$Res>
         type: null == type
             ? _value.type
             : type // ignore: cast_nullable_to_non_nullable
-                  as String,
+                as String,
       ),
     );
   }

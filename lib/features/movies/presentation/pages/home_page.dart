@@ -106,8 +106,8 @@ class _HomePageViewState extends State<HomePageView>
                   message: message,
                   onRetry: () {
                     context.read<TrendingMoviesBloc>().add(
-                      const TrendingMoviesEvent.load(),
-                    );
+                          const TrendingMoviesEvent.load(),
+                        );
                   },
                 ),
               ),
@@ -202,12 +202,6 @@ class _HomePageViewState extends State<HomePageView>
                           final categoryName = entry.key;
                           final categoryMovies = entry.value;
 
-                          // Optimization: Calculate explicit cache width (130px * pixelRatio)
-                          // to avoid LayoutBuilder overhead in MovieCard -> AppCachedImage
-                          // Uses devicePixelRatio from parent scope to avoid repetitive MediaQuery lookups
-                          final memCacheWidth = (130 * devicePixelRatio)
-                              .toInt();
-
                           if (categoryMovies.isEmpty) {
                             return const SizedBox.shrink();
                           }
@@ -240,8 +234,7 @@ class _HomePageViewState extends State<HomePageView>
                                           lookupKey = 'Action';
                                         }
 
-                                        final genreId =
-                                            genres[lookupKey] ??
+                                        final genreId = genres[lookupKey] ??
                                             genres[categoryName
                                                 .replaceAll('Movies', '')
                                                 .trim()];
