@@ -44,9 +44,7 @@ class _HomePageViewState extends State<HomePageView>
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
-    final mediaQuery = MediaQuery.of(context);
-    final screenWidth = mediaQuery.size.width;
-    // final devicePixelRatio = mediaQuery.devicePixelRatio;
+    final screenWidth = MediaQuery.sizeOf(context).width;
 
     return Scaffold(
       appBar: AppBar(
@@ -114,9 +112,7 @@ class _HomePageViewState extends State<HomePageView>
               loaded: (trending, categories) {
                 final trendingMovies = trending.toSet().toList();
                 // Optimization: Pre-calculate cache width for horizontal lists
-                final devicePixelRatio = MediaQuery.of(
-                  context,
-                ).devicePixelRatio;
+                final devicePixelRatio = MediaQuery.devicePixelRatioOf(context);
                 final categoryMemCacheWidth = (130 * devicePixelRatio).toInt();
 
                 final genres = AppConstants.genres;
@@ -130,9 +126,6 @@ class _HomePageViewState extends State<HomePageView>
                 // Optimization: Calculate explicit cache width to avoid LayoutBuilder overhead
                 final trendingCacheWidth =
                     ((screenWidth - 32) * devicePixelRatio).toInt();
-
-                // Optimization: Pre-calculate category entries to avoid O(N) lookup in builder
-                final categoryEntries = categories.entries.toList();
 
                 return CustomScrollView(
                   slivers: [
@@ -204,12 +197,6 @@ class _HomePageViewState extends State<HomePageView>
                           final entry = categoryEntries[index];
                           final categoryName = entry.key;
                           final categoryMovies = entry.value;
-
-                          // Optimization: Calculate explicit cache width (130px * pixelRatio)
-                          // to avoid LayoutBuilder overhead in MovieCard -> AppCachedImage
-                          // Uses devicePixelRatio from parent scope to avoid repetitive MediaQuery lookups
-                          final memCacheWidth =
-                              (130 * devicePixelRatio).toInt();
 
                           if (categoryMovies.isEmpty) {
                             return const SizedBox.shrink();
