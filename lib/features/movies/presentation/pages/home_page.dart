@@ -132,7 +132,7 @@ class _HomePageViewState extends State<HomePageView>
                     ((screenWidth - 32) * devicePixelRatio).toInt();
 
                 // Optimization: Pre-calculate category entries to avoid O(N) lookup in builder
-                final categoryEntries = categories.entries.toList();
+                // categoryEntries is already defined above
 
                 return CustomScrollView(
                   slivers: [
@@ -208,8 +208,6 @@ class _HomePageViewState extends State<HomePageView>
                           // Optimization: Calculate explicit cache width (130px * pixelRatio)
                           // to avoid LayoutBuilder overhead in MovieCard -> AppCachedImage
                           // Uses devicePixelRatio from parent scope to avoid repetitive MediaQuery lookups
-                          final memCacheWidth =
-                              (130 * devicePixelRatio).toInt();
 
                           if (categoryMovies.isEmpty) {
                             return const SizedBox.shrink();
