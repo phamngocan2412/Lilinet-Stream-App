@@ -125,7 +125,9 @@ void main() {
 
     // Verify that the path is sanitized and does NOT contain traversal
     expect(capturedPath, isNot(contains('/downloads/../../../etc/passwd')));
-    expect(capturedPath, contains('.._.._.._etc_passwd'));
+    // The implementation of _sanitizeFileName replaces '/' with '_' and '..' with '__'
+    // ../../../etc/passwd -> .._.._.._etc_passwd -> _________etc_passwd
+    expect(capturedPath, contains('_________etc_passwd'));
   });
 
   test('isFileDownloaded sanitizes filename', () async {
@@ -136,14 +138,16 @@ void main() {
     // Attempt to access it via traversal
     final result = await downloadService.isFileDownloaded('../outside.txt');
 
-    // Should be false because it should look for '.._outside.txt' in downloads
+    // Should be false because it should look for '__outside.txt' in downloads (sanitized)
     expect(result, isFalse);
 
     // Verify it looks for sanitized path
     // We can't verify what file.exists() was called on without mocking File, but we can verify behaviour.
 
     // Create the sanitized file inside downloads
-    final sanitizedFile = File('/tmp/lilinet_test/downloads/.._outside.txt');
+    // ../outside.txt -> .._outside.txt -> ___outside.txt
+    // (.. -> __) and (/ -> _) so we get __ + _ + outside.txt
+    final sanitizedFile = File('/tmp/lilinet_test/downloads/___outside.txt');
     sanitizedFile.writeAsStringSync('safe');
 
     final result2 = await downloadService.isFileDownloaded('../outside.txt');

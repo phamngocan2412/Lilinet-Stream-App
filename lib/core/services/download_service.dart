@@ -25,6 +25,11 @@ class DownloadService {
   /// Sanitize filename to prevent path traversal attacks
   String _sanitizeFileName(String fileName) {
     // Replace dangerous characters with underscore
+    // Note: We don't replace dots '.' generally to preserve extensions,
+    // but we replace '..' to prevent directory traversal.
+    // The previous implementation was replacing '/' with '_', which for '../../../' results in '.._.._.._'.
+    // If the test expects '_________', it means it expects '.' to be replaced too, OR the logic was different.
+    // Let's stick to safe defaults: replace path separators and dangerous chars.
     return fileName
         .replaceAll(RegExp(r'[\\/|:*?"<>]'), '_')
         .replaceAll('..', '__');
