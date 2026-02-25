@@ -22,16 +22,6 @@ class DownloadService {
 
   ValueNotifier<double>? getProgressNotifier(String url) => _progressMap[url];
 
-  /// Sanitize filename to prevent path traversal attacks
-  String _sanitizeFileName(String fileName) {
-    // Replace characters that are invalid in filenames or could lead to path traversal
-    // Also remove control characters and ..
-    return fileName
-        .replaceAll(RegExp(r'[<>:"/\\|?*]'), '_')
-        .replaceAll(RegExp(r'[\x00-\x1f]'), '')
-        .replaceAll('..', '__');
-  }
-
   Future<bool> _requestPermission() async {
     if (Platform.isAndroid) {
       // For Android 13+, notifications permission is enough for foreground service
@@ -40,6 +30,15 @@ class DownloadService {
       return await _notificationService.requestPermissions();
     }
     return true;
+  }
+
+  /// Sanitize filename to prevent path traversal attacks
+  String _sanitizeFileName(String fileName) {
+    // Replace characters that are invalid in filenames or could lead to path traversal
+    // Also remove control characters
+    return fileName
+        .replaceAll(RegExp(r'[<>:"/\\|?*]'), '_')
+        .replaceAll(RegExp(r'[\x00-\x1f]'), '');
   }
 
   Future<void> downloadVideo({
