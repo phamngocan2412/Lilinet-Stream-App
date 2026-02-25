@@ -70,27 +70,60 @@ void main() {
     PathProviderPlatform.instance = MockPathProviderPlatform();
 
     // Create temp directory
-    Directory('/tmp/lilinet_test').createSync(recursive: true);
+    final tempDir = Directory('/tmp/lilinet_test');
+    if (tempDir.existsSync()) {
+      tempDir.deleteSync(recursive: true);
+    }
+    tempDir.createSync(recursive: true);
     Directory('/tmp/lilinet_test/downloads').createSync(recursive: true);
 
     // Setup default mocks
+    registerFallbackValue(RequestOptions(path: ''));
+    registerFallbackValue(
+      (int received, int total) {},
+    ); // fallback for onReceiveProgress
+
     when(() => mockNotificationService.requestPermissions())
         .thenAnswer((_) async => true);
-    when(() => mockNotificationService.showDownloadProgress(
-          notificationId: any(named: 'notificationId'),
-          title: any(named: 'title'),
-          progress: any(named: 'progress'),
-          maxProgress: any(named: 'maxProgress'),
-        )).thenAnswer((_) async {});
+    when(
+      () => mockNotificationService.showDownloadProgress(
+        notificationId: any(named: 'notificationId'),
+        title: any(named: 'title'),
+        progress: any(named: 'progress'),
+        maxProgress: any(named: 'maxProgress'),
+      ),
+    ).thenAnswer((_) async {});
 
     when(() => mockNotificationService.cancelDownloadProgress(any()))
         .thenAnswer((_) async {});
 
-    when(() => mockNotificationService.showDownloadComplete(
-          title: any(named: 'title'),
-          fileName: any(named: 'fileName'),
-          movieId: any(named: 'movieId'),
-        )).thenAnswer((_) async {});
+    when(
+      () => mockNotificationService.showDownloadComplete(
+        title: any(named: 'title'),
+        fileName: any(named: 'fileName'),
+        movieId: any(named: 'movieId'),
+      ),
+    ).thenAnswer((_) async {});
+
+    // Mock dio download to call onReceiveProgress immediately
+    when(
+      () => mockDio.download(
+        any(),
+        any(),
+        onReceiveProgress: any(named: 'onReceiveProgress'),
+      ),
+    ).thenAnswer((invocation) async {
+      final callback =
+          invocation.namedArguments[const Symbol('onReceiveProgress')] as void
+              Function(int, int)?;
+      if (callback != null) {
+        callback(100, 100);
+      }
+      return Response(
+        requestOptions: RequestOptions(path: ''),
+        statusCode: 200,
+      );
+    });
 
     downloadService = DownloadService(mockDio, mockNotificationService);
   });
@@ -102,19 +135,27 @@ void main() {
   });
 
   test('downloadVideo sanitizes filename to prevent path traversal', () async {
-    final fileName = '../../../etc/passwd';
-    final url = 'http://example.com/video.mp4';
+    const fileName = '../../../etc/passwd';
+    const url = 'http://example.com/video.mp4';
 
     // Capture the savePath passed to dio.download
     String? capturedPath;
-    when(() => mockDio.download(any(), any(),
-            onReceiveProgress: any(named: 'onReceiveProgress')))
-        .thenAnswer((invocation) async {
+    when(
+      () => mockDio.download(
+        any(),
+        any(),
+        onReceiveProgress: any(named: 'onReceiveProgress'),
+      ),
+    ).thenAnswer((invocation) async {
       capturedPath = invocation.positionalArguments[1] as String;
       // create a dummy file so file size check works
-      File(capturedPath!).createSync(recursive: true);
+      final file = File(capturedPath!);
+      file.parent.createSync(recursive: true);
+      file.writeAsStringSync('dummy content');
       return Response(
-          requestOptions: RequestOptions(path: ''), statusCode: 200);
+        requestOptions: RequestOptions(path: ''),
+        statusCode: 200,
+      );
     });
 
     await downloadService.downloadVideo(
@@ -131,6 +172,7 @@ void main() {
   test('isFileDownloaded sanitizes filename', () async {
     // We create a file outside the downloads directory to simulate what a traversal would try to access
     final outsideFile = File('/tmp/lilinet_test/outside.txt');
+    outsideFile.parent.createSync(recursive: true);
     outsideFile.writeAsStringSync('secret');
 
     // Attempt to access it via traversal

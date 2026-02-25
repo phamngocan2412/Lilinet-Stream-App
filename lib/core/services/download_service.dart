@@ -58,9 +58,9 @@ class DownloadService {
 
     // Generate a stable ID for notification based on URL hash
     final notificationId = url.hashCode;
+    final sanitizedFileName = _sanitizeFileName(fileName);
 
     try {
-      final sanitizedFileName = _sanitizeFileName(fileName);
       final dir = await getApplicationDocumentsDirectory();
       final savePath = '${dir.path}/downloads/$sanitizedFileName';
 
