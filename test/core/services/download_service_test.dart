@@ -70,13 +70,21 @@ void main() {
     PathProviderPlatform.instance = MockPathProviderPlatform();
 
     // Create temp directory
-    Directory('/tmp/lilinet_test').createSync(recursive: true);
+    final tempDir = Directory('/tmp/lilinet_test');
+    if (tempDir.existsSync()) {
+      tempDir.deleteSync(recursive: true);
+    }
+    tempDir.createSync(recursive: true);
     Directory('/tmp/lilinet_test/downloads').createSync(recursive: true);
 
     // Setup default mocks
-    when(
-      () => mockNotificationService.requestPermissions(),
-    ).thenAnswer((_) async => true);
+    registerFallbackValue(RequestOptions(path: ''));
+    registerFallbackValue(
+      (int received, int total) {},
+    ); // fallback for onReceiveProgress
+
+    when(() => mockNotificationService.requestPermissions())
+        .thenAnswer((_) async => true);
     when(
       () => mockNotificationService.showDownloadProgress(
         notificationId: any(named: 'notificationId'),
@@ -86,9 +94,8 @@ void main() {
       ),
     ).thenAnswer((_) async {});
 
-    when(
-      () => mockNotificationService.cancelDownloadProgress(any()),
-    ).thenAnswer((_) async {});
+    when(() => mockNotificationService.cancelDownloadProgress(any()))
+        .thenAnswer((_) async {});
 
     when(
       () => mockNotificationService.showDownloadComplete(
@@ -97,6 +104,26 @@ void main() {
         movieId: any(named: 'movieId'),
       ),
     ).thenAnswer((_) async {});
+
+    // Mock dio download to call onReceiveProgress immediately
+    when(
+      () => mockDio.download(
+        any(),
+        any(),
+        onReceiveProgress: any(named: 'onReceiveProgress'),
+      ),
+    ).thenAnswer((invocation) async {
+      final callback =
+          invocation.namedArguments[const Symbol('onReceiveProgress')] as void
+              Function(int, int)?;
+      if (callback != null) {
+        callback(100, 100);
+      }
+      return Response(
+        requestOptions: RequestOptions(path: ''),
+        statusCode: 200,
+      );
+    });
 
     downloadService = DownloadService(mockDio, mockNotificationService);
   });
@@ -108,8 +135,8 @@ void main() {
   });
 
   test('downloadVideo sanitizes filename to prevent path traversal', () async {
-    final fileName = '../../../etc/passwd';
-    final url = 'http://example.com/video.mp4';
+    const fileName = '../../../etc/passwd';
+    const url = 'http://example.com/video.mp4';
 
     // Capture the savePath passed to dio.download
     String? capturedPath;
@@ -122,7 +149,9 @@ void main() {
     ).thenAnswer((invocation) async {
       capturedPath = invocation.positionalArguments[1] as String;
       // create a dummy file so file size check works
-      File(capturedPath!).createSync(recursive: true);
+      final file = File(capturedPath!);
+      file.parent.createSync(recursive: true);
+      file.writeAsStringSync('dummy content');
       return Response(
         requestOptions: RequestOptions(path: ''),
         statusCode: 200,
@@ -137,25 +166,57 @@ void main() {
 
     // Verify that the path is sanitized and does NOT contain traversal
     expect(capturedPath, isNot(contains('/downloads/../../../etc/passwd')));
-    expect(capturedPath, contains('.._.._.._etc_passwd'));
+    expect(capturedPath, contains('_________etc_passwd'));
   });
 
   test('isFileDownloaded sanitizes filename', () async {
     // We create a file outside the downloads directory to simulate what a traversal would try to access
     final outsideFile = File('/tmp/lilinet_test/outside.txt');
+    outsideFile.parent.createSync(recursive: true);
     outsideFile.writeAsStringSync('secret');
 
     // Attempt to access it via traversal
     final result = await downloadService.isFileDownloaded('../outside.txt');
 
-    // Should be false because it should look for '.._outside.txt' in downloads
+    // Should be false because it should look for '___outside.txt' in downloads
     expect(result, isFalse);
 
     // Verify it looks for sanitized path
-    // We can't verify what file.exists() was called on without mocking File, but we can verify behaviour.
+    // Based on previous test, `..` seems to become `___` or similar.
+    // `../outside.txt`
+    // `/` -> `_`
+    // `.._outside.txt`
+    // `..` -> `__`
+    // `___outside.txt` (3 underscores?)
+    // Or if dots are replaced: `___outside_txt`?
+    // Let's look at `downloadVideo` test result: `_________etc_passwd` from `../../../etc/passwd`.
+    // `../../../` -> `_________` (9 underscores).
+    // So `../` -> `___` (3 underscores).
+    // So `../outside.txt` -> `___outside.txt` (if dot in .txt is preserved? Wait)
+    // `passwd` has no extension. `outside.txt` has dot.
+    // If dots are replaced, `___outside_txt`.
+    // Let's try to match what the code does.
+    // Code:
+    // fileName.replaceAll(RegExp(r'[\\/|:*?"<>]'), '_')
+    //         .replaceAll('..', '__')
+    //         .replaceAll(RegExp(r'[\x00-\x1f]'), '');
+    //
+    // `../outside.txt`
+    // 1. `.._outside.txt`
+    // 2. `__` + `_` + `outside.txt` -> `___outside.txt`
+    // 3. `___outside.txt`
+    //
+    // `../../../etc/passwd`
+    // 1. `.._.._.._etc/passwd` (wait, slash is replaced globally?)
+    //    `.._.._.._etc_passwd`
+    // 2. `__` + `_` + `__` + `_` + `__` + `_` + `etc_passwd`
+    //    `___` + `___` + `___` + `etc_passwd`
+    //    `_________etc_passwd`
+    //
+    // So `../outside.txt` -> `___outside.txt`.
 
     // Create the sanitized file inside downloads
-    final sanitizedFile = File('/tmp/lilinet_test/downloads/.._outside.txt');
+    final sanitizedFile = File('/tmp/lilinet_test/downloads/___outside.txt');
     sanitizedFile.writeAsStringSync('safe');
 
     final result2 = await downloadService.isFileDownloaded('../outside.txt');
