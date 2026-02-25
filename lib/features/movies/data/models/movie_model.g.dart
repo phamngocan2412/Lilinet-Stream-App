@@ -144,17 +144,21 @@ class MovieListResponseAdapter extends TypeAdapter<MovieListResponse> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$MovieModelImpl _$$MovieModelImplFromJson(Map<String, dynamic> json) =>
+_$MovieModelImpl _$$MovieModelImplFromJson(
+  Map<String, dynamic> json,
+) =>
     _$MovieModelImpl(
       id: const AnyToStringConverter().fromJson(json['id']),
       title: json['title'] as String,
       poster: const AnyToStringNullableConverter().fromJson(json['poster']),
       cover: const AnyToStringNullableConverter().fromJson(json['cover']),
-      description:
-          const AnyToStringNullableConverter().fromJson(json['description']),
+      description: const AnyToStringNullableConverter().fromJson(
+        json['description'],
+      ),
       rating: const StringToDoubleConverter().fromJson(json['rating']),
-      releaseDate:
-          const AnyToStringNullableConverter().fromJson(json['releaseDate']),
+      releaseDate: const AnyToStringNullableConverter().fromJson(
+        json['releaseDate'],
+      ),
       type: json['type'] as String,
       episodeId:
           const AnyToStringNullableConverter().fromJson(json['episodeId']),
@@ -184,17 +188,21 @@ _$MovieModelImpl _$$MovieModelImplFromJson(Map<String, dynamic> json) =>
       provider: const AnyToStringNullableConverter().fromJson(json['provider']),
     );
 
-Map<String, dynamic> _$$MovieModelImplToJson(_$MovieModelImpl instance) =>
+Map<String, dynamic> _$$MovieModelImplToJson(
+  _$MovieModelImpl instance,
+) =>
     <String, dynamic>{
       'id': const AnyToStringConverter().toJson(instance.id),
       'title': instance.title,
       'poster': const AnyToStringNullableConverter().toJson(instance.poster),
       'cover': const AnyToStringNullableConverter().toJson(instance.cover),
-      'description':
-          const AnyToStringNullableConverter().toJson(instance.description),
+      'description': const AnyToStringNullableConverter().toJson(
+        instance.description,
+      ),
       'rating': const StringToDoubleConverter().toJson(instance.rating),
-      'releaseDate':
-          const AnyToStringNullableConverter().toJson(instance.releaseDate),
+      'releaseDate': const AnyToStringNullableConverter().toJson(
+        instance.releaseDate,
+      ),
       'type': instance.type,
       'episodeId':
           const AnyToStringNullableConverter().toJson(instance.episodeId),
@@ -207,8 +215,9 @@ Map<String, dynamic> _$$MovieModelImplToJson(_$MovieModelImpl instance) =>
       'seasons': instance.seasons,
       'recommendations': instance.recommendations,
       'country': const AnyToStringNullableConverter().toJson(instance.country),
-      'production':
-          const AnyToStringNullableConverter().toJson(instance.production),
+      'production': const AnyToStringNullableConverter().toJson(
+        instance.production,
+      ),
       'casts': instance.casts,
       'tags': instance.tags,
       'image': const AnyToStringNullableConverter().toJson(instance.image),
@@ -217,7 +226,8 @@ Map<String, dynamic> _$$MovieModelImplToJson(_$MovieModelImpl instance) =>
     };
 
 _$MovieListResponseImpl _$$MovieListResponseImplFromJson(
-        Map<String, dynamic> json) =>
+  Map<String, dynamic> json,
+) =>
     _$MovieListResponseImpl(
       currentPage: json['currentPage'] == null
           ? 1
@@ -229,10 +239,12 @@ _$MovieListResponseImpl _$$MovieListResponseImplFromJson(
     );
 
 Map<String, dynamic> _$$MovieListResponseImplToJson(
-        _$MovieListResponseImpl instance) =>
+  _$MovieListResponseImpl instance,
+) =>
     <String, dynamic>{
-      'currentPage':
-          const StringToIntConverterRequired().toJson(instance.currentPage),
+      'currentPage': const StringToIntConverterRequired().toJson(
+        instance.currentPage,
+      ),
       'hasNextPage': instance.hasNextPage,
       'results': instance.results,
     };

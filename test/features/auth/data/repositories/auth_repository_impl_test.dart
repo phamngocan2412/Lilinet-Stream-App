@@ -41,10 +41,7 @@ void main() {
         );
 
         // Assert
-        expect(
-          result,
-          equals(const Left(Failure.server(tGenericError))),
-        );
+        expect(result, equals(const Left(Failure.server(tGenericError))));
       },
     );
   });
@@ -69,10 +66,7 @@ void main() {
         );
 
         // Assert
-        expect(
-          result,
-          equals(const Left(Failure.server(tGenericError))),
-        );
+        expect(result, equals(const Left(Failure.server(tGenericError))));
       },
     );
   });
@@ -90,10 +84,7 @@ void main() {
         final result = await repository.signOut();
 
         // Assert
-        expect(
-          result,
-          equals(const Left(Failure.server(tGenericError))),
-        );
+        expect(result, equals(const Left(Failure.server(tGenericError))));
       },
     );
   });
@@ -111,10 +102,7 @@ void main() {
         final result = await repository.sendPasswordResetEmail(tEmail);
 
         // Assert
-        expect(
-          result,
-          equals(const Left(Failure.server(tGenericError))),
-        );
+        expect(result, equals(const Left(Failure.server(tGenericError))));
       },
     );
   });
