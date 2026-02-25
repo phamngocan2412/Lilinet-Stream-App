@@ -12,7 +12,8 @@ part of 'movie_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 MovieModel _$MovieModelFromJson(Map<String, dynamic> json) {
   return _MovieModel.fromJson(json);
@@ -89,31 +90,33 @@ mixin _$MovieModel {
 /// @nodoc
 abstract class $MovieModelCopyWith<$Res> {
   factory $MovieModelCopyWith(
-          MovieModel value, $Res Function(MovieModel) then) =
-      _$MovieModelCopyWithImpl<$Res, MovieModel>;
+    MovieModel value,
+    $Res Function(MovieModel) then,
+  ) = _$MovieModelCopyWithImpl<$Res, MovieModel>;
   @useResult
-  $Res call(
-      {@HiveField(0) @AnyToStringConverter() String id,
-      @HiveField(1) String title,
-      @HiveField(2) @AnyToStringNullableConverter() String? poster,
-      @HiveField(3) @AnyToStringNullableConverter() String? cover,
-      @HiveField(4) @AnyToStringNullableConverter() String? description,
-      @HiveField(5) @StringToDoubleConverter() double? rating,
-      @HiveField(6) @AnyToStringNullableConverter() String? releaseDate,
-      @HiveField(7) String type,
-      @HiveField(8) @AnyToStringNullableConverter() String? episodeId,
-      @HiveField(9) List<String> genres,
-      @HiveField(10) @StringToIntConverter() int? totalEpisodes,
-      @HiveField(11) @AnyToStringNullableConverter() String? duration,
-      @HiveField(12) List<EpisodeModel>? episodes,
-      @HiveField(13) List<SeasonModel>? seasons,
-      @HiveField(14) List<MovieModel>? recommendations,
-      @HiveField(15) @AnyToStringNullableConverter() String? country,
-      @HiveField(16) @AnyToStringNullableConverter() String? production,
-      @HiveField(17) List<String>? casts,
-      @HiveField(18) List<String>? tags,
-      @HiveField(19) @AnyToStringNullableConverter() String? image,
-      @HiveField(20) @AnyToStringNullableConverter() String? provider});
+  $Res call({
+    @HiveField(0) @AnyToStringConverter() String id,
+    @HiveField(1) String title,
+    @HiveField(2) @AnyToStringNullableConverter() String? poster,
+    @HiveField(3) @AnyToStringNullableConverter() String? cover,
+    @HiveField(4) @AnyToStringNullableConverter() String? description,
+    @HiveField(5) @StringToDoubleConverter() double? rating,
+    @HiveField(6) @AnyToStringNullableConverter() String? releaseDate,
+    @HiveField(7) String type,
+    @HiveField(8) @AnyToStringNullableConverter() String? episodeId,
+    @HiveField(9) List<String> genres,
+    @HiveField(10) @StringToIntConverter() int? totalEpisodes,
+    @HiveField(11) @AnyToStringNullableConverter() String? duration,
+    @HiveField(12) List<EpisodeModel>? episodes,
+    @HiveField(13) List<SeasonModel>? seasons,
+    @HiveField(14) List<MovieModel>? recommendations,
+    @HiveField(15) @AnyToStringNullableConverter() String? country,
+    @HiveField(16) @AnyToStringNullableConverter() String? production,
+    @HiveField(17) List<String>? casts,
+    @HiveField(18) List<String>? tags,
+    @HiveField(19) @AnyToStringNullableConverter() String? image,
+    @HiveField(20) @AnyToStringNullableConverter() String? provider,
+  });
 }
 
 /// @nodoc
@@ -153,92 +156,94 @@ class _$MovieModelCopyWithImpl<$Res, $Val extends MovieModel>
     Object? image = freezed,
     Object? provider = freezed,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      poster: freezed == poster
-          ? _value.poster
-          : poster // ignore: cast_nullable_to_non_nullable
-              as String?,
-      cover: freezed == cover
-          ? _value.cover
-          : cover // ignore: cast_nullable_to_non_nullable
-              as String?,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      rating: freezed == rating
-          ? _value.rating
-          : rating // ignore: cast_nullable_to_non_nullable
-              as double?,
-      releaseDate: freezed == releaseDate
-          ? _value.releaseDate
-          : releaseDate // ignore: cast_nullable_to_non_nullable
-              as String?,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String,
-      episodeId: freezed == episodeId
-          ? _value.episodeId
-          : episodeId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      genres: null == genres
-          ? _value.genres
-          : genres // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      totalEpisodes: freezed == totalEpisodes
-          ? _value.totalEpisodes
-          : totalEpisodes // ignore: cast_nullable_to_non_nullable
-              as int?,
-      duration: freezed == duration
-          ? _value.duration
-          : duration // ignore: cast_nullable_to_non_nullable
-              as String?,
-      episodes: freezed == episodes
-          ? _value.episodes
-          : episodes // ignore: cast_nullable_to_non_nullable
-              as List<EpisodeModel>?,
-      seasons: freezed == seasons
-          ? _value.seasons
-          : seasons // ignore: cast_nullable_to_non_nullable
-              as List<SeasonModel>?,
-      recommendations: freezed == recommendations
-          ? _value.recommendations
-          : recommendations // ignore: cast_nullable_to_non_nullable
-              as List<MovieModel>?,
-      country: freezed == country
-          ? _value.country
-          : country // ignore: cast_nullable_to_non_nullable
-              as String?,
-      production: freezed == production
-          ? _value.production
-          : production // ignore: cast_nullable_to_non_nullable
-              as String?,
-      casts: freezed == casts
-          ? _value.casts
-          : casts // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
-      tags: freezed == tags
-          ? _value.tags
-          : tags // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
-      image: freezed == image
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
-              as String?,
-      provider: freezed == provider
-          ? _value.provider
-          : provider // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                as String,
+        title: null == title
+            ? _value.title
+            : title // ignore: cast_nullable_to_non_nullable
+                as String,
+        poster: freezed == poster
+            ? _value.poster
+            : poster // ignore: cast_nullable_to_non_nullable
+                as String?,
+        cover: freezed == cover
+            ? _value.cover
+            : cover // ignore: cast_nullable_to_non_nullable
+                as String?,
+        description: freezed == description
+            ? _value.description
+            : description // ignore: cast_nullable_to_non_nullable
+                as String?,
+        rating: freezed == rating
+            ? _value.rating
+            : rating // ignore: cast_nullable_to_non_nullable
+                as double?,
+        releaseDate: freezed == releaseDate
+            ? _value.releaseDate
+            : releaseDate // ignore: cast_nullable_to_non_nullable
+                as String?,
+        type: null == type
+            ? _value.type
+            : type // ignore: cast_nullable_to_non_nullable
+                as String,
+        episodeId: freezed == episodeId
+            ? _value.episodeId
+            : episodeId // ignore: cast_nullable_to_non_nullable
+                as String?,
+        genres: null == genres
+            ? _value.genres
+            : genres // ignore: cast_nullable_to_non_nullable
+                as List<String>,
+        totalEpisodes: freezed == totalEpisodes
+            ? _value.totalEpisodes
+            : totalEpisodes // ignore: cast_nullable_to_non_nullable
+                as int?,
+        duration: freezed == duration
+            ? _value.duration
+            : duration // ignore: cast_nullable_to_non_nullable
+                as String?,
+        episodes: freezed == episodes
+            ? _value.episodes
+            : episodes // ignore: cast_nullable_to_non_nullable
+                as List<EpisodeModel>?,
+        seasons: freezed == seasons
+            ? _value.seasons
+            : seasons // ignore: cast_nullable_to_non_nullable
+                as List<SeasonModel>?,
+        recommendations: freezed == recommendations
+            ? _value.recommendations
+            : recommendations // ignore: cast_nullable_to_non_nullable
+                as List<MovieModel>?,
+        country: freezed == country
+            ? _value.country
+            : country // ignore: cast_nullable_to_non_nullable
+                as String?,
+        production: freezed == production
+            ? _value.production
+            : production // ignore: cast_nullable_to_non_nullable
+                as String?,
+        casts: freezed == casts
+            ? _value.casts
+            : casts // ignore: cast_nullable_to_non_nullable
+                as List<String>?,
+        tags: freezed == tags
+            ? _value.tags
+            : tags // ignore: cast_nullable_to_non_nullable
+                as List<String>?,
+        image: freezed == image
+            ? _value.image
+            : image // ignore: cast_nullable_to_non_nullable
+                as String?,
+        provider: freezed == provider
+            ? _value.provider
+            : provider // ignore: cast_nullable_to_non_nullable
+                as String?,
+      ) as $Val,
+    );
   }
 }
 
@@ -246,32 +251,34 @@ class _$MovieModelCopyWithImpl<$Res, $Val extends MovieModel>
 abstract class _$$MovieModelImplCopyWith<$Res>
     implements $MovieModelCopyWith<$Res> {
   factory _$$MovieModelImplCopyWith(
-          _$MovieModelImpl value, $Res Function(_$MovieModelImpl) then) =
-      __$$MovieModelImplCopyWithImpl<$Res>;
+    _$MovieModelImpl value,
+    $Res Function(_$MovieModelImpl) then,
+  ) = __$$MovieModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {@HiveField(0) @AnyToStringConverter() String id,
-      @HiveField(1) String title,
-      @HiveField(2) @AnyToStringNullableConverter() String? poster,
-      @HiveField(3) @AnyToStringNullableConverter() String? cover,
-      @HiveField(4) @AnyToStringNullableConverter() String? description,
-      @HiveField(5) @StringToDoubleConverter() double? rating,
-      @HiveField(6) @AnyToStringNullableConverter() String? releaseDate,
-      @HiveField(7) String type,
-      @HiveField(8) @AnyToStringNullableConverter() String? episodeId,
-      @HiveField(9) List<String> genres,
-      @HiveField(10) @StringToIntConverter() int? totalEpisodes,
-      @HiveField(11) @AnyToStringNullableConverter() String? duration,
-      @HiveField(12) List<EpisodeModel>? episodes,
-      @HiveField(13) List<SeasonModel>? seasons,
-      @HiveField(14) List<MovieModel>? recommendations,
-      @HiveField(15) @AnyToStringNullableConverter() String? country,
-      @HiveField(16) @AnyToStringNullableConverter() String? production,
-      @HiveField(17) List<String>? casts,
-      @HiveField(18) List<String>? tags,
-      @HiveField(19) @AnyToStringNullableConverter() String? image,
-      @HiveField(20) @AnyToStringNullableConverter() String? provider});
+  $Res call({
+    @HiveField(0) @AnyToStringConverter() String id,
+    @HiveField(1) String title,
+    @HiveField(2) @AnyToStringNullableConverter() String? poster,
+    @HiveField(3) @AnyToStringNullableConverter() String? cover,
+    @HiveField(4) @AnyToStringNullableConverter() String? description,
+    @HiveField(5) @StringToDoubleConverter() double? rating,
+    @HiveField(6) @AnyToStringNullableConverter() String? releaseDate,
+    @HiveField(7) String type,
+    @HiveField(8) @AnyToStringNullableConverter() String? episodeId,
+    @HiveField(9) List<String> genres,
+    @HiveField(10) @StringToIntConverter() int? totalEpisodes,
+    @HiveField(11) @AnyToStringNullableConverter() String? duration,
+    @HiveField(12) List<EpisodeModel>? episodes,
+    @HiveField(13) List<SeasonModel>? seasons,
+    @HiveField(14) List<MovieModel>? recommendations,
+    @HiveField(15) @AnyToStringNullableConverter() String? country,
+    @HiveField(16) @AnyToStringNullableConverter() String? production,
+    @HiveField(17) List<String>? casts,
+    @HiveField(18) List<String>? tags,
+    @HiveField(19) @AnyToStringNullableConverter() String? image,
+    @HiveField(20) @AnyToStringNullableConverter() String? provider,
+  });
 }
 
 /// @nodoc
@@ -279,8 +286,9 @@ class __$$MovieModelImplCopyWithImpl<$Res>
     extends _$MovieModelCopyWithImpl<$Res, _$MovieModelImpl>
     implements _$$MovieModelImplCopyWith<$Res> {
   __$$MovieModelImplCopyWithImpl(
-      _$MovieModelImpl _value, $Res Function(_$MovieModelImpl) _then)
-      : super(_value, _then);
+    _$MovieModelImpl _value,
+    $Res Function(_$MovieModelImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of MovieModel
   /// with the given fields replaced by the non-null parameter values.
@@ -309,121 +317,123 @@ class __$$MovieModelImplCopyWithImpl<$Res>
     Object? image = freezed,
     Object? provider = freezed,
   }) {
-    return _then(_$MovieModelImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      poster: freezed == poster
-          ? _value.poster
-          : poster // ignore: cast_nullable_to_non_nullable
-              as String?,
-      cover: freezed == cover
-          ? _value.cover
-          : cover // ignore: cast_nullable_to_non_nullable
-              as String?,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      rating: freezed == rating
-          ? _value.rating
-          : rating // ignore: cast_nullable_to_non_nullable
-              as double?,
-      releaseDate: freezed == releaseDate
-          ? _value.releaseDate
-          : releaseDate // ignore: cast_nullable_to_non_nullable
-              as String?,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String,
-      episodeId: freezed == episodeId
-          ? _value.episodeId
-          : episodeId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      genres: null == genres
-          ? _value._genres
-          : genres // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      totalEpisodes: freezed == totalEpisodes
-          ? _value.totalEpisodes
-          : totalEpisodes // ignore: cast_nullable_to_non_nullable
-              as int?,
-      duration: freezed == duration
-          ? _value.duration
-          : duration // ignore: cast_nullable_to_non_nullable
-              as String?,
-      episodes: freezed == episodes
-          ? _value._episodes
-          : episodes // ignore: cast_nullable_to_non_nullable
-              as List<EpisodeModel>?,
-      seasons: freezed == seasons
-          ? _value._seasons
-          : seasons // ignore: cast_nullable_to_non_nullable
-              as List<SeasonModel>?,
-      recommendations: freezed == recommendations
-          ? _value._recommendations
-          : recommendations // ignore: cast_nullable_to_non_nullable
-              as List<MovieModel>?,
-      country: freezed == country
-          ? _value.country
-          : country // ignore: cast_nullable_to_non_nullable
-              as String?,
-      production: freezed == production
-          ? _value.production
-          : production // ignore: cast_nullable_to_non_nullable
-              as String?,
-      casts: freezed == casts
-          ? _value._casts
-          : casts // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
-      tags: freezed == tags
-          ? _value._tags
-          : tags // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
-      image: freezed == image
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
-              as String?,
-      provider: freezed == provider
-          ? _value.provider
-          : provider // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
+    return _then(
+      _$MovieModelImpl(
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                as String,
+        title: null == title
+            ? _value.title
+            : title // ignore: cast_nullable_to_non_nullable
+                as String,
+        poster: freezed == poster
+            ? _value.poster
+            : poster // ignore: cast_nullable_to_non_nullable
+                as String?,
+        cover: freezed == cover
+            ? _value.cover
+            : cover // ignore: cast_nullable_to_non_nullable
+                as String?,
+        description: freezed == description
+            ? _value.description
+            : description // ignore: cast_nullable_to_non_nullable
+                as String?,
+        rating: freezed == rating
+            ? _value.rating
+            : rating // ignore: cast_nullable_to_non_nullable
+                as double?,
+        releaseDate: freezed == releaseDate
+            ? _value.releaseDate
+            : releaseDate // ignore: cast_nullable_to_non_nullable
+                as String?,
+        type: null == type
+            ? _value.type
+            : type // ignore: cast_nullable_to_non_nullable
+                as String,
+        episodeId: freezed == episodeId
+            ? _value.episodeId
+            : episodeId // ignore: cast_nullable_to_non_nullable
+                as String?,
+        genres: null == genres
+            ? _value._genres
+            : genres // ignore: cast_nullable_to_non_nullable
+                as List<String>,
+        totalEpisodes: freezed == totalEpisodes
+            ? _value.totalEpisodes
+            : totalEpisodes // ignore: cast_nullable_to_non_nullable
+                as int?,
+        duration: freezed == duration
+            ? _value.duration
+            : duration // ignore: cast_nullable_to_non_nullable
+                as String?,
+        episodes: freezed == episodes
+            ? _value._episodes
+            : episodes // ignore: cast_nullable_to_non_nullable
+                as List<EpisodeModel>?,
+        seasons: freezed == seasons
+            ? _value._seasons
+            : seasons // ignore: cast_nullable_to_non_nullable
+                as List<SeasonModel>?,
+        recommendations: freezed == recommendations
+            ? _value._recommendations
+            : recommendations // ignore: cast_nullable_to_non_nullable
+                as List<MovieModel>?,
+        country: freezed == country
+            ? _value.country
+            : country // ignore: cast_nullable_to_non_nullable
+                as String?,
+        production: freezed == production
+            ? _value.production
+            : production // ignore: cast_nullable_to_non_nullable
+                as String?,
+        casts: freezed == casts
+            ? _value._casts
+            : casts // ignore: cast_nullable_to_non_nullable
+                as List<String>?,
+        tags: freezed == tags
+            ? _value._tags
+            : tags // ignore: cast_nullable_to_non_nullable
+                as List<String>?,
+        image: freezed == image
+            ? _value.image
+            : image // ignore: cast_nullable_to_non_nullable
+                as String?,
+        provider: freezed == provider
+            ? _value.provider
+            : provider // ignore: cast_nullable_to_non_nullable
+                as String?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$MovieModelImpl extends _MovieModel {
-  const _$MovieModelImpl(
-      {@HiveField(0) @AnyToStringConverter() required this.id,
-      @HiveField(1) required this.title,
-      @HiveField(2) @AnyToStringNullableConverter() this.poster,
-      @HiveField(3) @AnyToStringNullableConverter() this.cover,
-      @HiveField(4) @AnyToStringNullableConverter() this.description,
-      @HiveField(5) @StringToDoubleConverter() this.rating,
-      @HiveField(6) @AnyToStringNullableConverter() this.releaseDate,
-      @HiveField(7) required this.type,
-      @HiveField(8) @AnyToStringNullableConverter() this.episodeId,
-      @HiveField(9) final List<String> genres = const [],
-      @HiveField(10) @StringToIntConverter() this.totalEpisodes,
-      @HiveField(11) @AnyToStringNullableConverter() this.duration,
-      @HiveField(12) final List<EpisodeModel>? episodes,
-      @HiveField(13) final List<SeasonModel>? seasons,
-      @HiveField(14) final List<MovieModel>? recommendations,
-      @HiveField(15) @AnyToStringNullableConverter() this.country,
-      @HiveField(16) @AnyToStringNullableConverter() this.production,
-      @HiveField(17) final List<String>? casts,
-      @HiveField(18) final List<String>? tags,
-      @HiveField(19) @AnyToStringNullableConverter() this.image,
-      @HiveField(20) @AnyToStringNullableConverter() this.provider})
-      : _genres = genres,
+  const _$MovieModelImpl({
+    @HiveField(0) @AnyToStringConverter() required this.id,
+    @HiveField(1) required this.title,
+    @HiveField(2) @AnyToStringNullableConverter() this.poster,
+    @HiveField(3) @AnyToStringNullableConverter() this.cover,
+    @HiveField(4) @AnyToStringNullableConverter() this.description,
+    @HiveField(5) @StringToDoubleConverter() this.rating,
+    @HiveField(6) @AnyToStringNullableConverter() this.releaseDate,
+    @HiveField(7) required this.type,
+    @HiveField(8) @AnyToStringNullableConverter() this.episodeId,
+    @HiveField(9) final List<String> genres = const [],
+    @HiveField(10) @StringToIntConverter() this.totalEpisodes,
+    @HiveField(11) @AnyToStringNullableConverter() this.duration,
+    @HiveField(12) final List<EpisodeModel>? episodes,
+    @HiveField(13) final List<SeasonModel>? seasons,
+    @HiveField(14) final List<MovieModel>? recommendations,
+    @HiveField(15) @AnyToStringNullableConverter() this.country,
+    @HiveField(16) @AnyToStringNullableConverter() this.production,
+    @HiveField(17) final List<String>? casts,
+    @HiveField(18) final List<String>? tags,
+    @HiveField(19) @AnyToStringNullableConverter() this.image,
+    @HiveField(20) @AnyToStringNullableConverter() this.provider,
+  })  : _genres = genres,
         _episodes = episodes,
         _seasons = seasons,
         _recommendations = recommendations,
@@ -587,8 +597,10 @@ class _$MovieModelImpl extends _MovieModel {
                 other.duration == duration) &&
             const DeepCollectionEquality().equals(other._episodes, _episodes) &&
             const DeepCollectionEquality().equals(other._seasons, _seasons) &&
-            const DeepCollectionEquality()
-                .equals(other._recommendations, _recommendations) &&
+            const DeepCollectionEquality().equals(
+              other._recommendations,
+              _recommendations,
+            ) &&
             (identical(other.country, country) || other.country == country) &&
             (identical(other.production, production) ||
                 other.production == production) &&
@@ -623,7 +635,7 @@ class _$MovieModelImpl extends _MovieModel {
         const DeepCollectionEquality().hash(_casts),
         const DeepCollectionEquality().hash(_tags),
         image,
-        provider
+        provider,
       ]);
 
   /// Create a copy of MovieModel
@@ -636,37 +648,34 @@ class _$MovieModelImpl extends _MovieModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$MovieModelImplToJson(
-      this,
-    );
+    return _$$MovieModelImplToJson(this);
   }
 }
 
 abstract class _MovieModel extends MovieModel {
-  const factory _MovieModel(
-      {@HiveField(0) @AnyToStringConverter() required final String id,
-      @HiveField(1) required final String title,
-      @HiveField(2) @AnyToStringNullableConverter() final String? poster,
-      @HiveField(3) @AnyToStringNullableConverter() final String? cover,
-      @HiveField(4) @AnyToStringNullableConverter() final String? description,
-      @HiveField(5) @StringToDoubleConverter() final double? rating,
-      @HiveField(6) @AnyToStringNullableConverter() final String? releaseDate,
-      @HiveField(7) required final String type,
-      @HiveField(8) @AnyToStringNullableConverter() final String? episodeId,
-      @HiveField(9) final List<String> genres,
-      @HiveField(10) @StringToIntConverter() final int? totalEpisodes,
-      @HiveField(11) @AnyToStringNullableConverter() final String? duration,
-      @HiveField(12) final List<EpisodeModel>? episodes,
-      @HiveField(13) final List<SeasonModel>? seasons,
-      @HiveField(14) final List<MovieModel>? recommendations,
-      @HiveField(15) @AnyToStringNullableConverter() final String? country,
-      @HiveField(16) @AnyToStringNullableConverter() final String? production,
-      @HiveField(17) final List<String>? casts,
-      @HiveField(18) final List<String>? tags,
-      @HiveField(19) @AnyToStringNullableConverter() final String? image,
-      @HiveField(20)
-      @AnyToStringNullableConverter()
-      final String? provider}) = _$MovieModelImpl;
+  const factory _MovieModel({
+    @HiveField(0) @AnyToStringConverter() required final String id,
+    @HiveField(1) required final String title,
+    @HiveField(2) @AnyToStringNullableConverter() final String? poster,
+    @HiveField(3) @AnyToStringNullableConverter() final String? cover,
+    @HiveField(4) @AnyToStringNullableConverter() final String? description,
+    @HiveField(5) @StringToDoubleConverter() final double? rating,
+    @HiveField(6) @AnyToStringNullableConverter() final String? releaseDate,
+    @HiveField(7) required final String type,
+    @HiveField(8) @AnyToStringNullableConverter() final String? episodeId,
+    @HiveField(9) final List<String> genres,
+    @HiveField(10) @StringToIntConverter() final int? totalEpisodes,
+    @HiveField(11) @AnyToStringNullableConverter() final String? duration,
+    @HiveField(12) final List<EpisodeModel>? episodes,
+    @HiveField(13) final List<SeasonModel>? seasons,
+    @HiveField(14) final List<MovieModel>? recommendations,
+    @HiveField(15) @AnyToStringNullableConverter() final String? country,
+    @HiveField(16) @AnyToStringNullableConverter() final String? production,
+    @HiveField(17) final List<String>? casts,
+    @HiveField(18) final List<String>? tags,
+    @HiveField(19) @AnyToStringNullableConverter() final String? image,
+    @HiveField(20) @AnyToStringNullableConverter() final String? provider,
+  }) = _$MovieModelImpl;
   const _MovieModel._() : super._();
 
   factory _MovieModel.fromJson(Map<String, dynamic> json) =
@@ -784,13 +793,15 @@ mixin _$MovieListResponse {
 /// @nodoc
 abstract class $MovieListResponseCopyWith<$Res> {
   factory $MovieListResponseCopyWith(
-          MovieListResponse value, $Res Function(MovieListResponse) then) =
-      _$MovieListResponseCopyWithImpl<$Res, MovieListResponse>;
+    MovieListResponse value,
+    $Res Function(MovieListResponse) then,
+  ) = _$MovieListResponseCopyWithImpl<$Res, MovieListResponse>;
   @useResult
-  $Res call(
-      {@HiveField(0) @StringToIntConverterRequired() int currentPage,
-      @HiveField(1) bool hasNextPage,
-      @HiveField(2) List<MovieModel> results});
+  $Res call({
+    @HiveField(0) @StringToIntConverterRequired() int currentPage,
+    @HiveField(1) bool hasNextPage,
+    @HiveField(2) List<MovieModel> results,
+  });
 }
 
 /// @nodoc
@@ -812,44 +823,49 @@ class _$MovieListResponseCopyWithImpl<$Res, $Val extends MovieListResponse>
     Object? hasNextPage = null,
     Object? results = null,
   }) {
-    return _then(_value.copyWith(
-      currentPage: null == currentPage
-          ? _value.currentPage
-          : currentPage // ignore: cast_nullable_to_non_nullable
-              as int,
-      hasNextPage: null == hasNextPage
-          ? _value.hasNextPage
-          : hasNextPage // ignore: cast_nullable_to_non_nullable
-              as bool,
-      results: null == results
-          ? _value.results
-          : results // ignore: cast_nullable_to_non_nullable
-              as List<MovieModel>,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+        currentPage: null == currentPage
+            ? _value.currentPage
+            : currentPage // ignore: cast_nullable_to_non_nullable
+                as int,
+        hasNextPage: null == hasNextPage
+            ? _value.hasNextPage
+            : hasNextPage // ignore: cast_nullable_to_non_nullable
+                as bool,
+        results: null == results
+            ? _value.results
+            : results // ignore: cast_nullable_to_non_nullable
+                as List<MovieModel>,
+      ) as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$MovieListResponseImplCopyWith<$Res>
     implements $MovieListResponseCopyWith<$Res> {
-  factory _$$MovieListResponseImplCopyWith(_$MovieListResponseImpl value,
-          $Res Function(_$MovieListResponseImpl) then) =
-      __$$MovieListResponseImplCopyWithImpl<$Res>;
+  factory _$$MovieListResponseImplCopyWith(
+    _$MovieListResponseImpl value,
+    $Res Function(_$MovieListResponseImpl) then,
+  ) = __$$MovieListResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {@HiveField(0) @StringToIntConverterRequired() int currentPage,
-      @HiveField(1) bool hasNextPage,
-      @HiveField(2) List<MovieModel> results});
+  $Res call({
+    @HiveField(0) @StringToIntConverterRequired() int currentPage,
+    @HiveField(1) bool hasNextPage,
+    @HiveField(2) List<MovieModel> results,
+  });
 }
 
 /// @nodoc
 class __$$MovieListResponseImplCopyWithImpl<$Res>
     extends _$MovieListResponseCopyWithImpl<$Res, _$MovieListResponseImpl>
     implements _$$MovieListResponseImplCopyWith<$Res> {
-  __$$MovieListResponseImplCopyWithImpl(_$MovieListResponseImpl _value,
-      $Res Function(_$MovieListResponseImpl) _then)
-      : super(_value, _then);
+  __$$MovieListResponseImplCopyWithImpl(
+    _$MovieListResponseImpl _value,
+    $Res Function(_$MovieListResponseImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of MovieListResponse
   /// with the given fields replaced by the non-null parameter values.
@@ -860,31 +876,33 @@ class __$$MovieListResponseImplCopyWithImpl<$Res>
     Object? hasNextPage = null,
     Object? results = null,
   }) {
-    return _then(_$MovieListResponseImpl(
-      currentPage: null == currentPage
-          ? _value.currentPage
-          : currentPage // ignore: cast_nullable_to_non_nullable
-              as int,
-      hasNextPage: null == hasNextPage
-          ? _value.hasNextPage
-          : hasNextPage // ignore: cast_nullable_to_non_nullable
-              as bool,
-      results: null == results
-          ? _value._results
-          : results // ignore: cast_nullable_to_non_nullable
-              as List<MovieModel>,
-    ));
+    return _then(
+      _$MovieListResponseImpl(
+        currentPage: null == currentPage
+            ? _value.currentPage
+            : currentPage // ignore: cast_nullable_to_non_nullable
+                as int,
+        hasNextPage: null == hasNextPage
+            ? _value.hasNextPage
+            : hasNextPage // ignore: cast_nullable_to_non_nullable
+                as bool,
+        results: null == results
+            ? _value._results
+            : results // ignore: cast_nullable_to_non_nullable
+                as List<MovieModel>,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$MovieListResponseImpl implements _MovieListResponse {
-  const _$MovieListResponseImpl(
-      {@HiveField(0) @StringToIntConverterRequired() this.currentPage = 1,
-      @HiveField(1) this.hasNextPage = false,
-      @HiveField(2) required final List<MovieModel> results})
-      : _results = results;
+  const _$MovieListResponseImpl({
+    @HiveField(0) @StringToIntConverterRequired() this.currentPage = 1,
+    @HiveField(1) this.hasNextPage = false,
+    @HiveField(2) required final List<MovieModel> results,
+  }) : _results = results;
 
   factory _$MovieListResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$MovieListResponseImplFromJson(json);
@@ -926,8 +944,12 @@ class _$MovieListResponseImpl implements _MovieListResponse {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, currentPage, hasNextPage,
-      const DeepCollectionEquality().hash(_results));
+  int get hashCode => Object.hash(
+        runtimeType,
+        currentPage,
+        hasNextPage,
+        const DeepCollectionEquality().hash(_results),
+      );
 
   /// Create a copy of MovieListResponse
   /// with the given fields replaced by the non-null parameter values.
@@ -936,22 +958,22 @@ class _$MovieListResponseImpl implements _MovieListResponse {
   @pragma('vm:prefer-inline')
   _$$MovieListResponseImplCopyWith<_$MovieListResponseImpl> get copyWith =>
       __$$MovieListResponseImplCopyWithImpl<_$MovieListResponseImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$MovieListResponseImplToJson(
-      this,
-    );
+    return _$$MovieListResponseImplToJson(this);
   }
 }
 
 abstract class _MovieListResponse implements MovieListResponse {
-  const factory _MovieListResponse(
-          {@HiveField(0) @StringToIntConverterRequired() final int currentPage,
-          @HiveField(1) final bool hasNextPage,
-          @HiveField(2) required final List<MovieModel> results}) =
-      _$MovieListResponseImpl;
+  const factory _MovieListResponse({
+    @HiveField(0) @StringToIntConverterRequired() final int currentPage,
+    @HiveField(1) final bool hasNextPage,
+    @HiveField(2) required final List<MovieModel> results,
+  }) = _$MovieListResponseImpl;
 
   factory _MovieListResponse.fromJson(Map<String, dynamic> json) =
       _$MovieListResponseImpl.fromJson;

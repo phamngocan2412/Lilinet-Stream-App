@@ -95,35 +95,44 @@ class NetworkMonitorService {
   Future<void> _sampleNetworkSpeed() async {
     try {
       final startTime = DateTime.now();
-      const url =
-          'http://www.google.com/generate_204'; // Lightweight URL for testing
+      // Use HTTPS for security and a URL that returns content for meaningful speed test
+      const url = 'https://www.google.com';
 
       final httpClient = HttpClient();
       httpClient.connectionTimeout = const Duration(seconds: 5);
 
       final request = await httpClient.getUrl(Uri.parse(url));
+      // Request range to be polite, but handle full content if ignored
       request.headers.add(
         HttpHeaders.rangeHeader,
-        'bytes=0-1023',
-      ); // Download only 1KB
+        'bytes=0-10230',
+      ); // Try to download ~10KB
 
       final response = await request.close().timeout(
             const Duration(seconds: 10),
           );
 
       if (response.statusCode == 200 || response.statusCode == 206) {
+        int bytesReceived = 0;
+        await response.listen((data) {
+          bytesReceived += data.length;
+        }).asFuture();
+
         final endTime = DateTime.now();
         final duration = endTime.difference(startTime).inMicroseconds;
 
-        if (duration > 0) {
+        if (duration > 0 && bytesReceived > 0) {
           // Calculate speed in bytes/second
-          final speed = (1024 / duration) * 1000000; // bytes/second
+          final speed = (bytesReceived / duration) * 1000000; // bytes/second
           _addSpeedSample(speed);
 
           if (kDebugMode) {
             print('Network speed: ${(speed / 1024).toStringAsFixed(2)} KB/s');
           }
         }
+      } else {
+        // Drain response if status is unexpected to clean up resources
+        await response.drain();
       }
     } catch (e) {
       if (kDebugMode) {

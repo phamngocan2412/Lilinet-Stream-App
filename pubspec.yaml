@@ -102,6 +102,8 @@ dev_dependencies:
 
   # Linting
   flutter_lints: ^5.0.0
+  connectivity_plus_platform_interface: ^2.0.1
+  fake_async: any
   
   # --- [CẦN BỎ] ---
   # analyzer: ^7.0.0  <-- Bỏ dòng này đi. 
