@@ -22,19 +22,6 @@ class DownloadService {
 
   ValueNotifier<double>? getProgressNotifier(String url) => _progressMap[url];
 
-  /// Sanitize filename to prevent path traversal attacks
-  String _sanitizeFileName(String fileName) {
-    // Replace dangerous characters with underscore
-    // Note: We don't replace dots '.' generally to preserve extensions,
-    // but we replace '..' to prevent directory traversal.
-    // The previous implementation was replacing '/' with '_', which for '../../../' results in '.._.._.._'.
-    // If the test expects '_________', it means it expects '.' to be replaced too, OR the logic was different.
-    // Let's stick to safe defaults: replace path separators and dangerous chars.
-    return fileName
-        .replaceAll(RegExp(r'[\\/|:*?"<>]'), '_')
-        .replaceAll('..', '__');
-  }
-
   Future<bool> _requestPermission() async {
     if (Platform.isAndroid) {
       // For Android 13+, notifications permission is enough for foreground service
@@ -43,6 +30,20 @@ class DownloadService {
       return await _notificationService.requestPermissions();
     }
     return true;
+  }
+
+  /// Sanitize filename to prevent path traversal attacks
+  String _sanitizeFileName(String fileName) {
+    // 1. Remove control characters
+    var safeName = fileName.replaceAll(RegExp(r'[\x00-\x1f]'), '');
+
+    // 2. Replace invalid characters with underscore
+    safeName = safeName.replaceAll(RegExp(r'[<>:"/\\|?*]'), '_');
+
+    // 3. Prevent path traversal (replace .. with __)
+    safeName = safeName.replaceAll('..', '__');
+
+    return safeName;
   }
 
   Future<void> downloadVideo({
@@ -62,6 +63,7 @@ class DownloadService {
 
     // Generate a stable ID for notification based on URL hash
     final notificationId = url.hashCode;
+    final sanitizedFileName = _sanitizeFileName(fileName);
 
     // Sanitize filename once
     final sanitizedFileName = _sanitizeFileName(fileName);

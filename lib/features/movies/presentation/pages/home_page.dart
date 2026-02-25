@@ -44,9 +44,7 @@ class _HomePageViewState extends State<HomePageView>
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
-    final mediaQuery = MediaQuery.of(context);
-    final screenWidth = mediaQuery.size.width;
-    // final devicePixelRatio = mediaQuery.devicePixelRatio;
+    final screenWidth = MediaQuery.sizeOf(context).width;
 
     return Scaffold(
       appBar: AppBar(
@@ -114,9 +112,7 @@ class _HomePageViewState extends State<HomePageView>
               loaded: (trending, categories) {
                 final trendingMovies = trending.toSet().toList();
                 // Optimization: Pre-calculate cache width for horizontal lists
-                final devicePixelRatio = MediaQuery.of(
-                  context,
-                ).devicePixelRatio;
+                final devicePixelRatio = MediaQuery.devicePixelRatioOf(context);
                 final categoryMemCacheWidth = (130 * devicePixelRatio).toInt();
 
                 final genres = AppConstants.genres;

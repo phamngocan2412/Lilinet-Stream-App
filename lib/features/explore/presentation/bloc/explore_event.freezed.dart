@@ -12,7 +12,8 @@ part of 'explore_event.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$ExploreEvent {
@@ -80,8 +81,9 @@ mixin _$ExploreEvent {
 /// @nodoc
 abstract class $ExploreEventCopyWith<$Res> {
   factory $ExploreEventCopyWith(
-          ExploreEvent value, $Res Function(ExploreEvent) then) =
-      _$ExploreEventCopyWithImpl<$Res, ExploreEvent>;
+    ExploreEvent value,
+    $Res Function(ExploreEvent) then,
+  ) = _$ExploreEventCopyWithImpl<$Res, ExploreEvent>;
 }
 
 /// @nodoc
@@ -101,8 +103,9 @@ class _$ExploreEventCopyWithImpl<$Res, $Val extends ExploreEvent>
 /// @nodoc
 abstract class _$$LoadGenresImplCopyWith<$Res> {
   factory _$$LoadGenresImplCopyWith(
-          _$LoadGenresImpl value, $Res Function(_$LoadGenresImpl) then) =
-      __$$LoadGenresImplCopyWithImpl<$Res>;
+    _$LoadGenresImpl value,
+    $Res Function(_$LoadGenresImpl) then,
+  ) = __$$LoadGenresImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
@@ -110,8 +113,9 @@ class __$$LoadGenresImplCopyWithImpl<$Res>
     extends _$ExploreEventCopyWithImpl<$Res, _$LoadGenresImpl>
     implements _$$LoadGenresImplCopyWith<$Res> {
   __$$LoadGenresImplCopyWithImpl(
-      _$LoadGenresImpl _value, $Res Function(_$LoadGenresImpl) _then)
-      : super(_value, _then);
+    _$LoadGenresImpl _value,
+    $Res Function(_$LoadGenresImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of ExploreEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -226,9 +230,10 @@ abstract class LoadGenres implements ExploreEvent {
 
 /// @nodoc
 abstract class _$$LoadMoviesByGenreImplCopyWith<$Res> {
-  factory _$$LoadMoviesByGenreImplCopyWith(_$LoadMoviesByGenreImpl value,
-          $Res Function(_$LoadMoviesByGenreImpl) then) =
-      __$$LoadMoviesByGenreImplCopyWithImpl<$Res>;
+  factory _$$LoadMoviesByGenreImplCopyWith(
+    _$LoadMoviesByGenreImpl value,
+    $Res Function(_$LoadMoviesByGenreImpl) then,
+  ) = __$$LoadMoviesByGenreImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String genreId, String genreName, int page});
 }
@@ -237,9 +242,10 @@ abstract class _$$LoadMoviesByGenreImplCopyWith<$Res> {
 class __$$LoadMoviesByGenreImplCopyWithImpl<$Res>
     extends _$ExploreEventCopyWithImpl<$Res, _$LoadMoviesByGenreImpl>
     implements _$$LoadMoviesByGenreImplCopyWith<$Res> {
-  __$$LoadMoviesByGenreImplCopyWithImpl(_$LoadMoviesByGenreImpl _value,
-      $Res Function(_$LoadMoviesByGenreImpl) _then)
-      : super(_value, _then);
+  __$$LoadMoviesByGenreImplCopyWithImpl(
+    _$LoadMoviesByGenreImpl _value,
+    $Res Function(_$LoadMoviesByGenreImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of ExploreEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -250,28 +256,33 @@ class __$$LoadMoviesByGenreImplCopyWithImpl<$Res>
     Object? genreName = null,
     Object? page = null,
   }) {
-    return _then(_$LoadMoviesByGenreImpl(
-      genreId: null == genreId
-          ? _value.genreId
-          : genreId // ignore: cast_nullable_to_non_nullable
-              as String,
-      genreName: null == genreName
-          ? _value.genreName
-          : genreName // ignore: cast_nullable_to_non_nullable
-              as String,
-      page: null == page
-          ? _value.page
-          : page // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
+    return _then(
+      _$LoadMoviesByGenreImpl(
+        genreId: null == genreId
+            ? _value.genreId
+            : genreId // ignore: cast_nullable_to_non_nullable
+                as String,
+        genreName: null == genreName
+            ? _value.genreName
+            : genreName // ignore: cast_nullable_to_non_nullable
+                as String,
+        page: null == page
+            ? _value.page
+            : page // ignore: cast_nullable_to_non_nullable
+                as int,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$LoadMoviesByGenreImpl implements LoadMoviesByGenre {
-  const _$LoadMoviesByGenreImpl(
-      {required this.genreId, required this.genreName, this.page = 1});
+  const _$LoadMoviesByGenreImpl({
+    required this.genreId,
+    required this.genreName,
+    this.page = 1,
+  });
 
   @override
   final String genreId;
@@ -307,7 +318,9 @@ class _$LoadMoviesByGenreImpl implements LoadMoviesByGenre {
   @pragma('vm:prefer-inline')
   _$$LoadMoviesByGenreImplCopyWith<_$LoadMoviesByGenreImpl> get copyWith =>
       __$$LoadMoviesByGenreImplCopyWithImpl<_$LoadMoviesByGenreImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 
   @override
   @optionalTypeArgs
@@ -394,10 +407,11 @@ class _$LoadMoviesByGenreImpl implements LoadMoviesByGenre {
 }
 
 abstract class LoadMoviesByGenre implements ExploreEvent {
-  const factory LoadMoviesByGenre(
-      {required final String genreId,
-      required final String genreName,
-      final int page}) = _$LoadMoviesByGenreImpl;
+  const factory LoadMoviesByGenre({
+    required final String genreId,
+    required final String genreName,
+    final int page,
+  }) = _$LoadMoviesByGenreImpl;
 
   String get genreId;
   String get genreName;
@@ -412,9 +426,10 @@ abstract class LoadMoviesByGenre implements ExploreEvent {
 
 /// @nodoc
 abstract class _$$LoadPopularMoviesImplCopyWith<$Res> {
-  factory _$$LoadPopularMoviesImplCopyWith(_$LoadPopularMoviesImpl value,
-          $Res Function(_$LoadPopularMoviesImpl) then) =
-      __$$LoadPopularMoviesImplCopyWithImpl<$Res>;
+  factory _$$LoadPopularMoviesImplCopyWith(
+    _$LoadPopularMoviesImpl value,
+    $Res Function(_$LoadPopularMoviesImpl) then,
+  ) = __$$LoadPopularMoviesImplCopyWithImpl<$Res>;
   @useResult
   $Res call({int page});
 }
@@ -423,23 +438,24 @@ abstract class _$$LoadPopularMoviesImplCopyWith<$Res> {
 class __$$LoadPopularMoviesImplCopyWithImpl<$Res>
     extends _$ExploreEventCopyWithImpl<$Res, _$LoadPopularMoviesImpl>
     implements _$$LoadPopularMoviesImplCopyWith<$Res> {
-  __$$LoadPopularMoviesImplCopyWithImpl(_$LoadPopularMoviesImpl _value,
-      $Res Function(_$LoadPopularMoviesImpl) _then)
-      : super(_value, _then);
+  __$$LoadPopularMoviesImplCopyWithImpl(
+    _$LoadPopularMoviesImpl _value,
+    $Res Function(_$LoadPopularMoviesImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of ExploreEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? page = null,
-  }) {
-    return _then(_$LoadPopularMoviesImpl(
-      page: null == page
-          ? _value.page
-          : page // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
+  $Res call({Object? page = null}) {
+    return _then(
+      _$LoadPopularMoviesImpl(
+        page: null == page
+            ? _value.page
+            : page // ignore: cast_nullable_to_non_nullable
+                as int,
+      ),
+    );
   }
 }
 
@@ -475,7 +491,9 @@ class _$LoadPopularMoviesImpl implements LoadPopularMovies {
   @pragma('vm:prefer-inline')
   _$$LoadPopularMoviesImplCopyWith<_$LoadPopularMoviesImpl> get copyWith =>
       __$$LoadPopularMoviesImplCopyWithImpl<_$LoadPopularMoviesImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 
   @override
   @optionalTypeArgs
@@ -575,9 +593,10 @@ abstract class LoadPopularMovies implements ExploreEvent {
 
 /// @nodoc
 abstract class _$$LoadTopRatedMoviesImplCopyWith<$Res> {
-  factory _$$LoadTopRatedMoviesImplCopyWith(_$LoadTopRatedMoviesImpl value,
-          $Res Function(_$LoadTopRatedMoviesImpl) then) =
-      __$$LoadTopRatedMoviesImplCopyWithImpl<$Res>;
+  factory _$$LoadTopRatedMoviesImplCopyWith(
+    _$LoadTopRatedMoviesImpl value,
+    $Res Function(_$LoadTopRatedMoviesImpl) then,
+  ) = __$$LoadTopRatedMoviesImplCopyWithImpl<$Res>;
   @useResult
   $Res call({int page});
 }
@@ -586,23 +605,24 @@ abstract class _$$LoadTopRatedMoviesImplCopyWith<$Res> {
 class __$$LoadTopRatedMoviesImplCopyWithImpl<$Res>
     extends _$ExploreEventCopyWithImpl<$Res, _$LoadTopRatedMoviesImpl>
     implements _$$LoadTopRatedMoviesImplCopyWith<$Res> {
-  __$$LoadTopRatedMoviesImplCopyWithImpl(_$LoadTopRatedMoviesImpl _value,
-      $Res Function(_$LoadTopRatedMoviesImpl) _then)
-      : super(_value, _then);
+  __$$LoadTopRatedMoviesImplCopyWithImpl(
+    _$LoadTopRatedMoviesImpl _value,
+    $Res Function(_$LoadTopRatedMoviesImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of ExploreEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? page = null,
-  }) {
-    return _then(_$LoadTopRatedMoviesImpl(
-      page: null == page
-          ? _value.page
-          : page // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
+  $Res call({Object? page = null}) {
+    return _then(
+      _$LoadTopRatedMoviesImpl(
+        page: null == page
+            ? _value.page
+            : page // ignore: cast_nullable_to_non_nullable
+                as int,
+      ),
+    );
   }
 }
 
@@ -638,7 +658,9 @@ class _$LoadTopRatedMoviesImpl implements LoadTopRatedMovies {
   @pragma('vm:prefer-inline')
   _$$LoadTopRatedMoviesImplCopyWith<_$LoadTopRatedMoviesImpl> get copyWith =>
       __$$LoadTopRatedMoviesImplCopyWithImpl<_$LoadTopRatedMoviesImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 
   @override
   @optionalTypeArgs
@@ -738,9 +760,10 @@ abstract class LoadTopRatedMovies implements ExploreEvent {
 
 /// @nodoc
 abstract class _$$LoadRecentlyAddedImplCopyWith<$Res> {
-  factory _$$LoadRecentlyAddedImplCopyWith(_$LoadRecentlyAddedImpl value,
-          $Res Function(_$LoadRecentlyAddedImpl) then) =
-      __$$LoadRecentlyAddedImplCopyWithImpl<$Res>;
+  factory _$$LoadRecentlyAddedImplCopyWith(
+    _$LoadRecentlyAddedImpl value,
+    $Res Function(_$LoadRecentlyAddedImpl) then,
+  ) = __$$LoadRecentlyAddedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({int page});
 }
@@ -749,23 +772,24 @@ abstract class _$$LoadRecentlyAddedImplCopyWith<$Res> {
 class __$$LoadRecentlyAddedImplCopyWithImpl<$Res>
     extends _$ExploreEventCopyWithImpl<$Res, _$LoadRecentlyAddedImpl>
     implements _$$LoadRecentlyAddedImplCopyWith<$Res> {
-  __$$LoadRecentlyAddedImplCopyWithImpl(_$LoadRecentlyAddedImpl _value,
-      $Res Function(_$LoadRecentlyAddedImpl) _then)
-      : super(_value, _then);
+  __$$LoadRecentlyAddedImplCopyWithImpl(
+    _$LoadRecentlyAddedImpl _value,
+    $Res Function(_$LoadRecentlyAddedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of ExploreEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? page = null,
-  }) {
-    return _then(_$LoadRecentlyAddedImpl(
-      page: null == page
-          ? _value.page
-          : page // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
+  $Res call({Object? page = null}) {
+    return _then(
+      _$LoadRecentlyAddedImpl(
+        page: null == page
+            ? _value.page
+            : page // ignore: cast_nullable_to_non_nullable
+                as int,
+      ),
+    );
   }
 }
 
@@ -801,7 +825,9 @@ class _$LoadRecentlyAddedImpl implements LoadRecentlyAdded {
   @pragma('vm:prefer-inline')
   _$$LoadRecentlyAddedImplCopyWith<_$LoadRecentlyAddedImpl> get copyWith =>
       __$$LoadRecentlyAddedImplCopyWithImpl<_$LoadRecentlyAddedImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 
   @override
   @optionalTypeArgs
