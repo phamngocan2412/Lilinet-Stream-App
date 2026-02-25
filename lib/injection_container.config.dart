@@ -11,6 +11,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:connectivity_plus/connectivity_plus.dart' as _i895;
 import 'package:dio/dio.dart' as _i361;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:hive_ce/hive_ce.dart' as _i1055;
 import 'package:hive_ce_flutter/hive_flutter.dart' as _i919;
@@ -158,10 +159,16 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i102.LocalNotificationService>(
         () => _i102.LocalNotificationService());
     gh.lazySingleton<_i361.Dio>(() => registerModule.dio);
+    gh.lazySingleton<_i558.FlutterSecureStorage>(
+        () => registerModule.secureStorage);
     gh.lazySingleton<_i454.SupabaseClient>(() => registerModule.supabaseClient);
+    gh.lazySingleton<_i558.FlutterSecureStorage>(
+        () => registerModule.secureStorage);
     gh.lazySingleton<_i895.Connectivity>(() => registerModule.connectivity);
     gh.lazySingleton<_i111.MiniplayerHeightNotifier>(
         () => registerModule.miniplayerHeightNotifier);
+    gh.lazySingleton<_i558.FlutterSecureStorage>(
+        () => registerModule.secureStorage);
     gh.lazySingleton<_i123.MovieLocalDataSource>(
         () => _i123.MovieLocalDataSource(
               gh<_i919.Box<_i892.MovieListResponse>>(),
@@ -190,7 +197,10 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i123.MovieLocalDataSource>(),
         ));
     gh.lazySingleton<_i387.SettingsLocalDataSource>(
-        () => _i387.SettingsLocalDataSource(gh<_i460.SharedPreferences>()));
+        () => _i387.SettingsLocalDataSource(
+              gh<_i460.SharedPreferences>(),
+              gh<_i558.FlutterSecureStorage>(),
+            ));
     gh.factory<_i83.NetworkCubit>(
         () => _i83.NetworkCubit(gh<_i895.Connectivity>()));
     gh.lazySingleton<_i320.FavoritesRepository>(() =>

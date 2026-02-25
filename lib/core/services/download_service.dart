@@ -32,6 +32,7 @@ class DownloadService {
     return true;
   }
 
+  /// Sanitize filename to prevent path traversal attacks
   String _sanitizeFileName(String fileName) {
     // Replace characters that are invalid in filenames or could lead to path traversal
     // Also remove control characters
@@ -57,9 +58,9 @@ class DownloadService {
 
     // Generate a stable ID for notification based on URL hash
     final notificationId = url.hashCode;
+    final sanitizedFileName = _sanitizeFileName(fileName);
 
     try {
-      final sanitizedFileName = _sanitizeFileName(fileName);
       final dir = await getApplicationDocumentsDirectory();
       final savePath = '${dir.path}/downloads/$sanitizedFileName';
 
