@@ -51,12 +51,13 @@ class AppCachedImage extends StatelessWidget {
 
     // Optimization: Skip LayoutBuilder if we already have explicit dimensions.
     // This reduces the widget tree depth and RenderObject overhead.
-    // Use devicePixelRatioOf to avoid rebuilding on other MediaQuery changes (like keyboard open/close)
-    final devicePixelRatio = MediaQuery.devicePixelRatioOf(context);
-
     if (memCacheWidth != null || (width != null && width!.isFinite)) {
       int? optimalMemCacheWidth = memCacheWidth;
+      double? devicePixelRatio;
+
+      // Calculate width if needed
       if (optimalMemCacheWidth == null && width != null && width!.isFinite) {
+        devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
         optimalMemCacheWidth = (width! * devicePixelRatio).toInt();
       }
 
@@ -64,13 +65,21 @@ class AppCachedImage extends StatelessWidget {
         optimalMemCacheWidth = 1;
       }
 
-      int? optimalMemCacheHeight = _calculateOptimalHeight(devicePixelRatio);
+      // Calculate height if needed
+      int? optimalMemCacheHeight = memCacheHeight;
+      if (optimalMemCacheHeight == null && height != null && height!.isFinite) {
+        devicePixelRatio ??= MediaQuery.of(context).devicePixelRatio;
+        optimalMemCacheHeight = (height! * devicePixelRatio).toInt();
+        if (optimalMemCacheHeight < 1) optimalMemCacheHeight = 1;
+      }
 
       return _buildImage(context, optimalMemCacheWidth, optimalMemCacheHeight);
     }
 
     return LayoutBuilder(
       builder: (context, constraints) {
+        final devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
+
         // Calculate optimal cache width based on constraints
         int? optimalMemCacheWidth;
 
@@ -85,7 +94,13 @@ class AppCachedImage extends StatelessWidget {
           optimalMemCacheWidth = 1;
         }
 
-        int? optimalMemCacheHeight = _calculateOptimalHeight(devicePixelRatio);
+        int? optimalMemCacheHeight = memCacheHeight;
+        if (optimalMemCacheHeight == null &&
+            height != null &&
+            height!.isFinite) {
+          optimalMemCacheHeight = (height! * devicePixelRatio).toInt();
+          if (optimalMemCacheHeight < 1) optimalMemCacheHeight = 1;
+        }
 
         return _buildImage(
           context,
@@ -94,15 +109,6 @@ class AppCachedImage extends StatelessWidget {
         );
       },
     );
-  }
-
-  int? _calculateOptimalHeight(double devicePixelRatio) {
-    int? optimalMemCacheHeight = memCacheHeight;
-    if (optimalMemCacheHeight == null && height != null && height!.isFinite) {
-      optimalMemCacheHeight = (height! * devicePixelRatio).toInt();
-      if (optimalMemCacheHeight < 1) optimalMemCacheHeight = 1;
-    }
-    return optimalMemCacheHeight;
   }
 
   Widget _buildImage(

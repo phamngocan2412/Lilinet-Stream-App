@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 import 'package:lilinet_app/l10n/app_localizations.dart';
+import '../../../../core/widgets/cached_image.dart';
 import '../../../../core/utils/time_formatter.dart';
 import '../../domain/entities/comment.dart';
 import '../../domain/repositories/comment_repository.dart';
@@ -101,6 +102,9 @@ class HomeTrendingListWidget extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 16),
             itemCount: comments.length,
+            // Optimization: Set itemExtent to 240 (card width) + 10 (margin) = 250
+            // This prevents the list from laying out every item to determine scroll extent
+            itemExtent: 250,
             itemBuilder: (context, index) {
               final comment = comments[index];
               return TrendingCommentCard(
@@ -164,9 +168,14 @@ class TrendingCommentCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                CircleAvatar(
-                  radius: 14,
-                  backgroundImage: NetworkImage(comment.avatarUrl),
+                ClipOval(
+                  child: AppCachedImage(
+                    imageUrl: comment.avatarUrl,
+                    width: 28,
+                    height: 28,
+                    fit: BoxFit.cover,
+                    placeholder: Container(color: Colors.grey[300]),
+                  ),
                 ),
                 const SizedBox(width: 6),
                 Expanded(

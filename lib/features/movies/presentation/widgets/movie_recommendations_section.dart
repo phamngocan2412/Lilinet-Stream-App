@@ -19,8 +19,8 @@ class MovieRecommendationsSection extends StatelessWidget {
       return const SliverToBoxAdapter(child: SizedBox.shrink());
     }
 
-    final screenWidth = MediaQuery.of(context).size.width;
-    final devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final devicePixelRatio = MediaQuery.devicePixelRatioOf(context);
     final itemWidth = (screenWidth - 32 - 12) / 2;
     final memCacheWidth = (itemWidth * devicePixelRatio).toInt();
 
