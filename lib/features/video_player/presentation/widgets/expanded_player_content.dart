@@ -78,10 +78,7 @@ class _ExpandedPlayerContentState extends State<ExpandedPlayerContent> {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        final contentChildren = _buildContentChildren(
-          context,
-          description,
-        );
+        final contentChildren = _buildContentChildren(context, description);
 
         return GestureDetector(
           // FIX: Absorb tap gestures in content area to prevent miniplayer

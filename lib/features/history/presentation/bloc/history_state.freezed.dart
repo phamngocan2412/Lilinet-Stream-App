@@ -12,7 +12,8 @@ part of 'history_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$HistoryState {
@@ -21,8 +22,10 @@ mixin _$HistoryState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(
-            List<WatchProgress> history, int totalVideos, int totalTimeSeconds)
-        loaded,
+      List<WatchProgress> history,
+      int totalVideos,
+      int totalTimeSeconds,
+    ) loaded,
     required TResult Function() empty,
     required TResult Function(String message) error,
   }) =>
@@ -32,8 +35,10 @@ mixin _$HistoryState {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(
-            List<WatchProgress> history, int totalVideos, int totalTimeSeconds)?
-        loaded,
+      List<WatchProgress> history,
+      int totalVideos,
+      int totalTimeSeconds,
+    )? loaded,
     TResult? Function()? empty,
     TResult? Function(String message)? error,
   }) =>
@@ -43,8 +48,10 @@ mixin _$HistoryState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(
-            List<WatchProgress> history, int totalVideos, int totalTimeSeconds)?
-        loaded,
+      List<WatchProgress> history,
+      int totalVideos,
+      int totalTimeSeconds,
+    )? loaded,
     TResult Function()? empty,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -83,8 +90,9 @@ mixin _$HistoryState {
 /// @nodoc
 abstract class $HistoryStateCopyWith<$Res> {
   factory $HistoryStateCopyWith(
-          HistoryState value, $Res Function(HistoryState) then) =
-      _$HistoryStateCopyWithImpl<$Res, HistoryState>;
+    HistoryState value,
+    $Res Function(HistoryState) then,
+  ) = _$HistoryStateCopyWithImpl<$Res, HistoryState>;
 }
 
 /// @nodoc
@@ -103,9 +111,10 @@ class _$HistoryStateCopyWithImpl<$Res, $Val extends HistoryState>
 
 /// @nodoc
 abstract class _$$HistoryInitialImplCopyWith<$Res> {
-  factory _$$HistoryInitialImplCopyWith(_$HistoryInitialImpl value,
-          $Res Function(_$HistoryInitialImpl) then) =
-      __$$HistoryInitialImplCopyWithImpl<$Res>;
+  factory _$$HistoryInitialImplCopyWith(
+    _$HistoryInitialImpl value,
+    $Res Function(_$HistoryInitialImpl) then,
+  ) = __$$HistoryInitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
@@ -113,8 +122,9 @@ class __$$HistoryInitialImplCopyWithImpl<$Res>
     extends _$HistoryStateCopyWithImpl<$Res, _$HistoryInitialImpl>
     implements _$$HistoryInitialImplCopyWith<$Res> {
   __$$HistoryInitialImplCopyWithImpl(
-      _$HistoryInitialImpl _value, $Res Function(_$HistoryInitialImpl) _then)
-      : super(_value, _then);
+    _$HistoryInitialImpl _value,
+    $Res Function(_$HistoryInitialImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of HistoryState
   /// with the given fields replaced by the non-null parameter values.
@@ -145,8 +155,10 @@ class _$HistoryInitialImpl implements HistoryInitial {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(
-            List<WatchProgress> history, int totalVideos, int totalTimeSeconds)
-        loaded,
+      List<WatchProgress> history,
+      int totalVideos,
+      int totalTimeSeconds,
+    ) loaded,
     required TResult Function() empty,
     required TResult Function(String message) error,
   }) {
@@ -159,8 +171,10 @@ class _$HistoryInitialImpl implements HistoryInitial {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(
-            List<WatchProgress> history, int totalVideos, int totalTimeSeconds)?
-        loaded,
+      List<WatchProgress> history,
+      int totalVideos,
+      int totalTimeSeconds,
+    )? loaded,
     TResult? Function()? empty,
     TResult? Function(String message)? error,
   }) {
@@ -173,8 +187,10 @@ class _$HistoryInitialImpl implements HistoryInitial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(
-            List<WatchProgress> history, int totalVideos, int totalTimeSeconds)?
-        loaded,
+      List<WatchProgress> history,
+      int totalVideos,
+      int totalTimeSeconds,
+    )? loaded,
     TResult Function()? empty,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -232,9 +248,10 @@ abstract class HistoryInitial implements HistoryState {
 
 /// @nodoc
 abstract class _$$HistoryLoadingImplCopyWith<$Res> {
-  factory _$$HistoryLoadingImplCopyWith(_$HistoryLoadingImpl value,
-          $Res Function(_$HistoryLoadingImpl) then) =
-      __$$HistoryLoadingImplCopyWithImpl<$Res>;
+  factory _$$HistoryLoadingImplCopyWith(
+    _$HistoryLoadingImpl value,
+    $Res Function(_$HistoryLoadingImpl) then,
+  ) = __$$HistoryLoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
@@ -242,8 +259,9 @@ class __$$HistoryLoadingImplCopyWithImpl<$Res>
     extends _$HistoryStateCopyWithImpl<$Res, _$HistoryLoadingImpl>
     implements _$$HistoryLoadingImplCopyWith<$Res> {
   __$$HistoryLoadingImplCopyWithImpl(
-      _$HistoryLoadingImpl _value, $Res Function(_$HistoryLoadingImpl) _then)
-      : super(_value, _then);
+    _$HistoryLoadingImpl _value,
+    $Res Function(_$HistoryLoadingImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of HistoryState
   /// with the given fields replaced by the non-null parameter values.
@@ -274,8 +292,10 @@ class _$HistoryLoadingImpl implements HistoryLoading {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(
-            List<WatchProgress> history, int totalVideos, int totalTimeSeconds)
-        loaded,
+      List<WatchProgress> history,
+      int totalVideos,
+      int totalTimeSeconds,
+    ) loaded,
     required TResult Function() empty,
     required TResult Function(String message) error,
   }) {
@@ -288,8 +308,10 @@ class _$HistoryLoadingImpl implements HistoryLoading {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(
-            List<WatchProgress> history, int totalVideos, int totalTimeSeconds)?
-        loaded,
+      List<WatchProgress> history,
+      int totalVideos,
+      int totalTimeSeconds,
+    )? loaded,
     TResult? Function()? empty,
     TResult? Function(String message)? error,
   }) {
@@ -302,8 +324,10 @@ class _$HistoryLoadingImpl implements HistoryLoading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(
-            List<WatchProgress> history, int totalVideos, int totalTimeSeconds)?
-        loaded,
+      List<WatchProgress> history,
+      int totalVideos,
+      int totalTimeSeconds,
+    )? loaded,
     TResult Function()? empty,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -362,11 +386,15 @@ abstract class HistoryLoading implements HistoryState {
 /// @nodoc
 abstract class _$$HistoryLoadedImplCopyWith<$Res> {
   factory _$$HistoryLoadedImplCopyWith(
-          _$HistoryLoadedImpl value, $Res Function(_$HistoryLoadedImpl) then) =
-      __$$HistoryLoadedImplCopyWithImpl<$Res>;
+    _$HistoryLoadedImpl value,
+    $Res Function(_$HistoryLoadedImpl) then,
+  ) = __$$HistoryLoadedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call(
-      {List<WatchProgress> history, int totalVideos, int totalTimeSeconds});
+  $Res call({
+    List<WatchProgress> history,
+    int totalVideos,
+    int totalTimeSeconds,
+  });
 }
 
 /// @nodoc
@@ -374,8 +402,9 @@ class __$$HistoryLoadedImplCopyWithImpl<$Res>
     extends _$HistoryStateCopyWithImpl<$Res, _$HistoryLoadedImpl>
     implements _$$HistoryLoadedImplCopyWith<$Res> {
   __$$HistoryLoadedImplCopyWithImpl(
-      _$HistoryLoadedImpl _value, $Res Function(_$HistoryLoadedImpl) _then)
-      : super(_value, _then);
+    _$HistoryLoadedImpl _value,
+    $Res Function(_$HistoryLoadedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of HistoryState
   /// with the given fields replaced by the non-null parameter values.
@@ -386,31 +415,33 @@ class __$$HistoryLoadedImplCopyWithImpl<$Res>
     Object? totalVideos = null,
     Object? totalTimeSeconds = null,
   }) {
-    return _then(_$HistoryLoadedImpl(
-      history: null == history
-          ? _value._history
-          : history // ignore: cast_nullable_to_non_nullable
-              as List<WatchProgress>,
-      totalVideos: null == totalVideos
-          ? _value.totalVideos
-          : totalVideos // ignore: cast_nullable_to_non_nullable
-              as int,
-      totalTimeSeconds: null == totalTimeSeconds
-          ? _value.totalTimeSeconds
-          : totalTimeSeconds // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
+    return _then(
+      _$HistoryLoadedImpl(
+        history: null == history
+            ? _value._history
+            : history // ignore: cast_nullable_to_non_nullable
+                as List<WatchProgress>,
+        totalVideos: null == totalVideos
+            ? _value.totalVideos
+            : totalVideos // ignore: cast_nullable_to_non_nullable
+                as int,
+        totalTimeSeconds: null == totalTimeSeconds
+            ? _value.totalTimeSeconds
+            : totalTimeSeconds // ignore: cast_nullable_to_non_nullable
+                as int,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$HistoryLoadedImpl implements HistoryLoaded {
-  const _$HistoryLoadedImpl(
-      {required final List<WatchProgress> history,
-      this.totalVideos = 0,
-      this.totalTimeSeconds = 0})
-      : _history = history;
+  const _$HistoryLoadedImpl({
+    required final List<WatchProgress> history,
+    this.totalVideos = 0,
+    this.totalTimeSeconds = 0,
+  }) : _history = history;
 
   final List<WatchProgress> _history;
   @override
@@ -446,10 +477,11 @@ class _$HistoryLoadedImpl implements HistoryLoaded {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_history),
-      totalVideos,
-      totalTimeSeconds);
+        runtimeType,
+        const DeepCollectionEquality().hash(_history),
+        totalVideos,
+        totalTimeSeconds,
+      );
 
   /// Create a copy of HistoryState
   /// with the given fields replaced by the non-null parameter values.
@@ -465,8 +497,10 @@ class _$HistoryLoadedImpl implements HistoryLoaded {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(
-            List<WatchProgress> history, int totalVideos, int totalTimeSeconds)
-        loaded,
+      List<WatchProgress> history,
+      int totalVideos,
+      int totalTimeSeconds,
+    ) loaded,
     required TResult Function() empty,
     required TResult Function(String message) error,
   }) {
@@ -479,8 +513,10 @@ class _$HistoryLoadedImpl implements HistoryLoaded {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(
-            List<WatchProgress> history, int totalVideos, int totalTimeSeconds)?
-        loaded,
+      List<WatchProgress> history,
+      int totalVideos,
+      int totalTimeSeconds,
+    )? loaded,
     TResult? Function()? empty,
     TResult? Function(String message)? error,
   }) {
@@ -493,8 +529,10 @@ class _$HistoryLoadedImpl implements HistoryLoaded {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(
-            List<WatchProgress> history, int totalVideos, int totalTimeSeconds)?
-        loaded,
+      List<WatchProgress> history,
+      int totalVideos,
+      int totalTimeSeconds,
+    )? loaded,
     TResult Function()? empty,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -547,10 +585,11 @@ class _$HistoryLoadedImpl implements HistoryLoaded {
 }
 
 abstract class HistoryLoaded implements HistoryState {
-  const factory HistoryLoaded(
-      {required final List<WatchProgress> history,
-      final int totalVideos,
-      final int totalTimeSeconds}) = _$HistoryLoadedImpl;
+  const factory HistoryLoaded({
+    required final List<WatchProgress> history,
+    final int totalVideos,
+    final int totalTimeSeconds,
+  }) = _$HistoryLoadedImpl;
 
   List<WatchProgress> get history;
   int get totalVideos;
@@ -566,8 +605,9 @@ abstract class HistoryLoaded implements HistoryState {
 /// @nodoc
 abstract class _$$HistoryEmptyImplCopyWith<$Res> {
   factory _$$HistoryEmptyImplCopyWith(
-          _$HistoryEmptyImpl value, $Res Function(_$HistoryEmptyImpl) then) =
-      __$$HistoryEmptyImplCopyWithImpl<$Res>;
+    _$HistoryEmptyImpl value,
+    $Res Function(_$HistoryEmptyImpl) then,
+  ) = __$$HistoryEmptyImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
@@ -575,8 +615,9 @@ class __$$HistoryEmptyImplCopyWithImpl<$Res>
     extends _$HistoryStateCopyWithImpl<$Res, _$HistoryEmptyImpl>
     implements _$$HistoryEmptyImplCopyWith<$Res> {
   __$$HistoryEmptyImplCopyWithImpl(
-      _$HistoryEmptyImpl _value, $Res Function(_$HistoryEmptyImpl) _then)
-      : super(_value, _then);
+    _$HistoryEmptyImpl _value,
+    $Res Function(_$HistoryEmptyImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of HistoryState
   /// with the given fields replaced by the non-null parameter values.
@@ -607,8 +648,10 @@ class _$HistoryEmptyImpl implements HistoryEmpty {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(
-            List<WatchProgress> history, int totalVideos, int totalTimeSeconds)
-        loaded,
+      List<WatchProgress> history,
+      int totalVideos,
+      int totalTimeSeconds,
+    ) loaded,
     required TResult Function() empty,
     required TResult Function(String message) error,
   }) {
@@ -621,8 +664,10 @@ class _$HistoryEmptyImpl implements HistoryEmpty {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(
-            List<WatchProgress> history, int totalVideos, int totalTimeSeconds)?
-        loaded,
+      List<WatchProgress> history,
+      int totalVideos,
+      int totalTimeSeconds,
+    )? loaded,
     TResult? Function()? empty,
     TResult? Function(String message)? error,
   }) {
@@ -635,8 +680,10 @@ class _$HistoryEmptyImpl implements HistoryEmpty {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(
-            List<WatchProgress> history, int totalVideos, int totalTimeSeconds)?
-        loaded,
+      List<WatchProgress> history,
+      int totalVideos,
+      int totalTimeSeconds,
+    )? loaded,
     TResult Function()? empty,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -695,8 +742,9 @@ abstract class HistoryEmpty implements HistoryState {
 /// @nodoc
 abstract class _$$HistoryErrorImplCopyWith<$Res> {
   factory _$$HistoryErrorImplCopyWith(
-          _$HistoryErrorImpl value, $Res Function(_$HistoryErrorImpl) then) =
-      __$$HistoryErrorImplCopyWithImpl<$Res>;
+    _$HistoryErrorImpl value,
+    $Res Function(_$HistoryErrorImpl) then,
+  ) = __$$HistoryErrorImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String message});
 }
@@ -706,22 +754,23 @@ class __$$HistoryErrorImplCopyWithImpl<$Res>
     extends _$HistoryStateCopyWithImpl<$Res, _$HistoryErrorImpl>
     implements _$$HistoryErrorImplCopyWith<$Res> {
   __$$HistoryErrorImplCopyWithImpl(
-      _$HistoryErrorImpl _value, $Res Function(_$HistoryErrorImpl) _then)
-      : super(_value, _then);
+    _$HistoryErrorImpl _value,
+    $Res Function(_$HistoryErrorImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of HistoryState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? message = null,
-  }) {
-    return _then(_$HistoryErrorImpl(
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
+  $Res call({Object? message = null}) {
+    return _then(
+      _$HistoryErrorImpl(
+        message: null == message
+            ? _value.message
+            : message // ignore: cast_nullable_to_non_nullable
+                as String,
+      ),
+    );
   }
 }
 
@@ -763,8 +812,10 @@ class _$HistoryErrorImpl implements HistoryError {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(
-            List<WatchProgress> history, int totalVideos, int totalTimeSeconds)
-        loaded,
+      List<WatchProgress> history,
+      int totalVideos,
+      int totalTimeSeconds,
+    ) loaded,
     required TResult Function() empty,
     required TResult Function(String message) error,
   }) {
@@ -777,8 +828,10 @@ class _$HistoryErrorImpl implements HistoryError {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(
-            List<WatchProgress> history, int totalVideos, int totalTimeSeconds)?
-        loaded,
+      List<WatchProgress> history,
+      int totalVideos,
+      int totalTimeSeconds,
+    )? loaded,
     TResult? Function()? empty,
     TResult? Function(String message)? error,
   }) {
@@ -791,8 +844,10 @@ class _$HistoryErrorImpl implements HistoryError {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(
-            List<WatchProgress> history, int totalVideos, int totalTimeSeconds)?
-        loaded,
+      List<WatchProgress> history,
+      int totalVideos,
+      int totalTimeSeconds,
+    )? loaded,
     TResult Function()? empty,
     TResult Function(String message)? error,
     required TResult orElse(),

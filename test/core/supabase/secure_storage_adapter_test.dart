@@ -17,20 +17,23 @@ void main() {
 
   group('SecureStorageAdapter', () {
     test('hasAccessToken returns true if key exists', () async {
-      when(() => mockStorage.containsKey(key: supabasePersistSessionKey))
-          .thenAnswer((_) async => true);
+      when(
+        () => mockStorage.containsKey(key: supabasePersistSessionKey),
+      ).thenAnswer((_) async => true);
 
       final result = await adapter.hasAccessToken();
 
       expect(result, isTrue);
-      verify(() => mockStorage.containsKey(key: supabasePersistSessionKey))
-          .called(1);
+      verify(
+        () => mockStorage.containsKey(key: supabasePersistSessionKey),
+      ).called(1);
     });
 
     test('accessToken returns token if key exists', () async {
       const token = 'test_token';
-      when(() => mockStorage.read(key: supabasePersistSessionKey))
-          .thenAnswer((_) async => token);
+      when(
+        () => mockStorage.read(key: supabasePersistSessionKey),
+      ).thenAnswer((_) async => token);
 
       final result = await adapter.accessToken();
 
@@ -40,27 +43,33 @@ void main() {
 
     test('persistSession writes token', () async {
       const sessionString = '{"access_token": "token"}';
-      when(() => mockStorage.write(
-            key: supabasePersistSessionKey,
-            value: sessionString,
-          )).thenAnswer((_) async {});
+      when(
+        () => mockStorage.write(
+          key: supabasePersistSessionKey,
+          value: sessionString,
+        ),
+      ).thenAnswer((_) async {});
 
       await adapter.persistSession(sessionString);
 
-      verify(() => mockStorage.write(
-            key: supabasePersistSessionKey,
-            value: sessionString,
-          )).called(1);
+      verify(
+        () => mockStorage.write(
+          key: supabasePersistSessionKey,
+          value: sessionString,
+        ),
+      ).called(1);
     });
 
     test('removePersistedSession deletes token', () async {
-      when(() => mockStorage.delete(key: supabasePersistSessionKey))
-          .thenAnswer((_) async {});
+      when(
+        () => mockStorage.delete(key: supabasePersistSessionKey),
+      ).thenAnswer((_) async {});
 
       await adapter.removePersistedSession();
 
-      verify(() => mockStorage.delete(key: supabasePersistSessionKey))
-          .called(1);
+      verify(
+        () => mockStorage.delete(key: supabasePersistSessionKey),
+      ).called(1);
     });
   });
 }
