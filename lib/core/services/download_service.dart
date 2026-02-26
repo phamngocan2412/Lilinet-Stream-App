@@ -63,10 +63,11 @@ class DownloadService {
 
     // Generate a stable ID for notification based on URL hash
     final notificationId = url.hashCode;
-    final sanitizedFileName = _sanitizeFileName(fileName);
+    var sanitizedFileName = _sanitizeFileName(fileName);
 
-    // Sanitize filename once
-    final sanitizedFileName = _sanitizeFileName(fileName);
+    if (sanitizedFileName.trim().isEmpty) {
+      sanitizedFileName = 'download_${DateTime.now().millisecondsSinceEpoch}';
+    }
 
     try {
       final dir = await getApplicationDocumentsDirectory();

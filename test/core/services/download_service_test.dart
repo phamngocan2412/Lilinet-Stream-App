@@ -222,4 +222,40 @@ void main() {
     final result2 = await downloadService.isFileDownloaded('../outside.txt');
     expect(result2, isTrue);
   });
+
+  test('downloadVideo uses default filename if input is invalid/empty', () async {
+    const fileName = ''; // Empty string
+    const url = 'http://example.com/video.mp4';
+
+    // Capture the savePath passed to dio.download
+    String? capturedPath;
+    when(
+      () => mockDio.download(
+        any(),
+        any(),
+        onReceiveProgress: any(named: 'onReceiveProgress'),
+      ),
+    ).thenAnswer((invocation) async {
+      capturedPath = invocation.positionalArguments[1] as String;
+      // create a dummy file so file size check works
+      final file = File(capturedPath!);
+      file.parent.createSync(recursive: true);
+      file.writeAsStringSync('dummy content');
+      return Response(
+        requestOptions: RequestOptions(path: ''),
+        statusCode: 200,
+      );
+    });
+
+    await downloadService.downloadVideo(
+      url: url,
+      fileName: fileName,
+      movieTitle: 'Test Movie',
+    );
+
+    // Verify that the path uses a fallback name (starts with download_)
+    expect(capturedPath, contains('/downloads/download_'));
+    // And is not just empty or slashes
+    expect(capturedPath, isNot(contains('///')));
+  });
 }
