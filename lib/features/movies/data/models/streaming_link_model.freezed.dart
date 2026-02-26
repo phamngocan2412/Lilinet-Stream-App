@@ -12,8 +12,7 @@ part of 'streaming_link_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 StreamingLinkModel _$StreamingLinkModelFromJson(Map<String, dynamic> json) {
   return _StreamingLinkModel.fromJson(json);
@@ -45,16 +44,14 @@ mixin _$StreamingLinkModel {
 /// @nodoc
 abstract class $StreamingLinkModelCopyWith<$Res> {
   factory $StreamingLinkModelCopyWith(
-    StreamingLinkModel value,
-    $Res Function(StreamingLinkModel) then,
-  ) = _$StreamingLinkModelCopyWithImpl<$Res, StreamingLinkModel>;
+          StreamingLinkModel value, $Res Function(StreamingLinkModel) then) =
+      _$StreamingLinkModelCopyWithImpl<$Res, StreamingLinkModel>;
   @useResult
-  $Res call({
-    @HiveField(0) @AnyToStringConverter() String url,
-    @HiveField(1) @AnyToStringConverter() String quality,
-    @HiveField(2) bool isM3U8,
-    @HiveField(3) Map<String, String>? headers,
-  });
+  $Res call(
+      {@HiveField(0) @AnyToStringConverter() String url,
+      @HiveField(1) @AnyToStringConverter() String quality,
+      @HiveField(2) bool isM3U8,
+      @HiveField(3) Map<String, String>? headers});
 }
 
 /// @nodoc
@@ -77,54 +74,49 @@ class _$StreamingLinkModelCopyWithImpl<$Res, $Val extends StreamingLinkModel>
     Object? isM3U8 = null,
     Object? headers = freezed,
   }) {
-    return _then(
-      _value.copyWith(
-        url: null == url
-            ? _value.url
-            : url // ignore: cast_nullable_to_non_nullable
-                as String,
-        quality: null == quality
-            ? _value.quality
-            : quality // ignore: cast_nullable_to_non_nullable
-                as String,
-        isM3U8: null == isM3U8
-            ? _value.isM3U8
-            : isM3U8 // ignore: cast_nullable_to_non_nullable
-                as bool,
-        headers: freezed == headers
-            ? _value.headers
-            : headers // ignore: cast_nullable_to_non_nullable
-                as Map<String, String>?,
-      ) as $Val,
-    );
+    return _then(_value.copyWith(
+      url: null == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String,
+      quality: null == quality
+          ? _value.quality
+          : quality // ignore: cast_nullable_to_non_nullable
+              as String,
+      isM3U8: null == isM3U8
+          ? _value.isM3U8
+          : isM3U8 // ignore: cast_nullable_to_non_nullable
+              as bool,
+      headers: freezed == headers
+          ? _value.headers
+          : headers // ignore: cast_nullable_to_non_nullable
+              as Map<String, String>?,
+    ) as $Val);
   }
 }
 
 /// @nodoc
 abstract class _$$StreamingLinkModelImplCopyWith<$Res>
     implements $StreamingLinkModelCopyWith<$Res> {
-  factory _$$StreamingLinkModelImplCopyWith(
-    _$StreamingLinkModelImpl value,
-    $Res Function(_$StreamingLinkModelImpl) then,
-  ) = __$$StreamingLinkModelImplCopyWithImpl<$Res>;
+  factory _$$StreamingLinkModelImplCopyWith(_$StreamingLinkModelImpl value,
+          $Res Function(_$StreamingLinkModelImpl) then) =
+      __$$StreamingLinkModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    @HiveField(0) @AnyToStringConverter() String url,
-    @HiveField(1) @AnyToStringConverter() String quality,
-    @HiveField(2) bool isM3U8,
-    @HiveField(3) Map<String, String>? headers,
-  });
+  $Res call(
+      {@HiveField(0) @AnyToStringConverter() String url,
+      @HiveField(1) @AnyToStringConverter() String quality,
+      @HiveField(2) bool isM3U8,
+      @HiveField(3) Map<String, String>? headers});
 }
 
 /// @nodoc
 class __$$StreamingLinkModelImplCopyWithImpl<$Res>
     extends _$StreamingLinkModelCopyWithImpl<$Res, _$StreamingLinkModelImpl>
     implements _$$StreamingLinkModelImplCopyWith<$Res> {
-  __$$StreamingLinkModelImplCopyWithImpl(
-    _$StreamingLinkModelImpl _value,
-    $Res Function(_$StreamingLinkModelImpl) _then,
-  ) : super(_value, _then);
+  __$$StreamingLinkModelImplCopyWithImpl(_$StreamingLinkModelImpl _value,
+      $Res Function(_$StreamingLinkModelImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of StreamingLinkModel
   /// with the given fields replaced by the non-null parameter values.
@@ -136,38 +128,36 @@ class __$$StreamingLinkModelImplCopyWithImpl<$Res>
     Object? isM3U8 = null,
     Object? headers = freezed,
   }) {
-    return _then(
-      _$StreamingLinkModelImpl(
-        url: null == url
-            ? _value.url
-            : url // ignore: cast_nullable_to_non_nullable
-                as String,
-        quality: null == quality
-            ? _value.quality
-            : quality // ignore: cast_nullable_to_non_nullable
-                as String,
-        isM3U8: null == isM3U8
-            ? _value.isM3U8
-            : isM3U8 // ignore: cast_nullable_to_non_nullable
-                as bool,
-        headers: freezed == headers
-            ? _value._headers
-            : headers // ignore: cast_nullable_to_non_nullable
-                as Map<String, String>?,
-      ),
-    );
+    return _then(_$StreamingLinkModelImpl(
+      url: null == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String,
+      quality: null == quality
+          ? _value.quality
+          : quality // ignore: cast_nullable_to_non_nullable
+              as String,
+      isM3U8: null == isM3U8
+          ? _value.isM3U8
+          : isM3U8 // ignore: cast_nullable_to_non_nullable
+              as bool,
+      headers: freezed == headers
+          ? _value._headers
+          : headers // ignore: cast_nullable_to_non_nullable
+              as Map<String, String>?,
+    ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$StreamingLinkModelImpl extends _StreamingLinkModel {
-  const _$StreamingLinkModelImpl({
-    @HiveField(0) @AnyToStringConverter() required this.url,
-    @HiveField(1) @AnyToStringConverter() required this.quality,
-    @HiveField(2) required this.isM3U8,
-    @HiveField(3) final Map<String, String>? headers,
-  })  : _headers = headers,
+  const _$StreamingLinkModelImpl(
+      {@HiveField(0) @AnyToStringConverter() required this.url,
+      @HiveField(1) @AnyToStringConverter() required this.quality,
+      @HiveField(2) required this.isM3U8,
+      @HiveField(3) final Map<String, String>? headers})
+      : _headers = headers,
         super._();
 
   factory _$StreamingLinkModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -213,13 +203,8 @@ class _$StreamingLinkModelImpl extends _StreamingLinkModel {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-        runtimeType,
-        url,
-        quality,
-        isM3U8,
-        const DeepCollectionEquality().hash(_headers),
-      );
+  int get hashCode => Object.hash(runtimeType, url, quality, isM3U8,
+      const DeepCollectionEquality().hash(_headers));
 
   /// Create a copy of StreamingLinkModel
   /// with the given fields replaced by the non-null parameter values.
@@ -228,23 +213,23 @@ class _$StreamingLinkModelImpl extends _StreamingLinkModel {
   @pragma('vm:prefer-inline')
   _$$StreamingLinkModelImplCopyWith<_$StreamingLinkModelImpl> get copyWith =>
       __$$StreamingLinkModelImplCopyWithImpl<_$StreamingLinkModelImpl>(
-        this,
-        _$identity,
-      );
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$StreamingLinkModelImplToJson(this);
+    return _$$StreamingLinkModelImplToJson(
+      this,
+    );
   }
 }
 
 abstract class _StreamingLinkModel extends StreamingLinkModel {
-  const factory _StreamingLinkModel({
-    @HiveField(0) @AnyToStringConverter() required final String url,
-    @HiveField(1) @AnyToStringConverter() required final String quality,
-    @HiveField(2) required final bool isM3U8,
-    @HiveField(3) final Map<String, String>? headers,
-  }) = _$StreamingLinkModelImpl;
+  const factory _StreamingLinkModel(
+          {@HiveField(0) @AnyToStringConverter() required final String url,
+          @HiveField(1) @AnyToStringConverter() required final String quality,
+          @HiveField(2) required final bool isM3U8,
+          @HiveField(3) final Map<String, String>? headers}) =
+      _$StreamingLinkModelImpl;
   const _StreamingLinkModel._() : super._();
 
   factory _StreamingLinkModel.fromJson(Map<String, dynamic> json) =
@@ -299,14 +284,12 @@ mixin _$SubtitleModel {
 /// @nodoc
 abstract class $SubtitleModelCopyWith<$Res> {
   factory $SubtitleModelCopyWith(
-    SubtitleModel value,
-    $Res Function(SubtitleModel) then,
-  ) = _$SubtitleModelCopyWithImpl<$Res, SubtitleModel>;
+          SubtitleModel value, $Res Function(SubtitleModel) then) =
+      _$SubtitleModelCopyWithImpl<$Res, SubtitleModel>;
   @useResult
-  $Res call({
-    @HiveField(0) @AnyToStringConverter() String url,
-    @HiveField(1) @AnyToStringConverter() String lang,
-  });
+  $Res call(
+      {@HiveField(0) @AnyToStringConverter() String url,
+      @HiveField(1) @AnyToStringConverter() String lang});
 }
 
 /// @nodoc
@@ -323,19 +306,20 @@ class _$SubtitleModelCopyWithImpl<$Res, $Val extends SubtitleModel>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? url = null, Object? lang = null}) {
-    return _then(
-      _value.copyWith(
-        url: null == url
-            ? _value.url
-            : url // ignore: cast_nullable_to_non_nullable
-                as String,
-        lang: null == lang
-            ? _value.lang
-            : lang // ignore: cast_nullable_to_non_nullable
-                as String,
-      ) as $Val,
-    );
+  $Res call({
+    Object? url = null,
+    Object? lang = null,
+  }) {
+    return _then(_value.copyWith(
+      url: null == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String,
+      lang: null == lang
+          ? _value.lang
+          : lang // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
   }
 }
 
@@ -343,15 +327,13 @@ class _$SubtitleModelCopyWithImpl<$Res, $Val extends SubtitleModel>
 abstract class _$$SubtitleModelImplCopyWith<$Res>
     implements $SubtitleModelCopyWith<$Res> {
   factory _$$SubtitleModelImplCopyWith(
-    _$SubtitleModelImpl value,
-    $Res Function(_$SubtitleModelImpl) then,
-  ) = __$$SubtitleModelImplCopyWithImpl<$Res>;
+          _$SubtitleModelImpl value, $Res Function(_$SubtitleModelImpl) then) =
+      __$$SubtitleModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    @HiveField(0) @AnyToStringConverter() String url,
-    @HiveField(1) @AnyToStringConverter() String lang,
-  });
+  $Res call(
+      {@HiveField(0) @AnyToStringConverter() String url,
+      @HiveField(1) @AnyToStringConverter() String lang});
 }
 
 /// @nodoc
@@ -359,37 +341,37 @@ class __$$SubtitleModelImplCopyWithImpl<$Res>
     extends _$SubtitleModelCopyWithImpl<$Res, _$SubtitleModelImpl>
     implements _$$SubtitleModelImplCopyWith<$Res> {
   __$$SubtitleModelImplCopyWithImpl(
-    _$SubtitleModelImpl _value,
-    $Res Function(_$SubtitleModelImpl) _then,
-  ) : super(_value, _then);
+      _$SubtitleModelImpl _value, $Res Function(_$SubtitleModelImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of SubtitleModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? url = null, Object? lang = null}) {
-    return _then(
-      _$SubtitleModelImpl(
-        url: null == url
-            ? _value.url
-            : url // ignore: cast_nullable_to_non_nullable
-                as String,
-        lang: null == lang
-            ? _value.lang
-            : lang // ignore: cast_nullable_to_non_nullable
-                as String,
-      ),
-    );
+  $Res call({
+    Object? url = null,
+    Object? lang = null,
+  }) {
+    return _then(_$SubtitleModelImpl(
+      url: null == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String,
+      lang: null == lang
+          ? _value.lang
+          : lang // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$SubtitleModelImpl extends _SubtitleModel {
-  const _$SubtitleModelImpl({
-    @HiveField(0) @AnyToStringConverter() required this.url,
-    @HiveField(1) @AnyToStringConverter() required this.lang,
-  }) : super._();
+  const _$SubtitleModelImpl(
+      {@HiveField(0) @AnyToStringConverter() required this.url,
+      @HiveField(1) @AnyToStringConverter() required this.lang})
+      : super._();
 
   factory _$SubtitleModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$SubtitleModelImplFromJson(json);
@@ -431,15 +413,17 @@ class _$SubtitleModelImpl extends _SubtitleModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$SubtitleModelImplToJson(this);
+    return _$$SubtitleModelImplToJson(
+      this,
+    );
   }
 }
 
 abstract class _SubtitleModel extends SubtitleModel {
-  const factory _SubtitleModel({
-    @HiveField(0) @AnyToStringConverter() required final String url,
-    @HiveField(1) @AnyToStringConverter() required final String lang,
-  }) = _$SubtitleModelImpl;
+  const factory _SubtitleModel(
+          {@HiveField(0) @AnyToStringConverter() required final String url,
+          @HiveField(1) @AnyToStringConverter() required final String lang}) =
+      _$SubtitleModelImpl;
   const _SubtitleModel._() : super._();
 
   factory _SubtitleModel.fromJson(Map<String, dynamic> json) =
@@ -463,8 +447,7 @@ abstract class _SubtitleModel extends SubtitleModel {
 }
 
 StreamingResponseModel _$StreamingResponseModelFromJson(
-  Map<String, dynamic> json,
-) {
+    Map<String, dynamic> json) {
   return _StreamingResponseModel.fromJson(json);
 }
 
@@ -489,16 +472,14 @@ mixin _$StreamingResponseModel {
 
 /// @nodoc
 abstract class $StreamingResponseModelCopyWith<$Res> {
-  factory $StreamingResponseModelCopyWith(
-    StreamingResponseModel value,
-    $Res Function(StreamingResponseModel) then,
-  ) = _$StreamingResponseModelCopyWithImpl<$Res, StreamingResponseModel>;
+  factory $StreamingResponseModelCopyWith(StreamingResponseModel value,
+          $Res Function(StreamingResponseModel) then) =
+      _$StreamingResponseModelCopyWithImpl<$Res, StreamingResponseModel>;
   @useResult
-  $Res call({
-    @HiveField(0) List<StreamingLinkModel> sources,
-    @HiveField(1) Map<String, String>? headers,
-    @HiveField(2) List<SubtitleModel>? subtitles,
-  });
+  $Res call(
+      {@HiveField(0) List<StreamingLinkModel> sources,
+      @HiveField(1) Map<String, String>? headers,
+      @HiveField(2) List<SubtitleModel>? subtitles});
 }
 
 /// @nodoc
@@ -521,22 +502,20 @@ class _$StreamingResponseModelCopyWithImpl<$Res,
     Object? headers = freezed,
     Object? subtitles = freezed,
   }) {
-    return _then(
-      _value.copyWith(
-        sources: null == sources
-            ? _value.sources
-            : sources // ignore: cast_nullable_to_non_nullable
-                as List<StreamingLinkModel>,
-        headers: freezed == headers
-            ? _value.headers
-            : headers // ignore: cast_nullable_to_non_nullable
-                as Map<String, String>?,
-        subtitles: freezed == subtitles
-            ? _value.subtitles
-            : subtitles // ignore: cast_nullable_to_non_nullable
-                as List<SubtitleModel>?,
-      ) as $Val,
-    );
+    return _then(_value.copyWith(
+      sources: null == sources
+          ? _value.sources
+          : sources // ignore: cast_nullable_to_non_nullable
+              as List<StreamingLinkModel>,
+      headers: freezed == headers
+          ? _value.headers
+          : headers // ignore: cast_nullable_to_non_nullable
+              as Map<String, String>?,
+      subtitles: freezed == subtitles
+          ? _value.subtitles
+          : subtitles // ignore: cast_nullable_to_non_nullable
+              as List<SubtitleModel>?,
+    ) as $Val);
   }
 }
 
@@ -544,16 +523,15 @@ class _$StreamingResponseModelCopyWithImpl<$Res,
 abstract class _$$StreamingResponseModelImplCopyWith<$Res>
     implements $StreamingResponseModelCopyWith<$Res> {
   factory _$$StreamingResponseModelImplCopyWith(
-    _$StreamingResponseModelImpl value,
-    $Res Function(_$StreamingResponseModelImpl) then,
-  ) = __$$StreamingResponseModelImplCopyWithImpl<$Res>;
+          _$StreamingResponseModelImpl value,
+          $Res Function(_$StreamingResponseModelImpl) then) =
+      __$$StreamingResponseModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    @HiveField(0) List<StreamingLinkModel> sources,
-    @HiveField(1) Map<String, String>? headers,
-    @HiveField(2) List<SubtitleModel>? subtitles,
-  });
+  $Res call(
+      {@HiveField(0) List<StreamingLinkModel> sources,
+      @HiveField(1) Map<String, String>? headers,
+      @HiveField(2) List<SubtitleModel>? subtitles});
 }
 
 /// @nodoc
@@ -562,9 +540,9 @@ class __$$StreamingResponseModelImplCopyWithImpl<$Res>
         _$StreamingResponseModelImpl>
     implements _$$StreamingResponseModelImplCopyWith<$Res> {
   __$$StreamingResponseModelImplCopyWithImpl(
-    _$StreamingResponseModelImpl _value,
-    $Res Function(_$StreamingResponseModelImpl) _then,
-  ) : super(_value, _then);
+      _$StreamingResponseModelImpl _value,
+      $Res Function(_$StreamingResponseModelImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of StreamingResponseModel
   /// with the given fields replaced by the non-null parameter values.
@@ -575,33 +553,31 @@ class __$$StreamingResponseModelImplCopyWithImpl<$Res>
     Object? headers = freezed,
     Object? subtitles = freezed,
   }) {
-    return _then(
-      _$StreamingResponseModelImpl(
-        sources: null == sources
-            ? _value._sources
-            : sources // ignore: cast_nullable_to_non_nullable
-                as List<StreamingLinkModel>,
-        headers: freezed == headers
-            ? _value._headers
-            : headers // ignore: cast_nullable_to_non_nullable
-                as Map<String, String>?,
-        subtitles: freezed == subtitles
-            ? _value._subtitles
-            : subtitles // ignore: cast_nullable_to_non_nullable
-                as List<SubtitleModel>?,
-      ),
-    );
+    return _then(_$StreamingResponseModelImpl(
+      sources: null == sources
+          ? _value._sources
+          : sources // ignore: cast_nullable_to_non_nullable
+              as List<StreamingLinkModel>,
+      headers: freezed == headers
+          ? _value._headers
+          : headers // ignore: cast_nullable_to_non_nullable
+              as Map<String, String>?,
+      subtitles: freezed == subtitles
+          ? _value._subtitles
+          : subtitles // ignore: cast_nullable_to_non_nullable
+              as List<SubtitleModel>?,
+    ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$StreamingResponseModelImpl implements _StreamingResponseModel {
-  const _$StreamingResponseModelImpl({
-    @HiveField(0) required final List<StreamingLinkModel> sources,
-    @HiveField(1) final Map<String, String>? headers,
-    @HiveField(2) final List<SubtitleModel>? subtitles,
-  })  : _sources = sources,
+  const _$StreamingResponseModelImpl(
+      {@HiveField(0) required final List<StreamingLinkModel> sources,
+      @HiveField(1) final Map<String, String>? headers,
+      @HiveField(2) final List<SubtitleModel>? subtitles})
+      : _sources = sources,
         _headers = headers,
         _subtitles = subtitles;
 
@@ -651,20 +627,17 @@ class _$StreamingResponseModelImpl implements _StreamingResponseModel {
             other is _$StreamingResponseModelImpl &&
             const DeepCollectionEquality().equals(other._sources, _sources) &&
             const DeepCollectionEquality().equals(other._headers, _headers) &&
-            const DeepCollectionEquality().equals(
-              other._subtitles,
-              _subtitles,
-            ));
+            const DeepCollectionEquality()
+                .equals(other._subtitles, _subtitles));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-        runtimeType,
-        const DeepCollectionEquality().hash(_sources),
-        const DeepCollectionEquality().hash(_headers),
-        const DeepCollectionEquality().hash(_subtitles),
-      );
+      runtimeType,
+      const DeepCollectionEquality().hash(_sources),
+      const DeepCollectionEquality().hash(_headers),
+      const DeepCollectionEquality().hash(_subtitles));
 
   /// Create a copy of StreamingResponseModel
   /// with the given fields replaced by the non-null parameter values.
@@ -673,23 +646,22 @@ class _$StreamingResponseModelImpl implements _StreamingResponseModel {
   @pragma('vm:prefer-inline')
   _$$StreamingResponseModelImplCopyWith<_$StreamingResponseModelImpl>
       get copyWith => __$$StreamingResponseModelImplCopyWithImpl<
-              _$StreamingResponseModelImpl>(
-            this,
-            _$identity,
-          );
+          _$StreamingResponseModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$StreamingResponseModelImplToJson(this);
+    return _$$StreamingResponseModelImplToJson(
+      this,
+    );
   }
 }
 
 abstract class _StreamingResponseModel implements StreamingResponseModel {
-  const factory _StreamingResponseModel({
-    @HiveField(0) required final List<StreamingLinkModel> sources,
-    @HiveField(1) final Map<String, String>? headers,
-    @HiveField(2) final List<SubtitleModel>? subtitles,
-  }) = _$StreamingResponseModelImpl;
+  const factory _StreamingResponseModel(
+          {@HiveField(0) required final List<StreamingLinkModel> sources,
+          @HiveField(1) final Map<String, String>? headers,
+          @HiveField(2) final List<SubtitleModel>? subtitles}) =
+      _$StreamingResponseModelImpl;
 
   factory _StreamingResponseModel.fromJson(Map<String, dynamic> json) =
       _$StreamingResponseModelImpl.fromJson;
@@ -734,9 +706,8 @@ mixin _$ServerInfoModel {
 /// @nodoc
 abstract class $ServerInfoModelCopyWith<$Res> {
   factory $ServerInfoModelCopyWith(
-    ServerInfoModel value,
-    $Res Function(ServerInfoModel) then,
-  ) = _$ServerInfoModelCopyWithImpl<$Res, ServerInfoModel>;
+          ServerInfoModel value, $Res Function(ServerInfoModel) then) =
+      _$ServerInfoModelCopyWithImpl<$Res, ServerInfoModel>;
   @useResult
   $Res call({String name, String url});
 }
@@ -755,29 +726,29 @@ class _$ServerInfoModelCopyWithImpl<$Res, $Val extends ServerInfoModel>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? name = null, Object? url = null}) {
-    return _then(
-      _value.copyWith(
-        name: null == name
-            ? _value.name
-            : name // ignore: cast_nullable_to_non_nullable
-                as String,
-        url: null == url
-            ? _value.url
-            : url // ignore: cast_nullable_to_non_nullable
-                as String,
-      ) as $Val,
-    );
+  $Res call({
+    Object? name = null,
+    Object? url = null,
+  }) {
+    return _then(_value.copyWith(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      url: null == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
   }
 }
 
 /// @nodoc
 abstract class _$$ServerInfoModelImplCopyWith<$Res>
     implements $ServerInfoModelCopyWith<$Res> {
-  factory _$$ServerInfoModelImplCopyWith(
-    _$ServerInfoModelImpl value,
-    $Res Function(_$ServerInfoModelImpl) then,
-  ) = __$$ServerInfoModelImplCopyWithImpl<$Res>;
+  factory _$$ServerInfoModelImplCopyWith(_$ServerInfoModelImpl value,
+          $Res Function(_$ServerInfoModelImpl) then) =
+      __$$ServerInfoModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String name, String url});
@@ -788,27 +759,27 @@ class __$$ServerInfoModelImplCopyWithImpl<$Res>
     extends _$ServerInfoModelCopyWithImpl<$Res, _$ServerInfoModelImpl>
     implements _$$ServerInfoModelImplCopyWith<$Res> {
   __$$ServerInfoModelImplCopyWithImpl(
-    _$ServerInfoModelImpl _value,
-    $Res Function(_$ServerInfoModelImpl) _then,
-  ) : super(_value, _then);
+      _$ServerInfoModelImpl _value, $Res Function(_$ServerInfoModelImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of ServerInfoModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? name = null, Object? url = null}) {
-    return _then(
-      _$ServerInfoModelImpl(
-        name: null == name
-            ? _value.name
-            : name // ignore: cast_nullable_to_non_nullable
-                as String,
-        url: null == url
-            ? _value.url
-            : url // ignore: cast_nullable_to_non_nullable
-                as String,
-      ),
-    );
+  $Res call({
+    Object? name = null,
+    Object? url = null,
+  }) {
+    return _then(_$ServerInfoModelImpl(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      url: null == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
   }
 }
 
@@ -850,21 +821,20 @@ class _$ServerInfoModelImpl implements _ServerInfoModel {
   @pragma('vm:prefer-inline')
   _$$ServerInfoModelImplCopyWith<_$ServerInfoModelImpl> get copyWith =>
       __$$ServerInfoModelImplCopyWithImpl<_$ServerInfoModelImpl>(
-        this,
-        _$identity,
-      );
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$ServerInfoModelImplToJson(this);
+    return _$$ServerInfoModelImplToJson(
+      this,
+    );
   }
 }
 
 abstract class _ServerInfoModel implements ServerInfoModel {
-  const factory _ServerInfoModel({
-    required final String name,
-    required final String url,
-  }) = _$ServerInfoModelImpl;
+  const factory _ServerInfoModel(
+      {required final String name,
+      required final String url}) = _$ServerInfoModelImpl;
 
   factory _ServerInfoModel.fromJson(Map<String, dynamic> json) =
       _$ServerInfoModelImpl.fromJson;

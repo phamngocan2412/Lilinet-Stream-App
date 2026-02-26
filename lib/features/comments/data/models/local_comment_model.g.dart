@@ -91,8 +91,7 @@ class LocalCommentModelAdapter extends TypeAdapter<LocalCommentModel> {
 // **************************************************************************
 
 _$LocalCommentModelImpl _$$LocalCommentModelImplFromJson(
-  Map<String, dynamic> json,
-) =>
+        Map<String, dynamic> json) =>
     _$LocalCommentModelImpl(
       localId: json['localId'] as String,
       serverId: json['serverId'] as String?,
@@ -116,8 +115,7 @@ _$LocalCommentModelImpl _$$LocalCommentModelImplFromJson(
     );
 
 Map<String, dynamic> _$$LocalCommentModelImplToJson(
-  _$LocalCommentModelImpl instance,
-) =>
+        _$LocalCommentModelImpl instance) =>
     <String, dynamic>{
       'localId': instance.localId,
       'serverId': instance.serverId,
