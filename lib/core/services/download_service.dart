@@ -43,6 +43,10 @@ class DownloadService {
     // 3. Prevent path traversal (replace .. with __)
     safeName = safeName.replaceAll('..', '__');
 
+    if (safeName.isEmpty) {
+      return 'download_${DateTime.now().millisecondsSinceEpoch}.mp4';
+    }
+
     return safeName;
   }
 
@@ -63,7 +67,6 @@ class DownloadService {
 
     // Generate a stable ID for notification based on URL hash
     final notificationId = url.hashCode;
-    final sanitizedFileName = _sanitizeFileName(fileName);
 
     // Sanitize filename once
     final sanitizedFileName = _sanitizeFileName(fileName);
