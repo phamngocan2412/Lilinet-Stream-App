@@ -88,7 +88,7 @@ class ScaffoldWithPlayer extends StatelessWidget {
                       top: isExpanded ? 0 : null,
                       child: MiniplayerWidget(
                         miniplayerHeight: miniplayerHeight,
-                          maxWidth: MediaQuery.sizeOf(context).width,
+                        maxWidth: MediaQuery.sizeOf(context).width,
                       ),
                     ),
                 ],
