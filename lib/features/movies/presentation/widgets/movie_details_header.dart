@@ -21,7 +21,8 @@ class MovieDetailsHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final mediaQuery = MediaQuery.of(context);
+    final mediaQuerySizeWidth = MediaQuery.sizeOf(context).width;
+    final mediaQueryPixelRatio = MediaQuery.devicePixelRatioOf(context);
 
     return SliverAppBar(
       expandedHeight: 450,
@@ -46,7 +47,7 @@ class MovieDetailsHeader extends StatelessWidget {
               imageUrl: movie.poster ?? movie.cover ?? '',
               fit: BoxFit.cover,
               memCacheWidth:
-                  (mediaQuery.size.width * mediaQuery.devicePixelRatio).toInt(),
+                  (mediaQuerySizeWidth * mediaQueryPixelRatio).toInt(),
             ),
             // Gradient Overlay
             Container(

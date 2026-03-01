@@ -133,7 +133,7 @@ class _MiniplayerWidgetState extends State<MiniplayerWidget> {
               minHeight: widget.miniplayerHeight,
               maxHeight: constraints.maxHeight.isFinite
                   ? constraints.maxHeight
-                  : MediaQuery.of(context).size.height,
+                  : MediaQuery.sizeOf(context).height,
               builder: (height, percentage) {
                 final isMini = percentage < 0.2;
 
