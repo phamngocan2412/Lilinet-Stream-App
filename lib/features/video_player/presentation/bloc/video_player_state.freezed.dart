@@ -12,8 +12,7 @@ part of 'video_player_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$VideoPlayerState {
@@ -41,25 +40,23 @@ mixin _$VideoPlayerState {
 /// @nodoc
 abstract class $VideoPlayerStateCopyWith<$Res> {
   factory $VideoPlayerStateCopyWith(
-    VideoPlayerState value,
-    $Res Function(VideoPlayerState) then,
-  ) = _$VideoPlayerStateCopyWithImpl<$Res, VideoPlayerState>;
+          VideoPlayerState value, $Res Function(VideoPlayerState) then) =
+      _$VideoPlayerStateCopyWithImpl<$Res, VideoPlayerState>;
   @useResult
-  $Res call({
-    VideoPlayerStatus status,
-    String? episodeId,
-    String? mediaId,
-    String? title,
-    String? posterUrl,
-    String? episodeTitle,
-    Duration? startPosition,
-    String? mediaType,
-    Movie? movie,
-    StreamingState streamingState,
-    List<String>? availableServers,
-    String? currentServer,
-    String? currentQuality,
-  });
+  $Res call(
+      {VideoPlayerStatus status,
+      String? episodeId,
+      String? mediaId,
+      String? title,
+      String? posterUrl,
+      String? episodeTitle,
+      Duration? startPosition,
+      String? mediaType,
+      Movie? movie,
+      StreamingState streamingState,
+      List<String>? availableServers,
+      String? currentServer,
+      String? currentQuality});
 
   $MovieCopyWith<$Res>? get movie;
   $StreamingStateCopyWith<$Res> get streamingState;
@@ -94,62 +91,60 @@ class _$VideoPlayerStateCopyWithImpl<$Res, $Val extends VideoPlayerState>
     Object? currentServer = freezed,
     Object? currentQuality = freezed,
   }) {
-    return _then(
-      _value.copyWith(
-        status: null == status
-            ? _value.status
-            : status // ignore: cast_nullable_to_non_nullable
-                as VideoPlayerStatus,
-        episodeId: freezed == episodeId
-            ? _value.episodeId
-            : episodeId // ignore: cast_nullable_to_non_nullable
-                as String?,
-        mediaId: freezed == mediaId
-            ? _value.mediaId
-            : mediaId // ignore: cast_nullable_to_non_nullable
-                as String?,
-        title: freezed == title
-            ? _value.title
-            : title // ignore: cast_nullable_to_non_nullable
-                as String?,
-        posterUrl: freezed == posterUrl
-            ? _value.posterUrl
-            : posterUrl // ignore: cast_nullable_to_non_nullable
-                as String?,
-        episodeTitle: freezed == episodeTitle
-            ? _value.episodeTitle
-            : episodeTitle // ignore: cast_nullable_to_non_nullable
-                as String?,
-        startPosition: freezed == startPosition
-            ? _value.startPosition
-            : startPosition // ignore: cast_nullable_to_non_nullable
-                as Duration?,
-        mediaType: freezed == mediaType
-            ? _value.mediaType
-            : mediaType // ignore: cast_nullable_to_non_nullable
-                as String?,
-        movie: freezed == movie
-            ? _value.movie
-            : movie // ignore: cast_nullable_to_non_nullable
-                as Movie?,
-        streamingState: null == streamingState
-            ? _value.streamingState
-            : streamingState // ignore: cast_nullable_to_non_nullable
-                as StreamingState,
-        availableServers: freezed == availableServers
-            ? _value.availableServers
-            : availableServers // ignore: cast_nullable_to_non_nullable
-                as List<String>?,
-        currentServer: freezed == currentServer
-            ? _value.currentServer
-            : currentServer // ignore: cast_nullable_to_non_nullable
-                as String?,
-        currentQuality: freezed == currentQuality
-            ? _value.currentQuality
-            : currentQuality // ignore: cast_nullable_to_non_nullable
-                as String?,
-      ) as $Val,
-    );
+    return _then(_value.copyWith(
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as VideoPlayerStatus,
+      episodeId: freezed == episodeId
+          ? _value.episodeId
+          : episodeId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      mediaId: freezed == mediaId
+          ? _value.mediaId
+          : mediaId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      title: freezed == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String?,
+      posterUrl: freezed == posterUrl
+          ? _value.posterUrl
+          : posterUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      episodeTitle: freezed == episodeTitle
+          ? _value.episodeTitle
+          : episodeTitle // ignore: cast_nullable_to_non_nullable
+              as String?,
+      startPosition: freezed == startPosition
+          ? _value.startPosition
+          : startPosition // ignore: cast_nullable_to_non_nullable
+              as Duration?,
+      mediaType: freezed == mediaType
+          ? _value.mediaType
+          : mediaType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      movie: freezed == movie
+          ? _value.movie
+          : movie // ignore: cast_nullable_to_non_nullable
+              as Movie?,
+      streamingState: null == streamingState
+          ? _value.streamingState
+          : streamingState // ignore: cast_nullable_to_non_nullable
+              as StreamingState,
+      availableServers: freezed == availableServers
+          ? _value.availableServers
+          : availableServers // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      currentServer: freezed == currentServer
+          ? _value.currentServer
+          : currentServer // ignore: cast_nullable_to_non_nullable
+              as String?,
+      currentQuality: freezed == currentQuality
+          ? _value.currentQuality
+          : currentQuality // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
   }
 
   /// Create a copy of VideoPlayerState
@@ -180,27 +175,25 @@ class _$VideoPlayerStateCopyWithImpl<$Res, $Val extends VideoPlayerState>
 /// @nodoc
 abstract class _$$VideoPlayerStateImplCopyWith<$Res>
     implements $VideoPlayerStateCopyWith<$Res> {
-  factory _$$VideoPlayerStateImplCopyWith(
-    _$VideoPlayerStateImpl value,
-    $Res Function(_$VideoPlayerStateImpl) then,
-  ) = __$$VideoPlayerStateImplCopyWithImpl<$Res>;
+  factory _$$VideoPlayerStateImplCopyWith(_$VideoPlayerStateImpl value,
+          $Res Function(_$VideoPlayerStateImpl) then) =
+      __$$VideoPlayerStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    VideoPlayerStatus status,
-    String? episodeId,
-    String? mediaId,
-    String? title,
-    String? posterUrl,
-    String? episodeTitle,
-    Duration? startPosition,
-    String? mediaType,
-    Movie? movie,
-    StreamingState streamingState,
-    List<String>? availableServers,
-    String? currentServer,
-    String? currentQuality,
-  });
+  $Res call(
+      {VideoPlayerStatus status,
+      String? episodeId,
+      String? mediaId,
+      String? title,
+      String? posterUrl,
+      String? episodeTitle,
+      Duration? startPosition,
+      String? mediaType,
+      Movie? movie,
+      StreamingState streamingState,
+      List<String>? availableServers,
+      String? currentServer,
+      String? currentQuality});
 
   @override
   $MovieCopyWith<$Res>? get movie;
@@ -212,10 +205,9 @@ abstract class _$$VideoPlayerStateImplCopyWith<$Res>
 class __$$VideoPlayerStateImplCopyWithImpl<$Res>
     extends _$VideoPlayerStateCopyWithImpl<$Res, _$VideoPlayerStateImpl>
     implements _$$VideoPlayerStateImplCopyWith<$Res> {
-  __$$VideoPlayerStateImplCopyWithImpl(
-    _$VideoPlayerStateImpl _value,
-    $Res Function(_$VideoPlayerStateImpl) _then,
-  ) : super(_value, _then);
+  __$$VideoPlayerStateImplCopyWithImpl(_$VideoPlayerStateImpl _value,
+      $Res Function(_$VideoPlayerStateImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of VideoPlayerState
   /// with the given fields replaced by the non-null parameter values.
@@ -236,83 +228,81 @@ class __$$VideoPlayerStateImplCopyWithImpl<$Res>
     Object? currentServer = freezed,
     Object? currentQuality = freezed,
   }) {
-    return _then(
-      _$VideoPlayerStateImpl(
-        status: null == status
-            ? _value.status
-            : status // ignore: cast_nullable_to_non_nullable
-                as VideoPlayerStatus,
-        episodeId: freezed == episodeId
-            ? _value.episodeId
-            : episodeId // ignore: cast_nullable_to_non_nullable
-                as String?,
-        mediaId: freezed == mediaId
-            ? _value.mediaId
-            : mediaId // ignore: cast_nullable_to_non_nullable
-                as String?,
-        title: freezed == title
-            ? _value.title
-            : title // ignore: cast_nullable_to_non_nullable
-                as String?,
-        posterUrl: freezed == posterUrl
-            ? _value.posterUrl
-            : posterUrl // ignore: cast_nullable_to_non_nullable
-                as String?,
-        episodeTitle: freezed == episodeTitle
-            ? _value.episodeTitle
-            : episodeTitle // ignore: cast_nullable_to_non_nullable
-                as String?,
-        startPosition: freezed == startPosition
-            ? _value.startPosition
-            : startPosition // ignore: cast_nullable_to_non_nullable
-                as Duration?,
-        mediaType: freezed == mediaType
-            ? _value.mediaType
-            : mediaType // ignore: cast_nullable_to_non_nullable
-                as String?,
-        movie: freezed == movie
-            ? _value.movie
-            : movie // ignore: cast_nullable_to_non_nullable
-                as Movie?,
-        streamingState: null == streamingState
-            ? _value.streamingState
-            : streamingState // ignore: cast_nullable_to_non_nullable
-                as StreamingState,
-        availableServers: freezed == availableServers
-            ? _value._availableServers
-            : availableServers // ignore: cast_nullable_to_non_nullable
-                as List<String>?,
-        currentServer: freezed == currentServer
-            ? _value.currentServer
-            : currentServer // ignore: cast_nullable_to_non_nullable
-                as String?,
-        currentQuality: freezed == currentQuality
-            ? _value.currentQuality
-            : currentQuality // ignore: cast_nullable_to_non_nullable
-                as String?,
-      ),
-    );
+    return _then(_$VideoPlayerStateImpl(
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as VideoPlayerStatus,
+      episodeId: freezed == episodeId
+          ? _value.episodeId
+          : episodeId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      mediaId: freezed == mediaId
+          ? _value.mediaId
+          : mediaId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      title: freezed == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String?,
+      posterUrl: freezed == posterUrl
+          ? _value.posterUrl
+          : posterUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      episodeTitle: freezed == episodeTitle
+          ? _value.episodeTitle
+          : episodeTitle // ignore: cast_nullable_to_non_nullable
+              as String?,
+      startPosition: freezed == startPosition
+          ? _value.startPosition
+          : startPosition // ignore: cast_nullable_to_non_nullable
+              as Duration?,
+      mediaType: freezed == mediaType
+          ? _value.mediaType
+          : mediaType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      movie: freezed == movie
+          ? _value.movie
+          : movie // ignore: cast_nullable_to_non_nullable
+              as Movie?,
+      streamingState: null == streamingState
+          ? _value.streamingState
+          : streamingState // ignore: cast_nullable_to_non_nullable
+              as StreamingState,
+      availableServers: freezed == availableServers
+          ? _value._availableServers
+          : availableServers // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      currentServer: freezed == currentServer
+          ? _value.currentServer
+          : currentServer // ignore: cast_nullable_to_non_nullable
+              as String?,
+      currentQuality: freezed == currentQuality
+          ? _value.currentQuality
+          : currentQuality // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
   }
 }
 
 /// @nodoc
 
 class _$VideoPlayerStateImpl implements _VideoPlayerState {
-  const _$VideoPlayerStateImpl({
-    this.status = VideoPlayerStatus.closed,
-    this.episodeId,
-    this.mediaId,
-    this.title,
-    this.posterUrl,
-    this.episodeTitle,
-    this.startPosition,
-    this.mediaType,
-    this.movie,
-    this.streamingState = const StreamingState.initial(),
-    final List<String>? availableServers,
-    this.currentServer,
-    this.currentQuality,
-  }) : _availableServers = availableServers;
+  const _$VideoPlayerStateImpl(
+      {this.status = VideoPlayerStatus.closed,
+      this.episodeId,
+      this.mediaId,
+      this.title,
+      this.posterUrl,
+      this.episodeTitle,
+      this.startPosition,
+      this.mediaType,
+      this.movie,
+      this.streamingState = const StreamingState.initial(),
+      final List<String>? availableServers,
+      this.currentServer,
+      this.currentQuality})
+      : _availableServers = availableServers;
 
   @override
   @JsonKey()
@@ -378,10 +368,8 @@ class _$VideoPlayerStateImpl implements _VideoPlayerState {
             (identical(other.movie, movie) || other.movie == movie) &&
             (identical(other.streamingState, streamingState) ||
                 other.streamingState == streamingState) &&
-            const DeepCollectionEquality().equals(
-              other._availableServers,
-              _availableServers,
-            ) &&
+            const DeepCollectionEquality()
+                .equals(other._availableServers, _availableServers) &&
             (identical(other.currentServer, currentServer) ||
                 other.currentServer == currentServer) &&
             (identical(other.currentQuality, currentQuality) ||
@@ -390,21 +378,20 @@ class _$VideoPlayerStateImpl implements _VideoPlayerState {
 
   @override
   int get hashCode => Object.hash(
-        runtimeType,
-        status,
-        episodeId,
-        mediaId,
-        title,
-        posterUrl,
-        episodeTitle,
-        startPosition,
-        mediaType,
-        movie,
-        streamingState,
-        const DeepCollectionEquality().hash(_availableServers),
-        currentServer,
-        currentQuality,
-      );
+      runtimeType,
+      status,
+      episodeId,
+      mediaId,
+      title,
+      posterUrl,
+      episodeTitle,
+      startPosition,
+      mediaType,
+      movie,
+      streamingState,
+      const DeepCollectionEquality().hash(_availableServers),
+      currentServer,
+      currentQuality);
 
   /// Create a copy of VideoPlayerState
   /// with the given fields replaced by the non-null parameter values.
@@ -413,27 +400,24 @@ class _$VideoPlayerStateImpl implements _VideoPlayerState {
   @pragma('vm:prefer-inline')
   _$$VideoPlayerStateImplCopyWith<_$VideoPlayerStateImpl> get copyWith =>
       __$$VideoPlayerStateImplCopyWithImpl<_$VideoPlayerStateImpl>(
-        this,
-        _$identity,
-      );
+          this, _$identity);
 }
 
 abstract class _VideoPlayerState implements VideoPlayerState {
-  const factory _VideoPlayerState({
-    final VideoPlayerStatus status,
-    final String? episodeId,
-    final String? mediaId,
-    final String? title,
-    final String? posterUrl,
-    final String? episodeTitle,
-    final Duration? startPosition,
-    final String? mediaType,
-    final Movie? movie,
-    final StreamingState streamingState,
-    final List<String>? availableServers,
-    final String? currentServer,
-    final String? currentQuality,
-  }) = _$VideoPlayerStateImpl;
+  const factory _VideoPlayerState(
+      {final VideoPlayerStatus status,
+      final String? episodeId,
+      final String? mediaId,
+      final String? title,
+      final String? posterUrl,
+      final String? episodeTitle,
+      final Duration? startPosition,
+      final String? mediaType,
+      final Movie? movie,
+      final StreamingState streamingState,
+      final List<String>? availableServers,
+      final String? currentServer,
+      final String? currentQuality}) = _$VideoPlayerStateImpl;
 
   @override
   VideoPlayerStatus get status;

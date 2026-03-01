@@ -66,15 +66,23 @@ void main() {
           invocation.positionalArguments[0];
       final void Function()? onDone = invocation.namedArguments[#onDone];
 
-      // Simulate 1KB of data with delay to ensure duration > 0
-      return Stream.periodic(
-              const Duration(milliseconds: 50), (_) => List.filled(1024, 0))
-          .take(1)
-          .listen(
-        (data) {
-          onData?.call(data);
-        },
+      // Use a stream controller to avoid the "Cannot add new events after calling close" error
+      // that happens when tests finish and streams are still active or trying to emit in fakeAsync.
+      final controller = StreamController<List<int>>();
+
+      // Add data asynchronously but deterministically
+      Future.microtask(() {
+        if (!controller.isClosed) {
+          controller.add(List.filled(1024, 0));
+          controller.close();
+        }
+      });
+
+      return controller.stream.listen(
+        onData,
         onDone: onDone,
+        onError: invocation.namedArguments[#onError],
+        cancelOnError: invocation.namedArguments[#cancelOnError],
       );
     });
   });

@@ -12,8 +12,7 @@ part of 'comment_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$CommentState {
@@ -22,14 +21,14 @@ mixin _$CommentState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(
-      List<Comment> comments,
-      CommentSortType sortType,
-      Map<String, List<Comment>> expandedReplies,
-      bool isAddingComment,
-      String? errorMessage,
-      Set<String> likedCommentIds,
-      Set<String> likingInProgress,
-    ) loaded,
+            List<Comment> comments,
+            CommentSortType sortType,
+            Map<String, List<Comment>> expandedReplies,
+            bool isAddingComment,
+            String? errorMessage,
+            Set<String> likedCommentIds,
+            Set<String> likingInProgress)
+        loaded,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -38,14 +37,14 @@ mixin _$CommentState {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(
-      List<Comment> comments,
-      CommentSortType sortType,
-      Map<String, List<Comment>> expandedReplies,
-      bool isAddingComment,
-      String? errorMessage,
-      Set<String> likedCommentIds,
-      Set<String> likingInProgress,
-    )? loaded,
+            List<Comment> comments,
+            CommentSortType sortType,
+            Map<String, List<Comment>> expandedReplies,
+            bool isAddingComment,
+            String? errorMessage,
+            Set<String> likedCommentIds,
+            Set<String> likingInProgress)?
+        loaded,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -54,14 +53,14 @@ mixin _$CommentState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(
-      List<Comment> comments,
-      CommentSortType sortType,
-      Map<String, List<Comment>> expandedReplies,
-      bool isAddingComment,
-      String? errorMessage,
-      Set<String> likedCommentIds,
-      Set<String> likingInProgress,
-    )? loaded,
+            List<Comment> comments,
+            CommentSortType sortType,
+            Map<String, List<Comment>> expandedReplies,
+            bool isAddingComment,
+            String? errorMessage,
+            Set<String> likedCommentIds,
+            Set<String> likingInProgress)?
+        loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -96,9 +95,8 @@ mixin _$CommentState {
 /// @nodoc
 abstract class $CommentStateCopyWith<$Res> {
   factory $CommentStateCopyWith(
-    CommentState value,
-    $Res Function(CommentState) then,
-  ) = _$CommentStateCopyWithImpl<$Res, CommentState>;
+          CommentState value, $Res Function(CommentState) then) =
+      _$CommentStateCopyWithImpl<$Res, CommentState>;
 }
 
 /// @nodoc
@@ -118,9 +116,8 @@ class _$CommentStateCopyWithImpl<$Res, $Val extends CommentState>
 /// @nodoc
 abstract class _$$InitialImplCopyWith<$Res> {
   factory _$$InitialImplCopyWith(
-    _$InitialImpl value,
-    $Res Function(_$InitialImpl) then,
-  ) = __$$InitialImplCopyWithImpl<$Res>;
+          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
+      __$$InitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
@@ -128,9 +125,8 @@ class __$$InitialImplCopyWithImpl<$Res>
     extends _$CommentStateCopyWithImpl<$Res, _$InitialImpl>
     implements _$$InitialImplCopyWith<$Res> {
   __$$InitialImplCopyWithImpl(
-    _$InitialImpl _value,
-    $Res Function(_$InitialImpl) _then,
-  ) : super(_value, _then);
+      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of CommentState
   /// with the given fields replaced by the non-null parameter values.
@@ -161,14 +157,14 @@ class _$InitialImpl implements _Initial {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(
-      List<Comment> comments,
-      CommentSortType sortType,
-      Map<String, List<Comment>> expandedReplies,
-      bool isAddingComment,
-      String? errorMessage,
-      Set<String> likedCommentIds,
-      Set<String> likingInProgress,
-    ) loaded,
+            List<Comment> comments,
+            CommentSortType sortType,
+            Map<String, List<Comment>> expandedReplies,
+            bool isAddingComment,
+            String? errorMessage,
+            Set<String> likedCommentIds,
+            Set<String> likingInProgress)
+        loaded,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -180,14 +176,14 @@ class _$InitialImpl implements _Initial {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(
-      List<Comment> comments,
-      CommentSortType sortType,
-      Map<String, List<Comment>> expandedReplies,
-      bool isAddingComment,
-      String? errorMessage,
-      Set<String> likedCommentIds,
-      Set<String> likingInProgress,
-    )? loaded,
+            List<Comment> comments,
+            CommentSortType sortType,
+            Map<String, List<Comment>> expandedReplies,
+            bool isAddingComment,
+            String? errorMessage,
+            Set<String> likedCommentIds,
+            Set<String> likingInProgress)?
+        loaded,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -199,14 +195,14 @@ class _$InitialImpl implements _Initial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(
-      List<Comment> comments,
-      CommentSortType sortType,
-      Map<String, List<Comment>> expandedReplies,
-      bool isAddingComment,
-      String? errorMessage,
-      Set<String> likedCommentIds,
-      Set<String> likingInProgress,
-    )? loaded,
+            List<Comment> comments,
+            CommentSortType sortType,
+            Map<String, List<Comment>> expandedReplies,
+            bool isAddingComment,
+            String? errorMessage,
+            Set<String> likedCommentIds,
+            Set<String> likingInProgress)?
+        loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -261,9 +257,8 @@ abstract class _Initial implements CommentState {
 /// @nodoc
 abstract class _$$LoadingImplCopyWith<$Res> {
   factory _$$LoadingImplCopyWith(
-    _$LoadingImpl value,
-    $Res Function(_$LoadingImpl) then,
-  ) = __$$LoadingImplCopyWithImpl<$Res>;
+          _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
+      __$$LoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
@@ -271,9 +266,8 @@ class __$$LoadingImplCopyWithImpl<$Res>
     extends _$CommentStateCopyWithImpl<$Res, _$LoadingImpl>
     implements _$$LoadingImplCopyWith<$Res> {
   __$$LoadingImplCopyWithImpl(
-    _$LoadingImpl _value,
-    $Res Function(_$LoadingImpl) _then,
-  ) : super(_value, _then);
+      _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of CommentState
   /// with the given fields replaced by the non-null parameter values.
@@ -304,14 +298,14 @@ class _$LoadingImpl implements _Loading {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(
-      List<Comment> comments,
-      CommentSortType sortType,
-      Map<String, List<Comment>> expandedReplies,
-      bool isAddingComment,
-      String? errorMessage,
-      Set<String> likedCommentIds,
-      Set<String> likingInProgress,
-    ) loaded,
+            List<Comment> comments,
+            CommentSortType sortType,
+            Map<String, List<Comment>> expandedReplies,
+            bool isAddingComment,
+            String? errorMessage,
+            Set<String> likedCommentIds,
+            Set<String> likingInProgress)
+        loaded,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -323,14 +317,14 @@ class _$LoadingImpl implements _Loading {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(
-      List<Comment> comments,
-      CommentSortType sortType,
-      Map<String, List<Comment>> expandedReplies,
-      bool isAddingComment,
-      String? errorMessage,
-      Set<String> likedCommentIds,
-      Set<String> likingInProgress,
-    )? loaded,
+            List<Comment> comments,
+            CommentSortType sortType,
+            Map<String, List<Comment>> expandedReplies,
+            bool isAddingComment,
+            String? errorMessage,
+            Set<String> likedCommentIds,
+            Set<String> likingInProgress)?
+        loaded,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -342,14 +336,14 @@ class _$LoadingImpl implements _Loading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(
-      List<Comment> comments,
-      CommentSortType sortType,
-      Map<String, List<Comment>> expandedReplies,
-      bool isAddingComment,
-      String? errorMessage,
-      Set<String> likedCommentIds,
-      Set<String> likingInProgress,
-    )? loaded,
+            List<Comment> comments,
+            CommentSortType sortType,
+            Map<String, List<Comment>> expandedReplies,
+            bool isAddingComment,
+            String? errorMessage,
+            Set<String> likedCommentIds,
+            Set<String> likingInProgress)?
+        loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -404,19 +398,17 @@ abstract class _Loading implements CommentState {
 /// @nodoc
 abstract class _$$LoadedImplCopyWith<$Res> {
   factory _$$LoadedImplCopyWith(
-    _$LoadedImpl value,
-    $Res Function(_$LoadedImpl) then,
-  ) = __$$LoadedImplCopyWithImpl<$Res>;
+          _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
+      __$$LoadedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({
-    List<Comment> comments,
-    CommentSortType sortType,
-    Map<String, List<Comment>> expandedReplies,
-    bool isAddingComment,
-    String? errorMessage,
-    Set<String> likedCommentIds,
-    Set<String> likingInProgress,
-  });
+  $Res call(
+      {List<Comment> comments,
+      CommentSortType sortType,
+      Map<String, List<Comment>> expandedReplies,
+      bool isAddingComment,
+      String? errorMessage,
+      Set<String> likedCommentIds,
+      Set<String> likingInProgress});
 }
 
 /// @nodoc
@@ -424,9 +416,8 @@ class __$$LoadedImplCopyWithImpl<$Res>
     extends _$CommentStateCopyWithImpl<$Res, _$LoadedImpl>
     implements _$$LoadedImplCopyWith<$Res> {
   __$$LoadedImplCopyWithImpl(
-    _$LoadedImpl _value,
-    $Res Function(_$LoadedImpl) _then,
-  ) : super(_value, _then);
+      _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of CommentState
   /// with the given fields replaced by the non-null parameter values.
@@ -441,53 +432,51 @@ class __$$LoadedImplCopyWithImpl<$Res>
     Object? likedCommentIds = null,
     Object? likingInProgress = null,
   }) {
-    return _then(
-      _$LoadedImpl(
-        comments: null == comments
-            ? _value._comments
-            : comments // ignore: cast_nullable_to_non_nullable
-                as List<Comment>,
-        sortType: null == sortType
-            ? _value.sortType
-            : sortType // ignore: cast_nullable_to_non_nullable
-                as CommentSortType,
-        expandedReplies: null == expandedReplies
-            ? _value._expandedReplies
-            : expandedReplies // ignore: cast_nullable_to_non_nullable
-                as Map<String, List<Comment>>,
-        isAddingComment: null == isAddingComment
-            ? _value.isAddingComment
-            : isAddingComment // ignore: cast_nullable_to_non_nullable
-                as bool,
-        errorMessage: freezed == errorMessage
-            ? _value.errorMessage
-            : errorMessage // ignore: cast_nullable_to_non_nullable
-                as String?,
-        likedCommentIds: null == likedCommentIds
-            ? _value._likedCommentIds
-            : likedCommentIds // ignore: cast_nullable_to_non_nullable
-                as Set<String>,
-        likingInProgress: null == likingInProgress
-            ? _value._likingInProgress
-            : likingInProgress // ignore: cast_nullable_to_non_nullable
-                as Set<String>,
-      ),
-    );
+    return _then(_$LoadedImpl(
+      comments: null == comments
+          ? _value._comments
+          : comments // ignore: cast_nullable_to_non_nullable
+              as List<Comment>,
+      sortType: null == sortType
+          ? _value.sortType
+          : sortType // ignore: cast_nullable_to_non_nullable
+              as CommentSortType,
+      expandedReplies: null == expandedReplies
+          ? _value._expandedReplies
+          : expandedReplies // ignore: cast_nullable_to_non_nullable
+              as Map<String, List<Comment>>,
+      isAddingComment: null == isAddingComment
+          ? _value.isAddingComment
+          : isAddingComment // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorMessage: freezed == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      likedCommentIds: null == likedCommentIds
+          ? _value._likedCommentIds
+          : likedCommentIds // ignore: cast_nullable_to_non_nullable
+              as Set<String>,
+      likingInProgress: null == likingInProgress
+          ? _value._likingInProgress
+          : likingInProgress // ignore: cast_nullable_to_non_nullable
+              as Set<String>,
+    ));
   }
 }
 
 /// @nodoc
 
 class _$LoadedImpl implements _Loaded {
-  const _$LoadedImpl({
-    required final List<Comment> comments,
-    required this.sortType,
-    final Map<String, List<Comment>> expandedReplies = const {},
-    this.isAddingComment = false,
-    this.errorMessage,
-    final Set<String> likedCommentIds = const {},
-    final Set<String> likingInProgress = const {},
-  })  : _comments = comments,
+  const _$LoadedImpl(
+      {required final List<Comment> comments,
+      required this.sortType,
+      final Map<String, List<Comment>> expandedReplies = const {},
+      this.isAddingComment = false,
+      this.errorMessage,
+      final Set<String> likedCommentIds = const {},
+      final Set<String> likingInProgress = const {}})
+      : _comments = comments,
         _expandedReplies = expandedReplies,
         _likedCommentIds = likedCommentIds,
         _likingInProgress = likingInProgress;
@@ -547,35 +536,28 @@ class _$LoadedImpl implements _Loaded {
             const DeepCollectionEquality().equals(other._comments, _comments) &&
             (identical(other.sortType, sortType) ||
                 other.sortType == sortType) &&
-            const DeepCollectionEquality().equals(
-              other._expandedReplies,
-              _expandedReplies,
-            ) &&
+            const DeepCollectionEquality()
+                .equals(other._expandedReplies, _expandedReplies) &&
             (identical(other.isAddingComment, isAddingComment) ||
                 other.isAddingComment == isAddingComment) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
-            const DeepCollectionEquality().equals(
-              other._likedCommentIds,
-              _likedCommentIds,
-            ) &&
-            const DeepCollectionEquality().equals(
-              other._likingInProgress,
-              _likingInProgress,
-            ));
+            const DeepCollectionEquality()
+                .equals(other._likedCommentIds, _likedCommentIds) &&
+            const DeepCollectionEquality()
+                .equals(other._likingInProgress, _likingInProgress));
   }
 
   @override
   int get hashCode => Object.hash(
-        runtimeType,
-        const DeepCollectionEquality().hash(_comments),
-        sortType,
-        const DeepCollectionEquality().hash(_expandedReplies),
-        isAddingComment,
-        errorMessage,
-        const DeepCollectionEquality().hash(_likedCommentIds),
-        const DeepCollectionEquality().hash(_likingInProgress),
-      );
+      runtimeType,
+      const DeepCollectionEquality().hash(_comments),
+      sortType,
+      const DeepCollectionEquality().hash(_expandedReplies),
+      isAddingComment,
+      errorMessage,
+      const DeepCollectionEquality().hash(_likedCommentIds),
+      const DeepCollectionEquality().hash(_likingInProgress));
 
   /// Create a copy of CommentState
   /// with the given fields replaced by the non-null parameter values.
@@ -591,25 +573,18 @@ class _$LoadedImpl implements _Loaded {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(
-      List<Comment> comments,
-      CommentSortType sortType,
-      Map<String, List<Comment>> expandedReplies,
-      bool isAddingComment,
-      String? errorMessage,
-      Set<String> likedCommentIds,
-      Set<String> likingInProgress,
-    ) loaded,
+            List<Comment> comments,
+            CommentSortType sortType,
+            Map<String, List<Comment>> expandedReplies,
+            bool isAddingComment,
+            String? errorMessage,
+            Set<String> likedCommentIds,
+            Set<String> likingInProgress)
+        loaded,
     required TResult Function(String message) error,
   }) {
-    return loaded(
-      comments,
-      sortType,
-      expandedReplies,
-      isAddingComment,
-      errorMessage,
-      likedCommentIds,
-      likingInProgress,
-    );
+    return loaded(comments, sortType, expandedReplies, isAddingComment,
+        errorMessage, likedCommentIds, likingInProgress);
   }
 
   @override
@@ -618,25 +593,18 @@ class _$LoadedImpl implements _Loaded {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(
-      List<Comment> comments,
-      CommentSortType sortType,
-      Map<String, List<Comment>> expandedReplies,
-      bool isAddingComment,
-      String? errorMessage,
-      Set<String> likedCommentIds,
-      Set<String> likingInProgress,
-    )? loaded,
+            List<Comment> comments,
+            CommentSortType sortType,
+            Map<String, List<Comment>> expandedReplies,
+            bool isAddingComment,
+            String? errorMessage,
+            Set<String> likedCommentIds,
+            Set<String> likingInProgress)?
+        loaded,
     TResult? Function(String message)? error,
   }) {
-    return loaded?.call(
-      comments,
-      sortType,
-      expandedReplies,
-      isAddingComment,
-      errorMessage,
-      likedCommentIds,
-      likingInProgress,
-    );
+    return loaded?.call(comments, sortType, expandedReplies, isAddingComment,
+        errorMessage, likedCommentIds, likingInProgress);
   }
 
   @override
@@ -645,27 +613,20 @@ class _$LoadedImpl implements _Loaded {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(
-      List<Comment> comments,
-      CommentSortType sortType,
-      Map<String, List<Comment>> expandedReplies,
-      bool isAddingComment,
-      String? errorMessage,
-      Set<String> likedCommentIds,
-      Set<String> likingInProgress,
-    )? loaded,
+            List<Comment> comments,
+            CommentSortType sortType,
+            Map<String, List<Comment>> expandedReplies,
+            bool isAddingComment,
+            String? errorMessage,
+            Set<String> likedCommentIds,
+            Set<String> likingInProgress)?
+        loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(
-        comments,
-        sortType,
-        expandedReplies,
-        isAddingComment,
-        errorMessage,
-        likedCommentIds,
-        likingInProgress,
-      );
+      return loaded(comments, sortType, expandedReplies, isAddingComment,
+          errorMessage, likedCommentIds, likingInProgress);
     }
     return orElse();
   }
@@ -709,15 +670,14 @@ class _$LoadedImpl implements _Loaded {
 }
 
 abstract class _Loaded implements CommentState {
-  const factory _Loaded({
-    required final List<Comment> comments,
-    required final CommentSortType sortType,
-    final Map<String, List<Comment>> expandedReplies,
-    final bool isAddingComment,
-    final String? errorMessage,
-    final Set<String> likedCommentIds,
-    final Set<String> likingInProgress,
-  }) = _$LoadedImpl;
+  const factory _Loaded(
+      {required final List<Comment> comments,
+      required final CommentSortType sortType,
+      final Map<String, List<Comment>> expandedReplies,
+      final bool isAddingComment,
+      final String? errorMessage,
+      final Set<String> likedCommentIds,
+      final Set<String> likingInProgress}) = _$LoadedImpl;
 
   List<Comment> get comments;
   CommentSortType get sortType;
@@ -737,9 +697,8 @@ abstract class _Loaded implements CommentState {
 /// @nodoc
 abstract class _$$ErrorImplCopyWith<$Res> {
   factory _$$ErrorImplCopyWith(
-    _$ErrorImpl value,
-    $Res Function(_$ErrorImpl) then,
-  ) = __$$ErrorImplCopyWithImpl<$Res>;
+          _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
+      __$$ErrorImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String message});
 }
@@ -749,23 +708,22 @@ class __$$ErrorImplCopyWithImpl<$Res>
     extends _$CommentStateCopyWithImpl<$Res, _$ErrorImpl>
     implements _$$ErrorImplCopyWith<$Res> {
   __$$ErrorImplCopyWithImpl(
-    _$ErrorImpl _value,
-    $Res Function(_$ErrorImpl) _then,
-  ) : super(_value, _then);
+      _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of CommentState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? message = null}) {
-    return _then(
-      _$ErrorImpl(
-        null == message
-            ? _value.message
-            : message // ignore: cast_nullable_to_non_nullable
-                as String,
-      ),
-    );
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$ErrorImpl(
+      null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
   }
 }
 
@@ -807,14 +765,14 @@ class _$ErrorImpl implements _Error {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(
-      List<Comment> comments,
-      CommentSortType sortType,
-      Map<String, List<Comment>> expandedReplies,
-      bool isAddingComment,
-      String? errorMessage,
-      Set<String> likedCommentIds,
-      Set<String> likingInProgress,
-    ) loaded,
+            List<Comment> comments,
+            CommentSortType sortType,
+            Map<String, List<Comment>> expandedReplies,
+            bool isAddingComment,
+            String? errorMessage,
+            Set<String> likedCommentIds,
+            Set<String> likingInProgress)
+        loaded,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -826,14 +784,14 @@ class _$ErrorImpl implements _Error {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(
-      List<Comment> comments,
-      CommentSortType sortType,
-      Map<String, List<Comment>> expandedReplies,
-      bool isAddingComment,
-      String? errorMessage,
-      Set<String> likedCommentIds,
-      Set<String> likingInProgress,
-    )? loaded,
+            List<Comment> comments,
+            CommentSortType sortType,
+            Map<String, List<Comment>> expandedReplies,
+            bool isAddingComment,
+            String? errorMessage,
+            Set<String> likedCommentIds,
+            Set<String> likingInProgress)?
+        loaded,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -845,14 +803,14 @@ class _$ErrorImpl implements _Error {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(
-      List<Comment> comments,
-      CommentSortType sortType,
-      Map<String, List<Comment>> expandedReplies,
-      bool isAddingComment,
-      String? errorMessage,
-      Set<String> likedCommentIds,
-      Set<String> likingInProgress,
-    )? loaded,
+            List<Comment> comments,
+            CommentSortType sortType,
+            Map<String, List<Comment>> expandedReplies,
+            bool isAddingComment,
+            String? errorMessage,
+            Set<String> likedCommentIds,
+            Set<String> likingInProgress)?
+        loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
