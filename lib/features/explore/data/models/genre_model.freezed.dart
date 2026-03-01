@@ -12,8 +12,7 @@ part of 'genre_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 GenreModel _$GenreModelFromJson(Map<String, dynamic> json) {
   return _GenreModel.fromJson(json);
@@ -41,15 +40,13 @@ mixin _$GenreModel {
 /// @nodoc
 abstract class $GenreModelCopyWith<$Res> {
   factory $GenreModelCopyWith(
-    GenreModel value,
-    $Res Function(GenreModel) then,
-  ) = _$GenreModelCopyWithImpl<$Res, GenreModel>;
+          GenreModel value, $Res Function(GenreModel) then) =
+      _$GenreModelCopyWithImpl<$Res, GenreModel>;
   @useResult
-  $Res call({
-    @HiveField(0) String id,
-    @HiveField(1) String name,
-    @HiveField(2) String? icon,
-  });
+  $Res call(
+      {@HiveField(0) String id,
+      @HiveField(1) String name,
+      @HiveField(2) String? icon});
 }
 
 /// @nodoc
@@ -66,23 +63,25 @@ class _$GenreModelCopyWithImpl<$Res, $Val extends GenreModel>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? id = null, Object? name = null, Object? icon = freezed}) {
-    return _then(
-      _value.copyWith(
-        id: null == id
-            ? _value.id
-            : id // ignore: cast_nullable_to_non_nullable
-                as String,
-        name: null == name
-            ? _value.name
-            : name // ignore: cast_nullable_to_non_nullable
-                as String,
-        icon: freezed == icon
-            ? _value.icon
-            : icon // ignore: cast_nullable_to_non_nullable
-                as String?,
-      ) as $Val,
-    );
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? icon = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      icon: freezed == icon
+          ? _value.icon
+          : icon // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
   }
 }
 
@@ -90,16 +89,14 @@ class _$GenreModelCopyWithImpl<$Res, $Val extends GenreModel>
 abstract class _$$GenreModelImplCopyWith<$Res>
     implements $GenreModelCopyWith<$Res> {
   factory _$$GenreModelImplCopyWith(
-    _$GenreModelImpl value,
-    $Res Function(_$GenreModelImpl) then,
-  ) = __$$GenreModelImplCopyWithImpl<$Res>;
+          _$GenreModelImpl value, $Res Function(_$GenreModelImpl) then) =
+      __$$GenreModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    @HiveField(0) String id,
-    @HiveField(1) String name,
-    @HiveField(2) String? icon,
-  });
+  $Res call(
+      {@HiveField(0) String id,
+      @HiveField(1) String name,
+      @HiveField(2) String? icon});
 }
 
 /// @nodoc
@@ -107,42 +104,43 @@ class __$$GenreModelImplCopyWithImpl<$Res>
     extends _$GenreModelCopyWithImpl<$Res, _$GenreModelImpl>
     implements _$$GenreModelImplCopyWith<$Res> {
   __$$GenreModelImplCopyWithImpl(
-    _$GenreModelImpl _value,
-    $Res Function(_$GenreModelImpl) _then,
-  ) : super(_value, _then);
+      _$GenreModelImpl _value, $Res Function(_$GenreModelImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of GenreModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? id = null, Object? name = null, Object? icon = freezed}) {
-    return _then(
-      _$GenreModelImpl(
-        id: null == id
-            ? _value.id
-            : id // ignore: cast_nullable_to_non_nullable
-                as String,
-        name: null == name
-            ? _value.name
-            : name // ignore: cast_nullable_to_non_nullable
-                as String,
-        icon: freezed == icon
-            ? _value.icon
-            : icon // ignore: cast_nullable_to_non_nullable
-                as String?,
-      ),
-    );
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? icon = freezed,
+  }) {
+    return _then(_$GenreModelImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      icon: freezed == icon
+          ? _value.icon
+          : icon // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$GenreModelImpl extends _GenreModel {
-  const _$GenreModelImpl({
-    @HiveField(0) required this.id,
-    @HiveField(1) required this.name,
-    @HiveField(2) this.icon,
-  }) : super._();
+  const _$GenreModelImpl(
+      {@HiveField(0) required this.id,
+      @HiveField(1) required this.name,
+      @HiveField(2) this.icon})
+      : super._();
 
   factory _$GenreModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$GenreModelImplFromJson(json);
@@ -186,16 +184,17 @@ class _$GenreModelImpl extends _GenreModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$GenreModelImplToJson(this);
+    return _$$GenreModelImplToJson(
+      this,
+    );
   }
 }
 
 abstract class _GenreModel extends GenreModel {
-  const factory _GenreModel({
-    @HiveField(0) required final String id,
-    @HiveField(1) required final String name,
-    @HiveField(2) final String? icon,
-  }) = _$GenreModelImpl;
+  const factory _GenreModel(
+      {@HiveField(0) required final String id,
+      @HiveField(1) required final String name,
+      @HiveField(2) final String? icon}) = _$GenreModelImpl;
   const _GenreModel._() : super._();
 
   factory _GenreModel.fromJson(Map<String, dynamic> json) =

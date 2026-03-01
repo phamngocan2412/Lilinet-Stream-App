@@ -502,7 +502,7 @@ class _VideoPlayerContentState extends State<VideoPlayerContent>
           color: kBgColor,
           child: SizedBox(
             height: widget.height,
-            width: MediaQuery.of(context).size.width,
+            width: MediaQuery.sizeOf(context).width,
             child: Column(
               children: [
                 // Video Area
