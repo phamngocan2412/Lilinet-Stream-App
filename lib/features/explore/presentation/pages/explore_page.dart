@@ -53,9 +53,10 @@ class _ExploreViewState extends State<ExploreView>
     super.build(context); // Required for AutomaticKeepAliveClientMixin
 
     // Optimization: Calculate optimal memory cache size for images.
-    final screenWidth = MediaQuery.of(context).size.width;
+    // Use specific MediaQuery selectors to prevent rebuilds on unrelated changes (e.g., viewInsets)
+    final screenWidth = MediaQuery.sizeOf(context).width;
     final itemWidth = (screenWidth - 32 - 12) / 2;
-    final pixelRatio = MediaQuery.of(context).devicePixelRatio;
+    final pixelRatio = MediaQuery.devicePixelRatioOf(context);
     final memCacheWidth = (itemWidth * pixelRatio).toInt();
 
     return Scaffold(
