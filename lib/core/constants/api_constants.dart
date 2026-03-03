@@ -9,7 +9,8 @@ class ApiConstants {
 
     // 2. Try runtime .env
     if (url.isEmpty) {
-      url = dotenv.env['API_BASE_URL'] ?? (kDebugMode ? 'http://localhost:7030' : '');
+      url = dotenv.env['API_BASE_URL'] ??
+          (kDebugMode ? 'http://localhost:7030' : '');
     }
 
     // 3. Platform specific fix for Android Emulator
