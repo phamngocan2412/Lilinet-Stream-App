@@ -106,10 +106,10 @@ class MovieLocalDataSource {
     }
 
     // Delete expired entries
-    for (final key in keysToDelete) {
-      _movieCacheBox.delete(key);
-      _movieDetailsBox.delete(key);
-      _cacheTimestampBox.delete(key);
+    if (keysToDelete.isNotEmpty) {
+      await _movieCacheBox.deleteAll(keysToDelete);
+      await _movieDetailsBox.deleteAll(keysToDelete);
+      await _cacheTimestampBox.deleteAll(keysToDelete);
     }
 
     return keysToDelete.length;
