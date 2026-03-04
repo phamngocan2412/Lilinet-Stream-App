@@ -48,9 +48,7 @@ abstract class RegisterModule {
           // ignore: deprecated_member_use
           encryptedSharedPreferences: true,
         ),
-        iOptions: IOSOptions(
-          accessibility: KeychainAccessibility.first_unlock,
-        ),
+        iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
       );
 
   @lazySingleton
@@ -62,9 +60,7 @@ abstract class RegisterModule {
           // ignore: deprecated_member_use
           encryptedSharedPreferences: true,
         ),
-        iOptions: IOSOptions(
-          accessibility: KeychainAccessibility.first_unlock,
-        ),
+        iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
       );
 
   @preResolve
