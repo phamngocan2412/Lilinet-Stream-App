@@ -65,9 +65,6 @@ class DownloadService {
     final notificationId = url.hashCode;
     final sanitizedFileName = _sanitizeFileName(fileName);
 
-    // Sanitize filename once
-    final sanitizedFileName = _sanitizeFileName(fileName);
-
     try {
       final dir = await getApplicationDocumentsDirectory();
       final savePath = '${dir.path}/downloads/$sanitizedFileName';
