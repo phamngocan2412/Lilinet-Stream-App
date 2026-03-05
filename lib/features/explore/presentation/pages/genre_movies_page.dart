@@ -62,7 +62,7 @@ class GenreMoviesPage extends StatelessWidget {
                   final miniplayerHeight =
                       getIt<MiniplayerHeightNotifier>().height;
                   final cacheWidth =
-                      (MediaQuery.of(context).size.width / 2 - 24).round() * 2;
+                      (MediaQuery.sizeOf(context).width / 2 - 24).round() * 2;
 
                   return GridView.builder(
                     padding: EdgeInsets.only(

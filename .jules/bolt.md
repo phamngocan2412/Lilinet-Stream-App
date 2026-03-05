@@ -17,3 +17,7 @@
 ## 2026-05-20 - Preserving Legacy Logic in Fixes
 **Learning:** When fixing build errors in existing files (like `download_service.dart`), verify if existing tests rely on "buggy" behavior (like partial sanitization).
 **Action:** Run tests immediately after fixes. If tests fail on logic you didn't intend to change (just fix compilation), revert to the behavior expected by tests unless the test is clearly wrong.
+
+## 2026-05-24 - Targeted MediaQuery Rebuilds
+**Learning:** Using `MediaQuery.of(context)` forces a widget to rebuild whenever *any* property of `MediaQueryData` changes (e.g., `viewInsets` for keyboard). This causes widespread unnecessary rebuilds, especially on complex screens.
+**Action:** Always use specific property accessors like `MediaQuery.sizeOf(context)`, `MediaQuery.devicePixelRatioOf(context)`, and `MediaQuery.paddingOf(context)`. These only trigger rebuilds when the specific property requested changes.
