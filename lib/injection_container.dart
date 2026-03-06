@@ -53,7 +53,6 @@ abstract class RegisterModule {
         ),
       );
 
-
   @lazySingleton
   SupabaseClient get supabaseClient => SupabaseConfig.client;
 
