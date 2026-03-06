@@ -17,3 +17,7 @@
 ## 2026-05-20 - Preserving Legacy Logic in Fixes
 **Learning:** When fixing build errors in existing files (like `download_service.dart`), verify if existing tests rely on "buggy" behavior (like partial sanitization).
 **Action:** Run tests immediately after fixes. If tests fail on logic you didn't intend to change (just fix compilation), revert to the behavior expected by tests unless the test is clearly wrong.
+
+## 2026-06-15 - Optimizing Collections and MediaQuery Lookups in Builders
+**Learning:** Using `.elementAt(index)` on a `List` inside builders introduces unnecessary method overhead compared to O(1) bracket notation `list[index]`. Additionally, `MediaQuery.of(context)` causes complete widget rebuilds whenever any MediaQuery property (like viewInsets) changes.
+**Action:** Always convert collections to a `List` and use bracket notation `list[index]` for access in builders. Use specific selectors like `MediaQuery.sizeOf(context)` or `MediaQuery.devicePixelRatioOf(context)` to isolate dependencies and prevent unnecessary widget rebuilds.
