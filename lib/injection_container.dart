@@ -56,7 +56,6 @@ abstract class RegisterModule {
   @lazySingleton
   SupabaseClient get supabaseClient => SupabaseConfig.client;
 
-
   @preResolve
   Future<Box<WatchProgressModel>> get watchHistoryBox =>
       Hive.openBox<WatchProgressModel>('watch_history');
@@ -79,5 +78,4 @@ abstract class RegisterModule {
   @lazySingleton
   MiniplayerHeightNotifier get miniplayerHeightNotifier =>
       MiniplayerHeightNotifier();
-
 }
