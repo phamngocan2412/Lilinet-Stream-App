@@ -113,17 +113,17 @@ class LocalCommentDataSourceImpl implements LocalCommentDataSource {
     return _box!;
   }
 
-  // Helper to generate unique local ID
+  // Helper to generate unique local ID securely
   static String generateLocalId() {
-    final random = Random();
+    final random = Random.secure();
     final timestamp = DateTime.now().millisecondsSinceEpoch;
     final randomPart = random.nextInt(999999).toString().padLeft(6, '0');
     return 'local_${timestamp}_$randomPart';
   }
 
-  // Helper to generate guest username
+  // Helper to generate guest username securely
   static String generateGuestName() {
-    final random = Random();
+    final random = Random.secure();
     final number = random.nextInt(999999).toString().padLeft(6, '0');
     return 'Guest_$number';
   }
