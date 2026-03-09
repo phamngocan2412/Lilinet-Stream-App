@@ -57,7 +57,9 @@ class AppCachedImage extends StatelessWidget {
 
       // Calculate width if needed
       if (optimalMemCacheWidth == null && width != null && width!.isFinite) {
-        devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
+        // Optimization: Use devicePixelRatioOf instead of of(context) to prevent rebuilds
+        // when unrelated MediaQuery properties (like viewInsets from keyboard) change.
+        devicePixelRatio = MediaQuery.devicePixelRatioOf(context);
         optimalMemCacheWidth = (width! * devicePixelRatio).toInt();
       }
 
@@ -68,7 +70,7 @@ class AppCachedImage extends StatelessWidget {
       // Calculate height if needed
       int? optimalMemCacheHeight = memCacheHeight;
       if (optimalMemCacheHeight == null && height != null && height!.isFinite) {
-        devicePixelRatio ??= MediaQuery.of(context).devicePixelRatio;
+        devicePixelRatio ??= MediaQuery.devicePixelRatioOf(context);
         optimalMemCacheHeight = (height! * devicePixelRatio).toInt();
         if (optimalMemCacheHeight < 1) optimalMemCacheHeight = 1;
       }
@@ -78,7 +80,9 @@ class AppCachedImage extends StatelessWidget {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        final devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
+        // Optimization: Use devicePixelRatioOf instead of of(context) to prevent rebuilds
+        // when unrelated MediaQuery properties (like viewInsets from keyboard) change.
+        final devicePixelRatio = MediaQuery.devicePixelRatioOf(context);
 
         // Calculate optimal cache width based on constraints
         int? optimalMemCacheWidth;
