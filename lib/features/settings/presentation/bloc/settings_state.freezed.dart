@@ -12,8 +12,7 @@ part of 'settings_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$SettingsState {
@@ -84,9 +83,8 @@ mixin _$SettingsState {
 /// @nodoc
 abstract class $SettingsStateCopyWith<$Res> {
   factory $SettingsStateCopyWith(
-    SettingsState value,
-    $Res Function(SettingsState) then,
-  ) = _$SettingsStateCopyWithImpl<$Res, SettingsState>;
+          SettingsState value, $Res Function(SettingsState) then) =
+      _$SettingsStateCopyWithImpl<$Res, SettingsState>;
 }
 
 /// @nodoc
@@ -105,10 +103,9 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
 
 /// @nodoc
 abstract class _$$SettingsInitialImplCopyWith<$Res> {
-  factory _$$SettingsInitialImplCopyWith(
-    _$SettingsInitialImpl value,
-    $Res Function(_$SettingsInitialImpl) then,
-  ) = __$$SettingsInitialImplCopyWithImpl<$Res>;
+  factory _$$SettingsInitialImplCopyWith(_$SettingsInitialImpl value,
+          $Res Function(_$SettingsInitialImpl) then) =
+      __$$SettingsInitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
@@ -116,9 +113,8 @@ class __$$SettingsInitialImplCopyWithImpl<$Res>
     extends _$SettingsStateCopyWithImpl<$Res, _$SettingsInitialImpl>
     implements _$$SettingsInitialImplCopyWith<$Res> {
   __$$SettingsInitialImplCopyWithImpl(
-    _$SettingsInitialImpl _value,
-    $Res Function(_$SettingsInitialImpl) _then,
-  ) : super(_value, _then);
+      _$SettingsInitialImpl _value, $Res Function(_$SettingsInitialImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of SettingsState
   /// with the given fields replaced by the non-null parameter values.
@@ -236,10 +232,9 @@ abstract class SettingsInitial implements SettingsState {
 
 /// @nodoc
 abstract class _$$SettingsLoadingImplCopyWith<$Res> {
-  factory _$$SettingsLoadingImplCopyWith(
-    _$SettingsLoadingImpl value,
-    $Res Function(_$SettingsLoadingImpl) then,
-  ) = __$$SettingsLoadingImplCopyWithImpl<$Res>;
+  factory _$$SettingsLoadingImplCopyWith(_$SettingsLoadingImpl value,
+          $Res Function(_$SettingsLoadingImpl) then) =
+      __$$SettingsLoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
@@ -247,9 +242,8 @@ class __$$SettingsLoadingImplCopyWithImpl<$Res>
     extends _$SettingsStateCopyWithImpl<$Res, _$SettingsLoadingImpl>
     implements _$$SettingsLoadingImplCopyWith<$Res> {
   __$$SettingsLoadingImplCopyWithImpl(
-    _$SettingsLoadingImpl _value,
-    $Res Function(_$SettingsLoadingImpl) _then,
-  ) : super(_value, _then);
+      _$SettingsLoadingImpl _value, $Res Function(_$SettingsLoadingImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of SettingsState
   /// with the given fields replaced by the non-null parameter values.
@@ -367,10 +361,9 @@ abstract class SettingsLoading implements SettingsState {
 
 /// @nodoc
 abstract class _$$SettingsLoadedImplCopyWith<$Res> {
-  factory _$$SettingsLoadedImplCopyWith(
-    _$SettingsLoadedImpl value,
-    $Res Function(_$SettingsLoadedImpl) then,
-  ) = __$$SettingsLoadedImplCopyWithImpl<$Res>;
+  factory _$$SettingsLoadedImplCopyWith(_$SettingsLoadedImpl value,
+          $Res Function(_$SettingsLoadedImpl) then) =
+      __$$SettingsLoadedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({AppSettings settings});
 }
@@ -380,23 +373,22 @@ class __$$SettingsLoadedImplCopyWithImpl<$Res>
     extends _$SettingsStateCopyWithImpl<$Res, _$SettingsLoadedImpl>
     implements _$$SettingsLoadedImplCopyWith<$Res> {
   __$$SettingsLoadedImplCopyWithImpl(
-    _$SettingsLoadedImpl _value,
-    $Res Function(_$SettingsLoadedImpl) _then,
-  ) : super(_value, _then);
+      _$SettingsLoadedImpl _value, $Res Function(_$SettingsLoadedImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of SettingsState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? settings = null}) {
-    return _then(
-      _$SettingsLoadedImpl(
-        settings: null == settings
-            ? _value.settings
-            : settings // ignore: cast_nullable_to_non_nullable
-                as AppSettings,
-      ),
-    );
+  $Res call({
+    Object? settings = null,
+  }) {
+    return _then(_$SettingsLoadedImpl(
+      settings: null == settings
+          ? _value.settings
+          : settings // ignore: cast_nullable_to_non_nullable
+              as AppSettings,
+    ));
   }
 }
 
@@ -432,9 +424,7 @@ class _$SettingsLoadedImpl implements SettingsLoaded {
   @pragma('vm:prefer-inline')
   _$$SettingsLoadedImplCopyWith<_$SettingsLoadedImpl> get copyWith =>
       __$$SettingsLoadedImplCopyWithImpl<_$SettingsLoadedImpl>(
-        this,
-        _$identity,
-      );
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -538,10 +528,9 @@ abstract class SettingsLoaded implements SettingsState {
 
 /// @nodoc
 abstract class _$$SettingsSavingImplCopyWith<$Res> {
-  factory _$$SettingsSavingImplCopyWith(
-    _$SettingsSavingImpl value,
-    $Res Function(_$SettingsSavingImpl) then,
-  ) = __$$SettingsSavingImplCopyWithImpl<$Res>;
+  factory _$$SettingsSavingImplCopyWith(_$SettingsSavingImpl value,
+          $Res Function(_$SettingsSavingImpl) then) =
+      __$$SettingsSavingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
@@ -549,9 +538,8 @@ class __$$SettingsSavingImplCopyWithImpl<$Res>
     extends _$SettingsStateCopyWithImpl<$Res, _$SettingsSavingImpl>
     implements _$$SettingsSavingImplCopyWith<$Res> {
   __$$SettingsSavingImplCopyWithImpl(
-    _$SettingsSavingImpl _value,
-    $Res Function(_$SettingsSavingImpl) _then,
-  ) : super(_value, _then);
+      _$SettingsSavingImpl _value, $Res Function(_$SettingsSavingImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of SettingsState
   /// with the given fields replaced by the non-null parameter values.
@@ -670,9 +658,8 @@ abstract class SettingsSaving implements SettingsState {
 /// @nodoc
 abstract class _$$SettingsSavedImplCopyWith<$Res> {
   factory _$$SettingsSavedImplCopyWith(
-    _$SettingsSavedImpl value,
-    $Res Function(_$SettingsSavedImpl) then,
-  ) = __$$SettingsSavedImplCopyWithImpl<$Res>;
+          _$SettingsSavedImpl value, $Res Function(_$SettingsSavedImpl) then) =
+      __$$SettingsSavedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({AppSettings settings});
 }
@@ -682,23 +669,22 @@ class __$$SettingsSavedImplCopyWithImpl<$Res>
     extends _$SettingsStateCopyWithImpl<$Res, _$SettingsSavedImpl>
     implements _$$SettingsSavedImplCopyWith<$Res> {
   __$$SettingsSavedImplCopyWithImpl(
-    _$SettingsSavedImpl _value,
-    $Res Function(_$SettingsSavedImpl) _then,
-  ) : super(_value, _then);
+      _$SettingsSavedImpl _value, $Res Function(_$SettingsSavedImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of SettingsState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? settings = null}) {
-    return _then(
-      _$SettingsSavedImpl(
-        settings: null == settings
-            ? _value.settings
-            : settings // ignore: cast_nullable_to_non_nullable
-                as AppSettings,
-      ),
-    );
+  $Res call({
+    Object? settings = null,
+  }) {
+    return _then(_$SettingsSavedImpl(
+      settings: null == settings
+          ? _value.settings
+          : settings // ignore: cast_nullable_to_non_nullable
+              as AppSettings,
+    ));
   }
 }
 
@@ -838,9 +824,8 @@ abstract class SettingsSaved implements SettingsState {
 /// @nodoc
 abstract class _$$SettingsErrorImplCopyWith<$Res> {
   factory _$$SettingsErrorImplCopyWith(
-    _$SettingsErrorImpl value,
-    $Res Function(_$SettingsErrorImpl) then,
-  ) = __$$SettingsErrorImplCopyWithImpl<$Res>;
+          _$SettingsErrorImpl value, $Res Function(_$SettingsErrorImpl) then) =
+      __$$SettingsErrorImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String message});
 }
@@ -850,23 +835,22 @@ class __$$SettingsErrorImplCopyWithImpl<$Res>
     extends _$SettingsStateCopyWithImpl<$Res, _$SettingsErrorImpl>
     implements _$$SettingsErrorImplCopyWith<$Res> {
   __$$SettingsErrorImplCopyWithImpl(
-    _$SettingsErrorImpl _value,
-    $Res Function(_$SettingsErrorImpl) _then,
-  ) : super(_value, _then);
+      _$SettingsErrorImpl _value, $Res Function(_$SettingsErrorImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of SettingsState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? message = null}) {
-    return _then(
-      _$SettingsErrorImpl(
-        message: null == message
-            ? _value.message
-            : message // ignore: cast_nullable_to_non_nullable
-                as String,
-      ),
-    );
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$SettingsErrorImpl(
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
   }
 }
 

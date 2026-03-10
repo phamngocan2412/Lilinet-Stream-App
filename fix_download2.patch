@@ -1,0 +1,25 @@
+--- lib/core/services/download_service.dart
++++ lib/core/services/download_service.dart
+@@ -66,6 +66,7 @@
+
+     // Sanitize filename once
++    final sanitizedFileName = _sanitizeFileName(fileName);
+
+     try {
+       final dir = await getApplicationDocumentsDirectory();
+@@ -262,7 +263,8 @@
+
+   Future<bool> isFileDownloaded(String fileName) async {
+     try {
++      final sanitizedFileName = _sanitizeFileName(fileName);
+       final dir = await getApplicationDocumentsDirectory();
+       final file = File('${dir.path}/downloads/$sanitizedFileName');
+       return await file.exists();
+@@ -272,7 +274,8 @@
+
+   Future<String?> getDownloadedFilePath(String fileName) async {
+     try {
++      final sanitizedFileName = _sanitizeFileName(fileName);
+       final dir = await getApplicationDocumentsDirectory();
+       final path = '${dir.path}/downloads/$sanitizedFileName';
+       if (await File(path).exists()) {
