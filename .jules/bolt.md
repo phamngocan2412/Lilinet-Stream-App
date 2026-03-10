@@ -17,3 +17,7 @@
 ## 2026-05-20 - Preserving Legacy Logic in Fixes
 **Learning:** When fixing build errors in existing files (like `download_service.dart`), verify if existing tests rely on "buggy" behavior (like partial sanitization).
 **Action:** Run tests immediately after fixes. If tests fail on logic you didn't intend to change (just fix compilation), revert to the behavior expected by tests unless the test is clearly wrong.
+
+## 2026-05-20 - Derived List Iteration in Builders
+**Learning:** Dynamically deriving a unique, sorted list from an existing list (like folders in Favorites) directly inside a `BlocBuilder`'s build method is an O(N log N) operation that executes unnecessarily on every frame.
+**Action:** Pre-compute and memoize derived sets or lists (like lookup maps or filtered lists) inside the Bloc so it's only executed when the underlying data actually changes, then pass it as a property in the state.
