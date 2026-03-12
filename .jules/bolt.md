@@ -17,3 +17,7 @@
 ## 2026-05-20 - Preserving Legacy Logic in Fixes
 **Learning:** When fixing build errors in existing files (like `download_service.dart`), verify if existing tests rely on "buggy" behavior (like partial sanitization).
 **Action:** Run tests immediately after fixes. If tests fail on logic you didn't intend to change (just fix compilation), revert to the behavior expected by tests unless the test is clearly wrong.
+
+## 2026-05-20 - Derived Collections in Builders
+**Learning:** Computing derived data (like mapping and sorting a unique list of folders from favorites) inside a `BlocBuilder`'s `build` method triggers an O(N log N) operation on every frame or state change, causing unnecessary CPU overhead.
+**Action:** Pre-compute derived lists or sets in the Bloc and pass them down as part of the state. Use `List` to access elements by index `[index]` in O(1) inside builders, completely avoiding `.elementAt(index)`.

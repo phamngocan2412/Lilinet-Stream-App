@@ -14,6 +14,7 @@ class FavoritesState with _$FavoritesState {
     @Default(1) int currentPage,
     @Default(true) bool hasMore,
     @Default({}) Set<String> favoriteIds,
+    @Default(['All']) List<String> folders,
   }) = FavoritesLoaded;
 
   const factory FavoritesState.error({required String message}) =

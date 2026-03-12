@@ -37,6 +37,11 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     emit(const FavoritesInitial());
   }
 
+  List<String> _computeFolders(List<Favorite> favorites) {
+    return {'All', ...favorites.map((f) => f.folder).toSet().toList()..sort()}
+        .toList();
+  }
+
   Future<void> _onLoadFavorites(
     LoadFavorites event,
     Emitter<FavoritesState> emit,
@@ -54,6 +59,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
           currentPage: event.page,
           hasMore: favorites.length >= _limit,
           favoriteIds: favorites.map((f) => f.movieId).toSet(),
+          folders: _computeFolders(favorites),
         ),
       ),
     );
@@ -81,6 +87,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
           currentPage: nextPage,
           hasMore: newFavorites.length >= _limit,
           favoriteIds: allFavorites.map((f) => f.movieId).toSet(),
+          folders: _computeFolders(allFavorites),
         ),
       );
     });
@@ -120,6 +127,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
           currentPage: currentPage,
           hasMore: hasMore,
           favoriteIds: currentFavorites.map((f) => f.movieId).toSet(),
+          folders: _computeFolders(currentFavorites),
         ),
       );
     });
@@ -153,6 +161,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
           currentPage: currentPage,
           hasMore: hasMore,
           favoriteIds: currentFavorites.map((f) => f.movieId).toSet(),
+          folders: _computeFolders(currentFavorites),
         ),
       );
     });
