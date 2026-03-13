@@ -17,3 +17,7 @@
 ## 2026-05-20 - Preserving Legacy Logic in Fixes
 **Learning:** When fixing build errors in existing files (like `download_service.dart`), verify if existing tests rely on "buggy" behavior (like partial sanitization).
 **Action:** Run tests immediately after fixes. If tests fail on logic you didn't intend to change (just fix compilation), revert to the behavior expected by tests unless the test is clearly wrong.
+
+## 2026-03-13 - Pre-computing Derived Lists in Blocs
+**Learning:** Recomputing derived lists (like dynamically mapping, deduplicating, and sorting `FavoritesPage`'s folder list, which is an O(N log N) operation) directly inside a `BlocBuilder`'s build method executes on every frame. This creates significant overhead and UI stutter during scrolling or animations.
+**Action:** Always pre-compute and memoize derived lists or sets within the Bloc state itself. Update these derived properties only when the underlying data changes in the event handlers. Pass the pre-computed list as a state property to avoid recomputation during widget rebuilds.
