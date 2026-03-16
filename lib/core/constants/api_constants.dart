@@ -12,7 +12,12 @@ class ApiConstants {
       url = dotenv.env['API_BASE_URL'] ?? 'http://localhost:7030';
     }
 
-    // 3. Platform specific fix for Android Emulator
+    // 3. Prevent cleartext traffic in production
+    if (!kDebugMode && url.startsWith('http://')) {
+      throw UnsupportedError('Cleartext HTTP is not allowed in production');
+    }
+
+    // 4. Platform specific fix for Android Emulator
     if (!kIsWeb && Platform.isAndroid) {
       if (url.contains('localhost') ||
           url.contains('127.0.0.1') ||
@@ -24,7 +29,7 @@ class ApiConstants {
       }
     }
 
-    // 4. Fix 0.0.0.0 for other platforms (iOS/Web) to localhost
+    // 5. Fix 0.0.0.0 for other platforms (iOS/Web) to localhost
     if (url.contains('0.0.0.0')) {
       return url.replaceAll('0.0.0.0', 'localhost');
     }
