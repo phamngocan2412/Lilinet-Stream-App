@@ -30,8 +30,10 @@ class _PlayerRecommendationsSectionState
     if (recommendations.isEmpty) return const SizedBox.shrink();
 
     // Calculate optimal cache width for performance
-    final screenWidth = MediaQuery.of(context).size.width;
-    final devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
+    // Optimization: Use MediaQuery.sizeOf() instead of MediaQuery.of().size to prevent rebuilding
+    // the widget when unrelated properties (like viewInsets/keyboard) change.
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final devicePixelRatio = MediaQuery.devicePixelRatioOf(context);
     final itemWidth = (screenWidth - 32 - 12) / 2;
     final memCacheWidth = (itemWidth * devicePixelRatio).toInt();
 

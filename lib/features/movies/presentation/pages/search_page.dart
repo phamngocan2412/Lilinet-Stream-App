@@ -190,8 +190,10 @@ class _SearchPageViewState extends State<SearchPageView> {
           }
 
           // Calculate optimal cache width
-          final screenWidth = MediaQuery.of(context).size.width;
-          final devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
+          // Optimization: Use MediaQuery.sizeOf() instead of MediaQuery.of().size to prevent rebuilding
+          // the widget when unrelated properties (like viewInsets/keyboard) change.
+          final screenWidth = MediaQuery.sizeOf(context).width;
+          final devicePixelRatio = MediaQuery.devicePixelRatioOf(context);
           final cacheWidth = ((screenWidth - 32) / 2 * devicePixelRatio).ceil();
 
           return ListenableBuilder(

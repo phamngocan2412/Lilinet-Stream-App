@@ -39,8 +39,10 @@ class _FavoritesViewState extends State<FavoritesView> {
     // Optimization: Calculate optimal cache width for grid items to avoid LayoutBuilder overhead
     // and reduce memory usage.
     // (Screen Width - Padding) / Columns * Pixel Density
-    final screenWidth = MediaQuery.of(context).size.width;
-    final devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
+    // Optimization: Use MediaQuery.sizeOf() instead of MediaQuery.of().size to prevent rebuilding
+    // the widget when unrelated properties (like viewInsets/keyboard) change.
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final devicePixelRatio = MediaQuery.devicePixelRatioOf(context);
     final memCacheWidth = ((screenWidth - 32) / 2 * devicePixelRatio).ceil();
 
     return Scaffold(
