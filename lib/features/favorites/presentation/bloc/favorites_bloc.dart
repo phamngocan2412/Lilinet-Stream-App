@@ -48,14 +48,22 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     final result = await getFavoritesUseCase(page: event.page, limit: _limit);
     result.fold(
       (failure) => emit(FavoritesError(message: failure.message)),
-      (favorites) => emit(
-        FavoritesLoaded(
-          favorites: favorites,
-          currentPage: event.page,
-          hasMore: favorites.length >= _limit,
-          favoriteIds: favorites.map((f) => f.movieId).toSet(),
-        ),
-      ),
+      (favorites) {
+        final folders = {
+          'All',
+          ...favorites.map((f) => f.folder).toSet().toList()..sort(),
+        }.toList();
+
+        emit(
+          FavoritesLoaded(
+            favorites: favorites,
+            currentPage: event.page,
+            hasMore: favorites.length >= _limit,
+            favoriteIds: favorites.map((f) => f.movieId).toSet(),
+            folders: folders,
+          ),
+        );
+      },
     );
   }
 
@@ -75,12 +83,17 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
       newFavorites,
     ) {
       final allFavorites = [...currentState.favorites, ...newFavorites];
+      final folders = {
+        'All',
+        ...allFavorites.map((f) => f.folder).toSet().toList()..sort(),
+      }.toList();
       emit(
         currentState.copyWith(
           favorites: allFavorites,
           currentPage: nextPage,
           hasMore: newFavorites.length >= _limit,
           favoriteIds: allFavorites.map((f) => f.movieId).toSet(),
+          folders: folders,
         ),
       );
     });
@@ -114,12 +127,17 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     ) {
       // Optimistic update: Add to list immediately without reloading
       currentFavorites.insert(0, favorite); // Add to top
+      final folders = {
+        'All',
+        ...currentFavorites.map((f) => f.folder).toSet().toList()..sort(),
+      }.toList();
       emit(
         FavoritesLoaded(
           favorites: currentFavorites,
           currentPage: currentPage,
           hasMore: hasMore,
           favoriteIds: currentFavorites.map((f) => f.movieId).toSet(),
+          folders: folders,
         ),
       );
     });
@@ -147,12 +165,17 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     ) {
       // Optimistic update: Remove from list immediately without reloading
       currentFavorites.removeWhere((f) => f.movieId == event.movieId);
+      final folders = {
+        'All',
+        ...currentFavorites.map((f) => f.folder).toSet().toList()..sort(),
+      }.toList();
       emit(
         FavoritesLoaded(
           favorites: currentFavorites,
           currentPage: currentPage,
           hasMore: hasMore,
           favoriteIds: currentFavorites.map((f) => f.movieId).toSet(),
+          folders: folders,
         ),
       );
     });

@@ -120,14 +120,12 @@ class _FavoritesViewState extends State<FavoritesView> {
                     );
                   }
 
-                  // Extract folders
-                  final folders = {
-                    'All',
-                    ...state.favorites.map((f) => f.folder).toSet().toList()
-                      ..sort(),
-                  }.toList();
+                  // Use precomputed folders from state
+                  final folders = state.folders;
 
                   // Filter favorites based on selected folder
+                  // Note: This is an O(N) operation per frame when filtering, but it's significantly better
+                  // than the previous O(N log N) derived folder set mapping/sorting combination.
                   final filteredFavorites = _selectedFolder == 'All'
                       ? state.favorites
                       : state.favorites
