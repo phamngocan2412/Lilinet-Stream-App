@@ -26,7 +26,12 @@ class ApiConstants {
 
     // 4. Fix 0.0.0.0 for other platforms (iOS/Web) to localhost
     if (url.contains('0.0.0.0')) {
-      return url.replaceAll('0.0.0.0', 'localhost');
+      url = url.replaceAll('0.0.0.0', 'localhost');
+    }
+
+    if (!kDebugMode && url.startsWith('http://')) {
+      throw UnsupportedError(
+          'Cleartext HTTP traffic is not allowed in production.');
     }
 
     return url;
