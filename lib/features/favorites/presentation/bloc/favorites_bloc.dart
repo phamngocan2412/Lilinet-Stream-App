@@ -33,6 +33,16 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     return super.close();
   }
 
+  // Optimization: Pre-compute derived state (unique, sorted folders) here in the Bloc
+  // instead of inside the UI's build method. This avoids an O(N log N) performance
+  // penalty on every frame/rebuild and allows the UI to access folders in O(1) time.
+  List<String> _computeFolders(List<Favorite> favorites) {
+    return {
+      'All',
+      ...favorites.map((f) => f.folder).toSet().toList()..sort(),
+    }.toList();
+  }
+
   void _onClearFavorites(ClearFavorites event, Emitter<FavoritesState> emit) {
     emit(const FavoritesInitial());
   }
@@ -54,6 +64,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
           currentPage: event.page,
           hasMore: favorites.length >= _limit,
           favoriteIds: favorites.map((f) => f.movieId).toSet(),
+          folders: _computeFolders(favorites),
         ),
       ),
     );
@@ -81,6 +92,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
           currentPage: nextPage,
           hasMore: newFavorites.length >= _limit,
           favoriteIds: allFavorites.map((f) => f.movieId).toSet(),
+          folders: _computeFolders(allFavorites),
         ),
       );
     });
@@ -120,6 +132,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
           currentPage: currentPage,
           hasMore: hasMore,
           favoriteIds: currentFavorites.map((f) => f.movieId).toSet(),
+          folders: _computeFolders(currentFavorites),
         ),
       );
     });
@@ -153,6 +166,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
           currentPage: currentPage,
           hasMore: hasMore,
           favoriteIds: currentFavorites.map((f) => f.movieId).toSet(),
+          folders: _computeFolders(currentFavorites),
         ),
       );
     });
