@@ -12,8 +12,7 @@ part of 'favorites_event.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$FavoritesEvent {
@@ -21,13 +20,9 @@ mixin _$FavoritesEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(int page) loadFavorites,
     required TResult Function() loadMoreFavorites,
-    required TResult Function(
-      String movieId,
-      String? movieTitle,
-      String? moviePoster,
-      String? movieType,
-      String folder,
-    ) addFavorite,
+    required TResult Function(String movieId, String? movieTitle,
+            String? moviePoster, String? movieType, String folder)
+        addFavorite,
     required TResult Function(String movieId) removeFavorite,
     required TResult Function() clearFavorites,
     required TResult Function(String movieId) checkFavoriteStatus,
@@ -37,13 +32,9 @@ mixin _$FavoritesEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int page)? loadFavorites,
     TResult? Function()? loadMoreFavorites,
-    TResult? Function(
-      String movieId,
-      String? movieTitle,
-      String? moviePoster,
-      String? movieType,
-      String folder,
-    )? addFavorite,
+    TResult? Function(String movieId, String? movieTitle, String? moviePoster,
+            String? movieType, String folder)?
+        addFavorite,
     TResult? Function(String movieId)? removeFavorite,
     TResult? Function()? clearFavorites,
     TResult? Function(String movieId)? checkFavoriteStatus,
@@ -53,13 +44,9 @@ mixin _$FavoritesEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int page)? loadFavorites,
     TResult Function()? loadMoreFavorites,
-    TResult Function(
-      String movieId,
-      String? movieTitle,
-      String? moviePoster,
-      String? movieType,
-      String folder,
-    )? addFavorite,
+    TResult Function(String movieId, String? movieTitle, String? moviePoster,
+            String? movieType, String folder)?
+        addFavorite,
     TResult Function(String movieId)? removeFavorite,
     TResult Function()? clearFavorites,
     TResult Function(String movieId)? checkFavoriteStatus,
@@ -102,9 +89,8 @@ mixin _$FavoritesEvent {
 /// @nodoc
 abstract class $FavoritesEventCopyWith<$Res> {
   factory $FavoritesEventCopyWith(
-    FavoritesEvent value,
-    $Res Function(FavoritesEvent) then,
-  ) = _$FavoritesEventCopyWithImpl<$Res, FavoritesEvent>;
+          FavoritesEvent value, $Res Function(FavoritesEvent) then) =
+      _$FavoritesEventCopyWithImpl<$Res, FavoritesEvent>;
 }
 
 /// @nodoc
@@ -124,9 +110,8 @@ class _$FavoritesEventCopyWithImpl<$Res, $Val extends FavoritesEvent>
 /// @nodoc
 abstract class _$$LoadFavoritesImplCopyWith<$Res> {
   factory _$$LoadFavoritesImplCopyWith(
-    _$LoadFavoritesImpl value,
-    $Res Function(_$LoadFavoritesImpl) then,
-  ) = __$$LoadFavoritesImplCopyWithImpl<$Res>;
+          _$LoadFavoritesImpl value, $Res Function(_$LoadFavoritesImpl) then) =
+      __$$LoadFavoritesImplCopyWithImpl<$Res>;
   @useResult
   $Res call({int page});
 }
@@ -136,23 +121,22 @@ class __$$LoadFavoritesImplCopyWithImpl<$Res>
     extends _$FavoritesEventCopyWithImpl<$Res, _$LoadFavoritesImpl>
     implements _$$LoadFavoritesImplCopyWith<$Res> {
   __$$LoadFavoritesImplCopyWithImpl(
-    _$LoadFavoritesImpl _value,
-    $Res Function(_$LoadFavoritesImpl) _then,
-  ) : super(_value, _then);
+      _$LoadFavoritesImpl _value, $Res Function(_$LoadFavoritesImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of FavoritesEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? page = null}) {
-    return _then(
-      _$LoadFavoritesImpl(
-        page: null == page
-            ? _value.page
-            : page // ignore: cast_nullable_to_non_nullable
-                as int,
-      ),
-    );
+  $Res call({
+    Object? page = null,
+  }) {
+    return _then(_$LoadFavoritesImpl(
+      page: null == page
+          ? _value.page
+          : page // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
   }
 }
 
@@ -194,13 +178,9 @@ class _$LoadFavoritesImpl implements LoadFavorites {
   TResult when<TResult extends Object?>({
     required TResult Function(int page) loadFavorites,
     required TResult Function() loadMoreFavorites,
-    required TResult Function(
-      String movieId,
-      String? movieTitle,
-      String? moviePoster,
-      String? movieType,
-      String folder,
-    ) addFavorite,
+    required TResult Function(String movieId, String? movieTitle,
+            String? moviePoster, String? movieType, String folder)
+        addFavorite,
     required TResult Function(String movieId) removeFavorite,
     required TResult Function() clearFavorites,
     required TResult Function(String movieId) checkFavoriteStatus,
@@ -213,13 +193,9 @@ class _$LoadFavoritesImpl implements LoadFavorites {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int page)? loadFavorites,
     TResult? Function()? loadMoreFavorites,
-    TResult? Function(
-      String movieId,
-      String? movieTitle,
-      String? moviePoster,
-      String? movieType,
-      String folder,
-    )? addFavorite,
+    TResult? Function(String movieId, String? movieTitle, String? moviePoster,
+            String? movieType, String folder)?
+        addFavorite,
     TResult? Function(String movieId)? removeFavorite,
     TResult? Function()? clearFavorites,
     TResult? Function(String movieId)? checkFavoriteStatus,
@@ -232,13 +208,9 @@ class _$LoadFavoritesImpl implements LoadFavorites {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int page)? loadFavorites,
     TResult Function()? loadMoreFavorites,
-    TResult Function(
-      String movieId,
-      String? movieTitle,
-      String? moviePoster,
-      String? movieType,
-      String folder,
-    )? addFavorite,
+    TResult Function(String movieId, String? movieTitle, String? moviePoster,
+            String? movieType, String folder)?
+        addFavorite,
     TResult Function(String movieId)? removeFavorite,
     TResult Function()? clearFavorites,
     TResult Function(String movieId)? checkFavoriteStatus,
@@ -308,20 +280,18 @@ abstract class LoadFavorites implements FavoritesEvent {
 
 /// @nodoc
 abstract class _$$LoadMoreFavoritesImplCopyWith<$Res> {
-  factory _$$LoadMoreFavoritesImplCopyWith(
-    _$LoadMoreFavoritesImpl value,
-    $Res Function(_$LoadMoreFavoritesImpl) then,
-  ) = __$$LoadMoreFavoritesImplCopyWithImpl<$Res>;
+  factory _$$LoadMoreFavoritesImplCopyWith(_$LoadMoreFavoritesImpl value,
+          $Res Function(_$LoadMoreFavoritesImpl) then) =
+      __$$LoadMoreFavoritesImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
 class __$$LoadMoreFavoritesImplCopyWithImpl<$Res>
     extends _$FavoritesEventCopyWithImpl<$Res, _$LoadMoreFavoritesImpl>
     implements _$$LoadMoreFavoritesImplCopyWith<$Res> {
-  __$$LoadMoreFavoritesImplCopyWithImpl(
-    _$LoadMoreFavoritesImpl _value,
-    $Res Function(_$LoadMoreFavoritesImpl) _then,
-  ) : super(_value, _then);
+  __$$LoadMoreFavoritesImplCopyWithImpl(_$LoadMoreFavoritesImpl _value,
+      $Res Function(_$LoadMoreFavoritesImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of FavoritesEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -351,13 +321,9 @@ class _$LoadMoreFavoritesImpl implements LoadMoreFavorites {
   TResult when<TResult extends Object?>({
     required TResult Function(int page) loadFavorites,
     required TResult Function() loadMoreFavorites,
-    required TResult Function(
-      String movieId,
-      String? movieTitle,
-      String? moviePoster,
-      String? movieType,
-      String folder,
-    ) addFavorite,
+    required TResult Function(String movieId, String? movieTitle,
+            String? moviePoster, String? movieType, String folder)
+        addFavorite,
     required TResult Function(String movieId) removeFavorite,
     required TResult Function() clearFavorites,
     required TResult Function(String movieId) checkFavoriteStatus,
@@ -370,13 +336,9 @@ class _$LoadMoreFavoritesImpl implements LoadMoreFavorites {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int page)? loadFavorites,
     TResult? Function()? loadMoreFavorites,
-    TResult? Function(
-      String movieId,
-      String? movieTitle,
-      String? moviePoster,
-      String? movieType,
-      String folder,
-    )? addFavorite,
+    TResult? Function(String movieId, String? movieTitle, String? moviePoster,
+            String? movieType, String folder)?
+        addFavorite,
     TResult? Function(String movieId)? removeFavorite,
     TResult? Function()? clearFavorites,
     TResult? Function(String movieId)? checkFavoriteStatus,
@@ -389,13 +351,9 @@ class _$LoadMoreFavoritesImpl implements LoadMoreFavorites {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int page)? loadFavorites,
     TResult Function()? loadMoreFavorites,
-    TResult Function(
-      String movieId,
-      String? movieTitle,
-      String? moviePoster,
-      String? movieType,
-      String folder,
-    )? addFavorite,
+    TResult Function(String movieId, String? movieTitle, String? moviePoster,
+            String? movieType, String folder)?
+        addFavorite,
     TResult Function(String movieId)? removeFavorite,
     TResult Function()? clearFavorites,
     TResult Function(String movieId)? checkFavoriteStatus,
@@ -457,28 +415,25 @@ abstract class LoadMoreFavorites implements FavoritesEvent {
 
 /// @nodoc
 abstract class _$$AddFavoriteEventImplCopyWith<$Res> {
-  factory _$$AddFavoriteEventImplCopyWith(
-    _$AddFavoriteEventImpl value,
-    $Res Function(_$AddFavoriteEventImpl) then,
-  ) = __$$AddFavoriteEventImplCopyWithImpl<$Res>;
+  factory _$$AddFavoriteEventImplCopyWith(_$AddFavoriteEventImpl value,
+          $Res Function(_$AddFavoriteEventImpl) then) =
+      __$$AddFavoriteEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({
-    String movieId,
-    String? movieTitle,
-    String? moviePoster,
-    String? movieType,
-    String folder,
-  });
+  $Res call(
+      {String movieId,
+      String? movieTitle,
+      String? moviePoster,
+      String? movieType,
+      String folder});
 }
 
 /// @nodoc
 class __$$AddFavoriteEventImplCopyWithImpl<$Res>
     extends _$FavoritesEventCopyWithImpl<$Res, _$AddFavoriteEventImpl>
     implements _$$AddFavoriteEventImplCopyWith<$Res> {
-  __$$AddFavoriteEventImplCopyWithImpl(
-    _$AddFavoriteEventImpl _value,
-    $Res Function(_$AddFavoriteEventImpl) _then,
-  ) : super(_value, _then);
+  __$$AddFavoriteEventImplCopyWithImpl(_$AddFavoriteEventImpl _value,
+      $Res Function(_$AddFavoriteEventImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of FavoritesEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -491,43 +446,40 @@ class __$$AddFavoriteEventImplCopyWithImpl<$Res>
     Object? movieType = freezed,
     Object? folder = null,
   }) {
-    return _then(
-      _$AddFavoriteEventImpl(
-        movieId: null == movieId
-            ? _value.movieId
-            : movieId // ignore: cast_nullable_to_non_nullable
-                as String,
-        movieTitle: freezed == movieTitle
-            ? _value.movieTitle
-            : movieTitle // ignore: cast_nullable_to_non_nullable
-                as String?,
-        moviePoster: freezed == moviePoster
-            ? _value.moviePoster
-            : moviePoster // ignore: cast_nullable_to_non_nullable
-                as String?,
-        movieType: freezed == movieType
-            ? _value.movieType
-            : movieType // ignore: cast_nullable_to_non_nullable
-                as String?,
-        folder: null == folder
-            ? _value.folder
-            : folder // ignore: cast_nullable_to_non_nullable
-                as String,
-      ),
-    );
+    return _then(_$AddFavoriteEventImpl(
+      movieId: null == movieId
+          ? _value.movieId
+          : movieId // ignore: cast_nullable_to_non_nullable
+              as String,
+      movieTitle: freezed == movieTitle
+          ? _value.movieTitle
+          : movieTitle // ignore: cast_nullable_to_non_nullable
+              as String?,
+      moviePoster: freezed == moviePoster
+          ? _value.moviePoster
+          : moviePoster // ignore: cast_nullable_to_non_nullable
+              as String?,
+      movieType: freezed == movieType
+          ? _value.movieType
+          : movieType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      folder: null == folder
+          ? _value.folder
+          : folder // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
   }
 }
 
 /// @nodoc
 
 class _$AddFavoriteEventImpl implements AddFavoriteEvent {
-  const _$AddFavoriteEventImpl({
-    required this.movieId,
-    this.movieTitle,
-    this.moviePoster,
-    this.movieType,
-    this.folder = 'Default',
-  });
+  const _$AddFavoriteEventImpl(
+      {required this.movieId,
+      this.movieTitle,
+      this.moviePoster,
+      this.movieType,
+      this.folder = 'Default'});
 
   @override
   final String movieId;
@@ -563,13 +515,7 @@ class _$AddFavoriteEventImpl implements AddFavoriteEvent {
 
   @override
   int get hashCode => Object.hash(
-        runtimeType,
-        movieId,
-        movieTitle,
-        moviePoster,
-        movieType,
-        folder,
-      );
+      runtimeType, movieId, movieTitle, moviePoster, movieType, folder);
 
   /// Create a copy of FavoritesEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -578,22 +524,16 @@ class _$AddFavoriteEventImpl implements AddFavoriteEvent {
   @pragma('vm:prefer-inline')
   _$$AddFavoriteEventImplCopyWith<_$AddFavoriteEventImpl> get copyWith =>
       __$$AddFavoriteEventImplCopyWithImpl<_$AddFavoriteEventImpl>(
-        this,
-        _$identity,
-      );
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(int page) loadFavorites,
     required TResult Function() loadMoreFavorites,
-    required TResult Function(
-      String movieId,
-      String? movieTitle,
-      String? moviePoster,
-      String? movieType,
-      String folder,
-    ) addFavorite,
+    required TResult Function(String movieId, String? movieTitle,
+            String? moviePoster, String? movieType, String folder)
+        addFavorite,
     required TResult Function(String movieId) removeFavorite,
     required TResult Function() clearFavorites,
     required TResult Function(String movieId) checkFavoriteStatus,
@@ -606,24 +546,15 @@ class _$AddFavoriteEventImpl implements AddFavoriteEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int page)? loadFavorites,
     TResult? Function()? loadMoreFavorites,
-    TResult? Function(
-      String movieId,
-      String? movieTitle,
-      String? moviePoster,
-      String? movieType,
-      String folder,
-    )? addFavorite,
+    TResult? Function(String movieId, String? movieTitle, String? moviePoster,
+            String? movieType, String folder)?
+        addFavorite,
     TResult? Function(String movieId)? removeFavorite,
     TResult? Function()? clearFavorites,
     TResult? Function(String movieId)? checkFavoriteStatus,
   }) {
     return addFavorite?.call(
-      movieId,
-      movieTitle,
-      moviePoster,
-      movieType,
-      folder,
-    );
+        movieId, movieTitle, moviePoster, movieType, folder);
   }
 
   @override
@@ -631,13 +562,9 @@ class _$AddFavoriteEventImpl implements AddFavoriteEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int page)? loadFavorites,
     TResult Function()? loadMoreFavorites,
-    TResult Function(
-      String movieId,
-      String? movieTitle,
-      String? moviePoster,
-      String? movieType,
-      String folder,
-    )? addFavorite,
+    TResult Function(String movieId, String? movieTitle, String? moviePoster,
+            String? movieType, String folder)?
+        addFavorite,
     TResult Function(String movieId)? removeFavorite,
     TResult Function()? clearFavorites,
     TResult Function(String movieId)? checkFavoriteStatus,
@@ -694,13 +621,12 @@ class _$AddFavoriteEventImpl implements AddFavoriteEvent {
 }
 
 abstract class AddFavoriteEvent implements FavoritesEvent {
-  const factory AddFavoriteEvent({
-    required final String movieId,
-    final String? movieTitle,
-    final String? moviePoster,
-    final String? movieType,
-    final String folder,
-  }) = _$AddFavoriteEventImpl;
+  const factory AddFavoriteEvent(
+      {required final String movieId,
+      final String? movieTitle,
+      final String? moviePoster,
+      final String? movieType,
+      final String folder}) = _$AddFavoriteEventImpl;
 
   String get movieId;
   String? get movieTitle;
@@ -717,10 +643,9 @@ abstract class AddFavoriteEvent implements FavoritesEvent {
 
 /// @nodoc
 abstract class _$$RemoveFavoriteEventImplCopyWith<$Res> {
-  factory _$$RemoveFavoriteEventImplCopyWith(
-    _$RemoveFavoriteEventImpl value,
-    $Res Function(_$RemoveFavoriteEventImpl) then,
-  ) = __$$RemoveFavoriteEventImplCopyWithImpl<$Res>;
+  factory _$$RemoveFavoriteEventImplCopyWith(_$RemoveFavoriteEventImpl value,
+          $Res Function(_$RemoveFavoriteEventImpl) then) =
+      __$$RemoveFavoriteEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String movieId});
 }
@@ -729,24 +654,23 @@ abstract class _$$RemoveFavoriteEventImplCopyWith<$Res> {
 class __$$RemoveFavoriteEventImplCopyWithImpl<$Res>
     extends _$FavoritesEventCopyWithImpl<$Res, _$RemoveFavoriteEventImpl>
     implements _$$RemoveFavoriteEventImplCopyWith<$Res> {
-  __$$RemoveFavoriteEventImplCopyWithImpl(
-    _$RemoveFavoriteEventImpl _value,
-    $Res Function(_$RemoveFavoriteEventImpl) _then,
-  ) : super(_value, _then);
+  __$$RemoveFavoriteEventImplCopyWithImpl(_$RemoveFavoriteEventImpl _value,
+      $Res Function(_$RemoveFavoriteEventImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of FavoritesEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? movieId = null}) {
-    return _then(
-      _$RemoveFavoriteEventImpl(
-        movieId: null == movieId
-            ? _value.movieId
-            : movieId // ignore: cast_nullable_to_non_nullable
-                as String,
-      ),
-    );
+  $Res call({
+    Object? movieId = null,
+  }) {
+    return _then(_$RemoveFavoriteEventImpl(
+      movieId: null == movieId
+          ? _value.movieId
+          : movieId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
   }
 }
 
@@ -781,22 +705,16 @@ class _$RemoveFavoriteEventImpl implements RemoveFavoriteEvent {
   @pragma('vm:prefer-inline')
   _$$RemoveFavoriteEventImplCopyWith<_$RemoveFavoriteEventImpl> get copyWith =>
       __$$RemoveFavoriteEventImplCopyWithImpl<_$RemoveFavoriteEventImpl>(
-        this,
-        _$identity,
-      );
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(int page) loadFavorites,
     required TResult Function() loadMoreFavorites,
-    required TResult Function(
-      String movieId,
-      String? movieTitle,
-      String? moviePoster,
-      String? movieType,
-      String folder,
-    ) addFavorite,
+    required TResult Function(String movieId, String? movieTitle,
+            String? moviePoster, String? movieType, String folder)
+        addFavorite,
     required TResult Function(String movieId) removeFavorite,
     required TResult Function() clearFavorites,
     required TResult Function(String movieId) checkFavoriteStatus,
@@ -809,13 +727,9 @@ class _$RemoveFavoriteEventImpl implements RemoveFavoriteEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int page)? loadFavorites,
     TResult? Function()? loadMoreFavorites,
-    TResult? Function(
-      String movieId,
-      String? movieTitle,
-      String? moviePoster,
-      String? movieType,
-      String folder,
-    )? addFavorite,
+    TResult? Function(String movieId, String? movieTitle, String? moviePoster,
+            String? movieType, String folder)?
+        addFavorite,
     TResult? Function(String movieId)? removeFavorite,
     TResult? Function()? clearFavorites,
     TResult? Function(String movieId)? checkFavoriteStatus,
@@ -828,13 +742,9 @@ class _$RemoveFavoriteEventImpl implements RemoveFavoriteEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int page)? loadFavorites,
     TResult Function()? loadMoreFavorites,
-    TResult Function(
-      String movieId,
-      String? movieTitle,
-      String? moviePoster,
-      String? movieType,
-      String folder,
-    )? addFavorite,
+    TResult Function(String movieId, String? movieTitle, String? moviePoster,
+            String? movieType, String folder)?
+        addFavorite,
     TResult Function(String movieId)? removeFavorite,
     TResult Function()? clearFavorites,
     TResult Function(String movieId)? checkFavoriteStatus,
@@ -905,10 +815,9 @@ abstract class RemoveFavoriteEvent implements FavoritesEvent {
 
 /// @nodoc
 abstract class _$$ClearFavoritesImplCopyWith<$Res> {
-  factory _$$ClearFavoritesImplCopyWith(
-    _$ClearFavoritesImpl value,
-    $Res Function(_$ClearFavoritesImpl) then,
-  ) = __$$ClearFavoritesImplCopyWithImpl<$Res>;
+  factory _$$ClearFavoritesImplCopyWith(_$ClearFavoritesImpl value,
+          $Res Function(_$ClearFavoritesImpl) then) =
+      __$$ClearFavoritesImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
@@ -916,9 +825,8 @@ class __$$ClearFavoritesImplCopyWithImpl<$Res>
     extends _$FavoritesEventCopyWithImpl<$Res, _$ClearFavoritesImpl>
     implements _$$ClearFavoritesImplCopyWith<$Res> {
   __$$ClearFavoritesImplCopyWithImpl(
-    _$ClearFavoritesImpl _value,
-    $Res Function(_$ClearFavoritesImpl) _then,
-  ) : super(_value, _then);
+      _$ClearFavoritesImpl _value, $Res Function(_$ClearFavoritesImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of FavoritesEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -948,13 +856,9 @@ class _$ClearFavoritesImpl implements ClearFavorites {
   TResult when<TResult extends Object?>({
     required TResult Function(int page) loadFavorites,
     required TResult Function() loadMoreFavorites,
-    required TResult Function(
-      String movieId,
-      String? movieTitle,
-      String? moviePoster,
-      String? movieType,
-      String folder,
-    ) addFavorite,
+    required TResult Function(String movieId, String? movieTitle,
+            String? moviePoster, String? movieType, String folder)
+        addFavorite,
     required TResult Function(String movieId) removeFavorite,
     required TResult Function() clearFavorites,
     required TResult Function(String movieId) checkFavoriteStatus,
@@ -967,13 +871,9 @@ class _$ClearFavoritesImpl implements ClearFavorites {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int page)? loadFavorites,
     TResult? Function()? loadMoreFavorites,
-    TResult? Function(
-      String movieId,
-      String? movieTitle,
-      String? moviePoster,
-      String? movieType,
-      String folder,
-    )? addFavorite,
+    TResult? Function(String movieId, String? movieTitle, String? moviePoster,
+            String? movieType, String folder)?
+        addFavorite,
     TResult? Function(String movieId)? removeFavorite,
     TResult? Function()? clearFavorites,
     TResult? Function(String movieId)? checkFavoriteStatus,
@@ -986,13 +886,9 @@ class _$ClearFavoritesImpl implements ClearFavorites {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int page)? loadFavorites,
     TResult Function()? loadMoreFavorites,
-    TResult Function(
-      String movieId,
-      String? movieTitle,
-      String? moviePoster,
-      String? movieType,
-      String folder,
-    )? addFavorite,
+    TResult Function(String movieId, String? movieTitle, String? moviePoster,
+            String? movieType, String folder)?
+        addFavorite,
     TResult Function(String movieId)? removeFavorite,
     TResult Function()? clearFavorites,
     TResult Function(String movieId)? checkFavoriteStatus,
@@ -1054,10 +950,9 @@ abstract class ClearFavorites implements FavoritesEvent {
 
 /// @nodoc
 abstract class _$$CheckFavoriteStatusImplCopyWith<$Res> {
-  factory _$$CheckFavoriteStatusImplCopyWith(
-    _$CheckFavoriteStatusImpl value,
-    $Res Function(_$CheckFavoriteStatusImpl) then,
-  ) = __$$CheckFavoriteStatusImplCopyWithImpl<$Res>;
+  factory _$$CheckFavoriteStatusImplCopyWith(_$CheckFavoriteStatusImpl value,
+          $Res Function(_$CheckFavoriteStatusImpl) then) =
+      __$$CheckFavoriteStatusImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String movieId});
 }
@@ -1066,24 +961,23 @@ abstract class _$$CheckFavoriteStatusImplCopyWith<$Res> {
 class __$$CheckFavoriteStatusImplCopyWithImpl<$Res>
     extends _$FavoritesEventCopyWithImpl<$Res, _$CheckFavoriteStatusImpl>
     implements _$$CheckFavoriteStatusImplCopyWith<$Res> {
-  __$$CheckFavoriteStatusImplCopyWithImpl(
-    _$CheckFavoriteStatusImpl _value,
-    $Res Function(_$CheckFavoriteStatusImpl) _then,
-  ) : super(_value, _then);
+  __$$CheckFavoriteStatusImplCopyWithImpl(_$CheckFavoriteStatusImpl _value,
+      $Res Function(_$CheckFavoriteStatusImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of FavoritesEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? movieId = null}) {
-    return _then(
-      _$CheckFavoriteStatusImpl(
-        movieId: null == movieId
-            ? _value.movieId
-            : movieId // ignore: cast_nullable_to_non_nullable
-                as String,
-      ),
-    );
+  $Res call({
+    Object? movieId = null,
+  }) {
+    return _then(_$CheckFavoriteStatusImpl(
+      movieId: null == movieId
+          ? _value.movieId
+          : movieId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
   }
 }
 
@@ -1118,22 +1012,16 @@ class _$CheckFavoriteStatusImpl implements CheckFavoriteStatus {
   @pragma('vm:prefer-inline')
   _$$CheckFavoriteStatusImplCopyWith<_$CheckFavoriteStatusImpl> get copyWith =>
       __$$CheckFavoriteStatusImplCopyWithImpl<_$CheckFavoriteStatusImpl>(
-        this,
-        _$identity,
-      );
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(int page) loadFavorites,
     required TResult Function() loadMoreFavorites,
-    required TResult Function(
-      String movieId,
-      String? movieTitle,
-      String? moviePoster,
-      String? movieType,
-      String folder,
-    ) addFavorite,
+    required TResult Function(String movieId, String? movieTitle,
+            String? moviePoster, String? movieType, String folder)
+        addFavorite,
     required TResult Function(String movieId) removeFavorite,
     required TResult Function() clearFavorites,
     required TResult Function(String movieId) checkFavoriteStatus,
@@ -1146,13 +1034,9 @@ class _$CheckFavoriteStatusImpl implements CheckFavoriteStatus {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int page)? loadFavorites,
     TResult? Function()? loadMoreFavorites,
-    TResult? Function(
-      String movieId,
-      String? movieTitle,
-      String? moviePoster,
-      String? movieType,
-      String folder,
-    )? addFavorite,
+    TResult? Function(String movieId, String? movieTitle, String? moviePoster,
+            String? movieType, String folder)?
+        addFavorite,
     TResult? Function(String movieId)? removeFavorite,
     TResult? Function()? clearFavorites,
     TResult? Function(String movieId)? checkFavoriteStatus,
@@ -1165,13 +1049,9 @@ class _$CheckFavoriteStatusImpl implements CheckFavoriteStatus {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int page)? loadFavorites,
     TResult Function()? loadMoreFavorites,
-    TResult Function(
-      String movieId,
-      String? movieTitle,
-      String? moviePoster,
-      String? movieType,
-      String folder,
-    )? addFavorite,
+    TResult Function(String movieId, String? movieTitle, String? moviePoster,
+            String? movieType, String folder)?
+        addFavorite,
     TResult Function(String movieId)? removeFavorite,
     TResult Function()? clearFavorites,
     TResult Function(String movieId)? checkFavoriteStatus,
