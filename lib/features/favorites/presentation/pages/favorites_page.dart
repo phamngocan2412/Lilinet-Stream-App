@@ -120,12 +120,9 @@ class _FavoritesViewState extends State<FavoritesView> {
                     );
                   }
 
-                  // Extract folders
-                  final folders = {
-                    'All',
-                    ...state.favorites.map((f) => f.folder).toSet().toList()
-                      ..sort(),
-                  }.toList();
+                  // Optimization: Moved O(N log N) folder extraction logic to FavoritesBloc.
+                  // This provides an O(1) read for state.folders instead of computing it on every frame,
+                  // reducing jank during animations or scrolling when the favorites list grows.
 
                   // Filter favorites based on selected folder
                   final filteredFavorites = _selectedFolder == 'All'
@@ -143,11 +140,11 @@ class _FavoritesViewState extends State<FavoritesView> {
                         child: ListView.separated(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           scrollDirection: Axis.horizontal,
-                          itemCount: folders.length,
+                          itemCount: state.folders.length,
                           separatorBuilder: (context, index) =>
                               const SizedBox(width: 8),
                           itemBuilder: (context, index) {
-                            final folder = folders.elementAt(index);
+                            final folder = state.folders[index];
                             return CategoryChip(
                               label: folder,
                               isSelected: folder == _selectedFolder,

@@ -33,6 +33,16 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     return super.close();
   }
 
+  // Optimization: Pre-compute derived folder list in the Bloc instead of on every UI render.
+  // This changes an O(N log N) operation (mapping, deduplicating, sorting) on every frame
+  // into an O(N log N) operation only when the underlying data changes, vastly reducing UI thread overhead.
+  List<String> _extractFolders(List<Favorite> favorites) {
+    final uniqueFolders = favorites.map((f) => f.folder).toSet().toList();
+    uniqueFolders.sort();
+    // Use a Set literal to ensure we deduplicate 'All' if the user happens to have a folder named 'All'.
+    return {'All', ...uniqueFolders}.toList();
+  }
+
   void _onClearFavorites(ClearFavorites event, Emitter<FavoritesState> emit) {
     emit(const FavoritesInitial());
   }
@@ -54,6 +64,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
           currentPage: event.page,
           hasMore: favorites.length >= _limit,
           favoriteIds: favorites.map((f) => f.movieId).toSet(),
+          folders: _extractFolders(favorites),
         ),
       ),
     );
@@ -81,6 +92,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
           currentPage: nextPage,
           hasMore: newFavorites.length >= _limit,
           favoriteIds: allFavorites.map((f) => f.movieId).toSet(),
+          folders: _extractFolders(allFavorites),
         ),
       );
     });
@@ -120,6 +132,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
           currentPage: currentPage,
           hasMore: hasMore,
           favoriteIds: currentFavorites.map((f) => f.movieId).toSet(),
+          folders: _extractFolders(currentFavorites),
         ),
       );
     });
@@ -153,6 +166,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
           currentPage: currentPage,
           hasMore: hasMore,
           favoriteIds: currentFavorites.map((f) => f.movieId).toSet(),
+          folders: _extractFolders(currentFavorites),
         ),
       );
     });
