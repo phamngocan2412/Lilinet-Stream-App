@@ -120,19 +120,11 @@ class _FavoritesViewState extends State<FavoritesView> {
                     );
                   }
 
-                  // Extract folders
-                  final folders = {
-                    'All',
-                    ...state.favorites.map((f) => f.folder).toSet().toList()
-                      ..sort(),
-                  }.toList();
-
-                  // Filter favorites based on selected folder
-                  final filteredFavorites = _selectedFolder == 'All'
-                      ? state.favorites
-                      : state.favorites
-                          .where((f) => f.folder == _selectedFolder)
-                          .toList();
+                  // Optimization: Use O(1) map lookup and pre-computed list instead of
+                  // dynamically mapping and sorting on every frame.
+                  final folders = state.folders;
+                  final filteredFavorites =
+                      state.favoritesByFolder[_selectedFolder] ?? [];
 
                   return Column(
                     children: [

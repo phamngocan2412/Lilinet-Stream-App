@@ -37,6 +37,21 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     emit(const FavoritesInitial());
   }
 
+  (List<String> folders, Map<String, List<Favorite>> map) _computeFoldersAndMap(
+    List<Favorite> favorites,
+  ) {
+    final Map<String, List<Favorite>> map = {'All': List.from(favorites)};
+    final Set<String> folderSet = {'All'};
+
+    for (final f in favorites) {
+      folderSet.add(f.folder);
+      map.putIfAbsent(f.folder, () => []).add(f);
+    }
+
+    final folders = folderSet.toList()..sort();
+    return (folders, map);
+  }
+
   Future<void> _onLoadFavorites(
     LoadFavorites event,
     Emitter<FavoritesState> emit,
@@ -46,17 +61,21 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     }
 
     final result = await getFavoritesUseCase(page: event.page, limit: _limit);
-    result.fold(
-      (failure) => emit(FavoritesError(message: failure.message)),
-      (favorites) => emit(
+    result.fold((failure) => emit(FavoritesError(message: failure.message)), (
+      favorites,
+    ) {
+      final computed = _computeFoldersAndMap(favorites);
+      emit(
         FavoritesLoaded(
           favorites: favorites,
           currentPage: event.page,
           hasMore: favorites.length >= _limit,
           favoriteIds: favorites.map((f) => f.movieId).toSet(),
+          folders: computed.$1,
+          favoritesByFolder: computed.$2,
         ),
-      ),
-    );
+      );
+    });
   }
 
   Future<void> _onLoadMoreFavorites(
@@ -75,12 +94,15 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
       newFavorites,
     ) {
       final allFavorites = [...currentState.favorites, ...newFavorites];
+      final computed = _computeFoldersAndMap(allFavorites);
       emit(
         currentState.copyWith(
           favorites: allFavorites,
           currentPage: nextPage,
           hasMore: newFavorites.length >= _limit,
           favoriteIds: allFavorites.map((f) => f.movieId).toSet(),
+          folders: computed.$1,
+          favoritesByFolder: computed.$2,
         ),
       );
     });
@@ -114,12 +136,15 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     ) {
       // Optimistic update: Add to list immediately without reloading
       currentFavorites.insert(0, favorite); // Add to top
+      final computed = _computeFoldersAndMap(currentFavorites);
       emit(
         FavoritesLoaded(
           favorites: currentFavorites,
           currentPage: currentPage,
           hasMore: hasMore,
           favoriteIds: currentFavorites.map((f) => f.movieId).toSet(),
+          folders: computed.$1,
+          favoritesByFolder: computed.$2,
         ),
       );
     });
@@ -147,12 +172,15 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     ) {
       // Optimistic update: Remove from list immediately without reloading
       currentFavorites.removeWhere((f) => f.movieId == event.movieId);
+      final computed = _computeFoldersAndMap(currentFavorites);
       emit(
         FavoritesLoaded(
           favorites: currentFavorites,
           currentPage: currentPage,
           hasMore: hasMore,
           favoriteIds: currentFavorites.map((f) => f.movieId).toSet(),
+          folders: computed.$1,
+          favoritesByFolder: computed.$2,
         ),
       );
     });

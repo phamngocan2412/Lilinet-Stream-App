@@ -109,8 +109,10 @@ class _FavoriteButtonState extends State<FavoriteButton> {
     final state = context.read<FavoritesBloc>().state;
     List<String> folders = ['Default'];
     if (state is FavoritesLoaded) {
-      final uniqueFolders = state.favorites.map((f) => f.folder).toSet();
-      folders = uniqueFolders.toList()..sort();
+      // Optimization: Use pre-computed folders instead of mapping and sorting O(N log N)
+      folders = List.from(state.folders);
+      // Remove 'All' from selection dialog since it's a virtual folder
+      folders.remove('All');
       if (!folders.contains('Default')) folders.insert(0, 'Default');
     }
 
