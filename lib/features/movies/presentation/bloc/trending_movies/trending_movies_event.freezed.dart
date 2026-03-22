@@ -12,8 +12,7 @@ part of 'trending_movies_event.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$TrendingMoviesEvent {
@@ -60,9 +59,8 @@ mixin _$TrendingMoviesEvent {
 /// @nodoc
 abstract class $TrendingMoviesEventCopyWith<$Res> {
   factory $TrendingMoviesEventCopyWith(
-    TrendingMoviesEvent value,
-    $Res Function(TrendingMoviesEvent) then,
-  ) = _$TrendingMoviesEventCopyWithImpl<$Res, TrendingMoviesEvent>;
+          TrendingMoviesEvent value, $Res Function(TrendingMoviesEvent) then) =
+      _$TrendingMoviesEventCopyWithImpl<$Res, TrendingMoviesEvent>;
 }
 
 /// @nodoc
@@ -81,10 +79,9 @@ class _$TrendingMoviesEventCopyWithImpl<$Res, $Val extends TrendingMoviesEvent>
 
 /// @nodoc
 abstract class _$$LoadTrendingMoviesImplCopyWith<$Res> {
-  factory _$$LoadTrendingMoviesImplCopyWith(
-    _$LoadTrendingMoviesImpl value,
-    $Res Function(_$LoadTrendingMoviesImpl) then,
-  ) = __$$LoadTrendingMoviesImplCopyWithImpl<$Res>;
+  factory _$$LoadTrendingMoviesImplCopyWith(_$LoadTrendingMoviesImpl value,
+          $Res Function(_$LoadTrendingMoviesImpl) then) =
+      __$$LoadTrendingMoviesImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String type});
 }
@@ -93,24 +90,23 @@ abstract class _$$LoadTrendingMoviesImplCopyWith<$Res> {
 class __$$LoadTrendingMoviesImplCopyWithImpl<$Res>
     extends _$TrendingMoviesEventCopyWithImpl<$Res, _$LoadTrendingMoviesImpl>
     implements _$$LoadTrendingMoviesImplCopyWith<$Res> {
-  __$$LoadTrendingMoviesImplCopyWithImpl(
-    _$LoadTrendingMoviesImpl _value,
-    $Res Function(_$LoadTrendingMoviesImpl) _then,
-  ) : super(_value, _then);
+  __$$LoadTrendingMoviesImplCopyWithImpl(_$LoadTrendingMoviesImpl _value,
+      $Res Function(_$LoadTrendingMoviesImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of TrendingMoviesEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? type = null}) {
-    return _then(
-      _$LoadTrendingMoviesImpl(
-        type: null == type
-            ? _value.type
-            : type // ignore: cast_nullable_to_non_nullable
-                as String,
-      ),
-    );
+  $Res call({
+    Object? type = null,
+  }) {
+    return _then(_$LoadTrendingMoviesImpl(
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
   }
 }
 
@@ -146,9 +142,7 @@ class _$LoadTrendingMoviesImpl implements LoadTrendingMovies {
   @pragma('vm:prefer-inline')
   _$$LoadTrendingMoviesImplCopyWith<_$LoadTrendingMoviesImpl> get copyWith =>
       __$$LoadTrendingMoviesImplCopyWithImpl<_$LoadTrendingMoviesImpl>(
-        this,
-        _$identity,
-      );
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -229,19 +223,18 @@ abstract class LoadTrendingMovies implements TrendingMoviesEvent {
 /// @nodoc
 abstract class _$$RefreshTrendingMoviesImplCopyWith<$Res> {
   factory _$$RefreshTrendingMoviesImplCopyWith(
-    _$RefreshTrendingMoviesImpl value,
-    $Res Function(_$RefreshTrendingMoviesImpl) then,
-  ) = __$$RefreshTrendingMoviesImplCopyWithImpl<$Res>;
+          _$RefreshTrendingMoviesImpl value,
+          $Res Function(_$RefreshTrendingMoviesImpl) then) =
+      __$$RefreshTrendingMoviesImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
 class __$$RefreshTrendingMoviesImplCopyWithImpl<$Res>
     extends _$TrendingMoviesEventCopyWithImpl<$Res, _$RefreshTrendingMoviesImpl>
     implements _$$RefreshTrendingMoviesImplCopyWith<$Res> {
-  __$$RefreshTrendingMoviesImplCopyWithImpl(
-    _$RefreshTrendingMoviesImpl _value,
-    $Res Function(_$RefreshTrendingMoviesImpl) _then,
-  ) : super(_value, _then);
+  __$$RefreshTrendingMoviesImplCopyWithImpl(_$RefreshTrendingMoviesImpl _value,
+      $Res Function(_$RefreshTrendingMoviesImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of TrendingMoviesEvent
   /// with the given fields replaced by the non-null parameter values.
