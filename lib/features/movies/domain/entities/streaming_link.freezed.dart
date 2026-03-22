@@ -12,7 +12,8 @@ part of 'streaming_link.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$StreamingLink {
@@ -31,11 +32,16 @@ mixin _$StreamingLink {
 /// @nodoc
 abstract class $StreamingLinkCopyWith<$Res> {
   factory $StreamingLinkCopyWith(
-          StreamingLink value, $Res Function(StreamingLink) then) =
-      _$StreamingLinkCopyWithImpl<$Res, StreamingLink>;
+    StreamingLink value,
+    $Res Function(StreamingLink) then,
+  ) = _$StreamingLinkCopyWithImpl<$Res, StreamingLink>;
   @useResult
-  $Res call(
-      {String url, String quality, bool isM3U8, Map<String, String>? headers});
+  $Res call({
+    String url,
+    String quality,
+    bool isM3U8,
+    Map<String, String>? headers,
+  });
 }
 
 /// @nodoc
@@ -58,24 +64,26 @@ class _$StreamingLinkCopyWithImpl<$Res, $Val extends StreamingLink>
     Object? isM3U8 = null,
     Object? headers = freezed,
   }) {
-    return _then(_value.copyWith(
-      url: null == url
-          ? _value.url
-          : url // ignore: cast_nullable_to_non_nullable
-              as String,
-      quality: null == quality
-          ? _value.quality
-          : quality // ignore: cast_nullable_to_non_nullable
-              as String,
-      isM3U8: null == isM3U8
-          ? _value.isM3U8
-          : isM3U8 // ignore: cast_nullable_to_non_nullable
-              as bool,
-      headers: freezed == headers
-          ? _value.headers
-          : headers // ignore: cast_nullable_to_non_nullable
-              as Map<String, String>?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+        url: null == url
+            ? _value.url
+            : url // ignore: cast_nullable_to_non_nullable
+                as String,
+        quality: null == quality
+            ? _value.quality
+            : quality // ignore: cast_nullable_to_non_nullable
+                as String,
+        isM3U8: null == isM3U8
+            ? _value.isM3U8
+            : isM3U8 // ignore: cast_nullable_to_non_nullable
+                as bool,
+        headers: freezed == headers
+            ? _value.headers
+            : headers // ignore: cast_nullable_to_non_nullable
+                as Map<String, String>?,
+      ) as $Val,
+    );
   }
 }
 
@@ -83,12 +91,17 @@ class _$StreamingLinkCopyWithImpl<$Res, $Val extends StreamingLink>
 abstract class _$$StreamingLinkImplCopyWith<$Res>
     implements $StreamingLinkCopyWith<$Res> {
   factory _$$StreamingLinkImplCopyWith(
-          _$StreamingLinkImpl value, $Res Function(_$StreamingLinkImpl) then) =
-      __$$StreamingLinkImplCopyWithImpl<$Res>;
+    _$StreamingLinkImpl value,
+    $Res Function(_$StreamingLinkImpl) then,
+  ) = __$$StreamingLinkImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String url, String quality, bool isM3U8, Map<String, String>? headers});
+  $Res call({
+    String url,
+    String quality,
+    bool isM3U8,
+    Map<String, String>? headers,
+  });
 }
 
 /// @nodoc
@@ -96,8 +109,9 @@ class __$$StreamingLinkImplCopyWithImpl<$Res>
     extends _$StreamingLinkCopyWithImpl<$Res, _$StreamingLinkImpl>
     implements _$$StreamingLinkImplCopyWith<$Res> {
   __$$StreamingLinkImplCopyWithImpl(
-      _$StreamingLinkImpl _value, $Res Function(_$StreamingLinkImpl) _then)
-      : super(_value, _then);
+    _$StreamingLinkImpl _value,
+    $Res Function(_$StreamingLinkImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of StreamingLink
   /// with the given fields replaced by the non-null parameter values.
@@ -109,36 +123,38 @@ class __$$StreamingLinkImplCopyWithImpl<$Res>
     Object? isM3U8 = null,
     Object? headers = freezed,
   }) {
-    return _then(_$StreamingLinkImpl(
-      url: null == url
-          ? _value.url
-          : url // ignore: cast_nullable_to_non_nullable
-              as String,
-      quality: null == quality
-          ? _value.quality
-          : quality // ignore: cast_nullable_to_non_nullable
-              as String,
-      isM3U8: null == isM3U8
-          ? _value.isM3U8
-          : isM3U8 // ignore: cast_nullable_to_non_nullable
-              as bool,
-      headers: freezed == headers
-          ? _value._headers
-          : headers // ignore: cast_nullable_to_non_nullable
-              as Map<String, String>?,
-    ));
+    return _then(
+      _$StreamingLinkImpl(
+        url: null == url
+            ? _value.url
+            : url // ignore: cast_nullable_to_non_nullable
+                as String,
+        quality: null == quality
+            ? _value.quality
+            : quality // ignore: cast_nullable_to_non_nullable
+                as String,
+        isM3U8: null == isM3U8
+            ? _value.isM3U8
+            : isM3U8 // ignore: cast_nullable_to_non_nullable
+                as bool,
+        headers: freezed == headers
+            ? _value._headers
+            : headers // ignore: cast_nullable_to_non_nullable
+                as Map<String, String>?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$StreamingLinkImpl implements _StreamingLink {
-  const _$StreamingLinkImpl(
-      {required this.url,
-      required this.quality,
-      required this.isM3U8,
-      final Map<String, String>? headers})
-      : _headers = headers;
+  const _$StreamingLinkImpl({
+    required this.url,
+    required this.quality,
+    required this.isM3U8,
+    final Map<String, String>? headers,
+  }) : _headers = headers;
 
   @override
   final String url;
@@ -173,8 +189,13 @@ class _$StreamingLinkImpl implements _StreamingLink {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, url, quality, isM3U8,
-      const DeepCollectionEquality().hash(_headers));
+  int get hashCode => Object.hash(
+        runtimeType,
+        url,
+        quality,
+        isM3U8,
+        const DeepCollectionEquality().hash(_headers),
+      );
 
   /// Create a copy of StreamingLink
   /// with the given fields replaced by the non-null parameter values.
@@ -186,11 +207,12 @@ class _$StreamingLinkImpl implements _StreamingLink {
 }
 
 abstract class _StreamingLink implements StreamingLink {
-  const factory _StreamingLink(
-      {required final String url,
-      required final String quality,
-      required final bool isM3U8,
-      final Map<String, String>? headers}) = _$StreamingLinkImpl;
+  const factory _StreamingLink({
+    required final String url,
+    required final String quality,
+    required final bool isM3U8,
+    final Map<String, String>? headers,
+  }) = _$StreamingLinkImpl;
 
   @override
   String get url;

@@ -12,7 +12,8 @@ part of 'trending_movies_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$TrendingMoviesState {
@@ -21,8 +22,9 @@ mixin _$TrendingMoviesState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(
-            List<Movie> trending, Map<String, List<Movie>> categories)
-        loaded,
+      List<Movie> trending,
+      Map<String, List<Movie>> categories,
+    ) loaded,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -31,8 +33,9 @@ mixin _$TrendingMoviesState {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(
-            List<Movie> trending, Map<String, List<Movie>> categories)?
-        loaded,
+      List<Movie> trending,
+      Map<String, List<Movie>> categories,
+    )? loaded,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -76,8 +79,9 @@ mixin _$TrendingMoviesState {
 /// @nodoc
 abstract class $TrendingMoviesStateCopyWith<$Res> {
   factory $TrendingMoviesStateCopyWith(
-          TrendingMoviesState value, $Res Function(TrendingMoviesState) then) =
-      _$TrendingMoviesStateCopyWithImpl<$Res, TrendingMoviesState>;
+    TrendingMoviesState value,
+    $Res Function(TrendingMoviesState) then,
+  ) = _$TrendingMoviesStateCopyWithImpl<$Res, TrendingMoviesState>;
 }
 
 /// @nodoc
@@ -97,8 +101,9 @@ class _$TrendingMoviesStateCopyWithImpl<$Res, $Val extends TrendingMoviesState>
 /// @nodoc
 abstract class _$$InitialImplCopyWith<$Res> {
   factory _$$InitialImplCopyWith(
-          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
-      __$$InitialImplCopyWithImpl<$Res>;
+    _$InitialImpl value,
+    $Res Function(_$InitialImpl) then,
+  ) = __$$InitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
@@ -106,8 +111,9 @@ class __$$InitialImplCopyWithImpl<$Res>
     extends _$TrendingMoviesStateCopyWithImpl<$Res, _$InitialImpl>
     implements _$$InitialImplCopyWith<$Res> {
   __$$InitialImplCopyWithImpl(
-      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
-      : super(_value, _then);
+    _$InitialImpl _value,
+    $Res Function(_$InitialImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of TrendingMoviesState
   /// with the given fields replaced by the non-null parameter values.
@@ -138,8 +144,9 @@ class _$InitialImpl implements _Initial {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(
-            List<Movie> trending, Map<String, List<Movie>> categories)
-        loaded,
+      List<Movie> trending,
+      Map<String, List<Movie>> categories,
+    ) loaded,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -151,8 +158,9 @@ class _$InitialImpl implements _Initial {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(
-            List<Movie> trending, Map<String, List<Movie>> categories)?
-        loaded,
+      List<Movie> trending,
+      Map<String, List<Movie>> categories,
+    )? loaded,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -219,8 +227,9 @@ abstract class _Initial implements TrendingMoviesState {
 /// @nodoc
 abstract class _$$LoadingImplCopyWith<$Res> {
   factory _$$LoadingImplCopyWith(
-          _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
-      __$$LoadingImplCopyWithImpl<$Res>;
+    _$LoadingImpl value,
+    $Res Function(_$LoadingImpl) then,
+  ) = __$$LoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
@@ -228,8 +237,9 @@ class __$$LoadingImplCopyWithImpl<$Res>
     extends _$TrendingMoviesStateCopyWithImpl<$Res, _$LoadingImpl>
     implements _$$LoadingImplCopyWith<$Res> {
   __$$LoadingImplCopyWithImpl(
-      _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
-      : super(_value, _then);
+    _$LoadingImpl _value,
+    $Res Function(_$LoadingImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of TrendingMoviesState
   /// with the given fields replaced by the non-null parameter values.
@@ -260,8 +270,9 @@ class _$LoadingImpl implements _Loading {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(
-            List<Movie> trending, Map<String, List<Movie>> categories)
-        loaded,
+      List<Movie> trending,
+      Map<String, List<Movie>> categories,
+    ) loaded,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -273,8 +284,9 @@ class _$LoadingImpl implements _Loading {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(
-            List<Movie> trending, Map<String, List<Movie>> categories)?
-        loaded,
+      List<Movie> trending,
+      Map<String, List<Movie>> categories,
+    )? loaded,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -341,8 +353,9 @@ abstract class _Loading implements TrendingMoviesState {
 /// @nodoc
 abstract class _$$LoadedImplCopyWith<$Res> {
   factory _$$LoadedImplCopyWith(
-          _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
-      __$$LoadedImplCopyWithImpl<$Res>;
+    _$LoadedImpl value,
+    $Res Function(_$LoadedImpl) then,
+  ) = __$$LoadedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({List<Movie> trending, Map<String, List<Movie>> categories});
 }
@@ -352,37 +365,37 @@ class __$$LoadedImplCopyWithImpl<$Res>
     extends _$TrendingMoviesStateCopyWithImpl<$Res, _$LoadedImpl>
     implements _$$LoadedImplCopyWith<$Res> {
   __$$LoadedImplCopyWithImpl(
-      _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
-      : super(_value, _then);
+    _$LoadedImpl _value,
+    $Res Function(_$LoadedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of TrendingMoviesState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? trending = null,
-    Object? categories = null,
-  }) {
-    return _then(_$LoadedImpl(
-      trending: null == trending
-          ? _value._trending
-          : trending // ignore: cast_nullable_to_non_nullable
-              as List<Movie>,
-      categories: null == categories
-          ? _value._categories
-          : categories // ignore: cast_nullable_to_non_nullable
-              as Map<String, List<Movie>>,
-    ));
+  $Res call({Object? trending = null, Object? categories = null}) {
+    return _then(
+      _$LoadedImpl(
+        trending: null == trending
+            ? _value._trending
+            : trending // ignore: cast_nullable_to_non_nullable
+                as List<Movie>,
+        categories: null == categories
+            ? _value._categories
+            : categories // ignore: cast_nullable_to_non_nullable
+                as Map<String, List<Movie>>,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$LoadedImpl implements _Loaded {
-  const _$LoadedImpl(
-      {required final List<Movie> trending,
-      final Map<String, List<Movie>> categories = const {}})
-      : _trending = trending,
+  const _$LoadedImpl({
+    required final List<Movie> trending,
+    final Map<String, List<Movie>> categories = const {},
+  })  : _trending = trending,
         _categories = categories;
 
   final List<Movie> _trending;
@@ -413,15 +426,18 @@ class _$LoadedImpl implements _Loaded {
         (other.runtimeType == runtimeType &&
             other is _$LoadedImpl &&
             const DeepCollectionEquality().equals(other._trending, _trending) &&
-            const DeepCollectionEquality()
-                .equals(other._categories, _categories));
+            const DeepCollectionEquality().equals(
+              other._categories,
+              _categories,
+            ));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_trending),
-      const DeepCollectionEquality().hash(_categories));
+        runtimeType,
+        const DeepCollectionEquality().hash(_trending),
+        const DeepCollectionEquality().hash(_categories),
+      );
 
   /// Create a copy of TrendingMoviesState
   /// with the given fields replaced by the non-null parameter values.
@@ -437,8 +453,9 @@ class _$LoadedImpl implements _Loaded {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(
-            List<Movie> trending, Map<String, List<Movie>> categories)
-        loaded,
+      List<Movie> trending,
+      Map<String, List<Movie>> categories,
+    ) loaded,
     required TResult Function(String message) error,
   }) {
     return loaded(trending, categories);
@@ -450,8 +467,9 @@ class _$LoadedImpl implements _Loaded {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(
-            List<Movie> trending, Map<String, List<Movie>> categories)?
-        loaded,
+      List<Movie> trending,
+      Map<String, List<Movie>> categories,
+    )? loaded,
     TResult? Function(String message)? error,
   }) {
     return loaded?.call(trending, categories);
@@ -512,9 +530,10 @@ class _$LoadedImpl implements _Loaded {
 }
 
 abstract class _Loaded implements TrendingMoviesState {
-  const factory _Loaded(
-      {required final List<Movie> trending,
-      final Map<String, List<Movie>> categories}) = _$LoadedImpl;
+  const factory _Loaded({
+    required final List<Movie> trending,
+    final Map<String, List<Movie>> categories,
+  }) = _$LoadedImpl;
 
   List<Movie> get trending;
   Map<String, List<Movie>> get categories;
@@ -529,8 +548,9 @@ abstract class _Loaded implements TrendingMoviesState {
 /// @nodoc
 abstract class _$$ErrorImplCopyWith<$Res> {
   factory _$$ErrorImplCopyWith(
-          _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
-      __$$ErrorImplCopyWithImpl<$Res>;
+    _$ErrorImpl value,
+    $Res Function(_$ErrorImpl) then,
+  ) = __$$ErrorImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String message});
 }
@@ -540,22 +560,23 @@ class __$$ErrorImplCopyWithImpl<$Res>
     extends _$TrendingMoviesStateCopyWithImpl<$Res, _$ErrorImpl>
     implements _$$ErrorImplCopyWith<$Res> {
   __$$ErrorImplCopyWithImpl(
-      _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
-      : super(_value, _then);
+    _$ErrorImpl _value,
+    $Res Function(_$ErrorImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of TrendingMoviesState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? message = null,
-  }) {
-    return _then(_$ErrorImpl(
-      null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
+  $Res call({Object? message = null}) {
+    return _then(
+      _$ErrorImpl(
+        null == message
+            ? _value.message
+            : message // ignore: cast_nullable_to_non_nullable
+                as String,
+      ),
+    );
   }
 }
 
@@ -597,8 +618,9 @@ class _$ErrorImpl implements _Error {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(
-            List<Movie> trending, Map<String, List<Movie>> categories)
-        loaded,
+      List<Movie> trending,
+      Map<String, List<Movie>> categories,
+    ) loaded,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -610,8 +632,9 @@ class _$ErrorImpl implements _Error {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(
-            List<Movie> trending, Map<String, List<Movie>> categories)?
-        loaded,
+      List<Movie> trending,
+      Map<String, List<Movie>> categories,
+    )? loaded,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
