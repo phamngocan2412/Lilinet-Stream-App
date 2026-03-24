@@ -17,3 +17,7 @@
 ## 2026-05-20 - Preserving Legacy Logic in Fixes
 **Learning:** When fixing build errors in existing files (like `download_service.dart`), verify if existing tests rely on "buggy" behavior (like partial sanitization).
 **Action:** Run tests immediately after fixes. If tests fail on logic you didn't intend to change (just fix compilation), revert to the behavior expected by tests unless the test is clearly wrong.
+
+## 2026-06-10 - Memoization vs. Idiom Micro-optimizations
+**Learning:** In Dart, replacing a generic `.elementAt(index)` call with `[index]` on an object that is *already* a `List` yields zero performance gain because the implementation delegates to `operator []` under the hood. Similarly, replacing a fast `for-in` loop with `.fold()` introduces closure allocation overhead and can actually be slower.
+**Action:** When acting as Bolt, avoid semantic/stylistic refactorings (like `fold` vs `for` or `[index]` vs `.elementAt` on Lists). Focus exclusively on algorithm complexity reductions (like memoizing O(N log N) Set extractions out of render functions).
