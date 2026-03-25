@@ -11,6 +11,7 @@ import '../../../auth/presentation/bloc/auth_bloc.dart';
 import '../../../auth/presentation/bloc/auth_state.dart';
 import '../../../auth/presentation/widgets/auth_dialog.dart';
 import '../../../explore/presentation/widgets/category_chip.dart';
+import '../../domain/entities/favorite.dart';
 import '../bloc/favorites_bloc.dart';
 import '../bloc/favorites_event.dart';
 import '../bloc/favorites_state.dart';
@@ -33,6 +34,12 @@ class FavoritesView extends StatefulWidget {
 
 class _FavoritesViewState extends State<FavoritesView> {
   String _selectedFolder = 'All';
+
+  // Memoization variables
+  List<Favorite>? _cachedFavorites;
+  String? _cachedSelectedFolder;
+  List<String> _cachedFolders = [];
+  List<Favorite> _cachedFilteredFavorites = [];
 
   @override
   Widget build(BuildContext context) {
@@ -120,19 +127,25 @@ class _FavoritesViewState extends State<FavoritesView> {
                     );
                   }
 
-                  // Extract folders
-                  final folders = {
-                    'All',
-                    ...state.favorites.map((f) => f.folder).toSet().toList()
-                      ..sort(),
-                  }.toList();
+                  // Optimization: Memoize folders and filtered favorites to prevent
+                  // O(N log N) sorting and mapping on every frame rebuild.
+                  if (_cachedFavorites != state.favorites ||
+                      _cachedSelectedFolder != _selectedFolder) {
+                    _cachedFavorites = state.favorites;
+                    _cachedSelectedFolder = _selectedFolder;
 
-                  // Filter favorites based on selected folder
-                  final filteredFavorites = _selectedFolder == 'All'
-                      ? state.favorites
-                      : state.favorites
-                          .where((f) => f.folder == _selectedFolder)
-                          .toList();
+                    _cachedFolders = {
+                      'All',
+                      ...state.favorites.map((f) => f.folder).toSet().toList()
+                        ..sort(),
+                    }.toList();
+
+                    _cachedFilteredFavorites = _selectedFolder == 'All'
+                        ? state.favorites
+                        : state.favorites
+                              .where((f) => f.folder == _selectedFolder)
+                              .toList();
+                  }
 
                   return Column(
                     children: [
@@ -143,11 +156,11 @@ class _FavoritesViewState extends State<FavoritesView> {
                         child: ListView.separated(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           scrollDirection: Axis.horizontal,
-                          itemCount: folders.length,
+                          itemCount: _cachedFolders.length,
                           separatorBuilder: (context, index) =>
                               const SizedBox(width: 8),
                           itemBuilder: (context, index) {
-                            final folder = folders.elementAt(index);
+                            final folder = _cachedFolders[index];
                             return CategoryChip(
                               label: folder,
                               isSelected: folder == _selectedFolder,
@@ -163,7 +176,7 @@ class _FavoritesViewState extends State<FavoritesView> {
 
                       // Favorites Grid
                       Expanded(
-                        child: filteredFavorites.isEmpty
+                        child: _cachedFilteredFavorites.isEmpty
                             ? const AppEmptyState(
                                 icon: Icons.folder_off_outlined,
                                 message: 'No items in this folder',
@@ -171,8 +184,8 @@ class _FavoritesViewState extends State<FavoritesView> {
                             : RefreshIndicator(
                                 onRefresh: () async {
                                   context.read<FavoritesBloc>().add(
-                                        const LoadFavorites(),
-                                      );
+                                    const LoadFavorites(),
+                                  );
                                 },
                                 child: ListenableBuilder(
                                   listenable: getIt<MiniplayerHeightNotifier>(),
@@ -190,15 +203,16 @@ class _FavoritesViewState extends State<FavoritesView> {
                                       ),
                                       gridDelegate:
                                           const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2,
-                                        childAspectRatio: 0.7,
-                                        crossAxisSpacing: 12,
-                                        mainAxisSpacing: 12,
-                                      ),
-                                      itemCount: filteredFavorites.length,
+                                            crossAxisCount: 2,
+                                            childAspectRatio: 0.7,
+                                            crossAxisSpacing: 12,
+                                            mainAxisSpacing: 12,
+                                          ),
+                                      itemCount:
+                                          _cachedFilteredFavorites.length,
                                       itemBuilder: (context, index) {
                                         final favorite =
-                                            filteredFavorites[index];
+                                            _cachedFilteredFavorites[index];
 
                                         // Convert Favorite to Movie for MovieCard
                                         final movie = Movie(
