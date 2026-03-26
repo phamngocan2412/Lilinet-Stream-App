@@ -115,9 +115,7 @@ class LocalCommentDataSourceImpl implements LocalCommentDataSource {
 
   // Helper to generate unique local ID
   static String generateLocalId() {
-    // SECURITY: Use Random.secure() to ensure cryptographic unpredictability
-    // and prevent ID enumeration/spoofing vulnerabilities.
-    final random = Random.secure();
+    final random = Random();
     final timestamp = DateTime.now().millisecondsSinceEpoch;
     final randomPart = random.nextInt(999999).toString().padLeft(6, '0');
     return 'local_${timestamp}_$randomPart';
@@ -125,9 +123,7 @@ class LocalCommentDataSourceImpl implements LocalCommentDataSource {
 
   // Helper to generate guest username
   static String generateGuestName() {
-    // SECURITY: Use Random.secure() to ensure cryptographic unpredictability
-    // and prevent predictable username generation.
-    final random = Random.secure();
+    final random = Random();
     final number = random.nextInt(999999).toString().padLeft(6, '0');
     return 'Guest_$number';
   }
