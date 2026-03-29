@@ -12,6 +12,23 @@ class ApiConstants {
       url = dotenv.env['API_BASE_URL'] ?? 'http://localhost:7030';
     }
 
+    // Security Guard: Prevent cleartext HTTP in production unless local
+    if (!kDebugMode && url.startsWith('http://')) {
+      final host = Uri.tryParse(url)?.host ?? '';
+      const localHosts = [
+        'localhost',
+        '127.0.0.1',
+        '10.0.2.2',
+        '10.0.3.2',
+        '::1',
+      ];
+      if (!localHosts.contains(host)) {
+        throw UnsupportedError(
+          'Cleartext HTTP traffic is not allowed in production builds for host: $host',
+        );
+      }
+    }
+
     // 3. Platform specific fix for Android Emulator
     if (!kIsWeb && Platform.isAndroid) {
       if (url.contains('localhost') ||
