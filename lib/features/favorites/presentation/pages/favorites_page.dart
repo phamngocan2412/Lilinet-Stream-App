@@ -33,6 +33,8 @@ class FavoritesView extends StatefulWidget {
 
 class _FavoritesViewState extends State<FavoritesView> {
   String _selectedFolder = 'All';
+  List<dynamic>? _lastFavorites;
+  List<String> _cachedFolders = ['All'];
 
   @override
   Widget build(BuildContext context) {
@@ -120,19 +122,22 @@ class _FavoritesViewState extends State<FavoritesView> {
                     );
                   }
 
-                  // Extract folders
-                  final folders = {
-                    'All',
-                    ...state.favorites.map((f) => f.folder).toSet().toList()
-                      ..sort(),
-                  }.toList();
+                  // Optimization: Memoize the O(N log N) folder extraction to avoid
+                  // recomputing it on every frame inside the BlocBuilder.
+                  if (!identical(state.favorites, _lastFavorites)) {
+                    _lastFavorites = state.favorites;
+                    final uniqueFolders =
+                        state.favorites.map((f) => f.folder).toSet().toList()
+                          ..sort();
+                    _cachedFolders = {'All', ...uniqueFolders}.toList();
+                  }
 
                   // Filter favorites based on selected folder
                   final filteredFavorites = _selectedFolder == 'All'
                       ? state.favorites
                       : state.favorites
-                          .where((f) => f.folder == _selectedFolder)
-                          .toList();
+                            .where((f) => f.folder == _selectedFolder)
+                            .toList();
 
                   return Column(
                     children: [
@@ -143,11 +148,11 @@ class _FavoritesViewState extends State<FavoritesView> {
                         child: ListView.separated(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           scrollDirection: Axis.horizontal,
-                          itemCount: folders.length,
+                          itemCount: _cachedFolders.length,
                           separatorBuilder: (context, index) =>
                               const SizedBox(width: 8),
                           itemBuilder: (context, index) {
-                            final folder = folders.elementAt(index);
+                            final folder = _cachedFolders[index];
                             return CategoryChip(
                               label: folder,
                               isSelected: folder == _selectedFolder,
@@ -171,8 +176,8 @@ class _FavoritesViewState extends State<FavoritesView> {
                             : RefreshIndicator(
                                 onRefresh: () async {
                                   context.read<FavoritesBloc>().add(
-                                        const LoadFavorites(),
-                                      );
+                                    const LoadFavorites(),
+                                  );
                                 },
                                 child: ListenableBuilder(
                                   listenable: getIt<MiniplayerHeightNotifier>(),
@@ -190,11 +195,11 @@ class _FavoritesViewState extends State<FavoritesView> {
                                       ),
                                       gridDelegate:
                                           const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2,
-                                        childAspectRatio: 0.7,
-                                        crossAxisSpacing: 12,
-                                        mainAxisSpacing: 12,
-                                      ),
+                                            crossAxisCount: 2,
+                                            childAspectRatio: 0.7,
+                                            crossAxisSpacing: 12,
+                                            mainAxisSpacing: 12,
+                                          ),
                                       itemCount: filteredFavorites.length,
                                       itemBuilder: (context, index) {
                                         final favorite =

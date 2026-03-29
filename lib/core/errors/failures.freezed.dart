@@ -24,16 +24,14 @@ mixin _$Failure {
     required TResult Function(String message) network,
     required TResult Function(String message) cache,
     required TResult Function(String message) validation,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String message)? server,
     TResult? Function(String message)? network,
     TResult? Function(String message)? cache,
     TResult? Function(String message)? validation,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String message)? server,
@@ -41,24 +39,21 @@ mixin _$Failure {
     TResult Function(String message)? cache,
     TResult Function(String message)? validation,
     required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(ServerFailure value) server,
     required TResult Function(NetworkFailure value) network,
     required TResult Function(CacheFailure value) cache,
     required TResult Function(ValidationFailure value) validation,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(ServerFailure value)? server,
     TResult? Function(NetworkFailure value)? network,
     TResult? Function(CacheFailure value)? cache,
     TResult? Function(ValidationFailure value)? validation,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ServerFailure value)? server,
@@ -66,8 +61,7 @@ mixin _$Failure {
     TResult Function(CacheFailure value)? cache,
     TResult Function(ValidationFailure value)? validation,
     required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
 
   /// Create a copy of Failure
   /// with the given fields replaced by the non-null parameter values.
@@ -100,11 +94,12 @@ class _$FailureCopyWithImpl<$Res, $Val extends Failure>
   $Res call({Object? message = null}) {
     return _then(
       _value.copyWith(
-        message: null == message
-            ? _value.message
-            : message // ignore: cast_nullable_to_non_nullable
-                as String,
-      ) as $Val,
+            message: null == message
+                ? _value.message
+                : message // ignore: cast_nullable_to_non_nullable
+                      as String,
+          )
+          as $Val,
     );
   }
 }
@@ -140,7 +135,7 @@ class __$$ServerFailureImplCopyWithImpl<$Res>
         null == message
             ? _value.message
             : message // ignore: cast_nullable_to_non_nullable
-                as String,
+                  as String,
       ),
     );
   }
@@ -298,7 +293,7 @@ class __$$NetworkFailureImplCopyWithImpl<$Res>
         null == message
             ? _value.message
             : message // ignore: cast_nullable_to_non_nullable
-                as String,
+                  as String,
       ),
     );
   }
@@ -459,7 +454,7 @@ class __$$CacheFailureImplCopyWithImpl<$Res>
         null == message
             ? _value.message
             : message // ignore: cast_nullable_to_non_nullable
-                as String,
+                  as String,
       ),
     );
   }
@@ -617,7 +612,7 @@ class __$$ValidationFailureImplCopyWithImpl<$Res>
         null == message
             ? _value.message
             : message // ignore: cast_nullable_to_non_nullable
-                as String,
+                  as String,
       ),
     );
   }

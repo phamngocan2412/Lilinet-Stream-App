@@ -97,11 +97,10 @@ class SettingsView extends StatelessWidget {
                           value: settings.downloadOverWifiOnly,
                           onChanged: (value) {
                             context.read<SettingsBloc>().add(
-                                  UpdateSettings(
-                                    settings.copyWith(
-                                        downloadOverWifiOnly: value),
-                                  ),
-                                );
+                              UpdateSettings(
+                                settings.copyWith(downloadOverWifiOnly: value),
+                              ),
+                            );
                           },
                         ),
                         const Divider(height: 1),
@@ -125,10 +124,10 @@ class SettingsView extends StatelessWidget {
                           value: settings.showNotifications,
                           onChanged: (value) {
                             context.read<SettingsBloc>().add(
-                                  UpdateSettings(
-                                    settings.copyWith(showNotifications: value),
-                                  ),
-                                );
+                              UpdateSettings(
+                                settings.copyWith(showNotifications: value),
+                              ),
+                            );
                           },
                         ),
                       ],

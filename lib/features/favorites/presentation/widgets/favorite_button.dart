@@ -63,7 +63,9 @@ class _FavoriteButtonState extends State<FavoriteButton> {
             icon: Icon(
               isFavorite ? Icons.favorite : Icons.favorite_border,
               color: isFavorite
-                  ? Theme.of(context).colorScheme.error // Red
+                  ? Theme.of(context)
+                        .colorScheme
+                        .error // Red
                   : Theme.of(context).colorScheme.onSurface,
               size: widget.size,
             ),
@@ -90,8 +92,8 @@ class _FavoriteButtonState extends State<FavoriteButton> {
                   // User IS logged in
                   if (isFavorite) {
                     context.read<FavoritesBloc>().add(
-                          RemoveFavoriteEvent(movieId: widget.movieId),
-                        );
+                      RemoveFavoriteEvent(movieId: widget.movieId),
+                    );
                   } else {
                     _showFolderSelectionAndAdd(context);
                   }
@@ -120,14 +122,14 @@ class _FavoriteButtonState extends State<FavoriteButton> {
         existingFolders: folders,
         onFolderSelected: (folder) {
           context.read<FavoritesBloc>().add(
-                AddFavoriteEvent(
-                  movieId: widget.movieId,
-                  movieTitle: widget.movieTitle,
-                  moviePoster: widget.moviePoster,
-                  movieType: widget.movieType,
-                  folder: folder,
-                ),
-              );
+            AddFavoriteEvent(
+              movieId: widget.movieId,
+              movieTitle: widget.movieTitle,
+              moviePoster: widget.moviePoster,
+              movieType: widget.movieType,
+              folder: folder,
+            ),
+          );
         },
       ),
     );

@@ -170,3 +170,5 @@ app.*.symbols
 !lib/core/supabase/
 !test/core/supabase/
 !test/
+*.freezed.dart
+*.g.dart

@@ -45,9 +45,9 @@ class StreamingConfig {
 
   /// All providers combined
   static List<String> get allProviders => [
-        ...animeProviders,
-        ...movieProviders,
-      ];
+    ...animeProviders,
+    ...movieProviders,
+  ];
 
   // ============================================
   // Server Lists

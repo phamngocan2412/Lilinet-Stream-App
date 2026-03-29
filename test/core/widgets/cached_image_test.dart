@@ -50,8 +50,7 @@ void main() {
     },
   );
 
-  testWidgets(
-      'AppCachedImage uses provided width if available (Optimized Case)', (
+  testWidgets('AppCachedImage uses provided width if available (Optimized Case)', (
     WidgetTester tester,
   ) async {
     const imageUrl = 'https://example.com/image.jpg';
