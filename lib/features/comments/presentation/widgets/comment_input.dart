@@ -43,8 +43,9 @@ class _CommentInputState extends State<CommentInput> {
     if (!widget.isLoggedIn) {
       return AppLocalizations.of(context)!.loginToComment;
     }
-    final name =
-        widget.userName?.isNotEmpty == true ? widget.userName! : 'Anonymous';
+    final name = widget.userName?.isNotEmpty == true
+        ? widget.userName!
+        : 'Anonymous';
     return 'Bình luận dưới tên $name';
   }
 
@@ -103,8 +104,8 @@ class _CommentInputState extends State<CommentInput> {
                       child: Text(
                         _hintText,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: Theme.of(context).disabledColor,
-                            ),
+                          color: Theme.of(context).disabledColor,
+                        ),
                       ),
                     ),
                   ),
