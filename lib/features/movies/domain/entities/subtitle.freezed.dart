@@ -12,7 +12,8 @@ part of 'subtitle.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$Subtitle {
@@ -48,20 +49,19 @@ class _$SubtitleCopyWithImpl<$Res, $Val extends Subtitle>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? url = null,
-    Object? lang = null,
-  }) {
-    return _then(_value.copyWith(
-      url: null == url
-          ? _value.url
-          : url // ignore: cast_nullable_to_non_nullable
-              as String,
-      lang: null == lang
-          ? _value.lang
-          : lang // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
+  $Res call({Object? url = null, Object? lang = null}) {
+    return _then(
+      _value.copyWith(
+        url: null == url
+            ? _value.url
+            : url // ignore: cast_nullable_to_non_nullable
+                as String,
+        lang: null == lang
+            ? _value.lang
+            : lang // ignore: cast_nullable_to_non_nullable
+                as String,
+      ) as $Val,
+    );
   }
 }
 
@@ -69,8 +69,9 @@ class _$SubtitleCopyWithImpl<$Res, $Val extends Subtitle>
 abstract class _$$SubtitleImplCopyWith<$Res>
     implements $SubtitleCopyWith<$Res> {
   factory _$$SubtitleImplCopyWith(
-          _$SubtitleImpl value, $Res Function(_$SubtitleImpl) then) =
-      __$$SubtitleImplCopyWithImpl<$Res>;
+    _$SubtitleImpl value,
+    $Res Function(_$SubtitleImpl) then,
+  ) = __$$SubtitleImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String url, String lang});
@@ -81,27 +82,27 @@ class __$$SubtitleImplCopyWithImpl<$Res>
     extends _$SubtitleCopyWithImpl<$Res, _$SubtitleImpl>
     implements _$$SubtitleImplCopyWith<$Res> {
   __$$SubtitleImplCopyWithImpl(
-      _$SubtitleImpl _value, $Res Function(_$SubtitleImpl) _then)
-      : super(_value, _then);
+    _$SubtitleImpl _value,
+    $Res Function(_$SubtitleImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of Subtitle
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? url = null,
-    Object? lang = null,
-  }) {
-    return _then(_$SubtitleImpl(
-      url: null == url
-          ? _value.url
-          : url // ignore: cast_nullable_to_non_nullable
-              as String,
-      lang: null == lang
-          ? _value.lang
-          : lang // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
+  $Res call({Object? url = null, Object? lang = null}) {
+    return _then(
+      _$SubtitleImpl(
+        url: null == url
+            ? _value.url
+            : url // ignore: cast_nullable_to_non_nullable
+                as String,
+        lang: null == lang
+            ? _value.lang
+            : lang // ignore: cast_nullable_to_non_nullable
+                as String,
+      ),
+    );
   }
 }
 
@@ -142,8 +143,10 @@ class _$SubtitleImpl implements _Subtitle {
 }
 
 abstract class _Subtitle implements Subtitle {
-  const factory _Subtitle(
-      {required final String url, required final String lang}) = _$SubtitleImpl;
+  const factory _Subtitle({
+    required final String url,
+    required final String lang,
+  }) = _$SubtitleImpl;
 
   @override
   String get url;

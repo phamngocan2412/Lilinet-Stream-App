@@ -69,8 +69,9 @@ _$EpisodeModelImpl _$$EpisodeModelImplFromJson(Map<String, dynamic> json) =>
     _$EpisodeModelImpl(
       id: const AnyToStringConverter().fromJson(json['id']),
       title: json['title'] as String,
-      description:
-          const AnyToStringNullableConverter().fromJson(json['description']),
+      description: const AnyToStringNullableConverter().fromJson(
+        json['description'],
+      ),
       number: const StringToIntConverterRequired().fromJson(json['episode']),
       season: const StringToIntConverter().fromJson(json['season']),
       image: const EpisodeImageConverter().fromJson(json['image']),
@@ -84,8 +85,9 @@ Map<String, dynamic> _$$EpisodeModelImplToJson(_$EpisodeModelImpl instance) =>
     <String, dynamic>{
       'id': const AnyToStringConverter().toJson(instance.id),
       'title': instance.title,
-      'description':
-          const AnyToStringNullableConverter().toJson(instance.description),
+      'description': const AnyToStringNullableConverter().toJson(
+        instance.description,
+      ),
       'episode': const StringToIntConverterRequired().toJson(instance.number),
       'season': const StringToIntConverter().toJson(instance.season),
       'image': const EpisodeImageConverter().toJson(instance.image),
