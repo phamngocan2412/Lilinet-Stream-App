@@ -96,9 +96,7 @@ class MovieDetailsHeader extends StatelessWidget {
                         if (movie.releaseDate != null) ...[
                           Text(
                             movie.releaseDate!.split('-').first,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
+                            style: Theme.of(context).textTheme.bodyMedium
                                 ?.copyWith(
                                   color: Theme.of(
                                     context,
@@ -108,9 +106,7 @@ class MovieDetailsHeader extends StatelessWidget {
                           const SizedBox(width: 12),
                           Text(
                             '•',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
+                            style: Theme.of(context).textTheme.bodyMedium
                                 ?.copyWith(
                                   color: Theme.of(
                                     context,
@@ -122,9 +118,7 @@ class MovieDetailsHeader extends StatelessWidget {
                         if (movie.duration != null) ...[
                           Text(
                             movie.duration!,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
+                            style: Theme.of(context).textTheme.bodyMedium
                                 ?.copyWith(
                                   color: Theme.of(
                                     context,
@@ -134,9 +128,7 @@ class MovieDetailsHeader extends StatelessWidget {
                           const SizedBox(width: 12),
                           Text(
                             '•',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
+                            style: Theme.of(context).textTheme.bodyMedium
                                 ?.copyWith(
                                   color: Theme.of(
                                     context,
@@ -163,9 +155,7 @@ class MovieDetailsHeader extends StatelessWidget {
                                     movie.type.toLowerCase().contains('series'))
                                 ? 'TV'
                                 : 'HD',
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelSmall
+                            style: Theme.of(context).textTheme.labelSmall
                                 ?.copyWith(
                                   color: Theme.of(
                                     context,
@@ -188,9 +178,7 @@ class MovieDetailsHeader extends StatelessWidget {
                           icon: const Icon(Icons.play_arrow_rounded, size: 28),
                           label: Text(
                             'Play Now',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium
+                            style: Theme.of(context).textTheme.titleMedium
                                 ?.copyWith(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,

@@ -45,12 +45,12 @@ class FilterOptions extends Equatable {
 
   @override
   List<Object?> get props => [
-        mediaType,
-        genres,
-        yearFrom,
-        yearTo,
-        minRating,
-        sortBy,
-        country,
-      ];
+    mediaType,
+    genres,
+    yearFrom,
+    yearTo,
+    minRating,
+    sortBy,
+    country,
+  ];
 }

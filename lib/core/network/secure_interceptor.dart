@@ -10,8 +10,9 @@ class SecureInterceptor extends Interceptor {
   final LogCallback _log;
 
   SecureInterceptor({LogCallback? logCallback})
-      : _log = logCallback ??
-            ((message, {name = ''}) => developer.log(message, name: name));
+    : _log =
+          logCallback ??
+          ((message, {name = ''}) => developer.log(message, name: name));
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {

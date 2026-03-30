@@ -26,7 +26,24 @@ class ApiConstants {
 
     // 4. Fix 0.0.0.0 for other platforms (iOS/Web) to localhost
     if (url.contains('0.0.0.0')) {
-      return url.replaceAll('0.0.0.0', 'localhost');
+      url = url.replaceAll('0.0.0.0', 'localhost');
+    }
+
+    // 5. Prevent cleartext HTTP in production, except for local loopback addresses
+    if (!kDebugMode && url.startsWith('http://')) {
+      final host = Uri.tryParse(url)?.host;
+      const localHosts = [
+        'localhost',
+        '127.0.0.1',
+        '10.0.2.2',
+        '10.0.3.2',
+        '::1',
+      ];
+      if (host == null || !localHosts.contains(host)) {
+        throw UnsupportedError(
+          'Cleartext HTTP traffic is not allowed in production',
+        );
+      }
     }
 
     return url;

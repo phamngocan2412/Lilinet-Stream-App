@@ -86,8 +86,8 @@ class FullPlayerContent extends StatelessWidget {
                   onPrev: onPlayPrevious,
                   onSpeedChanged: (speed) {
                     context.read<VideoPlayerBloc>().add(
-                          SetPlaybackSpeed(speed),
-                        );
+                      SetPlaybackSpeed(speed),
+                    );
                   },
                   onEnterPiP: () {
                     context.read<VideoPlayerBloc>().add(EnterPiP());
@@ -95,12 +95,17 @@ class FullPlayerContent extends StatelessWidget {
                   onCast: () {
                     if (this.state.title != null) {
                       context.read<VideoPlayerBloc>().add(
-                            StartCast(
-                              videoService.player.state.playlist.medias
-                                      .firstOrNull?.uri ??
-                                  '',
-                            ),
-                          );
+                        StartCast(
+                          videoService
+                                  .player
+                                  .state
+                                  .playlist
+                                  .medias
+                                  .firstOrNull
+                                  ?.uri ??
+                              '',
+                        ),
+                      );
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text('Casting feature is a prototype'),

@@ -294,27 +294,27 @@ class AnimeDetectionService {
 
     // Check western titles
     final westernTitle = westernTitles.cast<String?>().firstWhere(
-          (western) => title.contains(western!),
-          orElse: () => null,
-        );
+      (western) => title.contains(western!),
+      orElse: () => null,
+    );
     if (westernTitle != null) {
       return 'Western animation title: "$westernTitle"';
     }
 
     // Check western studios
     final westernStudio = westernStudios.cast<String?>().firstWhere(
-          (studio) => production.contains(studio!) || title.contains(studio),
-          orElse: () => null,
-        );
+      (studio) => production.contains(studio!) || title.contains(studio),
+      orElse: () => null,
+    );
     if (westernStudio != null) {
       return 'Western studio: "$westernStudio"';
     }
 
     // Check anime keywords
     final animeKeyword = animeKeywords.cast<String?>().firstWhere(
-          (keyword) => title.contains(keyword!),
-          orElse: () => null,
-        );
+      (keyword) => title.contains(keyword!),
+      orElse: () => null,
+    );
     if (animeKeyword != null) {
       return 'Anime keyword: "$animeKeyword"';
     }
