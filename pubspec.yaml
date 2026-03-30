@@ -97,7 +97,7 @@ dev_dependencies:
   # ----------------------------------------
 
   # Testing
-  bloc_test: ^10.0.0
+  bloc_test: any
   mocktail: ^1.0.3
 
   # Linting
