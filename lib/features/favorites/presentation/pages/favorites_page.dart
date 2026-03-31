@@ -120,12 +120,8 @@ class _FavoritesViewState extends State<FavoritesView> {
                     );
                   }
 
-                  // Extract folders
-                  final folders = {
-                    'All',
-                    ...state.favorites.map((f) => f.folder).toSet().toList()
-                      ..sort(),
-                  }.toList();
+                  // Retrieve pre-computed folders
+                  final folders = state.folders;
 
                   // Filter favorites based on selected folder
                   final filteredFavorites = _selectedFolder == 'All'
@@ -147,7 +143,7 @@ class _FavoritesViewState extends State<FavoritesView> {
                           separatorBuilder: (context, index) =>
                               const SizedBox(width: 8),
                           itemBuilder: (context, index) {
-                            final folder = folders.elementAt(index);
+                            final folder = folders[index];
                             return CategoryChip(
                               label: folder,
                               isSelected: folder == _selectedFolder,
