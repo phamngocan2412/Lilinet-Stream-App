@@ -109,8 +109,7 @@ class _FavoriteButtonState extends State<FavoriteButton> {
     final state = context.read<FavoritesBloc>().state;
     List<String> folders = ['Default'];
     if (state is FavoritesLoaded) {
-      final uniqueFolders = state.favorites.map((f) => f.folder).toSet();
-      folders = uniqueFolders.toList()..sort();
+      folders = state.folders.where((f) => f != 'All').toList();
       if (!folders.contains('Default')) folders.insert(0, 'Default');
     }
 
