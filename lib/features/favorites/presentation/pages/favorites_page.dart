@@ -154,8 +154,8 @@ class _FavoritesViewState extends State<FavoritesView> {
                     _memoizedFilteredFavorites = _selectedFolder == 'All'
                         ? state.favorites
                         : state.favorites
-                              .where((f) => f.folder == _selectedFolder)
-                              .toList();
+                            .where((f) => f.folder == _selectedFolder)
+                            .toList();
                   }
 
                   return Column(
@@ -195,8 +195,8 @@ class _FavoritesViewState extends State<FavoritesView> {
                             : RefreshIndicator(
                                 onRefresh: () async {
                                   context.read<FavoritesBloc>().add(
-                                    const LoadFavorites(),
-                                  );
+                                        const LoadFavorites(),
+                                      );
                                 },
                                 child: ListenableBuilder(
                                   listenable: getIt<MiniplayerHeightNotifier>(),
@@ -214,11 +214,11 @@ class _FavoritesViewState extends State<FavoritesView> {
                                       ),
                                       gridDelegate:
                                           const SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 2,
-                                            childAspectRatio: 0.7,
-                                            crossAxisSpacing: 12,
-                                            mainAxisSpacing: 12,
-                                          ),
+                                        crossAxisCount: 2,
+                                        childAspectRatio: 0.7,
+                                        crossAxisSpacing: 12,
+                                        mainAxisSpacing: 12,
+                                      ),
                                       itemCount:
                                           _memoizedFilteredFavorites.length,
                                       itemBuilder: (context, index) {

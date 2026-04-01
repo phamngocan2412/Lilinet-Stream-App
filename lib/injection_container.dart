@@ -42,12 +42,12 @@ abstract class RegisterModule {
 
   @lazySingleton
   FlutterSecureStorage get secureStorage => const FlutterSecureStorage(
-    aOptions: AndroidOptions(
-      // ignore: deprecated_member_use
-      encryptedSharedPreferences: true,
-    ),
-    iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
-  );
+        aOptions: AndroidOptions(
+          // ignore: deprecated_member_use
+          encryptedSharedPreferences: true,
+        ),
+        iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
+      );
 
   @lazySingleton
   SupabaseClient get supabaseClient => SupabaseConfig.client;
