@@ -25,11 +25,11 @@ mixin _$HistoryState {
       List<WatchProgress> history,
       int totalVideos,
       int totalTimeSeconds,
-    ) loaded,
+    )
+    loaded,
     required TResult Function() empty,
     required TResult Function(String message) error,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
@@ -38,11 +38,11 @@ mixin _$HistoryState {
       List<WatchProgress> history,
       int totalVideos,
       int totalTimeSeconds,
-    )? loaded,
+    )?
+    loaded,
     TResult? Function()? empty,
     TResult? Function(String message)? error,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
@@ -51,12 +51,12 @@ mixin _$HistoryState {
       List<WatchProgress> history,
       int totalVideos,
       int totalTimeSeconds,
-    )? loaded,
+    )?
+    loaded,
     TResult Function()? empty,
     TResult Function(String message)? error,
     required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(HistoryInitial value) initial,
@@ -64,8 +64,7 @@ mixin _$HistoryState {
     required TResult Function(HistoryLoaded value) loaded,
     required TResult Function(HistoryEmpty value) empty,
     required TResult Function(HistoryError value) error,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(HistoryInitial value)? initial,
@@ -73,8 +72,7 @@ mixin _$HistoryState {
     TResult? Function(HistoryLoaded value)? loaded,
     TResult? Function(HistoryEmpty value)? empty,
     TResult? Function(HistoryError value)? error,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(HistoryInitial value)? initial,
@@ -83,8 +81,7 @@ mixin _$HistoryState {
     TResult Function(HistoryEmpty value)? empty,
     TResult Function(HistoryError value)? error,
     required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -158,7 +155,8 @@ class _$HistoryInitialImpl implements HistoryInitial {
       List<WatchProgress> history,
       int totalVideos,
       int totalTimeSeconds,
-    ) loaded,
+    )
+    loaded,
     required TResult Function() empty,
     required TResult Function(String message) error,
   }) {
@@ -174,7 +172,8 @@ class _$HistoryInitialImpl implements HistoryInitial {
       List<WatchProgress> history,
       int totalVideos,
       int totalTimeSeconds,
-    )? loaded,
+    )?
+    loaded,
     TResult? Function()? empty,
     TResult? Function(String message)? error,
   }) {
@@ -190,7 +189,8 @@ class _$HistoryInitialImpl implements HistoryInitial {
       List<WatchProgress> history,
       int totalVideos,
       int totalTimeSeconds,
-    )? loaded,
+    )?
+    loaded,
     TResult Function()? empty,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -295,7 +295,8 @@ class _$HistoryLoadingImpl implements HistoryLoading {
       List<WatchProgress> history,
       int totalVideos,
       int totalTimeSeconds,
-    ) loaded,
+    )
+    loaded,
     required TResult Function() empty,
     required TResult Function(String message) error,
   }) {
@@ -311,7 +312,8 @@ class _$HistoryLoadingImpl implements HistoryLoading {
       List<WatchProgress> history,
       int totalVideos,
       int totalTimeSeconds,
-    )? loaded,
+    )?
+    loaded,
     TResult? Function()? empty,
     TResult? Function(String message)? error,
   }) {
@@ -327,7 +329,8 @@ class _$HistoryLoadingImpl implements HistoryLoading {
       List<WatchProgress> history,
       int totalVideos,
       int totalTimeSeconds,
-    )? loaded,
+    )?
+    loaded,
     TResult Function()? empty,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -420,15 +423,15 @@ class __$$HistoryLoadedImplCopyWithImpl<$Res>
         history: null == history
             ? _value._history
             : history // ignore: cast_nullable_to_non_nullable
-                as List<WatchProgress>,
+                  as List<WatchProgress>,
         totalVideos: null == totalVideos
             ? _value.totalVideos
             : totalVideos // ignore: cast_nullable_to_non_nullable
-                as int,
+                  as int,
         totalTimeSeconds: null == totalTimeSeconds
             ? _value.totalTimeSeconds
             : totalTimeSeconds // ignore: cast_nullable_to_non_nullable
-                as int,
+                  as int,
       ),
     );
   }
@@ -477,11 +480,11 @@ class _$HistoryLoadedImpl implements HistoryLoaded {
 
   @override
   int get hashCode => Object.hash(
-        runtimeType,
-        const DeepCollectionEquality().hash(_history),
-        totalVideos,
-        totalTimeSeconds,
-      );
+    runtimeType,
+    const DeepCollectionEquality().hash(_history),
+    totalVideos,
+    totalTimeSeconds,
+  );
 
   /// Create a copy of HistoryState
   /// with the given fields replaced by the non-null parameter values.
@@ -500,7 +503,8 @@ class _$HistoryLoadedImpl implements HistoryLoaded {
       List<WatchProgress> history,
       int totalVideos,
       int totalTimeSeconds,
-    ) loaded,
+    )
+    loaded,
     required TResult Function() empty,
     required TResult Function(String message) error,
   }) {
@@ -516,7 +520,8 @@ class _$HistoryLoadedImpl implements HistoryLoaded {
       List<WatchProgress> history,
       int totalVideos,
       int totalTimeSeconds,
-    )? loaded,
+    )?
+    loaded,
     TResult? Function()? empty,
     TResult? Function(String message)? error,
   }) {
@@ -532,7 +537,8 @@ class _$HistoryLoadedImpl implements HistoryLoaded {
       List<WatchProgress> history,
       int totalVideos,
       int totalTimeSeconds,
-    )? loaded,
+    )?
+    loaded,
     TResult Function()? empty,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -651,7 +657,8 @@ class _$HistoryEmptyImpl implements HistoryEmpty {
       List<WatchProgress> history,
       int totalVideos,
       int totalTimeSeconds,
-    ) loaded,
+    )
+    loaded,
     required TResult Function() empty,
     required TResult Function(String message) error,
   }) {
@@ -667,7 +674,8 @@ class _$HistoryEmptyImpl implements HistoryEmpty {
       List<WatchProgress> history,
       int totalVideos,
       int totalTimeSeconds,
-    )? loaded,
+    )?
+    loaded,
     TResult? Function()? empty,
     TResult? Function(String message)? error,
   }) {
@@ -683,7 +691,8 @@ class _$HistoryEmptyImpl implements HistoryEmpty {
       List<WatchProgress> history,
       int totalVideos,
       int totalTimeSeconds,
-    )? loaded,
+    )?
+    loaded,
     TResult Function()? empty,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -768,7 +777,7 @@ class __$$HistoryErrorImplCopyWithImpl<$Res>
         message: null == message
             ? _value.message
             : message // ignore: cast_nullable_to_non_nullable
-                as String,
+                  as String,
       ),
     );
   }
@@ -815,7 +824,8 @@ class _$HistoryErrorImpl implements HistoryError {
       List<WatchProgress> history,
       int totalVideos,
       int totalTimeSeconds,
-    ) loaded,
+    )
+    loaded,
     required TResult Function() empty,
     required TResult Function(String message) error,
   }) {
@@ -831,7 +841,8 @@ class _$HistoryErrorImpl implements HistoryError {
       List<WatchProgress> history,
       int totalVideos,
       int totalTimeSeconds,
-    )? loaded,
+    )?
+    loaded,
     TResult? Function()? empty,
     TResult? Function(String message)? error,
   }) {
@@ -847,7 +858,8 @@ class _$HistoryErrorImpl implements HistoryError {
       List<WatchProgress> history,
       int totalVideos,
       int totalTimeSeconds,
-    )? loaded,
+    )?
+    loaded,
     TResult Function()? empty,
     TResult Function(String message)? error,
     required TResult orElse(),

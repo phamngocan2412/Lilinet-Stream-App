@@ -79,8 +79,9 @@ class _PinCodeDialogState extends State<PinCodeDialog> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final title = widget.isSettingPin ? l10n.setPinTitle : l10n.enterPinTitle;
-    final instruction =
-        widget.isSettingPin ? l10n.setPinInstruction : l10n.enterPinInstruction;
+    final instruction = widget.isSettingPin
+        ? l10n.setPinInstruction
+        : l10n.enterPinInstruction;
 
     return AlertDialog(
       title: Text(title),

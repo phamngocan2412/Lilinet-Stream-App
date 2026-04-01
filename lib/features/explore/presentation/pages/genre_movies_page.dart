@@ -24,8 +24,9 @@ class GenreMoviesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => getIt<ExploreBloc>()
-        ..add(LoadMoviesByGenre(genreId: genreId, genreName: genreName)),
+      create: (context) =>
+          getIt<ExploreBloc>()
+            ..add(LoadMoviesByGenre(genreId: genreId, genreName: genreName)),
       child: Scaffold(
         appBar: AppBar(title: Text(genreName)),
         body: BlocBuilder<ExploreBloc, ExploreState>(
@@ -40,9 +41,8 @@ class GenreMoviesPage extends StatelessWidget {
                   message: state.message,
                   onRetry: () {
                     context.read<ExploreBloc>().add(
-                          LoadMoviesByGenre(
-                              genreId: genreId, genreName: genreName),
-                        );
+                      LoadMoviesByGenre(genreId: genreId, genreName: genreName),
+                    );
                   },
                 ),
               );
@@ -73,11 +73,11 @@ class GenreMoviesPage extends StatelessWidget {
                     ),
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 0.7,
-                      crossAxisSpacing: 12,
-                      mainAxisSpacing: 12,
-                    ),
+                          crossAxisCount: 2,
+                          childAspectRatio: 0.7,
+                          crossAxisSpacing: 12,
+                          mainAxisSpacing: 12,
+                        ),
                     itemCount: state.movies.length,
                     itemBuilder: (context, index) {
                       final movie = state.movies[index];
