@@ -14,6 +14,7 @@ import '../../../explore/presentation/widgets/category_chip.dart';
 import '../bloc/favorites_bloc.dart';
 import '../bloc/favorites_event.dart';
 import '../bloc/favorites_state.dart';
+import '../../domain/entities/favorite.dart';
 
 class FavoritesPage extends StatelessWidget {
   const FavoritesPage({super.key});
@@ -33,6 +34,12 @@ class FavoritesView extends StatefulWidget {
 
 class _FavoritesViewState extends State<FavoritesView> {
   String _selectedFolder = 'All';
+
+  // Memoization variables
+  List<Favorite>? _lastFavorites;
+  List<String> _memoizedFolders = [];
+  List<Favorite> _memoizedFilteredFavorites = [];
+  String? _lastSelectedFolder;
 
   @override
   Widget build(BuildContext context) {
@@ -120,19 +127,36 @@ class _FavoritesViewState extends State<FavoritesView> {
                     );
                   }
 
-                  // Extract folders
-                  final folders = {
-                    'All',
-                    ...state.favorites.map((f) => f.folder).toSet().toList()
-                      ..sort(),
-                  }.toList();
+                  final bool favoritesChanged = !identical(
+                    state.favorites,
+                    _lastFavorites,
+                  );
+                  final bool folderChanged =
+                      _selectedFolder != _lastSelectedFolder;
 
-                  // Filter favorites based on selected folder
-                  final filteredFavorites = _selectedFolder == 'All'
-                      ? state.favorites
-                      : state.favorites
-                          .where((f) => f.folder == _selectedFolder)
-                          .toList();
+                  // Only recalculate folders if the source list changed
+                  if (favoritesChanged) {
+                    _lastFavorites = state.favorites;
+
+                    // Compute folders (O(N log N) - now only runs when data changes)
+                    _memoizedFolders = {
+                      'All',
+                      ...state.favorites.map((f) => f.folder).toSet().toList()
+                        ..sort(),
+                    }.toList();
+                  }
+
+                  // Only recalculate filtered list if source list or filter condition changed
+                  if (favoritesChanged || folderChanged) {
+                    _lastSelectedFolder = _selectedFolder;
+
+                    // Compute filtered list (O(N))
+                    _memoizedFilteredFavorites = _selectedFolder == 'All'
+                        ? state.favorites
+                        : state.favorites
+                              .where((f) => f.folder == _selectedFolder)
+                              .toList();
+                  }
 
                   return Column(
                     children: [
@@ -143,11 +167,11 @@ class _FavoritesViewState extends State<FavoritesView> {
                         child: ListView.separated(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           scrollDirection: Axis.horizontal,
-                          itemCount: folders.length,
+                          itemCount: _memoizedFolders.length,
                           separatorBuilder: (context, index) =>
                               const SizedBox(width: 8),
                           itemBuilder: (context, index) {
-                            final folder = folders.elementAt(index);
+                            final folder = _memoizedFolders[index];
                             return CategoryChip(
                               label: folder,
                               isSelected: folder == _selectedFolder,
@@ -163,7 +187,7 @@ class _FavoritesViewState extends State<FavoritesView> {
 
                       // Favorites Grid
                       Expanded(
-                        child: filteredFavorites.isEmpty
+                        child: _memoizedFilteredFavorites.isEmpty
                             ? const AppEmptyState(
                                 icon: Icons.folder_off_outlined,
                                 message: 'No items in this folder',
@@ -171,8 +195,8 @@ class _FavoritesViewState extends State<FavoritesView> {
                             : RefreshIndicator(
                                 onRefresh: () async {
                                   context.read<FavoritesBloc>().add(
-                                        const LoadFavorites(),
-                                      );
+                                    const LoadFavorites(),
+                                  );
                                 },
                                 child: ListenableBuilder(
                                   listenable: getIt<MiniplayerHeightNotifier>(),
@@ -190,15 +214,16 @@ class _FavoritesViewState extends State<FavoritesView> {
                                       ),
                                       gridDelegate:
                                           const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2,
-                                        childAspectRatio: 0.7,
-                                        crossAxisSpacing: 12,
-                                        mainAxisSpacing: 12,
-                                      ),
-                                      itemCount: filteredFavorites.length,
+                                            crossAxisCount: 2,
+                                            childAspectRatio: 0.7,
+                                            crossAxisSpacing: 12,
+                                            mainAxisSpacing: 12,
+                                          ),
+                                      itemCount:
+                                          _memoizedFilteredFavorites.length,
                                       itemBuilder: (context, index) {
                                         final favorite =
-                                            filteredFavorites[index];
+                                            _memoizedFilteredFavorites[index];
 
                                         // Convert Favorite to Movie for MovieCard
                                         final movie = Movie(
