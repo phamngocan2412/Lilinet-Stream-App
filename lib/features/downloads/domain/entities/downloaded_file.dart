@@ -38,30 +38,30 @@ class DownloadedFile {
   }
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'fileName': fileName,
-        'filePath': filePath,
-        'movieId': movieId,
-        'movieTitle': movieTitle,
-        'episodeTitle': episodeTitle,
-        'posterUrl': posterUrl,
-        'fileSize': fileSize,
-        'downloadedAt': downloadedAt.toIso8601String(),
-        'url': url,
-      };
+    'id': id,
+    'fileName': fileName,
+    'filePath': filePath,
+    'movieId': movieId,
+    'movieTitle': movieTitle,
+    'episodeTitle': episodeTitle,
+    'posterUrl': posterUrl,
+    'fileSize': fileSize,
+    'downloadedAt': downloadedAt.toIso8601String(),
+    'url': url,
+  };
 
   factory DownloadedFile.fromJson(Map<String, dynamic> json) => DownloadedFile(
-        id: json['id'],
-        fileName: json['fileName'],
-        filePath: json['filePath'],
-        movieId: json['movieId'],
-        movieTitle: json['movieTitle'],
-        episodeTitle: json['episodeTitle'],
-        posterUrl: json['posterUrl'],
-        fileSize: json['fileSize'] ?? 0,
-        downloadedAt: DateTime.parse(json['downloadedAt']),
-        url: json['url'],
-      );
+    id: json['id'],
+    fileName: json['fileName'],
+    filePath: json['filePath'],
+    movieId: json['movieId'],
+    movieTitle: json['movieTitle'],
+    episodeTitle: json['episodeTitle'],
+    posterUrl: json['posterUrl'],
+    fileSize: json['fileSize'] ?? 0,
+    downloadedAt: DateTime.parse(json['downloadedAt']),
+    url: json['url'],
+  );
 
   DownloadedFile copyWith({
     String? id,
@@ -74,17 +74,16 @@ class DownloadedFile {
     int? fileSize,
     DateTime? downloadedAt,
     String? url,
-  }) =>
-      DownloadedFile(
-        id: id ?? this.id,
-        fileName: fileName ?? this.fileName,
-        filePath: filePath ?? this.filePath,
-        movieId: movieId ?? this.movieId,
-        movieTitle: movieTitle ?? this.movieTitle,
-        episodeTitle: episodeTitle ?? this.episodeTitle,
-        posterUrl: posterUrl ?? this.posterUrl,
-        fileSize: fileSize ?? this.fileSize,
-        downloadedAt: downloadedAt ?? this.downloadedAt,
-        url: url ?? this.url,
-      );
+  }) => DownloadedFile(
+    id: id ?? this.id,
+    fileName: fileName ?? this.fileName,
+    filePath: filePath ?? this.filePath,
+    movieId: movieId ?? this.movieId,
+    movieTitle: movieTitle ?? this.movieTitle,
+    episodeTitle: episodeTitle ?? this.episodeTitle,
+    posterUrl: posterUrl ?? this.posterUrl,
+    fileSize: fileSize ?? this.fileSize,
+    downloadedAt: downloadedAt ?? this.downloadedAt,
+    url: url ?? this.url,
+  );
 }

@@ -21,33 +21,30 @@ mixin _$ExploreEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() loadGenres,
     required TResult Function(String genreId, String genreName, int page)
-        loadMoviesByGenre,
+    loadMoviesByGenre,
     required TResult Function(int page) loadPopularMovies,
     required TResult Function(int page) loadTopRatedMovies,
     required TResult Function(int page) loadRecentlyAdded,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loadGenres,
     TResult? Function(String genreId, String genreName, int page)?
-        loadMoviesByGenre,
+    loadMoviesByGenre,
     TResult? Function(int page)? loadPopularMovies,
     TResult? Function(int page)? loadTopRatedMovies,
     TResult? Function(int page)? loadRecentlyAdded,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadGenres,
     TResult Function(String genreId, String genreName, int page)?
-        loadMoviesByGenre,
+    loadMoviesByGenre,
     TResult Function(int page)? loadPopularMovies,
     TResult Function(int page)? loadTopRatedMovies,
     TResult Function(int page)? loadRecentlyAdded,
     required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(LoadGenres value) loadGenres,
@@ -55,8 +52,7 @@ mixin _$ExploreEvent {
     required TResult Function(LoadPopularMovies value) loadPopularMovies,
     required TResult Function(LoadTopRatedMovies value) loadTopRatedMovies,
     required TResult Function(LoadRecentlyAdded value) loadRecentlyAdded,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LoadGenres value)? loadGenres,
@@ -64,8 +60,7 @@ mixin _$ExploreEvent {
     TResult? Function(LoadPopularMovies value)? loadPopularMovies,
     TResult? Function(LoadTopRatedMovies value)? loadTopRatedMovies,
     TResult? Function(LoadRecentlyAdded value)? loadRecentlyAdded,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoadGenres value)? loadGenres,
@@ -74,8 +69,7 @@ mixin _$ExploreEvent {
     TResult Function(LoadTopRatedMovies value)? loadTopRatedMovies,
     TResult Function(LoadRecentlyAdded value)? loadRecentlyAdded,
     required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -145,7 +139,7 @@ class _$LoadGenresImpl implements LoadGenres {
   TResult when<TResult extends Object?>({
     required TResult Function() loadGenres,
     required TResult Function(String genreId, String genreName, int page)
-        loadMoviesByGenre,
+    loadMoviesByGenre,
     required TResult Function(int page) loadPopularMovies,
     required TResult Function(int page) loadTopRatedMovies,
     required TResult Function(int page) loadRecentlyAdded,
@@ -158,7 +152,7 @@ class _$LoadGenresImpl implements LoadGenres {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loadGenres,
     TResult? Function(String genreId, String genreName, int page)?
-        loadMoviesByGenre,
+    loadMoviesByGenre,
     TResult? Function(int page)? loadPopularMovies,
     TResult? Function(int page)? loadTopRatedMovies,
     TResult? Function(int page)? loadRecentlyAdded,
@@ -171,7 +165,7 @@ class _$LoadGenresImpl implements LoadGenres {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadGenres,
     TResult Function(String genreId, String genreName, int page)?
-        loadMoviesByGenre,
+    loadMoviesByGenre,
     TResult Function(int page)? loadPopularMovies,
     TResult Function(int page)? loadTopRatedMovies,
     TResult Function(int page)? loadRecentlyAdded,
@@ -261,15 +255,15 @@ class __$$LoadMoviesByGenreImplCopyWithImpl<$Res>
         genreId: null == genreId
             ? _value.genreId
             : genreId // ignore: cast_nullable_to_non_nullable
-                as String,
+                  as String,
         genreName: null == genreName
             ? _value.genreName
             : genreName // ignore: cast_nullable_to_non_nullable
-                as String,
+                  as String,
         page: null == page
             ? _value.page
             : page // ignore: cast_nullable_to_non_nullable
-                as int,
+                  as int,
       ),
     );
   }
@@ -327,7 +321,7 @@ class _$LoadMoviesByGenreImpl implements LoadMoviesByGenre {
   TResult when<TResult extends Object?>({
     required TResult Function() loadGenres,
     required TResult Function(String genreId, String genreName, int page)
-        loadMoviesByGenre,
+    loadMoviesByGenre,
     required TResult Function(int page) loadPopularMovies,
     required TResult Function(int page) loadTopRatedMovies,
     required TResult Function(int page) loadRecentlyAdded,
@@ -340,7 +334,7 @@ class _$LoadMoviesByGenreImpl implements LoadMoviesByGenre {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loadGenres,
     TResult? Function(String genreId, String genreName, int page)?
-        loadMoviesByGenre,
+    loadMoviesByGenre,
     TResult? Function(int page)? loadPopularMovies,
     TResult? Function(int page)? loadTopRatedMovies,
     TResult? Function(int page)? loadRecentlyAdded,
@@ -353,7 +347,7 @@ class _$LoadMoviesByGenreImpl implements LoadMoviesByGenre {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadGenres,
     TResult Function(String genreId, String genreName, int page)?
-        loadMoviesByGenre,
+    loadMoviesByGenre,
     TResult Function(int page)? loadPopularMovies,
     TResult Function(int page)? loadTopRatedMovies,
     TResult Function(int page)? loadRecentlyAdded,
@@ -453,7 +447,7 @@ class __$$LoadPopularMoviesImplCopyWithImpl<$Res>
         page: null == page
             ? _value.page
             : page // ignore: cast_nullable_to_non_nullable
-                as int,
+                  as int,
       ),
     );
   }
@@ -500,7 +494,7 @@ class _$LoadPopularMoviesImpl implements LoadPopularMovies {
   TResult when<TResult extends Object?>({
     required TResult Function() loadGenres,
     required TResult Function(String genreId, String genreName, int page)
-        loadMoviesByGenre,
+    loadMoviesByGenre,
     required TResult Function(int page) loadPopularMovies,
     required TResult Function(int page) loadTopRatedMovies,
     required TResult Function(int page) loadRecentlyAdded,
@@ -513,7 +507,7 @@ class _$LoadPopularMoviesImpl implements LoadPopularMovies {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loadGenres,
     TResult? Function(String genreId, String genreName, int page)?
-        loadMoviesByGenre,
+    loadMoviesByGenre,
     TResult? Function(int page)? loadPopularMovies,
     TResult? Function(int page)? loadTopRatedMovies,
     TResult? Function(int page)? loadRecentlyAdded,
@@ -526,7 +520,7 @@ class _$LoadPopularMoviesImpl implements LoadPopularMovies {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadGenres,
     TResult Function(String genreId, String genreName, int page)?
-        loadMoviesByGenre,
+    loadMoviesByGenre,
     TResult Function(int page)? loadPopularMovies,
     TResult Function(int page)? loadTopRatedMovies,
     TResult Function(int page)? loadRecentlyAdded,
@@ -620,7 +614,7 @@ class __$$LoadTopRatedMoviesImplCopyWithImpl<$Res>
         page: null == page
             ? _value.page
             : page // ignore: cast_nullable_to_non_nullable
-                as int,
+                  as int,
       ),
     );
   }
@@ -667,7 +661,7 @@ class _$LoadTopRatedMoviesImpl implements LoadTopRatedMovies {
   TResult when<TResult extends Object?>({
     required TResult Function() loadGenres,
     required TResult Function(String genreId, String genreName, int page)
-        loadMoviesByGenre,
+    loadMoviesByGenre,
     required TResult Function(int page) loadPopularMovies,
     required TResult Function(int page) loadTopRatedMovies,
     required TResult Function(int page) loadRecentlyAdded,
@@ -680,7 +674,7 @@ class _$LoadTopRatedMoviesImpl implements LoadTopRatedMovies {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loadGenres,
     TResult? Function(String genreId, String genreName, int page)?
-        loadMoviesByGenre,
+    loadMoviesByGenre,
     TResult? Function(int page)? loadPopularMovies,
     TResult? Function(int page)? loadTopRatedMovies,
     TResult? Function(int page)? loadRecentlyAdded,
@@ -693,7 +687,7 @@ class _$LoadTopRatedMoviesImpl implements LoadTopRatedMovies {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadGenres,
     TResult Function(String genreId, String genreName, int page)?
-        loadMoviesByGenre,
+    loadMoviesByGenre,
     TResult Function(int page)? loadPopularMovies,
     TResult Function(int page)? loadTopRatedMovies,
     TResult Function(int page)? loadRecentlyAdded,
@@ -787,7 +781,7 @@ class __$$LoadRecentlyAddedImplCopyWithImpl<$Res>
         page: null == page
             ? _value.page
             : page // ignore: cast_nullable_to_non_nullable
-                as int,
+                  as int,
       ),
     );
   }
@@ -834,7 +828,7 @@ class _$LoadRecentlyAddedImpl implements LoadRecentlyAdded {
   TResult when<TResult extends Object?>({
     required TResult Function() loadGenres,
     required TResult Function(String genreId, String genreName, int page)
-        loadMoviesByGenre,
+    loadMoviesByGenre,
     required TResult Function(int page) loadPopularMovies,
     required TResult Function(int page) loadTopRatedMovies,
     required TResult Function(int page) loadRecentlyAdded,
@@ -847,7 +841,7 @@ class _$LoadRecentlyAddedImpl implements LoadRecentlyAdded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loadGenres,
     TResult? Function(String genreId, String genreName, int page)?
-        loadMoviesByGenre,
+    loadMoviesByGenre,
     TResult? Function(int page)? loadPopularMovies,
     TResult? Function(int page)? loadTopRatedMovies,
     TResult? Function(int page)? loadRecentlyAdded,
@@ -860,7 +854,7 @@ class _$LoadRecentlyAddedImpl implements LoadRecentlyAdded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadGenres,
     TResult Function(String genreId, String genreName, int page)?
-        loadMoviesByGenre,
+    loadMoviesByGenre,
     TResult Function(int page)? loadPopularMovies,
     TResult Function(int page)? loadTopRatedMovies,
     TResult Function(int page)? loadRecentlyAdded,

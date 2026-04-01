@@ -24,10 +24,10 @@ mixin _$TrendingMoviesState {
     required TResult Function(
       List<Movie> trending,
       Map<String, List<Movie>> categories,
-    ) loaded,
+    )
+    loaded,
     required TResult Function(String message) error,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
@@ -35,36 +35,33 @@ mixin _$TrendingMoviesState {
     TResult? Function(
       List<Movie> trending,
       Map<String, List<Movie>> categories,
-    )? loaded,
+    )?
+    loaded,
     TResult? Function(String message)? error,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<Movie> trending, Map<String, List<Movie>> categories)?
-        loaded,
+    loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
@@ -72,8 +69,7 @@ mixin _$TrendingMoviesState {
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
     required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -146,7 +142,8 @@ class _$InitialImpl implements _Initial {
     required TResult Function(
       List<Movie> trending,
       Map<String, List<Movie>> categories,
-    ) loaded,
+    )
+    loaded,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -160,7 +157,8 @@ class _$InitialImpl implements _Initial {
     TResult? Function(
       List<Movie> trending,
       Map<String, List<Movie>> categories,
-    )? loaded,
+    )?
+    loaded,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -172,7 +170,7 @@ class _$InitialImpl implements _Initial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<Movie> trending, Map<String, List<Movie>> categories)?
-        loaded,
+    loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -272,7 +270,8 @@ class _$LoadingImpl implements _Loading {
     required TResult Function(
       List<Movie> trending,
       Map<String, List<Movie>> categories,
-    ) loaded,
+    )
+    loaded,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -286,7 +285,8 @@ class _$LoadingImpl implements _Loading {
     TResult? Function(
       List<Movie> trending,
       Map<String, List<Movie>> categories,
-    )? loaded,
+    )?
+    loaded,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -298,7 +298,7 @@ class _$LoadingImpl implements _Loading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<Movie> trending, Map<String, List<Movie>> categories)?
-        loaded,
+    loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -379,11 +379,11 @@ class __$$LoadedImplCopyWithImpl<$Res>
         trending: null == trending
             ? _value._trending
             : trending // ignore: cast_nullable_to_non_nullable
-                as List<Movie>,
+                  as List<Movie>,
         categories: null == categories
             ? _value._categories
             : categories // ignore: cast_nullable_to_non_nullable
-                as Map<String, List<Movie>>,
+                  as Map<String, List<Movie>>,
       ),
     );
   }
@@ -395,8 +395,8 @@ class _$LoadedImpl implements _Loaded {
   const _$LoadedImpl({
     required final List<Movie> trending,
     final Map<String, List<Movie>> categories = const {},
-  })  : _trending = trending,
-        _categories = categories;
+  }) : _trending = trending,
+       _categories = categories;
 
   final List<Movie> _trending;
   @override
@@ -434,10 +434,10 @@ class _$LoadedImpl implements _Loaded {
 
   @override
   int get hashCode => Object.hash(
-        runtimeType,
-        const DeepCollectionEquality().hash(_trending),
-        const DeepCollectionEquality().hash(_categories),
-      );
+    runtimeType,
+    const DeepCollectionEquality().hash(_trending),
+    const DeepCollectionEquality().hash(_categories),
+  );
 
   /// Create a copy of TrendingMoviesState
   /// with the given fields replaced by the non-null parameter values.
@@ -455,7 +455,8 @@ class _$LoadedImpl implements _Loaded {
     required TResult Function(
       List<Movie> trending,
       Map<String, List<Movie>> categories,
-    ) loaded,
+    )
+    loaded,
     required TResult Function(String message) error,
   }) {
     return loaded(trending, categories);
@@ -469,7 +470,8 @@ class _$LoadedImpl implements _Loaded {
     TResult? Function(
       List<Movie> trending,
       Map<String, List<Movie>> categories,
-    )? loaded,
+    )?
+    loaded,
     TResult? Function(String message)? error,
   }) {
     return loaded?.call(trending, categories);
@@ -481,7 +483,7 @@ class _$LoadedImpl implements _Loaded {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<Movie> trending, Map<String, List<Movie>> categories)?
-        loaded,
+    loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -574,7 +576,7 @@ class __$$ErrorImplCopyWithImpl<$Res>
         null == message
             ? _value.message
             : message // ignore: cast_nullable_to_non_nullable
-                as String,
+                  as String,
       ),
     );
   }
@@ -620,7 +622,8 @@ class _$ErrorImpl implements _Error {
     required TResult Function(
       List<Movie> trending,
       Map<String, List<Movie>> categories,
-    ) loaded,
+    )
+    loaded,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -634,7 +637,8 @@ class _$ErrorImpl implements _Error {
     TResult? Function(
       List<Movie> trending,
       Map<String, List<Movie>> categories,
-    )? loaded,
+    )?
+    loaded,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -646,7 +650,7 @@ class _$ErrorImpl implements _Error {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<Movie> trending, Map<String, List<Movie>> categories)?
-        loaded,
+    loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
