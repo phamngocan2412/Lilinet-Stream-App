@@ -17,3 +17,6 @@
 ## 2026-05-20 - Preserving Legacy Logic in Fixes
 **Learning:** When fixing build errors in existing files (like `download_service.dart`), verify if existing tests rely on "buggy" behavior (like partial sanitization).
 **Action:** Run tests immediately after fixes. If tests fail on logic you didn't intend to change (just fix compilation), revert to the behavior expected by tests unless the test is clearly wrong.
+## 2024-05-28 - [Memoize derived state in UI Builders]
+**Learning:** Extracting unique categories and sorting them is an O(N log N) operation. When placed directly inside a `BlocBuilder`'s `build` method, this operation executes on every frame rebuild or state update, causing an unnecessary performance bottleneck for large lists.
+**Action:** Pre-compute derived lists within the Bloc state, or memoize them within a `StatefulWidget`'s `build` method using cached variables and `identical(state.list, _lastList)` checks to ensure execution only occurs when underlying data changes.

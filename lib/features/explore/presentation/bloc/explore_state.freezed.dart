@@ -12,8 +12,7 @@ part of 'explore_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$ExploreState {
@@ -23,11 +22,8 @@ mixin _$ExploreState {
     required TResult Function() loading,
     required TResult Function(List<Genre> genres) genresLoaded,
     required TResult Function(
-      List<Movie> movies,
-      String category,
-      int currentPage,
-      bool hasMore,
-    ) moviesLoaded,
+            List<Movie> movies, String category, int currentPage, bool hasMore)
+        moviesLoaded,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -37,11 +33,8 @@ mixin _$ExploreState {
     TResult? Function()? loading,
     TResult? Function(List<Genre> genres)? genresLoaded,
     TResult? Function(
-      List<Movie> movies,
-      String category,
-      int currentPage,
-      bool hasMore,
-    )? moviesLoaded,
+            List<Movie> movies, String category, int currentPage, bool hasMore)?
+        moviesLoaded,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -51,11 +44,8 @@ mixin _$ExploreState {
     TResult Function()? loading,
     TResult Function(List<Genre> genres)? genresLoaded,
     TResult Function(
-      List<Movie> movies,
-      String category,
-      int currentPage,
-      bool hasMore,
-    )? moviesLoaded,
+            List<Movie> movies, String category, int currentPage, bool hasMore)?
+        moviesLoaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -93,9 +83,8 @@ mixin _$ExploreState {
 /// @nodoc
 abstract class $ExploreStateCopyWith<$Res> {
   factory $ExploreStateCopyWith(
-    ExploreState value,
-    $Res Function(ExploreState) then,
-  ) = _$ExploreStateCopyWithImpl<$Res, ExploreState>;
+          ExploreState value, $Res Function(ExploreState) then) =
+      _$ExploreStateCopyWithImpl<$Res, ExploreState>;
 }
 
 /// @nodoc
@@ -114,10 +103,9 @@ class _$ExploreStateCopyWithImpl<$Res, $Val extends ExploreState>
 
 /// @nodoc
 abstract class _$$ExploreInitialImplCopyWith<$Res> {
-  factory _$$ExploreInitialImplCopyWith(
-    _$ExploreInitialImpl value,
-    $Res Function(_$ExploreInitialImpl) then,
-  ) = __$$ExploreInitialImplCopyWithImpl<$Res>;
+  factory _$$ExploreInitialImplCopyWith(_$ExploreInitialImpl value,
+          $Res Function(_$ExploreInitialImpl) then) =
+      __$$ExploreInitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
@@ -125,9 +113,8 @@ class __$$ExploreInitialImplCopyWithImpl<$Res>
     extends _$ExploreStateCopyWithImpl<$Res, _$ExploreInitialImpl>
     implements _$$ExploreInitialImplCopyWith<$Res> {
   __$$ExploreInitialImplCopyWithImpl(
-    _$ExploreInitialImpl _value,
-    $Res Function(_$ExploreInitialImpl) _then,
-  ) : super(_value, _then);
+      _$ExploreInitialImpl _value, $Res Function(_$ExploreInitialImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of ExploreState
   /// with the given fields replaced by the non-null parameter values.
@@ -159,11 +146,8 @@ class _$ExploreInitialImpl implements ExploreInitial {
     required TResult Function() loading,
     required TResult Function(List<Genre> genres) genresLoaded,
     required TResult Function(
-      List<Movie> movies,
-      String category,
-      int currentPage,
-      bool hasMore,
-    ) moviesLoaded,
+            List<Movie> movies, String category, int currentPage, bool hasMore)
+        moviesLoaded,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -176,11 +160,8 @@ class _$ExploreInitialImpl implements ExploreInitial {
     TResult? Function()? loading,
     TResult? Function(List<Genre> genres)? genresLoaded,
     TResult? Function(
-      List<Movie> movies,
-      String category,
-      int currentPage,
-      bool hasMore,
-    )? moviesLoaded,
+            List<Movie> movies, String category, int currentPage, bool hasMore)?
+        moviesLoaded,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -193,11 +174,8 @@ class _$ExploreInitialImpl implements ExploreInitial {
     TResult Function()? loading,
     TResult Function(List<Genre> genres)? genresLoaded,
     TResult Function(
-      List<Movie> movies,
-      String category,
-      int currentPage,
-      bool hasMore,
-    )? moviesLoaded,
+            List<Movie> movies, String category, int currentPage, bool hasMore)?
+        moviesLoaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -254,10 +232,9 @@ abstract class ExploreInitial implements ExploreState {
 
 /// @nodoc
 abstract class _$$ExploreLoadingImplCopyWith<$Res> {
-  factory _$$ExploreLoadingImplCopyWith(
-    _$ExploreLoadingImpl value,
-    $Res Function(_$ExploreLoadingImpl) then,
-  ) = __$$ExploreLoadingImplCopyWithImpl<$Res>;
+  factory _$$ExploreLoadingImplCopyWith(_$ExploreLoadingImpl value,
+          $Res Function(_$ExploreLoadingImpl) then) =
+      __$$ExploreLoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
@@ -265,9 +242,8 @@ class __$$ExploreLoadingImplCopyWithImpl<$Res>
     extends _$ExploreStateCopyWithImpl<$Res, _$ExploreLoadingImpl>
     implements _$$ExploreLoadingImplCopyWith<$Res> {
   __$$ExploreLoadingImplCopyWithImpl(
-    _$ExploreLoadingImpl _value,
-    $Res Function(_$ExploreLoadingImpl) _then,
-  ) : super(_value, _then);
+      _$ExploreLoadingImpl _value, $Res Function(_$ExploreLoadingImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of ExploreState
   /// with the given fields replaced by the non-null parameter values.
@@ -299,11 +275,8 @@ class _$ExploreLoadingImpl implements ExploreLoading {
     required TResult Function() loading,
     required TResult Function(List<Genre> genres) genresLoaded,
     required TResult Function(
-      List<Movie> movies,
-      String category,
-      int currentPage,
-      bool hasMore,
-    ) moviesLoaded,
+            List<Movie> movies, String category, int currentPage, bool hasMore)
+        moviesLoaded,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -316,11 +289,8 @@ class _$ExploreLoadingImpl implements ExploreLoading {
     TResult? Function()? loading,
     TResult? Function(List<Genre> genres)? genresLoaded,
     TResult? Function(
-      List<Movie> movies,
-      String category,
-      int currentPage,
-      bool hasMore,
-    )? moviesLoaded,
+            List<Movie> movies, String category, int currentPage, bool hasMore)?
+        moviesLoaded,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -333,11 +303,8 @@ class _$ExploreLoadingImpl implements ExploreLoading {
     TResult Function()? loading,
     TResult Function(List<Genre> genres)? genresLoaded,
     TResult Function(
-      List<Movie> movies,
-      String category,
-      int currentPage,
-      bool hasMore,
-    )? moviesLoaded,
+            List<Movie> movies, String category, int currentPage, bool hasMore)?
+        moviesLoaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -395,9 +362,8 @@ abstract class ExploreLoading implements ExploreState {
 /// @nodoc
 abstract class _$$GenresLoadedImplCopyWith<$Res> {
   factory _$$GenresLoadedImplCopyWith(
-    _$GenresLoadedImpl value,
-    $Res Function(_$GenresLoadedImpl) then,
-  ) = __$$GenresLoadedImplCopyWithImpl<$Res>;
+          _$GenresLoadedImpl value, $Res Function(_$GenresLoadedImpl) then) =
+      __$$GenresLoadedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({List<Genre> genres});
 }
@@ -407,23 +373,22 @@ class __$$GenresLoadedImplCopyWithImpl<$Res>
     extends _$ExploreStateCopyWithImpl<$Res, _$GenresLoadedImpl>
     implements _$$GenresLoadedImplCopyWith<$Res> {
   __$$GenresLoadedImplCopyWithImpl(
-    _$GenresLoadedImpl _value,
-    $Res Function(_$GenresLoadedImpl) _then,
-  ) : super(_value, _then);
+      _$GenresLoadedImpl _value, $Res Function(_$GenresLoadedImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of ExploreState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? genres = null}) {
-    return _then(
-      _$GenresLoadedImpl(
-        genres: null == genres
-            ? _value._genres
-            : genres // ignore: cast_nullable_to_non_nullable
-                as List<Genre>,
-      ),
-    );
+  $Res call({
+    Object? genres = null,
+  }) {
+    return _then(_$GenresLoadedImpl(
+      genres: null == genres
+          ? _value._genres
+          : genres // ignore: cast_nullable_to_non_nullable
+              as List<Genre>,
+    ));
   }
 }
 
@@ -473,11 +438,8 @@ class _$GenresLoadedImpl implements GenresLoaded {
     required TResult Function() loading,
     required TResult Function(List<Genre> genres) genresLoaded,
     required TResult Function(
-      List<Movie> movies,
-      String category,
-      int currentPage,
-      bool hasMore,
-    ) moviesLoaded,
+            List<Movie> movies, String category, int currentPage, bool hasMore)
+        moviesLoaded,
     required TResult Function(String message) error,
   }) {
     return genresLoaded(genres);
@@ -490,11 +452,8 @@ class _$GenresLoadedImpl implements GenresLoaded {
     TResult? Function()? loading,
     TResult? Function(List<Genre> genres)? genresLoaded,
     TResult? Function(
-      List<Movie> movies,
-      String category,
-      int currentPage,
-      bool hasMore,
-    )? moviesLoaded,
+            List<Movie> movies, String category, int currentPage, bool hasMore)?
+        moviesLoaded,
     TResult? Function(String message)? error,
   }) {
     return genresLoaded?.call(genres);
@@ -507,11 +466,8 @@ class _$GenresLoadedImpl implements GenresLoaded {
     TResult Function()? loading,
     TResult Function(List<Genre> genres)? genresLoaded,
     TResult Function(
-      List<Movie> movies,
-      String category,
-      int currentPage,
-      bool hasMore,
-    )? moviesLoaded,
+            List<Movie> movies, String category, int currentPage, bool hasMore)?
+        moviesLoaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -578,16 +534,11 @@ abstract class GenresLoaded implements ExploreState {
 /// @nodoc
 abstract class _$$MoviesLoadedImplCopyWith<$Res> {
   factory _$$MoviesLoadedImplCopyWith(
-    _$MoviesLoadedImpl value,
-    $Res Function(_$MoviesLoadedImpl) then,
-  ) = __$$MoviesLoadedImplCopyWithImpl<$Res>;
+          _$MoviesLoadedImpl value, $Res Function(_$MoviesLoadedImpl) then) =
+      __$$MoviesLoadedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({
-    List<Movie> movies,
-    String category,
-    int currentPage,
-    bool hasMore,
-  });
+  $Res call(
+      {List<Movie> movies, String category, int currentPage, bool hasMore});
 }
 
 /// @nodoc
@@ -595,9 +546,8 @@ class __$$MoviesLoadedImplCopyWithImpl<$Res>
     extends _$ExploreStateCopyWithImpl<$Res, _$MoviesLoadedImpl>
     implements _$$MoviesLoadedImplCopyWith<$Res> {
   __$$MoviesLoadedImplCopyWithImpl(
-    _$MoviesLoadedImpl _value,
-    $Res Function(_$MoviesLoadedImpl) _then,
-  ) : super(_value, _then);
+      _$MoviesLoadedImpl _value, $Res Function(_$MoviesLoadedImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of ExploreState
   /// with the given fields replaced by the non-null parameter values.
@@ -609,38 +559,36 @@ class __$$MoviesLoadedImplCopyWithImpl<$Res>
     Object? currentPage = null,
     Object? hasMore = null,
   }) {
-    return _then(
-      _$MoviesLoadedImpl(
-        movies: null == movies
-            ? _value._movies
-            : movies // ignore: cast_nullable_to_non_nullable
-                as List<Movie>,
-        category: null == category
-            ? _value.category
-            : category // ignore: cast_nullable_to_non_nullable
-                as String,
-        currentPage: null == currentPage
-            ? _value.currentPage
-            : currentPage // ignore: cast_nullable_to_non_nullable
-                as int,
-        hasMore: null == hasMore
-            ? _value.hasMore
-            : hasMore // ignore: cast_nullable_to_non_nullable
-                as bool,
-      ),
-    );
+    return _then(_$MoviesLoadedImpl(
+      movies: null == movies
+          ? _value._movies
+          : movies // ignore: cast_nullable_to_non_nullable
+              as List<Movie>,
+      category: null == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String,
+      currentPage: null == currentPage
+          ? _value.currentPage
+          : currentPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      hasMore: null == hasMore
+          ? _value.hasMore
+          : hasMore // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
   }
 }
 
 /// @nodoc
 
 class _$MoviesLoadedImpl implements MoviesLoaded {
-  const _$MoviesLoadedImpl({
-    required final List<Movie> movies,
-    required this.category,
-    this.currentPage = 1,
-    this.hasMore = true,
-  }) : _movies = movies;
+  const _$MoviesLoadedImpl(
+      {required final List<Movie> movies,
+      required this.category,
+      this.currentPage = 1,
+      this.hasMore = true})
+      : _movies = movies;
 
   final List<Movie> _movies;
   @override
@@ -679,12 +627,11 @@ class _$MoviesLoadedImpl implements MoviesLoaded {
 
   @override
   int get hashCode => Object.hash(
-        runtimeType,
-        const DeepCollectionEquality().hash(_movies),
-        category,
-        currentPage,
-        hasMore,
-      );
+      runtimeType,
+      const DeepCollectionEquality().hash(_movies),
+      category,
+      currentPage,
+      hasMore);
 
   /// Create a copy of ExploreState
   /// with the given fields replaced by the non-null parameter values.
@@ -701,11 +648,8 @@ class _$MoviesLoadedImpl implements MoviesLoaded {
     required TResult Function() loading,
     required TResult Function(List<Genre> genres) genresLoaded,
     required TResult Function(
-      List<Movie> movies,
-      String category,
-      int currentPage,
-      bool hasMore,
-    ) moviesLoaded,
+            List<Movie> movies, String category, int currentPage, bool hasMore)
+        moviesLoaded,
     required TResult Function(String message) error,
   }) {
     return moviesLoaded(movies, category, currentPage, hasMore);
@@ -718,11 +662,8 @@ class _$MoviesLoadedImpl implements MoviesLoaded {
     TResult? Function()? loading,
     TResult? Function(List<Genre> genres)? genresLoaded,
     TResult? Function(
-      List<Movie> movies,
-      String category,
-      int currentPage,
-      bool hasMore,
-    )? moviesLoaded,
+            List<Movie> movies, String category, int currentPage, bool hasMore)?
+        moviesLoaded,
     TResult? Function(String message)? error,
   }) {
     return moviesLoaded?.call(movies, category, currentPage, hasMore);
@@ -735,11 +676,8 @@ class _$MoviesLoadedImpl implements MoviesLoaded {
     TResult Function()? loading,
     TResult Function(List<Genre> genres)? genresLoaded,
     TResult Function(
-      List<Movie> movies,
-      String category,
-      int currentPage,
-      bool hasMore,
-    )? moviesLoaded,
+            List<Movie> movies, String category, int currentPage, bool hasMore)?
+        moviesLoaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -791,12 +729,11 @@ class _$MoviesLoadedImpl implements MoviesLoaded {
 }
 
 abstract class MoviesLoaded implements ExploreState {
-  const factory MoviesLoaded({
-    required final List<Movie> movies,
-    required final String category,
-    final int currentPage,
-    final bool hasMore,
-  }) = _$MoviesLoadedImpl;
+  const factory MoviesLoaded(
+      {required final List<Movie> movies,
+      required final String category,
+      final int currentPage,
+      final bool hasMore}) = _$MoviesLoadedImpl;
 
   List<Movie> get movies;
   String get category;
@@ -813,9 +750,8 @@ abstract class MoviesLoaded implements ExploreState {
 /// @nodoc
 abstract class _$$ExploreErrorImplCopyWith<$Res> {
   factory _$$ExploreErrorImplCopyWith(
-    _$ExploreErrorImpl value,
-    $Res Function(_$ExploreErrorImpl) then,
-  ) = __$$ExploreErrorImplCopyWithImpl<$Res>;
+          _$ExploreErrorImpl value, $Res Function(_$ExploreErrorImpl) then) =
+      __$$ExploreErrorImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String message});
 }
@@ -825,23 +761,22 @@ class __$$ExploreErrorImplCopyWithImpl<$Res>
     extends _$ExploreStateCopyWithImpl<$Res, _$ExploreErrorImpl>
     implements _$$ExploreErrorImplCopyWith<$Res> {
   __$$ExploreErrorImplCopyWithImpl(
-    _$ExploreErrorImpl _value,
-    $Res Function(_$ExploreErrorImpl) _then,
-  ) : super(_value, _then);
+      _$ExploreErrorImpl _value, $Res Function(_$ExploreErrorImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of ExploreState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? message = null}) {
-    return _then(
-      _$ExploreErrorImpl(
-        message: null == message
-            ? _value.message
-            : message // ignore: cast_nullable_to_non_nullable
-                as String,
-      ),
-    );
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$ExploreErrorImpl(
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
   }
 }
 
@@ -884,11 +819,8 @@ class _$ExploreErrorImpl implements ExploreError {
     required TResult Function() loading,
     required TResult Function(List<Genre> genres) genresLoaded,
     required TResult Function(
-      List<Movie> movies,
-      String category,
-      int currentPage,
-      bool hasMore,
-    ) moviesLoaded,
+            List<Movie> movies, String category, int currentPage, bool hasMore)
+        moviesLoaded,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -901,11 +833,8 @@ class _$ExploreErrorImpl implements ExploreError {
     TResult? Function()? loading,
     TResult? Function(List<Genre> genres)? genresLoaded,
     TResult? Function(
-      List<Movie> movies,
-      String category,
-      int currentPage,
-      bool hasMore,
-    )? moviesLoaded,
+            List<Movie> movies, String category, int currentPage, bool hasMore)?
+        moviesLoaded,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -918,11 +847,8 @@ class _$ExploreErrorImpl implements ExploreError {
     TResult Function()? loading,
     TResult Function(List<Genre> genres)? genresLoaded,
     TResult Function(
-      List<Movie> movies,
-      String category,
-      int currentPage,
-      bool hasMore,
-    )? moviesLoaded,
+            List<Movie> movies, String category, int currentPage, bool hasMore)?
+        moviesLoaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
