@@ -11,6 +11,7 @@ import '../../../auth/presentation/bloc/auth_bloc.dart';
 import '../../../auth/presentation/bloc/auth_state.dart';
 import '../../../auth/presentation/widgets/auth_dialog.dart';
 import '../../../explore/presentation/widgets/category_chip.dart';
+import '../../domain/entities/favorite.dart';
 import '../bloc/favorites_bloc.dart';
 import '../bloc/favorites_event.dart';
 import '../bloc/favorites_state.dart';
@@ -33,6 +34,12 @@ class FavoritesView extends StatefulWidget {
 
 class _FavoritesViewState extends State<FavoritesView> {
   String _selectedFolder = 'All';
+
+  // Memoization variables
+  List<Favorite>? _lastFavorites;
+  String? _lastSelectedFolder;
+  List<String> _cachedFolders = [];
+  List<Favorite> _cachedFilteredFavorites = [];
 
   @override
   Widget build(BuildContext context) {
@@ -120,19 +127,35 @@ class _FavoritesViewState extends State<FavoritesView> {
                     );
                   }
 
-                  // Extract folders
-                  final folders = {
-                    'All',
-                    ...state.favorites.map((f) => f.folder).toSet().toList()
-                      ..sort(),
-                  }.toList();
+                  // Optimization: Memoize derived sets/lists to prevent O(N log N) sorting
+                  // and O(N) filtering on every build/frame
+                  final favoritesChanged = !identical(
+                    state.favorites,
+                    _lastFavorites,
+                  );
+                  final folderChanged = _selectedFolder != _lastSelectedFolder;
 
-                  // Filter favorites based on selected folder
-                  final filteredFavorites = _selectedFolder == 'All'
-                      ? state.favorites
-                      : state.favorites
-                          .where((f) => f.folder == _selectedFolder)
-                          .toList();
+                  if (favoritesChanged || folderChanged) {
+                    if (favoritesChanged) {
+                      _cachedFolders = {
+                        'All',
+                        ...state.favorites.map((f) => f.folder).toSet().toList()
+                          ..sort(),
+                      }.toList();
+                    }
+
+                    _cachedFilteredFavorites = _selectedFolder == 'All'
+                        ? state.favorites
+                        : state.favorites
+                              .where((f) => f.folder == _selectedFolder)
+                              .toList();
+
+                    _lastFavorites = state.favorites;
+                    _lastSelectedFolder = _selectedFolder;
+                  }
+
+                  final folders = _cachedFolders;
+                  final filteredFavorites = _cachedFilteredFavorites;
 
                   return Column(
                     children: [
@@ -171,8 +194,8 @@ class _FavoritesViewState extends State<FavoritesView> {
                             : RefreshIndicator(
                                 onRefresh: () async {
                                   context.read<FavoritesBloc>().add(
-                                        const LoadFavorites(),
-                                      );
+                                    const LoadFavorites(),
+                                  );
                                 },
                                 child: ListenableBuilder(
                                   listenable: getIt<MiniplayerHeightNotifier>(),
@@ -190,11 +213,11 @@ class _FavoritesViewState extends State<FavoritesView> {
                                       ),
                                       gridDelegate:
                                           const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2,
-                                        childAspectRatio: 0.7,
-                                        crossAxisSpacing: 12,
-                                        mainAxisSpacing: 12,
-                                      ),
+                                            crossAxisCount: 2,
+                                            childAspectRatio: 0.7,
+                                            crossAxisSpacing: 12,
+                                            mainAxisSpacing: 12,
+                                          ),
                                       itemCount: filteredFavorites.length,
                                       itemBuilder: (context, index) {
                                         final favorite =
