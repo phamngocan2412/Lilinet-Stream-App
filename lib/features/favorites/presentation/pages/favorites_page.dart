@@ -129,10 +129,8 @@ class _FavoritesViewState extends State<FavoritesView> {
 
                   // Optimization: Memoize derived sets/lists to prevent O(N log N) sorting
                   // and O(N) filtering on every build/frame
-                  final favoritesChanged = !identical(
-                    state.favorites,
-                    _lastFavorites,
-                  );
+                  final favoritesChanged =
+                      !identical(state.favorites, _lastFavorites);
                   final folderChanged = _selectedFolder != _lastSelectedFolder;
 
                   if (favoritesChanged || folderChanged) {
@@ -147,8 +145,8 @@ class _FavoritesViewState extends State<FavoritesView> {
                     _cachedFilteredFavorites = _selectedFolder == 'All'
                         ? state.favorites
                         : state.favorites
-                              .where((f) => f.folder == _selectedFolder)
-                              .toList();
+                            .where((f) => f.folder == _selectedFolder)
+                            .toList();
 
                     _lastFavorites = state.favorites;
                     _lastSelectedFolder = _selectedFolder;
@@ -194,8 +192,8 @@ class _FavoritesViewState extends State<FavoritesView> {
                             : RefreshIndicator(
                                 onRefresh: () async {
                                   context.read<FavoritesBloc>().add(
-                                    const LoadFavorites(),
-                                  );
+                                        const LoadFavorites(),
+                                      );
                                 },
                                 child: ListenableBuilder(
                                   listenable: getIt<MiniplayerHeightNotifier>(),
@@ -213,11 +211,11 @@ class _FavoritesViewState extends State<FavoritesView> {
                                       ),
                                       gridDelegate:
                                           const SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 2,
-                                            childAspectRatio: 0.7,
-                                            crossAxisSpacing: 12,
-                                            mainAxisSpacing: 12,
-                                          ),
+                                        crossAxisCount: 2,
+                                        childAspectRatio: 0.7,
+                                        crossAxisSpacing: 12,
+                                        mainAxisSpacing: 12,
+                                      ),
                                       itemCount: filteredFavorites.length,
                                       itemBuilder: (context, index) {
                                         final favorite =
