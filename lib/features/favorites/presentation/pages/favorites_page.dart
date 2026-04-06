@@ -11,6 +11,7 @@ import '../../../auth/presentation/bloc/auth_bloc.dart';
 import '../../../auth/presentation/bloc/auth_state.dart';
 import '../../../auth/presentation/widgets/auth_dialog.dart';
 import '../../../explore/presentation/widgets/category_chip.dart';
+import '../../domain/entities/favorite.dart';
 import '../bloc/favorites_bloc.dart';
 import '../bloc/favorites_event.dart';
 import '../bloc/favorites_state.dart';
@@ -24,25 +25,11 @@ class FavoritesPage extends StatelessWidget {
   }
 }
 
-class FavoritesView extends StatefulWidget {
+class FavoritesView extends StatelessWidget {
   const FavoritesView({super.key});
 
   @override
-  State<FavoritesView> createState() => _FavoritesViewState();
-}
-
-class _FavoritesViewState extends State<FavoritesView> {
-  String _selectedFolder = 'All';
-
-  @override
   Widget build(BuildContext context) {
-    // Optimization: Calculate optimal cache width for grid items to avoid LayoutBuilder overhead
-    // and reduce memory usage.
-    // (Screen Width - Padding) / Columns * Pixel Density
-    final screenWidth = MediaQuery.of(context).size.width;
-    final devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
-    final memCacheWidth = ((screenWidth - 32) / 2 * devicePixelRatio).ceil();
-
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -120,113 +107,7 @@ class _FavoritesViewState extends State<FavoritesView> {
                     );
                   }
 
-                  // Extract folders
-                  final folders = {
-                    'All',
-                    ...state.favorites.map((f) => f.folder).toSet().toList()
-                      ..sort(),
-                  }.toList();
-
-                  // Filter favorites based on selected folder
-                  final filteredFavorites = _selectedFolder == 'All'
-                      ? state.favorites
-                      : state.favorites
-                          .where((f) => f.folder == _selectedFolder)
-                          .toList();
-
-                  return Column(
-                    children: [
-                      // Folder Filter List
-                      Container(
-                        height: 50,
-                        margin: const EdgeInsets.symmetric(vertical: 8),
-                        child: ListView.separated(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: folders.length,
-                          separatorBuilder: (context, index) =>
-                              const SizedBox(width: 8),
-                          itemBuilder: (context, index) {
-                            final folder = folders.elementAt(index);
-                            return CategoryChip(
-                              label: folder,
-                              isSelected: folder == _selectedFolder,
-                              onTap: () {
-                                setState(() {
-                                  _selectedFolder = folder;
-                                });
-                              },
-                            );
-                          },
-                        ),
-                      ),
-
-                      // Favorites Grid
-                      Expanded(
-                        child: filteredFavorites.isEmpty
-                            ? const AppEmptyState(
-                                icon: Icons.folder_off_outlined,
-                                message: 'No items in this folder',
-                              )
-                            : RefreshIndicator(
-                                onRefresh: () async {
-                                  context.read<FavoritesBloc>().add(
-                                        const LoadFavorites(),
-                                      );
-                                },
-                                child: ListenableBuilder(
-                                  listenable: getIt<MiniplayerHeightNotifier>(),
-                                  builder: (context, _) {
-                                    final miniplayerHeight =
-                                        getIt<MiniplayerHeightNotifier>()
-                                            .height;
-
-                                    return GridView.builder(
-                                      padding: EdgeInsets.only(
-                                        left: 16,
-                                        right: 16,
-                                        top: 16,
-                                        bottom: miniplayerHeight + 16,
-                                      ),
-                                      gridDelegate:
-                                          const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2,
-                                        childAspectRatio: 0.7,
-                                        crossAxisSpacing: 12,
-                                        mainAxisSpacing: 12,
-                                      ),
-                                      itemCount: filteredFavorites.length,
-                                      itemBuilder: (context, index) {
-                                        final favorite =
-                                            filteredFavorites[index];
-
-                                        // Convert Favorite to Movie for MovieCard
-                                        final movie = Movie(
-                                          id: favorite.movieId,
-                                          title:
-                                              favorite.movieTitle ?? 'Unknown',
-                                          poster: favorite.moviePoster,
-                                          type: favorite.movieType ?? 'Movie',
-                                        );
-
-                                        return MovieCard(
-                                          movie: movie,
-                                          memCacheWidth: memCacheWidth,
-                                          onTap: () {
-                                            context.push(
-                                              '/movie/${movie.id}?type=${movie.type}',
-                                              extra: movie,
-                                            );
-                                          },
-                                        );
-                                      },
-                                    );
-                                  },
-                                ),
-                              ),
-                      ),
-                    ],
-                  );
+                  return _FavoritesContentView(favorites: state.favorites);
                 }
 
                 return const SizedBox.shrink();
@@ -235,6 +116,153 @@ class _FavoritesViewState extends State<FavoritesView> {
           },
         ),
       ),
+    );
+  }
+}
+
+class _FavoritesContentView extends StatefulWidget {
+  final List<Favorite> favorites;
+
+  const _FavoritesContentView({required this.favorites});
+
+  @override
+  State<_FavoritesContentView> createState() => _FavoritesContentViewState();
+}
+
+class _FavoritesContentViewState extends State<_FavoritesContentView> {
+  String _selectedFolder = 'All';
+  late List<String> _folders;
+  late List<Favorite> _filteredFavorites;
+
+  @override
+  void initState() {
+    super.initState();
+    _computeDerivedState();
+  }
+
+  @override
+  void didUpdateWidget(covariant _FavoritesContentView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (!identical(widget.favorites, oldWidget.favorites)) {
+      _computeDerivedState();
+    }
+  }
+
+  void _computeDerivedState() {
+    _folders = {
+      'All',
+      ...widget.favorites.map((f) => f.folder).toSet().toList()..sort(),
+    }.toList();
+
+    _filterFavorites();
+  }
+
+  void _filterFavorites() {
+    _filteredFavorites = _selectedFolder == 'All'
+        ? widget.favorites
+        : widget.favorites.where((f) => f.folder == _selectedFolder).toList();
+  }
+
+  void _onFolderSelected(String folder) {
+    if (_selectedFolder != folder) {
+      setState(() {
+        _selectedFolder = folder;
+        _filterFavorites();
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Optimization: Calculate optimal cache width for grid items to avoid LayoutBuilder overhead
+    // and reduce memory usage.
+    // (Screen Width - Padding) / Columns * Pixel Density
+    final screenWidth = MediaQuery.of(context).size.width;
+    final devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
+    final memCacheWidth = ((screenWidth - 32) / 2 * devicePixelRatio).ceil();
+
+    return Column(
+      children: [
+        // Folder Filter List
+        Container(
+          height: 50,
+          margin: const EdgeInsets.symmetric(vertical: 8),
+          child: ListView.separated(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            scrollDirection: Axis.horizontal,
+            itemCount: _folders.length,
+            separatorBuilder: (context, index) => const SizedBox(width: 8),
+            itemBuilder: (context, index) {
+              final folder = _folders[index];
+              return CategoryChip(
+                label: folder,
+                isSelected: folder == _selectedFolder,
+                onTap: () => _onFolderSelected(folder),
+              );
+            },
+          ),
+        ),
+
+        // Favorites Grid
+        Expanded(
+          child: _filteredFavorites.isEmpty
+              ? const AppEmptyState(
+                  icon: Icons.folder_off_outlined,
+                  message: 'No items in this folder',
+                )
+              : RefreshIndicator(
+                  onRefresh: () async {
+                    context.read<FavoritesBloc>().add(const LoadFavorites());
+                  },
+                  child: ListenableBuilder(
+                    listenable: getIt<MiniplayerHeightNotifier>(),
+                    builder: (context, _) {
+                      final miniplayerHeight =
+                          getIt<MiniplayerHeightNotifier>().height;
+
+                      return GridView.builder(
+                        padding: EdgeInsets.only(
+                          left: 16,
+                          right: 16,
+                          top: 16,
+                          bottom: miniplayerHeight + 16,
+                        ),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              childAspectRatio: 0.7,
+                              crossAxisSpacing: 12,
+                              mainAxisSpacing: 12,
+                            ),
+                        itemCount: _filteredFavorites.length,
+                        itemBuilder: (context, index) {
+                          final favorite = _filteredFavorites[index];
+
+                          // Convert Favorite to Movie for MovieCard
+                          final movie = Movie(
+                            id: favorite.movieId,
+                            title: favorite.movieTitle ?? 'Unknown',
+                            poster: favorite.moviePoster,
+                            type: favorite.movieType ?? 'Movie',
+                          );
+
+                          return MovieCard(
+                            movie: movie,
+                            memCacheWidth: memCacheWidth,
+                            onTap: () {
+                              context.push(
+                                '/movie/${movie.id}?type=${movie.type}',
+                                extra: movie,
+                              );
+                            },
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ),
+        ),
+      ],
     );
   }
 }

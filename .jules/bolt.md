@@ -17,3 +17,7 @@
 ## 2026-05-20 - Preserving Legacy Logic in Fixes
 **Learning:** When fixing build errors in existing files (like `download_service.dart`), verify if existing tests rely on "buggy" behavior (like partial sanitization).
 **Action:** Run tests immediately after fixes. If tests fail on logic you didn't intend to change (just fix compilation), revert to the behavior expected by tests unless the test is clearly wrong.
+
+## 2024-05-30 - [Memoizing Derived Lists in Flutter BLoC UIs]
+**Learning:** `BlocSelector` cannot be used to memoize derived lists if the selector function returns a new list instance (e.g., using `.toList()`), because Dart's default `==` operator for lists checks for identity equality. The comparison always fails, causing a widget rebuild on every state change anyway. Additionally, manually mutating cache variables directly inside a `build()` method is an impure anti-pattern that reduces code readability and predictability.
+**Action:** Extract expensive list computations (`O(N log N)` sorting/filtering) out of BLoC `build` methods. Move the UI into a dedicated child `StatefulWidget`. Use `initState` to calculate the lists initially, and `didUpdateWidget` (checking `!identical(widget.data, oldWidget.data)`) to safely recalculate and cache them only when the underlying BLoC state identity actually changes.
